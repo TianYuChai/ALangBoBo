@@ -86,6 +86,7 @@ class FileUpload
      */
     protected static function getManyFileInfo($file)
     {
+        //文件上传保持原名称
         $file_name = $file->getClientOriginalName();
         $path = $file->getRealPath();
         Storage::disk('file')->put($file_name, file_get_contents($path));
@@ -120,6 +121,12 @@ class FileUpload
         return Storage::disk($type)->url($path);
     }
 
+    /**
+     * 删除文件
+     * @param $type
+     * @param $path
+     * @return bool
+     */
     public static function del($type, $path)
     {
         return Storage::disk($type)->delete($path);
