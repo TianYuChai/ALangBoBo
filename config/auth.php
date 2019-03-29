@@ -40,11 +40,15 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
-
         'api' => [
             'driver' => 'token',
             'provider' => 'users',
         ],
+        //后台管理登陆
+        'backstage' => [
+            'driver' => 'session',
+            'provider' => 'backstage'
+        ]
     ],
 
     /*
@@ -69,7 +73,10 @@ return [
             'driver' => 'eloquent',
             'model' => App\User::class,
         ],
-
+        'backstage' => [
+            'driver' => 'eloquent',
+            'model' => \App\Http\Models\admin\BackstageModel::class
+        ],
         // 'users' => [
         //     'driver' => 'database',
         //     'table' => 'users',

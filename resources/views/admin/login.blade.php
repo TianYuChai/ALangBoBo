@@ -34,7 +34,7 @@
     <div class="container">
         <div class="col-md-4 content-center">
             <div class="card card-login card-plain">
-                <form class="form" method="" action="">
+                <form class="form" method="" action="" id="fileinfo">
                     <div class="header header-primary text-center">
                         <div class="logo-container">
                             <img src="{{ asset('admin/login/assets/img/now-logo.png') }}" alt="">
@@ -45,28 +45,18 @@
                                 <span class="input-group-addon">
                                     <i class="now-ui-icons users_circle-08"></i>
                                 </span>
-                            <input type="text" class="form-control">
+                            <input type="text" class="form-control" name="username">
                         </div>
                         <div class="input-group form-group-no-border input-lg">
                                 <span class="input-group-addon">
                                     <i class="now-ui-icons text_caps-small"></i>
                                 </span>
-                            <input type="password" class="form-control" />
+                            <input type="password" class="form-control" name="password"/>
                         </div>
                     </div>
                     <div class="footer text-center">
                         <a href="javascript:void(0)" class="btn btn-primary btn-round btn-lg btn-block">Get Started</a>
                     </div>
-                    {{--<div class="pull-left">--}}
-                        {{--<h6>--}}
-                            {{--<a href="#pablo" class="link">Create Account</a>--}}
-                        {{--</h6>--}}
-                    {{--</div>--}}
-                    {{--<div class="pull-right">--}}
-                        {{--<h6>--}}
-                            {{--<a href="#pablo" class="link">Need Help?</a>--}}
-                        {{--</h6>--}}
-                    {{--</div>--}}
                 </form>
             </div>
         </div>
@@ -87,10 +77,34 @@
 <script src="{{ asset('admin/login/assets/js/plugins/jquery.sharrre.js') }}" type="text/javascript"></script>
 <!-- Control Center for Now Ui Kit: parallax effects, scripts for the example pages etc -->
 <script src="{{ asset('admin/login/assets/js/now-ui-kit.js?v=1.1.0') }}" type="text/javascript"></script>
+<script type="text/javascript" src="{{ asset('admin/lib/layer/2.4/layer.js') }}"></script>
 
 <script type="text/javascript">
     $('.btn-block').click(function () {
-        alert('1');
+        var formData = $('#fileinfo').serialize();
+        $.ajax({
+            headers: {
+                'X-CSRF-TOKEN': "{{ csrf_token() }}"
+            },
+            method:"POST",
+            url:"{!! route('backstage.admin.login') !!}",
+            data:formData,
+            success:function (res) {
+                if(res.status == 200) {
+                    layer.msg(res.info);
+                    setTimeout(function () {
+                        window.location.href = res.url;
+                    }, 1000)
+                }
+            },
+            error:function (XMLHttpRequest) {
+                //返回提示信息
+                var errors = XMLHttpRequest.responseJSON.errors;
+                for (var value in errors) {
+                    layer.msg(errors[value][0]);return;
+                }
+            }
+        });
     })
 </script>
 </html>
