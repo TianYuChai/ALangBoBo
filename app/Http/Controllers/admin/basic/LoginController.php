@@ -24,7 +24,7 @@ class LoginController extends BaseController
         if (Auth::guard('backstage')->attempt($credentials)) {
             $data = [
                 'info' => '登陆成功',
-                'url' => route('backage.index.index'),
+                'url' => route('backstage.index.index'),
                 'status' => 200
             ];
         } else {

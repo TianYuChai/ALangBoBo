@@ -22,6 +22,10 @@ Route::group(['prefix' => 'backstage', 'namespace' => 'admin'], function () {
      * 后台管理页面路由分组
      */
     Route::group(['middleware' => 'auth:backstage'], function () {
-        Route::get('index', ['as' => 'backage.index.index', 'uses' => 'IndexController@index']);
+        Route::get('index', ['as' => 'backstage.index.index', 'uses' => 'IndexController@index']);
+
+        Route::group(['namespace' => 'member'], function () {
+            Route::get('member/index', ['as' => 'backstage.member.index', 'uses' => 'MemberController@index']);
+        });
     });
 });

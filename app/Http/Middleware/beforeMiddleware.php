@@ -21,7 +21,7 @@ class beforeMiddleware
     public function handle($request, Closure $next)
     {
         if(Auth::guard('backstage')->check()) {
-            return \redirect()->route('backage.index.index');
+            return \redirect()->route('backstage.index.index');
         }
         return $next($request);
     }

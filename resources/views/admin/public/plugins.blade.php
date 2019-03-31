@@ -13,22 +13,15 @@
     @show
     <title>@yield('title', '阿朗博博商务管理中心')</title>
 </head>
-
 <body>
-@section('sidebar')
-    @include('admin.public.sidebar')
-@show
+    <section class="Hui-admin-article-wrapper">
+        @section('header')
+            @include('admin.public.header')
+        @show
+        @section('content')
 
-<section class="Hui-admin-article-wrapper">
-    @section('header')
-        @include('admin.public.header')
-    @show
-    @yield('content')
-</section>
-@section('inject')
-    @include('admin.public.inject')
-    <script type="text/javascript" src="{{ asset('admin/static/business/js/main.js') }}"></script>
-@show
+        @show
+    </section>
 </body>
 </html>
 
