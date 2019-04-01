@@ -19,7 +19,7 @@
                         <span class="select-box" style="width:150px">
                             <select class="select" name="brandclass" size="1">
                                 <option value="" selected>请选择商户类别</option>
-                                @foreach($category as $key => $item)
+                                @foreach($data['category'] as $key => $item)
                                     <option value="{{ $key }}">{{ $item }}</option>
                                 @endforeach
                             </select>
@@ -27,7 +27,7 @@
                         <span class="select-box" style="width:150px">
                             <select class="select" name="brandclass" size="1">
                                 <option value="" selected>请选择账户状态</option>
-                                @foreach($status as $key => $item)
+                                @foreach($data['status'] as $key => $item)
                                     <option value="{{ $key }}">{{ $item }}</option>
                                 @endforeach
                             </select>
@@ -44,7 +44,7 @@
                                 <span class="f-l">
                                     <a href="javascript:;" onclick="datadel()" class="btn btn-danger radius"><i class="Hui-iconfont">&#xe6e2;</i> 批量删除</a>
                                 </span>
-                        <span class="f-r">当前用户数：<strong>{{ $user_count }}</strong> 条</span>
+                        <span class="f-r">当前用户数：<strong>{{ $data['user_count'] }}</strong> 条</span>
                     </div>
                     <div class="clearfix mt-20">
                         <table class="table table-border table-bordered table-hover table-bg table-sort">
@@ -63,7 +63,7 @@
                             </tr>
                             </thead>
                             <tbody>
-                                @foreach($items as $item)
+                                @foreach($data['items'] as $item)
                                     <tr class="text-c">
                                         <td>
                                             <input type="checkbox" value="{{ $item->id }}" name="">

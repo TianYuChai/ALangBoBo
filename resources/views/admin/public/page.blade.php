@@ -1,3 +1,3 @@
-<div id="page" class="pager">
-    {{ $items->links() }}
+<div class="page">
+    {{ $data['items']->links() }}
 </div>
