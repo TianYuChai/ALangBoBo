@@ -1,5 +1,10 @@
 /* 这里面是整个系统业务相关的js代码 */
 
+$('.Hui-menu-item ul li').click(function () {
+    $(this).addClass('current');
+    $('.Hui-admin-article').html('<iframe src="'+$(this).find('a').attr('_href')+'" style="width:100%; height:100%" frameborder="no" border="0" marginwidth="0" marginheight="0" scrolling="no" allowtransparency="yes"></iframe>');
+})
+
 function runDatetimePicker(){
   $("#search-datetime-start").datetimepicker({
     format: 'yyyy-mm-dd',

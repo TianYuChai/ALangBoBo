@@ -7,7 +7,7 @@ use App\Http\Controllers\Controller;
 
 class BaseController extends Controller
 {
-    protected $page_limit = 15;
+    protected static $page_limit = 15;
 
     /**
      * ajax提交返回
