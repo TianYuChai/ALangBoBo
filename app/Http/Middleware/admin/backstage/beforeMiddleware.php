@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Middleware;
+namespace App\Http\Middleware\admin\backstage;
 
 use Closure;
 use Illuminate\Http\JsonResponse;
@@ -21,7 +21,7 @@ class beforeMiddleware
     public function handle($request, Closure $next)
     {
         if(Auth::guard('backstage')->check()) {
-            return \redirect()->route('backage.index.index');
+            return redirect()->route('backstage.index.index');
         }
         return $next($request);
     }
