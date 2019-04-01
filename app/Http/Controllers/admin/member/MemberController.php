@@ -18,8 +18,22 @@ class MemberController extends BaseController
     }
     public function index()
     {
+//        dd(UserModel::create([
+//            'account' => '研发1',
+//            'password' => bcrypt('admin123'),
+//            'category' => 0,
+//            'name' => '柴天宇',
+//            'card' => '341124199411203811',
+//            'number' => '1395505240',
+//            'type' => 1,
+//            'status' => 1
+//        ]));
         $query = $this->makeQuery(new UserModel());
+        $user_count = $query->count();
         $items = $query->orderBy('created_at', 'desc')->paginate(parent::$page_limit);
-        return view('admin.member.index', compact('items'));
+        $category = UserModel::$_CATEGORY; //商户类别
+        $status = UserModel::$_STATUS; //账户状态
+        return view('admin.member.index', compact(
+            'items', 'user_count', 'category', 'status'));
     }
 }
