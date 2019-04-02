@@ -35,4 +35,10 @@ class LoginController extends BaseController
         }
         return $this->ajaxReturn($data, $data['status']);
     }
+
+    public function logout()
+    {
+        Auth::guard('backstage')->logout();
+        return redirect(route('login'));
+    }
 }

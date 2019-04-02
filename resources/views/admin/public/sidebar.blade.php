@@ -1,43 +1,191 @@
-<!--_menu 作为公共模版分离出去-->
-<aside class="Hui-admin-aside-wrapper">
-    <div class="Hui-admin-logo-wrapper">
-        <a class="logo navbar-logo" href="{{ route('backstage.index.index') }}">
-            <i class="va-m iconpic global-logo"></i>
-            <span class="va-m">H-ui.admin</span>
-        </a>
-    </div>
-    <div class="Hui-admin-menu-dropdown bk_2">
-        <dl id="menu-member" class="Hui-menu">
-            <dt class="Hui-menu-title"><i class="Hui-iconfont">&#xe60d;</i> 会员管理<i class="Hui-iconfont Hui-admin-menu-dropdown-arrow">&#xe6d5;</i></dt>
-            <dd class="Hui-menu-item">
-                <ul>
-                    <li><a _href="{{ route('backstage.member.index') }}" title="会员列表">会员列表</a></li>
-                    <li><a href="member-del.html" title="删除的会员">删除的会员</a></li>
-                    <li><a href="member-record-browse.html" title="浏览记录">浏览记录</a></li>
-                    <li><a href="member-record-download.html" title="下载记录">下载记录</a></li>
-                    <li><a href="member-record-share.html" title="分享记录">分享记录</a></li>
+<!-- 左侧菜单开始 -->
+<div class="left-nav">
+    <div id="side-nav">
+        <ul id="nav">
+            <li>
+                <a href="javascript:;">
+                    <i class="iconfont">&#xe6b8;</i>
+                    <cite>会员管理</cite>
+                    <i class="iconfont nav_right">&#xe697;</i>
+                </a>
+                <ul class="sub-menu">
+                    <li>
+                        <a _href="{{ route('backstage.member.index') }}">
+                            <i class="iconfont">&#xe6a7;</i>
+                            <cite>会员列表</cite>
+
+                        </a>
+                    </li>
+                    <li>
+                        <a _href="./pages/member/del.html">
+                            <i class="iconfont">&#xe6a7;</i>
+                            <cite>会员删除</cite>
+
+                        </a>
+                    </li>
+                    <li>
+                        <a href="javascript:;">
+                            <i class="iconfont">&#xe70b;</i>
+                            <cite>会员管理</cite>
+                            <i class="iconfont nav_right">&#xe697;</i>
+                        </a>
+                        <ul class="sub-menu">
+                            <li>
+                                <a _href="./pages/member/addInput.html">
+                                    <i class="iconfont">&#xe6a7;</i>
+                                    <cite>输入框操作</cite>
+                                </a>
+                            </li>
+                            <li>
+                                <a _href="./pages/404.html">
+                                    <i class="iconfont">&#xe6a7;</i>
+                                    <cite>三级菜单演示</cite>
+                                </a>
+                            </li>
+                            <li>
+                                <a _href="./pages/404.html">
+                                    <i class="iconfont">&#xe6a7;</i>
+                                    <cite>导航菜单演示</cite>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
                 </ul>
-            </dd>
-        </dl>
-        <dl id="menu-system" class="Hui-menu">
-            <dt class="Hui-menu-title"><i class="Hui-iconfont">&#xe62e;</i> 系统管理<i class="Hui-iconfont Hui-admin-menu-dropdown-arrow">&#xe6d5;</i></dt>
-            <dd class="Hui-menu-item">
-                <ul>
-                    <li><a href="system-base.html" title="系统设置">系统设置</a></li>
-                    <li><a href="system-category.html" title="栏目管理">栏目管理</a></li>
-                    <li><a href="system-data.html" title="数据字典">数据字典</a></li>
-                    <li><a href="system-shielding.html" title="屏蔽词">屏蔽词</a></li>
-                    <li><a href="system-log.html" title="系统日志">系统日志</a></li>
+            </li>
+            <li>
+                <a href="javascript:;">
+                    <i class="iconfont">&#xe705;</i>
+                    <cite>文章管理</cite>
+                    <i class="iconfont nav_right">&#xe697;</i>
+                </a>
+                <ul class="sub-menu">
+                    <li>
+                        <a _href="./pages/article/list.html">
+                            <i class="iconfont">&#xe6a7;</i>
+                            <cite>文章列表</cite>
+                        </a>
+                    </li>
+                    <li>
+                        <a _href="./pages/article/category.html">
+                            <i class="iconfont">&#xe6a7;</i>
+                            <cite>分类管理</cite>
+                        </a>
+                    </li>
                 </ul>
-            </dd>
-        </dl>
+            </li>
+            <li>
+                <a href="javascript:;">
+                    <i class="iconfont">&#xe723;</i>
+                    <cite>订单管理</cite>
+                    <i class="iconfont nav_right">&#xe697;</i>
+                </a>
+                <ul class="sub-menu">
+                    <li>
+                        <a _href="./pages/order/list.html">
+                            <i class="iconfont">&#xe6a7;</i>
+                            <cite>订单列表</cite>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <a href="javascript:;">
+                    <i class="iconfont">&#xe726;</i>
+                    <cite>管理员管理</cite>
+                    <i class="iconfont nav_right">&#xe697;</i>
+                </a>
+                <ul class="sub-menu">
+                    <li>
+                        <a _href="./pages/admin/list.html">
+                            <i class="iconfont">&#xe6a7;</i>
+                            <cite>管理员列表</cite>
+                        </a>
+                    </li>
+                    <li>
+                        <a _href="./pages/admin/role.html">
+                            <i class="iconfont">&#xe6a7;</i>
+                            <cite>角色管理</cite>
+                        </a>
+                    </li>
+                    <li>
+                        <a _href="./pages/admin/cate.html">
+                            <i class="iconfont">&#xe6a7;</i>
+                            <cite>权限分类</cite>
+                        </a>
+                    </li>
+                    <li>
+                        <a _href="./pages/admin/rule.html">
+                            <i class="iconfont">&#xe6a7;</i>
+                            <cite>权限管理</cite>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <a href="javascript:;">
+                    <i class="iconfont">&#xe6ce;</i>
+                    <cite>系统统计</cite>
+                    <i class="iconfont nav_right">&#xe697;</i>
+                </a>
+                <ul class="sub-menu">
+                    <li>
+                        <a _href="./pages/echarts/echarts1.html">
+                            <i class="iconfont">&#xe6a7;</i>
+                            <cite>拆线图</cite>
+                        </a>
+                    </li>
+                    <li>
+                        <a _href="./pages/echarts/echarts2.html">
+                            <i class="iconfont">&#xe6a7;</i>
+                            <cite>柱状图</cite>
+                        </a>
+                    </li>
+                    <li>
+                        <a _href="./pages/echarts/echarts3.html">
+                            <i class="iconfont">&#xe6a7;</i>
+                            <cite>地图</cite>
+                        </a>
+                    </li>
+                    <li>
+                        <a _href="./pages/echarts/echarts4.html">
+                            <i class="iconfont">&#xe6a7;</i>
+                            <cite>饼图</cite>
+                        </a>
+                    </li>
+                    <li>
+                        <a _href="./pages/echarts/echarts5.html">
+                            <i class="iconfont">&#xe6a7;</i>
+                            <cite>雷达图</cite>
+                        </a>
+                    </li>
+                    <li>
+                        <a _href="./pages/echarts/echarts6.html">
+                            <i class="iconfont">&#xe6a7;</i>
+                            <cite>k线图</cite>
+                        </a>
+                    </li>
+                    <li>
+                        <a _href="./pages/echarts/echarts7.html">
+                            <i class="iconfont">&#xe6a7;</i>
+                            <cite>热力图</cite>
+                        </a>
+                    </li>
+                    <li>
+                        <a _href="./pages/echarts/echarts8.html">
+                            <i class="iconfont">&#xe6a7;</i>
+                            <cite>仪表图</cite>
+                        </a>
+                    </li>
+                    <li>
+                        <a _href="./pages/echarts/echarts9.html">
+                            <i class="iconfont">&#xe6a7;</i>
+                            <cite>地图DIY实例</cite>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
     </div>
-</aside>
-<div class="Hui-admin-aside-mask"></div>
-<!--/_menu 作为公共模版分离出去-->
-<div class="Hui-admin-dislpayArrow">
-    <a href="javascript:void(0);" onClick="displaynavbar(this)">
-        <i class="Hui-iconfont Hui-iconfont-left">&#xe6d4;</i>
-        <i class="Hui-iconfont Hui-iconfont-right">&#xe6d7;</i>
-    </a>
 </div>
+<!-- <div class="x-slide_left"></div> -->
+<!-- 左侧菜单结束 -->

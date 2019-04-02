@@ -77,34 +77,36 @@
 <script src="{{ asset('admin/login/assets/js/plugins/jquery.sharrre.js') }}" type="text/javascript"></script>
 <!-- Control Center for Now Ui Kit: parallax effects, scripts for the example pages etc -->
 <script src="{{ asset('admin/login/assets/js/now-ui-kit.js?v=1.1.0') }}" type="text/javascript"></script>
-<script type="text/javascript" src="{{ asset('admin/lib/layer/2.4/layer.js') }}"></script>
+<script type="text/javascript" src="{{ asset('admin/lib/layui/layui.js') }}"></script>
 
 <script type="text/javascript">
-    $('.btn-block').click(function () {
-        var formData = $('#fileinfo').serialize();
-        $.ajax({
-            headers: {
-                'X-CSRF-TOKEN': "{{ csrf_token() }}"
-            },
-            method:"POST",
-            url:"{!! route('backstage.admin.login') !!}",
-            data:formData,
-            success:function (res) {
-                if(res.status == 200) {
-                    layer.msg(res.info);
-                    setTimeout(function () {
-                        window.location.href = res.url;
-                    }, 1000)
+    layui.use('layer', function(){
+        $('.btn-block').click(function () {
+            var formData = $('#fileinfo').serialize();
+            $.ajax({
+                headers: {
+                    'X-CSRF-TOKEN': "{{ csrf_token() }}"
+                },
+                method:"POST",
+                url:"{!! route('backstage.admin.login') !!}",
+                data:formData,
+                success:function (res) {
+                    if(res.status == 200) {
+                        layer.msg(res.info);
+                        setTimeout(function () {
+                            window.location.href = res.url;
+                        }, 1000)
+                    }
+                },
+                error:function (XMLHttpRequest) {
+                    //返回提示信息
+                    var errors = XMLHttpRequest.responseJSON.errors;
+                    for (var value in errors) {
+                        layer.msg(errors[value][0]);return;
+                    }
                 }
-            },
-            error:function (XMLHttpRequest) {
-                //返回提示信息
-                var errors = XMLHttpRequest.responseJSON.errors;
-                for (var value in errors) {
-                    layer.msg(errors[value][0]);return;
-                }
-            }
-        });
-    })
+            });
+        })
+    });
 </script>
 </html>

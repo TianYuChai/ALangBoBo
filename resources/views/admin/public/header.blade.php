@@ -1,21 +1,24 @@
-<!--_header 作为公共模版分离出去-->
-<header class="Hui-navbar">
-    <div class="navbar">
-        <div class="container-fluid clearfix">
-            <nav id="Hui-userbar" class="nav navbar-nav navbar-userbar">
-                <ul class="clearfix">
-                    {{--<li>超级管理员</li>--}}
-                    <li class="dropDown dropDown_hover">
-                        <a href="#" class="dropDown_A">admin <i class="Hui-iconfont">&#xe6d5;</i></a>
-                        <ul class="dropDown-menu menu radius box-shadow">
-                            <li><a href="javascript:;" onClick="myselfinfo()">个人信息</a></li>
-                            <li><a href="#">切换账户</a></li>
-                            <li><a href="#">退出</a></li>
-                        </ul>
-                    </li>
-                </ul>
-            </nav>
-        </div>
+<!-- 顶部开始 -->
+<div class="container">
+    <div class="logo">
+        <a href="{{ route('backstage.member.index') }}">
+            商务管理中心
+        </a>
     </div>
-</header>
-<!--/_header 作为公共模版分离出去-->
+    <div class="left_open">
+        <!-- <i title="展开左侧栏" class="iconfont">&#xe699;</i> -->
+        <i title="展开左侧栏" class="layui-icon layui-icon-shrink-right"></i>
+    </div>
+    <ul class="layui-nav right" lay-filter="">
+        <li class="layui-nav-item">
+            <a href="javascript:void(0);">{{ auth()->guard('backstage')->user()->nickname }}</a>
+            <dl class="layui-nav-child">
+                <dd><a class="loginout" href="{{ route('backstage.login.out') }}">退出</a></dd>
+            </dl>
+        </li>
+        <li class="layui-nav-item to-index">
+            <a href="/">前台首页</a>
+        </li>
+    </ul>
+</div>
+<!-- 顶部结束 -->

@@ -2,6 +2,8 @@
 
 namespace App\Http\Models\currency;
 
+use App\Http\Models\admin\RegisterAuditingModel;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 class UserModel extends Model
@@ -31,6 +33,19 @@ class UserModel extends Model
     ];
 
     /**
+     * 商户关联表
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function merchant()
+    {
+        return $this->hasOne(MerchantModel::class, 'uid', 'id');
+    }
+
+    public function registerauditing()
+    {
+        return $this->hasOne(RegisterAuditingModel::class, 'uid', 'id');
+    }
+    /**
      * 账户类别展示
      * @return mixed
      */
@@ -46,5 +61,62 @@ class UserModel extends Model
     public function getStatusNameAttribute()
     {
         return array_get(self::$_STATUS, $this->status, '未知');
+    }
+
+    /**
+     * 搜索时间
+     *
+     * @param $query
+     * @param $search
+     * @return mixed
+     */
+    public function scopeSearchTime($query, $search)
+    {
+       if(!empty($search)) {
+            $time_section = explode(' - ', $search);
+            return $query->whereBetween('created_at', $time_section);
+       }
+    }
+
+    /**
+     * 搜索账户名
+     *
+     * @param $query
+     * @param $search
+     * @return mixed
+     */
+    public function scopeSearchAccount($query, $search)
+    {
+        if(!empty($search)) {
+            return $query->where('account', 'like', "{$search}");
+        }
+    }
+
+    /**
+     * 搜索类别
+     *
+     * @param $query
+     * @param $search
+     * @return mixed
+     */
+    public function scopeSearchCategory($query, $search)
+    {
+        if(!empty($search) || $search == "0") {
+            return $query->where('category', intval($search));
+        }
+    }
+
+    /**
+     * 搜索状态
+     *
+     * @param $query
+     * @param $search
+     * @return mixed
+     */
+    public function scopeSearchStatus($query, $search)
+    {
+        if(!empty($search) || $search == "0") {
+            return $query->where('status', intval($search));
+        }
     }
 }

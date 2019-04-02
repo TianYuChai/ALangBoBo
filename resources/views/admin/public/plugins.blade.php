@@ -1,28 +1,36 @@
 <!DOCTYPE HTML>
-<html>
+<html lang="en">
 <head>
-    <meta charset="utf-8">
+    <meta charset="UTF-8">
+    <title>@yield('title', '阿朗博博商务管理中心')</title>
     <meta name="renderer" content="webkit|ie-comp|ie-stand">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
     <meta http-equiv="Cache-Control" content="no-siteapp" />
-    <link rel="Bookmark" href="favicon.ico" >
-    <link rel="Shortcut Icon" href="favicon.ico" />
+    <link rel="shortcut icon" href="./favicon.ico" type="image/x-icon" />
     @section('hea')
         @include('admin.public.head')
     @show
-    <title>@yield('title', '阿朗博博商务管理中心')</title>
 </head>
-<body>
-    <section class="Hui-admin-article-wrapper">
-        @section('header')
-            @include('admin.public.header')
-        @show
-        @section('content')
 
-        @show
-    </section>
+<body>
+    @section('header')
+    @show
+    @section('sidebar')
+    @show
+    @section('content')
+    @show
+    @section('inject')
+        @include('admin.public.inject')
+    @show
+    @section('script')
+        @include('admin.public.script')
+    @show
+    <ul class="rightMenu" id="rightMenu">
+        <li data-type="fresh">刷新</li>
+        <li data-type="current">关闭当前</li>
+        <li data-type="other">关闭其它</li>
+        <li data-type="all">关闭所有</li>
+    </ul>
 </body>
 </html>
-
-

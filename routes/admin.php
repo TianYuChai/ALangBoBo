@@ -23,9 +23,15 @@ Route::group(['prefix' => 'backstage', 'namespace' => 'admin'], function () {
      */
     Route::group(['middleware' => 'auth:backstage'], function () {
         Route::get('index', ['as' => 'backstage.index.index', 'uses' => 'IndexController@index']);
-
+        Route::get('welcome', ['as' => 'backstage.index.welcome', 'uses' => 'IndexController@welcome']);
+        Route::get('logout', ['as' => 'backstage.login.out', 'uses' => 'basic\LoginController@logout']);
+        /**
+         * 会员管理
+         */
         Route::group(['namespace' => 'member'], function () {
             Route::get('member/index', ['as' => 'backstage.member.index', 'uses' => 'MemberController@index']);
+            Route::get('member/{id}/adopt', ['as' => 'backstage.member.adopt', 'uses' => 'MemberController@adopt']);
+            Route::post('member/{id}/reject', ['as' => 'backstage.member.reject', 'uses' => 'MemberController@reject']);
         });
     });
 });

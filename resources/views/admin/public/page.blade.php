@@ -1,3 +1,3 @@
 <div class="page">
-    {{ $data['items']->links() }}
+    {!! $data['items']->links() !!}
 </div>

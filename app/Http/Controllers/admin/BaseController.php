@@ -29,6 +29,13 @@ class BaseController extends Controller
                     ]
                 ];
                 break;
+            case 5:
+                $message = [
+                    'errors' => [
+                        'info' => [$data['info']]
+                    ]
+                ];
+                break;
             default:
                 $message = $data;
             break;

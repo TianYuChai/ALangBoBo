@@ -7,4 +7,5 @@ use Illuminate\Database\Eloquent\Model;
 class RegisterAuditingModel extends Model
 {
     protected $table = 'registerauditing';
+    protected $guarded = ['id'];
 }

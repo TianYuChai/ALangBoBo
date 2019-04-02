@@ -1,0 +1,56 @@
+<?php
+/**
+ * Created by PhpStorm.
+ * User: chai
+ * Date: 2019/4/2
+ * Time: 17:15
+ */
+namespace App\Http\Services\admin\Member;
+
+use App\Http\Models\admin\RegisterAuditingModel;
+use App\Http\Models\currency\UserModel;
+use App\Http\Services\BaseService;
+use Exception;
+
+
+class MemberService extends BaseService
+{
+    /**
+     * 校验会员是否可用
+     *
+     * @param $id
+     * @return mixed
+     * @throws Exception
+     */
+    public function checkMemberStatus($id)
+    {
+        $item = UserModel::where([
+            'id' => intval($id),
+            'status' => 0
+        ])->first();
+        if(!$item) {
+            throw new Exception('不符合过审条件');
+        }
+        return $item;
+    }
+
+    /**
+     * 驳回用户提交的注册申请
+     * 已审核规划到未审核中
+     * 查询是否审核，则去审核记录中查看
+     * 存在记录则审核过，不存在则未审核。
+     * @param $data
+     * @param $text
+     * @throws Exception
+     */
+    public function handleRejectReason($data, $text)
+    {
+        if(!$text['reject_reason']) {
+            throw new Exception('请填写驳回原因');
+        }
+        RegisterAuditingModel::create([
+            'uid' => intval($data->id),
+            'reject' => trim($text['reject_reason'])
+        ]);
+    }
+}

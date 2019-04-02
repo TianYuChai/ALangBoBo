@@ -1,6 +1,10 @@
 @extends('admin.public.plugins')
-@include('admin.public.sidebar')
+@section('header')
+    @include('admin.public.header')
+@endsection
+@section('sidebar')
+    @include('admin.public.sidebar')
+@endsection
 @section('content')
     @include('admin.public.content')
 @endsection
-@include('admin.public.inject')

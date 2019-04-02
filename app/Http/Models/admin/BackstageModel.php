@@ -13,6 +13,11 @@ class BackstageModel extends Authenticatable
     protected $guarded = ['id'];
 
     /**
+     * 改写
+     * @var string
+     */
+    protected $rememberTokenName = '';
+    /**
      * The attributes that are mass assignable.
      *
      * @var array
@@ -29,5 +34,4 @@ class BackstageModel extends Authenticatable
     protected $hidden = [
         'password'
     ];
-
 }
