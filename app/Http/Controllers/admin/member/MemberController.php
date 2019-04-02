@@ -29,12 +29,13 @@ class MemberController extends BaseController
 //            'status' => 1
 //        ]));
         $query = $this->makeQuery(new UserModel());
-        $user_count = $query->count(); //会员统计
         $items = $query->orderBy('created_at', 'desc')->paginate(parent::$page_limit);
-        $category = UserModel::$_CATEGORY; //商户类别
-        $status = UserModel::$_STATUS; //账户状态
-        return view('admin.member.index', compact(
-            'items', 'user_count', 'category', 'status'
-        ));
+        $data = [
+            'items' => $items,
+            'user_count' => $query->count(),
+            'category' => UserModel::$_CATEGORY, //商户类别
+            'status' => UserModel::$_STATUS //账户状态
+        ];
+        return view('admin.member.index', compact('data'));
     }
 }
