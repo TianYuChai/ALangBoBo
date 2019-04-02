@@ -53,4 +53,34 @@ class MemberService extends BaseService
             'reject' => trim($text['reject_reason'])
         ]);
     }
+
+    /**
+     * 过滤用户数据
+     * 判断用户数据是否存在, 然后再去判断密文是否合法
+     * @param $id
+     * @param $data
+     * @throws Exception
+     */
+    public function passFilter($id, $data)
+    {
+        $item = UserModel::find($id);
+        if(!$item) {
+            throw new Exception('账号错误, 不存在该数据！');
+        }
+
+        if(!regularHaveSinoram($data['pass'])) {
+            throw new Exception('密文中含有中文');
+        }
+        $str_len = stringLen($data['pass']);
+        if($str_len < 6 || $str_len > 12) {
+            throw new Exception('密文长度超出限制');
+        }
+    }
+
+    public function editPass($id, $data)
+    {
+        UserModel::where('id', intval($id))->update([
+            'password' => bcrypt($data['pass'])
+        ]);
+    }
 }

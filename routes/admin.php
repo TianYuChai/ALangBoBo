@@ -32,6 +32,7 @@ Route::group(['prefix' => 'backstage', 'namespace' => 'admin'], function () {
             Route::get('member/index', ['as' => 'backstage.member.index', 'uses' => 'MemberController@index']);
             Route::get('member/{id}/adopt', ['as' => 'backstage.member.adopt', 'uses' => 'MemberController@adopt']);
             Route::post('member/{id}/reject', ['as' => 'backstage.member.reject', 'uses' => 'MemberController@reject']);
+            Route::post('member/{id}/edit_pass', ['as' => 'backstage.member.edit_pass', 'uses' => 'MemberController@edit_pass']);
         });
     });
 });

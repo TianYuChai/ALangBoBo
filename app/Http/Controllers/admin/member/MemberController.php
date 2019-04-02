@@ -42,11 +42,6 @@ class MemberController extends BaseController
             'status' => $status,
         ]);
         $items = $query->orderBy('created_at', 'desc')->paginate(parent::$page_limit);
-//        foreach ($items as $item) {
-//            if($item->status == 0) {
-//                dd($item->registerauditing);
-//            }
-//        }
         $data = [
             'items' => $items,
             'user_count' => $query->count(),
@@ -60,6 +55,26 @@ class MemberController extends BaseController
         return view('admin.member.index', compact('data'));
     }
 
+    /**
+     * 修改用户密码
+     * @param $id
+     * @param Request $request
+     * @param MemberService $memberService
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function edit_pass($id, Request $request, MemberService $memberService)
+    {
+        try{
+            $memberService->passFilter($id, $request);
+            $memberService->editPass($id, $request);
+        } catch (Exception $e) {
+            return $this->ajaxReturn([
+                'info' => $e->getMessage(),
+                'status' => 510
+            ], 510);
+        }
+        return $this->ajaxReturn();
+    }
     /**
      * 会员过审
      * 为后期业务扩展未和驳回合并成一个函数

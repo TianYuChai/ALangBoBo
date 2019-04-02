@@ -138,10 +138,8 @@
                                 {{--{{ $item->status_name }}--}}
                             {{--</span>--}}
                         @endif
-                        {{--<a title="编辑" onclick="WeAdminEdit('编辑','./edit.html', 1, 600, 400)" href="javascript:;">--}}
-                            {{--<i class="layui-icon layui-icon-edit"></i>--}}
-                        {{--</a>--}}
-                        <a onclick="WeAdminShow('修改密码','./password.html',600,400)" title="修改密码" href="javascript:;">
+                        <a onclick="change_password(this, '{{ route('backstage.member.edit_pass', ['id' => $item->id]) }}')"
+                           title="修改密码" href="javascript:void(0);">
                             <i class="layui-icon layui-icon-util"></i>
                         </a>
                         {{--<a title="删除" onclick="member_del(this,'要删除的id')" href="javascript:;">--}}
@@ -207,6 +205,41 @@
                         method:"post",
                         url:url,
                         data:{'reject_reason': text},
+                        success:function (res) {
+                            if(res.status == 200) {
+                                layer.msg(res.info);
+                                setTimeout(function () {
+                                    window.location.href = res.url;
+                                }, 1000)
+                            }
+                        },
+                        error:function (XMLHttpRequest) {
+                            //返回提示信息
+                            var errors = XMLHttpRequest.responseJSON.errors;
+                            for (var value in errors) {
+                                layer.msg(errors[value][0]);return;
+                            }
+                        }
+                    });
+                });
+            };
+            /*用户-更改密码*/
+            window.change_password = function (obj, url) {
+                layer.prompt({title: '请输入新的密码, 密码长度为6-12', formType: 3}, function(text, index){
+                    layer.close(index);
+                    if(/.*[\u4e00-\u9fa5]+.*$/.test(text)) {
+                        layer.msg('不可使用中文作为账户密码!');return;
+                    }
+                    if(text.length < 6 || text.length > 12) {
+                        layer.msg('密码长度需为6-12个字符');return;
+                    }
+                    $.ajax({
+                        headers: {
+                            'X-CSRF-TOKEN': "{{ csrf_token() }}"
+                        },
+                        method:"post",
+                        url:url,
+                        data:{'pass': text},
                         success:function (res) {
                             if(res.status == 200) {
                                 layer.msg(res.info);
