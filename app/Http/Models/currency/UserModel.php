@@ -89,7 +89,7 @@ class UserModel extends Model
     public function scopeSearchAccount($query, $search)
     {
         if(!empty($search)) {
-            return $query->where('account', 'like', "{$search}");
+            return $query->where('account', 'like', "%{$search}%");
         }
     }
 

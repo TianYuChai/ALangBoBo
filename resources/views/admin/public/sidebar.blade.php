@@ -13,14 +13,12 @@
                         <a _href="{{ route('backstage.member.index') }}">
                             <i class="iconfont">&#xe6a7;</i>
                             <cite>会员列表</cite>
-
                         </a>
                     </li>
                     <li>
-                        <a _href="./pages/member/del.html">
+                        <a _href="{{ route('backstage.mreject.index') }}">
                             <i class="iconfont">&#xe6a7;</i>
-                            <cite>会员删除</cite>
-
+                            <cite>驳回记录</cite>
                         </a>
                     </li>
                     <li>
