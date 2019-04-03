@@ -24,9 +24,8 @@ class FileUpload
     public static function folderInfo($file, $name = 'file')
     {
         if($name != 'file') {
-            $file = $file->file($file);
+            $file = $file->file($name);
         }
-
         if(empty($file)) {
             throw new Exception("请选择上传内容！");
         }
@@ -45,7 +44,7 @@ class FileUpload
         $result = [];
         foreach ($file as $item) {
             if(!$item->isValid()) {
-                throw new Exception($item->getClientOriginalName()." 不是有效内容");
+                throw new Exception("上传文件错误, 请联系管理员！");
             }
             $file_type = $item->getClientOriginalExtension();
             if(in_array($file_type, self::$image_type)) {

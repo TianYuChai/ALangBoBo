@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\admin\member;
 
 use App\Http\Controllers\admin\BaseController;
-use App\Http\Models\admin\BackstageModel;
 use App\Http\Models\currency\UserModel;
 use App\Http\Services\admin\Member\MemberService;
 use Illuminate\Http\Request;
@@ -118,5 +117,65 @@ class MemberController extends BaseController
             ], 510);
         }
         return $this->ajaxReturn();
+    }
+
+    /**
+     * 封停单人账户
+     *
+     * @param $id
+     * @param MemberService $memberService
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function sealUp($id, MemberService $memberService)
+    {
+        try {
+            $item = $memberService->checkMember($id);
+            if($item->status != 1) {
+               throw new Exception('操作记录有误, 请联系管理员');
+            }
+            $memberService->saelUpMemberGoods($item);
+            return $this->ajaxReturn();
+        } catch (Exception $e) {
+            return $this->ajaxReturn([
+                'info' => $e->getMessage(),
+                'status' => 510
+            ], 510);
+        }
+    }
+
+    /**
+     * 启用单人账户
+     *
+     * @param $id
+     * @param MemberService $memberService
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function stop($id, MemberService $memberService)
+    {
+        try {
+            $item = $memberService->checkMember($id);
+            if($item->status != 2) {
+                throw new Exception('操作记录有误, 请联系管理员');
+            }
+            $memberService->stopMemberGoods($item);
+            return $this->ajaxReturn();
+        } catch (Exception $e) {
+            return $this->ajaxReturn([
+                'info' => $e->getMessage(),
+                'status' => 510
+            ], 510);
+        }
+    }
+
+    /**
+     * 会员信息展示
+     *
+     * @param $id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function see($id)
+    {
+        $item = UserModel::find($id);
+        return view('admin.member.details', compact('item'));
     }
 }

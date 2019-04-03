@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class UserModel extends Model
 {
+    /*用户表*/
     protected $table = 'users';
     protected $guarded  = ['id'];
 

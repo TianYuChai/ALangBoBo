@@ -7,6 +7,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class BackstageModel extends Authenticatable
 {
+    /*后台-用户表*/
     use Notifiable;
 
     protected $table = 'backstage';

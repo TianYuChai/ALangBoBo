@@ -22,13 +22,26 @@ class MemberService extends BaseService
      * @return mixed
      * @throws Exception
      */
+    public function checkMember($id)
+    {
+         $item = UserModel::find($id);
+         if(!$item) {
+             throw new Exception('数据有误, 不存在此数据');
+         }
+         return $item;
+    }
+
+    /**
+     * 校验过审会员是否可用
+     *
+     * @param $id
+     * @return mixed
+     * @throws Exception
+     */
     public function checkMemberStatus($id)
     {
-        $item = UserModel::where([
-            'id' => intval($id),
-            'status' => 0
-        ])->first();
-        if(!$item) {
+        $item = $this->checkMember($id);
+        if($item->status != 0) {
             throw new Exception('不符合过审条件');
         }
         return $item;
@@ -63,11 +76,7 @@ class MemberService extends BaseService
      */
     public function passFilter($id, $data)
     {
-        $item = UserModel::find($id);
-        if(!$item) {
-            throw new Exception('账号错误, 不存在该数据！');
-        }
-
+        $this->checkMember($id);
         if(!regularHaveSinoram($data['pass'])) {
             throw new Exception('密文中含有中文');
         }
@@ -77,10 +86,37 @@ class MemberService extends BaseService
         }
     }
 
+    /**
+     * 修改密码
+     * @param $id
+     * @param $data
+     */
     public function editPass($id, $data)
     {
         UserModel::where('id', intval($id))->update([
             'password' => bcrypt($data['pass'])
         ]);
+    }
+
+    /**
+     * 封停账户，预留，
+     * 等商品表，进行同步封停
+     * @param $data
+     */
+    public function saelUpMemberGoods($data)
+    {
+        $data->status = 2;
+        $data->save();
+    }
+
+    /**
+     * 启用账户，预留
+     * 等商品表，同步启用
+     * @param $data
+     */
+    public function stopMemberGoods($data)
+    {
+        $data->status = 1;
+        $data->save();
     }
 }

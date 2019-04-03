@@ -58,22 +58,19 @@
         </form>
     </div>
     <div class="weadmin-block">
-        <button class="layui-btn layui-btn-danger" onclick="delAll()">
-            <i class="layui-icon layui-icon-delete"></i>批量删除
-        </button>
-        <button class="layui-btn" onclick="WeAdminShow('添加用户','./add.html',600,400)">
-            <i class="layui-icon layui-icon-add-circle-fine"></i>添加
+        <button class="layui-btn layui-btn-danger" style="background-color:#F8F2F0">
+            {{--<i class="layui-icon layui-icon-delete"></i>批量封停--}}
         </button>
         <span class="fr" style="line-height:40px">注册会员：{{ $data['user_count'] }} 位</span>
     </div>
     <table class="layui-table" id="memberList">
         <thead>
         <tr>
-            <th>
-                <div class="layui-unselect header layui-form-checkbox" lay-skin="primary">
-                    <i class="layui-icon">&#xe605;</i>
-                </div>
-            </th>
+            {{--<th>--}}
+                {{--<div class="layui-unselect header layui-form-checkbox" lay-skin="primary">--}}
+                    {{--<i class="layui-icon">&#xe605;</i>--}}
+                {{--</div>--}}
+            {{--</th>--}}
             <th>账户名</th>
             <th>账户类别</th>
             <th>真实姓名</th>
@@ -86,12 +83,14 @@
         <tbody>
             @foreach($data['items'] as $item)
                 <tr data-id="{{ $item->id }}">
+                    {{--<td>--}}
+                        {{--<div class="layui-unselect layui-form-checkbox" lay-skin="primary" data-id="{{ $item->id }}">--}}
+                            {{--<i class="layui-icon">&#xe605;</i>--}}
+                        {{--</div>--}}
+                    {{--</td>--}}
                     <td>
-                        <div class="layui-unselect layui-form-checkbox" lay-skin="primary" data-id="{{ $item->id }}">
-                            <i class="layui-icon">&#xe605;</i>
-                        </div>
+                        {{ $item->account }}
                     </td>
-                    <td>{{ $item->account }}</td>
                     <td>{{ $item->category_name }}</td>
                     <td>{{ $item->name }}</td>
                     <td>{{ $item->number }}</td>
@@ -110,10 +109,15 @@
                         @endif
                     </td>
                     <td class="td-manage">
+                        <a title="查看"
+                           onclick="WeAdminShow('查看','{{ route('backstage.member.see', ['id' => $item->id]) }}')"
+                           href="javascript:void(0);">
+                            <i class="layui-icon">&#xe63c;</i>
+                        </a>
                         @if($item->status == 0)
                             @if(!empty($item->registerauditing))
                                 <span class="layui-btn layui-btn-normal layui-btn-xs layui-btn-disabled">
-                                    已审核，等待用户重新提交
+                                    已审核，等待重新提交
                                 </span>
                             @else
                                 <a title="过审"
@@ -130,21 +134,18 @@
                                 </a>
                             @endif
                         @elseif($item->status == 1)
-                            {{--<span class="layui-btn layui-btn-normal layui-btn-xs">--}}
-                                {{--{{ $item->status_name }}--}}
-                            {{--</span>--}}
+                            <a title="封停" onclick="member_sealup(this,'{{ route('backstage.member.sealUp', ['id' => $item->id]) }}')" href="javascript:void(0);">
+                                <i class="layui-icon layui-icon-delete"></i>
+                            </a>
                         @elseif(in_array($item->status, [2, 3]))
-                            {{--<span class="layui-btn layui-btn-normal layui-btn-xs layui-btn-disabled">--}}
-                                {{--{{ $item->status_name }}--}}
-                            {{--</span>--}}
+                            <a onclick="member_stop(this,'{{ route('backstage.member.stop', ['id' => $item->id]) }}')" href="javascript:void(0);" title="启用">
+                                <i class="layui-icon layui-icon-download-circle"></i>
+                            </a>
                         @endif
-                        <a onclick="change_password(this, '{{ route('backstage.member.edit_pass', ['id' => $item->id]) }}')"
-                           title="修改密码" href="javascript:void(0);">
-                            <i class="layui-icon layui-icon-util"></i>
-                        </a>
-                        {{--<a title="删除" onclick="member_del(this,'要删除的id')" href="javascript:;">--}}
-                            {{--<i class="layui-icon layui-icon-delete"></i>--}}
-                        {{--</a>--}}
+                            <a onclick="change_password(this, '{{ route('backstage.member.edit_pass', ['id' => $item->id]) }}')"
+                               title="修改密码" href="javascript:void(0);">
+                                <i class="layui-icon layui-icon-util"></i>
+                            </a>
                     </td>
                 </tr>
             @endforeach
@@ -209,7 +210,7 @@
                             if(res.status == 200) {
                                 layer.msg(res.info);
                                 setTimeout(function () {
-                                    window.location.href = res.url;
+                                    window.location.reload();
                                 }, 1000)
                             }
                         },
@@ -244,7 +245,7 @@
                             if(res.status == 200) {
                                 layer.msg(res.info);
                                 setTimeout(function () {
-                                    window.location.href = res.url;
+                                    window.location.reload();
                                 }, 1000)
                             }
                         },
@@ -259,29 +260,61 @@
                 });
             };
             /*用户-停用*/
-            window.member_stop = function (obj, id) {
+            window.member_sealup = function (obj, url) {
                 layer.confirm('确认要停用吗？', function(index) {
-                    if($(obj).attr('title') == '启用') {
-                        //发异步把用户状态进行更改
-                        $(obj).attr('title', '停用');
-                        $(obj).find('i').html('&#xe62f;');
-
-                        $(obj).parents("tr").find(".td-status").find('span').addClass('layui-btn-disabled').html('已停用');
-                        layer.msg('已停用!', {
-                            icon: 5,
-                            time: 1000
-                        });
-                    } else {
-                        $(obj).attr('title', '启用')
-                        $(obj).find('i').html('&#xe601;');
-                        $(obj).parents("tr").find(".td-status").find('span').removeClass('layui-btn-disabled').html('已启用');
-                        layer.msg('已启用!', {
-                            icon: 5,
-                            time: 1000
-                        });
-                    }
+                    $.ajax({
+                        headers: {
+                            'X-CSRF-TOKEN': "{{ csrf_token() }}"
+                        },
+                        method:"get",
+                        url:url,
+                        data:"",
+                        success:function (res) {
+                            if(res.status == 200) {
+                                layer.msg(res.info);
+                                setTimeout(function () {
+                                    window.location.reload();
+                                }, 1000)
+                            }
+                        },
+                        error:function (XMLHttpRequest) {
+                            //返回提示信息
+                            var errors = XMLHttpRequest.responseJSON.errors;
+                            for (var value in errors) {
+                                layer.msg(errors[value][0]);return;
+                            }
+                        }
+                    });
                 });
-            }
+            };
+            /*用户-启用*/
+            window.member_stop = function (obj, url) {
+                layer.confirm('确认要启用吗?', function(index) {
+                    $.ajax({
+                        headers: {
+                            'X-CSRF-TOKEN': "{{ csrf_token() }}"
+                        },
+                        method:"get",
+                        url:url,
+                        data:"",
+                        success:function (res) {
+                            if(res.status == 200) {
+                                layer.msg(res.info);
+                                setTimeout(function () {
+                                    window.location.reload();
+                                }, 1000)
+                            }
+                        },
+                        error:function (XMLHttpRequest) {
+                            //返回提示信息
+                            var errors = XMLHttpRequest.responseJSON.errors;
+                            for (var value in errors) {
+                                layer.msg(errors[value][0]);return;
+                            }
+                        }
+                    });
+                })
+            };
         })
     </script>
 @endsection
