@@ -1,4 +1,3 @@
-;
 layui.define("jquery", function(e) {
     "use strict";
     var o = layui.jquery,

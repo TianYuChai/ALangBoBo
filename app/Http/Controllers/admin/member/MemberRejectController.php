@@ -36,7 +36,7 @@ class MemberRejectController extends BaseController
             'items' => $items,
             'select_account' => $user
         ];
-        return view('admin.member.reject_list', compact('data'));
+        return view('admin.member.reject.reject_list', compact('data'));
     }
 
     /**

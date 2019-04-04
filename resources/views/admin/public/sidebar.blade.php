@@ -21,50 +21,23 @@
                             <cite>驳回记录</cite>
                         </a>
                     </li>
-                    <li>
-                        <a href="javascript:;">
-                            <i class="iconfont">&#xe70b;</i>
-                            <cite>会员管理</cite>
-                            <i class="iconfont nav_right">&#xe697;</i>
-                        </a>
-                        <ul class="sub-menu">
-                            <li>
-                                <a _href="./pages/member/addInput.html">
-                                    <i class="iconfont">&#xe6a7;</i>
-                                    <cite>输入框操作</cite>
-                                </a>
-                            </li>
-                            <li>
-                                <a _href="./pages/404.html">
-                                    <i class="iconfont">&#xe6a7;</i>
-                                    <cite>三级菜单演示</cite>
-                                </a>
-                            </li>
-                            <li>
-                                <a _href="./pages/404.html">
-                                    <i class="iconfont">&#xe6a7;</i>
-                                    <cite>导航菜单演示</cite>
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
                 </ul>
             </li>
             <li>
                 <a href="javascript:;">
                     <i class="iconfont">&#xe705;</i>
-                    <cite>文章管理</cite>
+                    <cite>商品管理</cite>
                     <i class="iconfont nav_right">&#xe697;</i>
                 </a>
                 <ul class="sub-menu">
                     <li>
                         <a _href="./pages/article/list.html">
                             <i class="iconfont">&#xe6a7;</i>
-                            <cite>文章列表</cite>
+                            <cite>商品列表</cite>
                         </a>
                     </li>
                     <li>
-                        <a _href="./pages/article/category.html">
+                        <a _href="{{ route('backstage.category.index') }}">
                             <i class="iconfont">&#xe6a7;</i>
                             <cite>分类管理</cite>
                         </a>

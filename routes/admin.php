@@ -29,6 +29,7 @@ Route::group(['prefix' => 'backstage', 'namespace' => 'admin'], function () {
          * 会员管理
          */
         Route::group(['namespace' => 'member'], function () {
+            /*会员-管理*/
             Route::get('member/index', ['as' => 'backstage.member.index', 'uses' => 'MemberController@index']);
             Route::get('member/{id}/adopt', ['as' => 'backstage.member.adopt', 'uses' => 'MemberController@adopt']);
             Route::post('member/{id}/reject', ['as' => 'backstage.member.reject', 'uses' => 'MemberController@reject']);
@@ -36,9 +37,18 @@ Route::group(['prefix' => 'backstage', 'namespace' => 'admin'], function () {
             Route::get('member/{id}/sealUp', ['as' => 'backstage.member.sealUp', 'uses' => 'MemberController@sealUp']);
             Route::get('member/{id}/stop', ['as' => 'backstage.member.stop', 'uses' => 'MemberController@stop']);
             Route::get('member/{id}/see', ['as' => 'backstage.member.see', 'uses' => 'MemberController@see']);
-            /*会员驳回记录*/
+            /*会员-驳回记录*/
             Route::get('member/reject/index', ['as' => 'backstage.mreject.index', 'uses' => 'MemberRejectController@index']);
             Route::get('memeber/reject/{id}/cancel', ['as' => 'backstage.mreject.cancel', 'uses' => 'MemberRejectController@cancel']);
+        });
+
+        /**
+         * 商品管理
+         */
+        Route::group(['namespace' => 'goods'], function () {
+            /*商品-分类*/
+            Route::get('goods/category/index', ['as' => 'backstage.category.index', 'uses' => 'GoodsCategoryController@index']);
+            Route::get('goods/category/create', ['as' => 'backstage.category.create', 'uses' => 'GoodsCategoryController@create']);
         });
     });
 });

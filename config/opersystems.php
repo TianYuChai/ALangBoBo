@@ -7,3 +7,6 @@
  */
 //后台资源管理路径
 define('ADMIN_CSS', '/admin');
+
+//后台商品分类管理路径
+define('ADMIN_GOODS_CATEGORY', 'admin.goods.category.');
