@@ -19,6 +19,6 @@ class MemberRejectController extends BaseController
 
     public function index(Request $request)
     {
-        
+
     }
 }
