@@ -16,9 +16,7 @@ class IndexController extends Controller
 {
     public function index(Request $request)
     {
-        $file = \FileUpload::folderInfo($request, 'source');
-        dd($file);
-//        return view('admin.index');
+        return view('admin.index');
     }
 
     public function welcome()
