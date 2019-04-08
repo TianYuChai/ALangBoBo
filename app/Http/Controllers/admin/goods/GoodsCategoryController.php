@@ -64,6 +64,11 @@ class GoodsCategoryController extends BaseController
         }
     }
 
+    /**
+     * 联动查询分类
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function select(Request $request)
     {
         $items = goodsCategoryModel::where([
