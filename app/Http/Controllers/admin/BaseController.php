@@ -15,7 +15,8 @@ class BaseController extends Controller
      * @param int $status
      * @return \Illuminate\Http\JsonResponse
      */
-    public function ajaxReturn($data = ['info' => '操作成功', 'status' => 200, 'url' => ''], $status = 200)
+    public function ajaxReturn($data = ['info' => '操作成功', 'status' => 200, 'url' => '', 'data' => ''],
+                               $status = 200)
     {
         $first = substr($status, 0, 1);
         switch ($first) {

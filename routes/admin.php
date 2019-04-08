@@ -49,6 +49,8 @@ Route::group(['prefix' => 'backstage', 'namespace' => 'admin'], function () {
             /*商品-分类*/
             Route::get('goods/category/index', ['as' => 'backstage.category.index', 'uses' => 'GoodsCategoryController@index']);
             Route::get('goods/category/create', ['as' => 'backstage.category.create', 'uses' => 'GoodsCategoryController@create']);
+            Route::post('goods/category/add', ['as' => 'backstage.category.add', 'uses' => 'GoodsCategoryController@add']);
+            Route::get('goods/category/select', ['as' => 'backstage.category.select', 'uses' => 'GoodsCategoryController@select']);
         });
     });
 });
