@@ -170,8 +170,8 @@
                 layer.msg('请输入属性名和属性值');return;
             }
             var htm_list = '<div class="layui-form-item"><label class="layui-form-label"></label>';
-                htm_list += '<div class="layui-input-inline"><input type="text" name="attribute[]['+name+']" autocomplete="off" class="layui-input" value="'+name+'"></div>';
-                htm_list += '<div class="layui-input-inline"><input type="text" name="attribute[]['+name+']" autocomplete="off" class="layui-input" value="'+value+'"></div>';
+                htm_list += '<div class="layui-input-inline"><input type="text" name="attribute['+name+']" autocomplete="off" class="layui-input" value="'+name+'"></div>';
+                htm_list += '<div class="layui-input-inline"><input type="text" name="attribute['+name+']" autocomplete="off" class="layui-input" value="'+value+'"></div>';
                 htm_list += '<div class="layui-input-inline"><div class="layui-btn-group"><span class="layui-btn layui-btn-sm" onclick="deletes(this)"><i class="layui-icon"></i></span></div></div>';
                 htm_list += '</div>';
             $('#attribute_name').val(''); $('#attribute_value').val('');

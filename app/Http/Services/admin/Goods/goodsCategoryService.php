@@ -30,15 +30,9 @@ class goodsCategoryService extends BaseService
             'sort' => intval($data['sort']),
         ];
 
-        //分类属性栏数据,条件：二级分类
-        $cate_attribute = [];
+        //整理分类属性栏数据
+        $cate_attribute = $this->cateAttributeFile($res['level'], $data['attribute']);
 
-        if($res['level'] == 2) {
-            $attribute = $data['attribute'];
-            if(!empty($attribute)) {
-                dd($attribute);
-            }
-        }
         return [
             'cate_data' => $res,
             'cate_attribute_data' => $cate_attribute
@@ -48,6 +42,31 @@ class goodsCategoryService extends BaseService
     public function setMessage($data)
     {
         $category = goodsCategoryModel::create($data['cate_data']);
-        
+
+    }
+
+    /**
+     * 整理分类栏数据
+     *
+     * @param $type
+     * @param $attribute
+     * @return array
+     */
+    protected function cateAttributeFile($type, $attribute)
+    {
+        if($type != 2 || empty($attribute)) {
+            return [];
+        }
+        $data = [];
+        foreach ($attribute as $key => $value) {
+            $items = explode(',', $value);
+            foreach ($items as $item) {
+                $data[] = [
+                    'attribute_name' => trim($key),
+                    'attribute_value' => $item
+                ];
+            }
+        }
+        return $data;
     }
 }
