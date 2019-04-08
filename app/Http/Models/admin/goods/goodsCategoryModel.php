@@ -14,4 +14,14 @@ class goodsCategoryModel extends Model
     /*商品分类表*/
     protected $table = 'goods_category';
     protected $guarded = ['id'];
+
+    public static $_STATUS = [
+        0 => '已启用',
+        1 => '已下架'
+    ];
+
+    public function getStatusNameAttribute()
+    {
+        return array_get(self::$_STATUS, $this->status, '未知');
+    }
 }

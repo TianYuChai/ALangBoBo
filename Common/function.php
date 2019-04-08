@@ -26,7 +26,30 @@ function regularHaveSinoram(string $str)
     }
 }
 
+/**
+ * 获取字符串长度
+ *
+ * @param string $str
+ * @return bool|int
+ */
 function stringLen(string $str)
 {
     return mb_strlen($str, 'UTF8');
+}
+
+function infiniteCate($data, $pid)
+{
+    $result = [];
+    foreach ($data as $key => $value) {
+        if($value->p_id == $pid) {
+            $result[] = [
+                'id' => $value->id,
+                'name' => $value->cate_name,
+                'status_name' => $value->status_name,
+                'children' => infiniteCate($data,$value->id)
+            ];
+            unset($data[$key]);
+        }
+    }
+    return $result;
 }

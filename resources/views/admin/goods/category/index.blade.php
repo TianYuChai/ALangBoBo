@@ -15,7 +15,7 @@
             <button class="layui-btn" id="collapse">全部收起</button>
             <button class="layui-btn" onclick="WeAdminShow('添加分类','{{ route('backstage.category.create') }}')">
                 <i class="layui-icon"></i>添加</button>
-            <span class="fr" style="line-height:40px">共有数据：66 条</span>
+            {{--<span class="fr" style="line-height:40px">共有数据：66 条</span>--}}
         </div>
 
         <div id="demo"></div>
@@ -45,7 +45,7 @@
                 colClass: 'td-status',
                 style: 'width: 10%',
                 render: function(row) {
-                    return '<span class="layui-btn layui-btn-normal layui-btn-xs">已启用</span>';
+                    return '<span class="layui-btn layui-btn-normal layui-btn-xs">'+row.status_name+'</span>';
                 }
             },
             {
@@ -69,33 +69,8 @@
                 treeGird = layui.treeGird;
             var tree1 = layui.treeGird({
                 elem: '#demo', //传入元素选择器
-                spreadable: true, //设置是否全展开，默认不展开
-                nodes: [{
-                    "id": "1",
-                    "name": "父节点1",
-                    "children": [{
-                        "id": "11",
-                        "name": "子节点11"
-                    },
-                        {
-                            "id": "12",
-                            "name": "子节点12"
-                        }
-                    ]
-                },
-                    {
-                        "id": "2",
-                        "name": "父节点2",
-                        "children": [{
-                            "id": "21",
-                            "name": "子节点21",
-                            "children": [{
-                                "id": "211",
-                                "name": "子节点211"
-                            }]
-                        }]
-                    }
-                ],
+                spreadable: false, //设置是否全展开，默认不展开
+                nodes: {!! $data !!},
                 layout: layout
             });
             $('#collapse').on('click', function() {

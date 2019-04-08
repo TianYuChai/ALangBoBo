@@ -25,8 +25,11 @@ class GoodsCategoryController extends BaseController
      */
     public function index()
     {
-        return view(self::ROUTE. 'index');
+        $items = goodsCategoryModel::orderBy('sort', 'desc')->get();
+        $data = json_encode(infiniteCate($items, 0));
+        return view(self::ROUTE. 'index', compact('data'));
     }
+
 
     /**
      * 分类添加
