@@ -16,8 +16,10 @@
             <form class="layui-form layui-col-md12 we-search">
                 会员搜索：
                 <div class="layui-inline">
-                    <input type="text" name="account" placeholder="请输入账号" autocomplete="off" class="layui-input"
-                            {{ empty($data['select_account']) ?? '' }} />
+                    <input type="text" name="account" placeholder="请输入账号"
+                           autocomplete="off"
+                           class="layui-input"
+                           value="{{ empty($data['select_account']) ? '' : $data['select_account'] }}"/>
                 </div>
                 <button class="layui-btn" lay-submit="" lay-filter="sreach">
                     <i class="layui-icon layui-icon-search"></i>

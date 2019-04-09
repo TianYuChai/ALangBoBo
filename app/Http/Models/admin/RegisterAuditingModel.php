@@ -24,7 +24,7 @@ class RegisterAuditingModel extends Model
     public function scopeSearchUser($query, $search)
     {
         if(!empty($search)) {
-            $user_ids = UserModel::where('account', 'like', "%{$search}%")->get(['id'])->pluck('id');
+            $user_ids = UserModel::where('account', 'like', "%{$search}%")->pluck('id');
             return $query->whereIn('id', $user_ids);
         }
     }
