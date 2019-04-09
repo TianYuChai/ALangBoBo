@@ -19,13 +19,15 @@
                 <input class="layui-input"
                        id="time"
                        type="text"
-                       placeholder="{{ $data['select_section_time'] ?? ' - ' }}"
+                       placeholder="请选择时间"
                        name="section_time"
+                       autocomplete="off"
+                       value="{{ empty($data['select_section_time']) ? '' : $data['select_section_time'] }}"
                 >
             </div>
             <div class="layui-inline">
                 <input type="text" name="account" placeholder="请输入账号" autocomplete="off" class="layui-input"
-                    {{ empty($data['select_account']) ?? '' }} />
+                       value="{{ empty($data['select_account']) ? '' : $data['select_account'] }}" />
             </div>
             <div class="layui-input-inline">
                 <select name="category" lay-search="">
