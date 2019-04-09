@@ -90,11 +90,20 @@ class goodsCategoryService extends BaseService
     {
         if(!empty($data)) {
             foreach ($data as $key => $attribute_datum) {
-                $data[$key]['cate_id'] = $cate_id;
-                $data[$key]['created_at'] = date('Y-m-d H:i:s', time());
-                $data[$key]['updated_at'] = date('Y-m-d H:i:s', time());
+                goodsCategoryAttributeModel::updateorcreate([
+                    'cate_id' => $cate_id,
+                    'attribute_name' => $attribute_datum['attribute_name'],
+                    'attribute_value' => $attribute_datum['attribute_value']
+                ],[
+                    'cate_id' => $cate_id,
+                    'attribute_name' => $attribute_datum['attribute_name'],
+                    'attribute_value' => $attribute_datum['attribute_value']
+                ]);
+//                $data[$key]['cate_id'] = $cate_id;
+//                $data[$key]['created_at'] = date('Y-m-d H:i:s', time());
+//                $data[$key]['updated_at'] = date('Y-m-d H:i:s', time());
             }
-            goodsCategoryAttributeModel::insert($data);
+//            goodsCategoryAttributeModel::insert($data);
         }
     }
 }

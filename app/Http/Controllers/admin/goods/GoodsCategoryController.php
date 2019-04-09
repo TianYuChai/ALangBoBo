@@ -86,4 +86,9 @@ class GoodsCategoryController extends BaseController
             'data' => $items
         ], 200);
     }
+
+    public function bannedOperation($id)
+    {
+
+    }
 }

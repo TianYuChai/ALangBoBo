@@ -54,7 +54,7 @@
                 colClass: 'td-manage',
                 style: 'width: 20%',
                 render: function(row) {
-                    return '<a onclick="member_stop(this,\'10001\')" href="javascript:;" title="启用"><i class="layui-icon">&#xe601;</i></a>' +
+                    return '<a onclick="category_stop(this, \'{{ route('') }}\')" href="javascript:;" title="启用"><i class="layui-icon">&#xe601;</i></a>' +
                         '<a title="添加子类" onclick="WeAdminShow(\'添加\',\'./category-add.html\')" href="javascript:;"><i class="layui-icon">&#xe654;</i></a>' +
                         '<a title="编辑" onclick="WeAdminShow(\'编辑\',\'./category-edit.html\')" href="javascript:;"><i class="layui-icon">&#xe642;</i></a>' +
                         '<a title="删除" onclick="del(' + row.id + ')" href="javascript:;">\<i class="layui-icon">&#xe640;</i></a>';
