@@ -33,7 +33,6 @@
                     <input type="text"
                            name="sort"
                            lay-verify="number"
-                           value="100"
                            jq-error="排序必须为数字"
                            placeholder="分类排序"
                            autocomplete="off"
