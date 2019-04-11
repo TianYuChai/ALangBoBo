@@ -2,6 +2,7 @@
 namespace App\Http\Controllers\admin\goods;
 
 use App\Http\Controllers\admin\BaseController;
+use Illuminate\Http\Request;
 
 class GoodsBannerController extends BaseController
 {
@@ -18,4 +19,8 @@ class GoodsBannerController extends BaseController
         return view(self::ROUTE. 'banner.create');
     }
 
+    public function store(Request $request)
+    {
+        dd($request->all());
+    }
 }

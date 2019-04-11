@@ -10,7 +10,7 @@
                                class="layui-input"
                                type="tel"
                                autocomplete="off"
-                               lay-verify="url" placeholder="用户点击横幅跳转地址">
+                               lay-verify="required|url" placeholder="用户点击横幅跳转地址">
                     </div>
                 </div>
             </div>
@@ -23,6 +23,7 @@
                            placeholder="请选择时间"
                            name="section_time"
                            autocomplete="off"
+                           lay-verify="section_time"
                     >
                 </div>
             </div>
@@ -42,10 +43,10 @@
             <div class="layui-form-item">
                 <label class="layui-form-label">横幅图</label>
                 <div class="layui-upload">
-                    <button class="layui-btn" id="test1" type="button">上传图片</button>
+                    <button class="layui-btn" id="banner" type="button">上传图片</button>
                     <div class="layui-upload-list">
-                        <img class="layui-upload-img" id="demo1">
-                        <input type="hidden" name="banner_image_url" value="">
+                        <img class="layui-upload-img" id="banner_image">
+                            <input type="hidden" name="banner_image_url" lay-verify="image_url">
                         <p id="demoText"></p>
                     </div>
                 </div>
@@ -53,7 +54,6 @@
             <div class="layui-form-item">
                 <div class="layui-input-block">
                     <button class="layui-btn" lay-submit="" lay-filter="add">立即提交</button>
-                    {{--<button type="reset" class="layui-btn layui-btn-primary">重置</button>--}}
                 </div>
             </div>
         </form>
@@ -61,7 +61,6 @@
 @endsection
 @section('script')
     <script type="text/javascript">
-        var tip_tis = '该类不选, 则为二级分类';
         layui.use(['jquery','form', 'layer', 'laydate', 'upload'], function() {
             var $ = layui.jquery,
                 form = layui.form,
@@ -73,6 +72,18 @@
                 ,type: 'datetime'
                 ,range: true
             });
+            form.verify({
+                section_time: function(value) {
+                    if(!value){
+                        return "请选择上下架时间";
+                    }
+                },
+                image_url: function (value) {
+                    if(!value) {
+                        return "请上传轮播图";
+                    }
+                }
+            });
             //监听提交
             form.on('submit(add)', function(data) {
                 $.ajax({
@@ -80,7 +91,7 @@
                         'X-CSRF-TOKEN': "{{ csrf_token() }}"
                     },
                     method:"POST",
-                    url:"{!! route('backstage.category.add') !!}",
+                    url:"{!! route('backstage.banner.store') !!}",
                     data:data.field,
                     success:function (res) {
                         if(res.status == 200) {
@@ -100,9 +111,9 @@
                 });
                 return false;
             });
-            //普通图片上传
+            //图片上传
             var uploadInst = upload.render({
-                elem: '#test1'
+                elem: '#banner'
                 ,url: '{{ route("file.upload") }}'
                 ,headers: {'X-CSRF-TOKEN': "{{ csrf_token() }}"}
                 ,exts: 'gif|jpg|jpeg|png'
@@ -112,7 +123,7 @@
                 ,before: function(obj){
                     //预读本地文件示例，不支持ie8
                     obj.preview(function(index, file, result){
-                        $('#demo1').attr('src', result); //图片链接（base64）
+                        $('#banner_image').attr('src', result); //图片链接（base64）
                     });
                 }
                 ,done: function(res){

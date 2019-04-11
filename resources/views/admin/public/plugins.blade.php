@@ -18,8 +18,8 @@
     @show
     @section('sidebar')
     @show
-    @section('content')
-    @show
+    @yield('content')
+    {{--@show--}}
     @section('inject')
         @include('admin.public.inject')
     @show

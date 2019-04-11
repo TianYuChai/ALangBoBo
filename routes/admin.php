@@ -58,6 +58,7 @@ Route::group(['prefix' => 'backstage', 'namespace' => 'admin'], function () {
             Route::group(['prefix' => 'banner'], function () {
                 Route::get('goods/banner/index', ['as' => 'backstage.banner.index', 'uses' => 'GoodsBannerController@index']);
                 Route::get('goods/banner/create', ['as' => 'backstage.banner.create', 'uses' => 'GoodsBannerController@create']);
+                Route::post('goods/banner/store', ['as' => 'backstage.banner.store', 'uses' => 'GoodsBannerController@store']);
             });
         });
     });

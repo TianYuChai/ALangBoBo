@@ -1,4 +1,7 @@
 <script type="text/javascript">
+    {{--layui.extend({--}}
+        {{--admin: "{/}{{ asset('admin/static/js/admin') }}"--}}
+    {{--});--}}
     layui.use(['jquery', 'element','util', 'admin', 'carousel'], function() {
         var element = layui.element,
             $ = layui.jquery,

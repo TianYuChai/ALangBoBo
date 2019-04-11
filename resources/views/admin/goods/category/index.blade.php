@@ -28,9 +28,6 @@
 @endsection
 @section('script')
     <script type="text/javascript">
-        layui.extend({
-            admin: "{/}{{ asset('admin/static/js/admin') }}"
-        });
         //自定义的render渲染输出多列表格
         var layout = [{
             name: '菜单名称',
@@ -58,7 +55,7 @@
                     li += '<a onclick="category_stop(this, \''+row.tip+'\', \''+row.id+'/bannedOperation\')" href="javascript:;" title="禁启用"><i class="layui-icon">&#xe601;</i></a>';
                     li += '<a title="编辑" onclick="WeAdminShow(\'编辑\',\''+row.id+'/edit\')" href="javascript:;"><i class="layui-icon">&#xe642;</i></a>';
                     return li;
-                        // '<a title="删除" onclick="del(' + row.id + ')" href="javascript:;">\<i class="layui-icon">&#xe640;</i></a>';
+                    // '<a title="删除" onclick="del(' + row.id + ')" href="javascript:;">\<i class="layui-icon">&#xe640;</i></a>';
                     //return '<a class="layui-btn layui-btn-danger layui-btn-mini" onclick="del(' + row.id + ')"><i class="layui-icon">&#xe640;</i> 删除</a>'; //列渲染
                 }
             },
