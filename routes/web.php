@@ -16,4 +16,7 @@ Route::get('/', function () {
 });
 
 Route::post('index', 'admin\IndexController@index');
-
+/**
+ * 文件上传
+ */
+Route::post('fileupload', ['as' => 'file.upload', 'uses' => 'FileController@fileupload']);

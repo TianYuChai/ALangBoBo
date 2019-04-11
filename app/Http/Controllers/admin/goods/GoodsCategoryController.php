@@ -28,7 +28,7 @@ class GoodsCategoryController extends BaseController
     {
         $items = goodsCategoryModel::orderBy('sort', 'desc')->get();
         $data = json_encode(infiniteCate($items, 0));
-        return view(self::ROUTE. 'index', compact('data'));
+        return view(self::ROUTE. 'category.index', compact('data'));
     }
 
 
@@ -44,7 +44,7 @@ class GoodsCategoryController extends BaseController
             'p_id' => 0
         ])->get(['id', 'cate_name']);
 
-        return view(self::ROUTE. 'create', compact('items'));
+        return view(self::ROUTE. 'category.create', compact('items'));
     }
 
     /**
@@ -78,7 +78,7 @@ class GoodsCategoryController extends BaseController
     {
         $item = goodsCategoryModel::find($id);
         $category = array_sorts(getTopComId(goodsCategoryModel::get(), $id), 'level', SORT_ASC);
-        return view(self::ROUTE .'edit', compact('item', 'category'));
+        return view(self::ROUTE .'category.edit', compact('item', 'category'));
     }
 
     public function update($id, Request $request, goodsCategoryService $goodsCategoryService)

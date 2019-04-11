@@ -42,15 +42,26 @@ class FileUpload
     protected static function checkFileType($file)
     {
         $result = [];
-        foreach ($file as $item) {
-            if(!$item->isValid()) {
-                throw new Exception("上传文件错误, 请联系管理员！");
+        if(is_array($file)) {
+            foreach ($file as $item) {
+                if(!$item->isValid()) {
+                    throw new Exception("上传文件错误, 请联系管理员！");
+                }
+                $file_type = $item->getClientOriginalExtension();
+                if(in_array($file_type, self::$image_type)) {
+                    $result[] = self::getManyImageInfo($item);
+                } else if(in_array($file_type, self::$file_type)) {
+                    $result[] = self::getManyFileInfo($item);
+                } else {
+                    throw new Exception("上传文件类型: ".$file_type." 错误, 请联系管理员！");
+                }
             }
-            $file_type = $item->getClientOriginalExtension();
+        } else {
+            $file_type = $file->getClientOriginalExtension();
             if(in_array($file_type, self::$image_type)) {
-                $result[] = self::getManyImageInfo($item);
+                $result[] = self::getManyImageInfo($file);
             } else if(in_array($file_type, self::$file_type)) {
-                $result[] = self::getManyFileInfo($item);
+                $result[] = self::getManyFileInfo($file);
             } else {
                 throw new Exception("上传文件类型: ".$file_type." 错误, 请联系管理员！");
             }

@@ -17,7 +17,6 @@ Route::group(['prefix' => 'backstage', 'namespace' => 'admin'], function () {
         Route::get('login', ['as' =>'login', 'uses' => 'LoginController@index']);
         Route::post('land', ['as' => 'backstage.admin.login', 'uses' => 'LoginController@login']);
     });
-
     /**
      * 后台管理页面路由分组
      */
@@ -55,6 +54,11 @@ Route::group(['prefix' => 'backstage', 'namespace' => 'admin'], function () {
             Route::get('goods/category/{id}/edit', ['as' => 'backstage.category.edit', 'uses' => 'GoodsCategoryController@edit']);
             Route::post('goods/category/{id}/update', ['as' => 'backstage.category.update', 'uses' => 'GoodsCategoryController@update']);
             Route::get('goods/category/{id}/bannedAttriStatus', ['as' => 'backstage.category.bannedAttriStatus', 'uses' => 'GoodsCategoryController@bannedAttriStatus']);
+            /*商品-横幅*/
+            Route::group(['prefix' => 'banner'], function () {
+                Route::get('goods/banner/index', ['as' => 'backstage.banner.index', 'uses' => 'GoodsBannerController@index']);
+                Route::get('goods/banner/create', ['as' => 'backstage.banner.create', 'uses' => 'GoodsBannerController@create']);
+            });
         });
     });
 });

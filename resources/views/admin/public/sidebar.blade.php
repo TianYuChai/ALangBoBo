@@ -42,6 +42,12 @@
                             <cite>分类管理</cite>
                         </a>
                     </li>
+                    <li>
+                        <a _href="{{ route('backstage.banner.index') }}">
+                            <i class="iconfont">&#xe6a7;</i>
+                            <cite>横幅管理</cite>
+                        </a>
+                    </li>
                 </ul>
             </li>
             <li>
