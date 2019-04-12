@@ -69,7 +69,6 @@
                 upload = layui.upload;
             laydate.render({
                 elem: '#time'
-                ,type: 'datetime'
                 ,range: true
             });
             form.verify({

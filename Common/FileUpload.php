@@ -141,5 +141,17 @@ class FileUpload
     {
         return Storage::disk($type)->delete($path);
     }
+
+    /**
+     * 获取文件
+     *
+     * @param $type
+     * @param $path
+     * @return bool
+     */
+    public static function exists($type, $path)
+    {
+        return Storage::disk($type)->exists($path);
+    }
 }
 

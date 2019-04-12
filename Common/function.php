@@ -114,3 +114,40 @@ function array_sorts($cates, string $key, $arg = SORT_DESC)
     array_multisort($last_names, $arg, $cates);
     return $cates;
 }
+
+/**
+ * 验证Url是否可用
+ *
+ * @param string $url
+ * @return bool
+ */
+function verificationUrl(string $url)
+{
+    $success = get_headers($url,1);
+    if(preg_match('/200/',$success[0])){
+        return true;
+    }else{
+        return false;
+    }
+}
+
+/**
+ * 获取当前时间
+ *
+ * @param $type
+ * @return false|string
+ */
+function getTime($type)
+{
+    switch ($type) {
+        case 'ymd':
+            $time = date('Y-m-d', time());
+        break;
+        case  'his':
+            $time = date('H:i:s', time());
+        break;
+        default:
+            $time = date('Y-m-d H:i:s', time());
+    }
+    return $time;
+}

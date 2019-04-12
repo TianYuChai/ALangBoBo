@@ -34,97 +34,64 @@
             <button class="layui-btn" onclick="WeAdminShow('添加横幅','{{ route("backstage.banner.create") }}')">
                 <i class="layui-icon layui-icon-add-circle-fine"></i>添加
             </button>
-            <span class="fr" style="line-height:40px">横幅数量：11</span>
+            <span class="fr" style="line-height:40px">横幅数量：{{ $data['items']->count() }}</span>
         </div>
         <table class="layui-table" id="memberList">
             <thead>
             <tr>
-                {{--<th>--}}
-                {{--<div class="layui-unselect header layui-form-checkbox" lay-skin="primary">--}}
-                {{--<i class="layui-icon">&#xe605;</i>--}}
-                {{--</div>--}}
-                {{--</th>--}}
-                <th>账户名</th>
-                <th>账户类别</th>
-                <th>真实姓名</th>
-                <th>手机号码</th>
-                <th>注册时间</th>
+                <th>
+                    <div class="layui-unselect header layui-form-checkbox" lay-skin="primary">
+                        <i class="layui-icon">&#xe605;</i>
+                    </div>
+                </th>
+                <th>链接地址</th>
+                <th>图片</th>
+                <th>上架时间</th>
+                <th>下架时间</th>
                 <th>状态</th>
                 <th>操作</th>
             </tr>
             </thead>
             <tbody>
-            {{--@foreach($data['items'] as $item)--}}
-                {{--<tr data-id="{{ $item->id }}">--}}
-                    {{--<td>--}}
-                    {{--<div class="layui-unselect layui-form-checkbox" lay-skin="primary" data-id="{{ $item->id }}">--}}
-                    {{--<i class="layui-icon">&#xe605;</i>--}}
-                    {{--</div>--}}
-                    {{--</td>--}}
-                    {{--<td>--}}
-                        {{--{{ $item->account }}--}}
-                    {{--</td>--}}
-                    {{--<td>{{ $item->category_name }}</td>--}}
-                    {{--<td>{{ $item->name }}</td>--}}
-                    {{--<td>{{ $item->number }}</td>--}}
-                    {{--<td>{{ $item->created_at }}</td>--}}
-                    {{--<td class="td-status">--}}
-                        {{--@if($item->status == 0)--}}
-                            {{--{{ $item->status_name }}--}}
-                        {{--@elseif($item->status == 1)--}}
-                            {{--<span class="layui-btn layui-btn-normal layui-btn-xs">--}}
-                                {{--{{ $item->status_name }}--}}
-                            {{--</span>--}}
-                        {{--@elseif(in_array($item->status, [2, 3]))--}}
-                            {{--<span class="layui-btn layui-btn-normal layui-btn-xs layui-btn-disabled">--}}
-                                {{--{{ $item->status_name }}--}}
-                            {{--</span>--}}
-                        {{--@endif--}}
-                    {{--</td>--}}
-                    {{--<td class="td-manage">--}}
-                        {{--<a title="查看"--}}
-                           {{--onclick="WeAdminShow('查看','{{ route('backstage.member.see', ['id' => $item->id]) }}')"--}}
-                           {{--href="javascript:void(0);">--}}
-                            {{--<i class="layui-icon">&#xe63c;</i>--}}
-                        {{--</a>--}}
-                        {{--@if($item->status == 0)--}}
-                            {{--@if(!empty($item->registerauditing))--}}
-                                {{--<span class="layui-btn layui-btn-normal layui-btn-xs layui-btn-disabled">--}}
-                                    {{--已审核，等待重新提交--}}
-                                {{--</span>--}}
-                            {{--@else--}}
-                                {{--<a title="过审"--}}
-                                   {{--onclick="member_adopt(this,'{{ route('backstage.member.adopt', ['id' => $item->id]) }}')"--}}
-                                   {{--href="javascript:void(0);"--}}
-                                   {{--class="layui-btn layui-btn-xs">--}}
-                                    {{--过审--}}
-                                {{--</a>--}}
-                                {{--<a title="驳回"--}}
-                                   {{--onclick="member_reject(this,'{{ route('backstage.member.reject', ['id' => $item->id]) }}')"--}}
-                                   {{--href="javascript:void(0);"--}}
-                                   {{--class="layui-btn layui-btn-xs">--}}
-                                    {{--驳回--}}
-                                {{--</a>--}}
-                            {{--@endif--}}
-                        {{--@elseif($item->status == 1)--}}
-                            {{--<a title="封停" onclick="member_sealup(this,'{{ route('backstage.member.sealUp', ['id' => $item->id]) }}')" href="javascript:void(0);">--}}
-                                {{--<i class="layui-icon layui-icon-delete"></i>--}}
-                            {{--</a>--}}
-                        {{--@elseif(in_array($item->status, [2, 3]))--}}
-                            {{--<a onclick="member_stop(this,'{{ route('backstage.member.stop', ['id' => $item->id]) }}')" href="javascript:void(0);" title="启用">--}}
-                                {{--<i class="layui-icon layui-icon-download-circle"></i>--}}
-                            {{--</a>--}}
-                        {{--@endif--}}
-                        {{--<a onclick="change_password(this, '{{ route('backstage.member.edit_pass', ['id' => $item->id]) }}')"--}}
-                           {{--title="修改密码" href="javascript:void(0);">--}}
-                            {{--<i class="layui-icon layui-icon-util"></i>--}}
-                        {{--</a>--}}
-                    {{--</td>--}}
-                {{--</tr>--}}
-            {{--@endforeach--}}
+            @foreach($data['items'] as $item)
+                <tr data-id="{{ $item->id }}">
+                    <td>
+                    <div class="layui-unselect layui-form-checkbox" lay-skin="primary" data-id="{{ $item->id }}">
+                    <i class="layui-icon">&#xe605;</i>
+                    </div>
+                    </td>
+                    <td>
+                        <a href="{{ $item->url }}" target="_blank">
+                            {{ $item->url }}
+                        </a>
+                    </td>
+                    <td>
+                        <div class="layui-inline" onclick="imgshow(this, '{{ FileUpload::url("image", $item->image_url) }}')">
+                            <img class="layui-circle"
+                                 src="{{ FileUpload::url('image', $item->image_url) }}">
+                        </div>
+                    </td>
+                    <td>{{ $item->start_time }}</td>
+                    <td>{{ $item->end_time }}</td>
+                    <td>{{ $item->status_name }}</td>
+                    <td class="td-manage">
+                        @if($item->status != 2)
+                            <a onclick="banner_stop(this,'{{ route('backstage.banner.stateOperation', ['id' => $item->id]) }}')"
+                               href="javascript:void(0);"
+                               title="{{ $item->status == 0 ? "上架" : "下架"}}">
+                                <i class="layui-icon layui-icon-download-circle"></i>
+                            </a>
+                        @endif
+                        <a title="删除" onclick="banner_del(this,'{{ route('backstage.banner.del', ['id' => $item->id]) }}')"
+                           href="javascript:void(0);">
+                            <i class="layui-icon layui-icon-delete"></i>
+                        </a>
+                    </td>
+                </tr>
+            @endforeach
             </tbody>
         </table>
-{{--        @include('admin.public.page')--}}
+        @include('admin.public.page')
     </div>
 @endsection
 @section('script')
@@ -138,11 +105,21 @@
                 ,type: 'datetime'
                 ,range: true
             });
-
-            /*用户-过审*/
-            window.member_adopt = function(obj, url)
-            {
-                layer.confirm('是否确认通过审核?', function(index) {
+            /*图片-放大-展示*/
+            window.imgshow = function (obj, url) {
+                layer.open({
+                    type: 1,
+                    title: false,
+                    closeBtn: 0,
+                    area: ['920px', '650px'],
+                    skin: 'layui-layer-nobg', //没有背景色
+                    shadeClose: true,
+                    content: '<img src="'+url+'">'
+                });
+            };
+            /*banner-操作*/
+            window.banner_stop = function (obj, url) {
+                layer.confirm('是否进行操作?', function(index) {
                     $.ajax({
                         headers: {
                             'X-CSRF-TOKEN': "{{ csrf_token() }}"
@@ -168,101 +145,8 @@
                     });
                 })
             };
-            /*用户-驳回*/
-            window.member_reject = function(obj, url) {
-                layer.prompt({title: '请输入驳回理由, 方便用户进行修改!', formType: 2}, function(text, index){
-                    layer.close(index);
-                    $.ajax({
-                        headers: {
-                            'X-CSRF-TOKEN': "{{ csrf_token() }}"
-                        },
-                        method:"post",
-                        url:url,
-                        data:{'reject_reason': text},
-                        success:function (res) {
-                            if(res.status == 200) {
-                                layer.msg(res.info);
-                                setTimeout(function () {
-                                    window.location.reload();
-                                }, 1000)
-                            }
-                        },
-                        error:function (XMLHttpRequest) {
-                            //返回提示信息
-                            var errors = XMLHttpRequest.responseJSON.errors;
-                            for (var value in errors) {
-                                layer.msg(errors[value][0]);return;
-                            }
-                        }
-                    });
-                });
-            };
-            /*用户-更改密码*/
-            window.change_password = function (obj, url) {
-                layer.prompt({title: '请输入新的密码, 密码长度为6-12', formType: 3}, function(text, index){
-                    layer.close(index);
-                    if(/.*[\u4e00-\u9fa5]+.*$/.test(text)) {
-                        layer.msg('不可使用中文作为账户密码!');return;
-                    }
-                    if(text.length < 6 || text.length > 12) {
-                        layer.msg('密码长度需为6-12个字符');return;
-                    }
-                    $.ajax({
-                        headers: {
-                            'X-CSRF-TOKEN': "{{ csrf_token() }}"
-                        },
-                        method:"post",
-                        url:url,
-                        data:{'pass': text},
-                        success:function (res) {
-                            if(res.status == 200) {
-                                layer.msg(res.info);
-                                setTimeout(function () {
-                                    window.location.reload();
-                                }, 1000)
-                            }
-                        },
-                        error:function (XMLHttpRequest) {
-                            //返回提示信息
-                            var errors = XMLHttpRequest.responseJSON.errors;
-                            for (var value in errors) {
-                                layer.msg(errors[value][0]);return;
-                            }
-                        }
-                    });
-                });
-            };
-            /*用户-停用*/
-            window.member_sealup = function (obj, url) {
-                layer.confirm('确认要停用吗？', function(index) {
-                    $.ajax({
-                        headers: {
-                            'X-CSRF-TOKEN': "{{ csrf_token() }}"
-                        },
-                        method:"get",
-                        url:url,
-                        data:"",
-                        success:function (res) {
-                            if(res.status == 200) {
-                                layer.msg(res.info);
-                                setTimeout(function () {
-                                    window.location.reload();
-                                }, 1000)
-                            }
-                        },
-                        error:function (XMLHttpRequest) {
-                            //返回提示信息
-                            var errors = XMLHttpRequest.responseJSON.errors;
-                            for (var value in errors) {
-                                layer.msg(errors[value][0]);return;
-                            }
-                        }
-                    });
-                });
-            };
-            /*用户-启用*/
-            window.member_stop = function (obj, url) {
-                layer.confirm('确认要启用吗?', function(index) {
+            window.banner_del = function (obj, url) {
+                layer.confirm('是否进行删除操作?', function(index) {
                     $.ajax({
                         headers: {
                             'X-CSRF-TOKEN': "{{ csrf_token() }}"
@@ -287,7 +171,7 @@
                         }
                     });
                 })
-            };
+            }
         })
     </script>
 @endsection
