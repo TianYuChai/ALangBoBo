@@ -2,6 +2,7 @@
 
 namespace App\Console;
 
+use App\Console\Commands\Banner;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 use App\Console\Commands\Test;
@@ -15,6 +16,7 @@ class Kernel extends ConsoleKernel
      */
     protected $commands = [
         //
+        Banner::class
     ];
 
     /**
@@ -27,6 +29,10 @@ class Kernel extends ConsoleKernel
     {
         // $schedule->command('inspire')
         //          ->hourly();
+        $schedule->command('banner')
+                    ->everyMinute() //运行时间，一分钟
+                    ->timezone('Asia/Shanghai') //设置时区
+                    ->runInBackground(); //设置后台运作
     }
 
     /**
