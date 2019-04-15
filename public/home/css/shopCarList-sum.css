@@ -1,0 +1,201 @@
+.productList{
+    width:100%;
+    border-bottom: 2px solid #e6e6e6;
+}
+.titleLeft{
+    font-size:14px;
+    color:#eba207;
+}
+.titleLeft{
+    width:120px;
+    border-bottom:2px solid #eba207;
+    text-align: center;
+    line-height: 30px;
+    margin:0px!important;
+}
+.titleRight{
+    font-size:12px;
+    color:#5f5f5f;
+    margin:0px!important;
+    line-height: 30px;
+}
+.titleRight span{
+    colro:#eba207!important;
+}
+.titleRight a{
+    text-decoration: none!important;
+    color:#fff;
+    padding:5px;
+    background-color: #eba207;
+    border-radius: 3px;
+    -moz-border-radius:3px;
+    -ms-border-radius:3px;
+    -o-border-radius:3px;
+    -webkit-border-radius:3px;
+    margin-left:10px;
+}
+.col-gray{
+    color:#979797;
+}
+/*#shopping tr td{*/
+    /*font-size:12px ;*/
+    /*color:#606060!important;*/
+    /*border:none!important;*/
+/*}*/
+.tableList tbody{
+    vertical-align: top;
+}
+.title_1,.title_2,.title_13,.title_4,.title_5{
+    text-align: center;
+}
+.title_2{
+    max-width: 500px;
+    text-align: left!important;
+}
+.title_1{
+    text-align: left!important;
+}
+.shopInfo{
+    color:#3f3f3f;
+    text-align: left!important;
+}
+.shopInfo{
+    padding-left:13px;
+}
+.cart_td_3{
+    text-align: left!important;
+    max-width:230px;
+}
+.cart_td_1{
+    text-align: left!important;
+    padding-left:13px;
+    /*width:20px;*/
+}
+.cart_td_2{
+    text-align: left!important;
+    width:80px;
+}
+.cart_td_2 img{
+    width:80px;
+    height:80px;
+}
+.cart_td_3{
+    padding-left:10px;
+    max-width:180px;
+}
+.cart_td_3 a{
+    display: block;
+    color:#606060;
+    text-decoration: none!important;
+    margin-bottom:10px;
+}
+.mgl-150{
+    margin-left:150px!important;
+}
+.title_1 span{
+    display: inline-block;
+    vertical-align: top;
+    margin-top:3px;
+}
+.cart_td_3 a{
+    display: inline-block;
+    color:#606060;
+}
+.cart_td_3 span{
+    display: inline-block;
+    color:#aba2a2;
+}
+.cart_td_4{
+    color:#3c3c3c;
+}
+.cart_td_6{
+    color:#f0bc69;
+}
+.cart_td_7 a{
+    color:#726c6c;
+}
+.productTr td{
+    padding-top:10px;
+    padding-bottom:10px;
+}
+.productTr{
+    border:1px solid #979797;
+    background-color: #fffaee;
+}
+.tableSum{
+    height:50px;
+    width:100%;
+}
+.tableSum .footDiv{
+    background-color: #e5e5e5;
+    margin-top:30px;
+}
+.tableSum .checkAll{
+    font-size:12px;
+    color:#606060;
+    text-align: left!important;
+    padding-left:13px;
+}
+.tableSum .deleteBtn a{
+    text-decoration: none;
+    font-size:12px;
+    color:#606060!important;
+}
+.checkedNum,.sumAccount .sumText{
+    text-align: right!important;
+    color:#726c6c;
+}
+.checkedNum span{
+    color:#eba207!important;
+    font-size: 14px!important;
+}
+.sumAccount{
+    width:280px;
+}
+.sumText{
+    display: inline-block;
+    vertical-align: middle;
+}
+.sumPrice{
+    color:#eba207!important;
+    font-size: 22px!important;
+}
+.sumBtn{
+    display: inline-block;
+    font-size: 20px;
+    text-decoration: none;
+    color:#fff;
+    line-height: 54px;
+    padding:0 30px;
+    background-color: #eba207;
+}
+.sunBtnTd{
+    width:100px;
+}
+.deleteBtn{
+    text-align: left!important;
+}
+.checkboxTh{
+    text-align: left!important;
+}
+tfoot{
+    padding-top: 20px;
+}
+.clear{
+    margin-top:5px;
+    vertical-align: top;
+    color:#616161;
+}
+.clear:hover{
+    color:#616161;
+}
+.totalSum{
+    color:#f0bc69;
+}
+.footLeft{
+    margin-top:15px;
+    margin-left:10px;
+}
+.jianNum{
+    color:#eba207;
+}

@@ -1,0 +1,196 @@
+.shInfoDiv{
+    width:1045px;
+}
+.shopCarList{
+    border-bottom: 2px solid #e8e8e8;
+}
+.shopCarList li{
+    margin-right:10px;
+}
+.shopCarList li.active>a{
+    text-decoration: none;
+    border:none!important;
+    color:#eba206!important;
+}
+.shopCarList li.active{
+    border-bottom: 2px solid #eba206;
+}
+.shopCarList li a{
+    display: block;
+    font-size:16px;
+    color:#000000;
+ }
+.borderRight{
+    border-right:1px solid #000000;
+    height:24px;
+    margin-top:10px;
+}
+.orderSearch{
+    margin-top:20px;
+    width:320px;
+    height:30px;
+    border:1px solid #bfbfbf;
+}
+.orderSearch input{
+    width:240px;
+    height:28px;
+    border:none;
+    float: left;
+    text-indent: 1em;
+}
+.orderSearch a{
+    text-decoration: none;
+    float: left;
+    width:78px;
+    font-size:12px;
+    color:#3d3d3d;
+    line-height: 28px;
+    text-align: center;
+    border-left:1px solid #bfbfbf;
+    background-color: #f5f5f5;
+    cursor: pointer;
+}
+.orderList{
+    margin-top:20px;
+}
+.table>thead>tr>th{
+    border-bottom:none!important;
+}
+.orderList thead th{
+    font-size:14px;
+    color:#929292!important;
+}
+.orderList table{
+    border:none;
+}
+.checkboxTd{
+    font-size:14px;
+    color:#9a9a9a;
+}
+.choosePage a{
+    display: inline-block;
+    font-size:14px;
+    color:#9a9a9a;
+    border:1px solid #dcdcdc;
+    border-radius: 3px;
+    line-height: 22px;
+    width:60px;
+    text-align: center;
+}
+.table>tbody>tr>td{
+    border-top:none!important;
+}
+.shopProductTop{
+    height:40px;
+    background-color: #eaf8ff;
+}
+.shopProductTop{
+    display: inline-block;
+    line-height: 40px;
+    width:100%;
+    padding-left:30px;
+}
+.shopProductTop span{
+    font-size:12px;
+    color:#3c3c3c;
+}
+.pd-0{
+    padding:0px!important;
+}
+.shopcarListTd1 img{
+    width:80px;
+    height:80px;
+}
+.shopcarListTd1 p{
+    width:300px;
+    margin-left:10px;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    font-size:12px;
+    color:#606060;
+    text-align: left;
+    line-height: 20px;
+}
+.orderList table td table{
+    border:1px solid #aed8ff;
+}
+.orderList table td table.gray{
+    border:1px solid #ececec!important;
+}
+.orderList table td table td{
+    font-size:12px;
+    color:#606060;
+}
+.orderList table td table td .payMoneyBtn,.orderList table td table td .sureBtn{
+    text-decoration: none;
+    display:block;
+    font-size:12px;
+    color:#fff;
+    line-height: 28px;
+    width:70px;
+    background-color: #eba206;
+    border-radius: 3px;
+    margin:auto;
+}
+.orderList table td table td .deleteBtn,.orderList table td table td .timeBtn{
+    display:block;
+    font-size:12px;
+    color:#606060;
+    margin-top:10px;
+}
+.shopCarContent{
+    border:none!important;
+}
+.paginationDiv{
+    margin-top:-20px;
+    margin-bottom:0px!important;
+}
+.tradeStatus a{
+    display: block;
+    text-decoration: none;
+    color:#606060;
+    cursor: pointer;
+}
+.pd-20{
+    padding:20px;
+}
+.shopProductTopGray{
+    background-color: #f1f1f1!important;
+}
+.deleteOrderBtn{
+    margin-left:600px;
+    cursor: pointer;
+    display: inline-block;
+}
+.changeContent fieldset{
+    margin-left:0px;
+}
+.manyidu span{
+    margin-right:10px;
+    cursor: pointer;
+    display: inline-block;
+    color:#606060;
+    font-size:12px;
+}
+.manyidu .manyiduActive{
+    color:#eeb046!important;
+}
+.changeContent fieldset textarea{
+    width:450px;
+    max-width: 450px;
+    height:150px;
+    vertical-align: middle;
+}
+.mgl-75{
+    margin-left:75px;
+}
+.mgl-80{
+    margin-left:80px;
+}
+.activeStar{
+    position: absolute;
+    top:-15px;
+    left:5px;
+}

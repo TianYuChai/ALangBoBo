@@ -1,0 +1,148 @@
+#receiveAddress form,#sendAddress form{
+    width:470px;
+    display: block;
+    margin:20px auto 0;
+    text-align: right;
+}
+#receiveForm .addLink,#sendForm .addLink{
+    display: block;
+    font-size:14px;
+    color:#ff5000;
+    text-align: right;
+    text-decoration: none;
+    cursor: pointer;
+}
+#receiveForm div,#sendForm div{
+    font-size:14px;
+    color:#666666;
+}
+.receiveStar{
+    color:#ff3000;
+    display: inline-block;
+    margin-right:5px;
+}
+#receiveForm div input,#sendForm div input{
+    width:330px;
+    height:30px;
+    border:1px solid #c4c6cf;
+}
+#receiveForm div select,#sendForm div select{
+    width:108px;
+    height:30px;
+    border:1px solid #c4c6cf;
+}
+#receiveForm div textarea,#sendForm div textarea{
+    width:330px;
+    height:50px;
+    vertical-align: middle;
+}
+.morenDiv{
+    text-align: left;
+    margin-left:140px;
+}
+.morenDiv input{
+    width:14px!important;
+    height:14px!important;
+}
+.addressSave{
+    display: block;
+    font-size:14px;
+    color:#fff;
+    line-height: 28px;
+    padding:0 15px;
+    border-radius: 3px;
+    background-color: #5584ff;
+    border: none;
+    margin-left:140px;
+    margin-top:20px;
+}
+.receiveAddressList,.sendAddressList{
+    padding:0 20px;
+}
+.saveAddressTip{
+    width:100%;
+    height:40px;
+    background-color: #e3f2fd;
+    border-radius: 5px;
+    margin-top:20px;
+}
+.saveAddressTip p{
+    display: inline-block;
+    line-height: 40px;
+    font-size:14px;
+    color:#666666;
+}
+.saveAddressTip img{
+    margin-left:20px;
+    margin-right:10px;
+}
+.receiveAddressList table,.sendAddressList table{
+    /*设置相邻单元格的边框间的距离*/
+    border-spacing: 0;
+    /*表格设置合并边框模型*/
+    border-collapse: collapse;
+
+    border:1px solid #dcdee3;
+    font-size:14px;
+    color:#333333;
+    margin-top:20px;
+}
+/*滚动条*/
+.receiveAddressList table tbody,.sendAddressList table tbody{
+    display: block;
+    max-height: 400px;
+    overflow-y: scroll;
+}
+table thead,
+tbody tr {
+    display: table;
+    width: 100%;
+    table-layout: fixed;
+}
+/*关键设置：滚动条默认宽度是16px 将thead的宽度减16px*/
+table thead {
+    width: calc( 100% - 1em)
+}
+table thead th {
+    background: #ccc;
+}
+.receiveAddressList table th,.receiveAddressList table td,.sendAddressList table th,.sendAddressList table td{
+    text-align: left!important;
+}
+.receiveAddressList table td,.sendAddressList table td{
+    vertical-align: middle!important;
+}
+.receiveAddressList table thead,.sendAddressList table thead{
+    background-color: #ebecf0;
+}
+.receiveAddressList table .deleteBtn,.receiveAddressList table .editBtn,.sendAddressList table .deleteBtn,.sendAddressList table .editBtn{
+     text-decoration: none;
+     display: block;
+     color:#333333;
+}
+.morenP{
+    color:#ff3300;
+    line-height: 30px;
+    background-color: #ffd6cc;
+    border: 1px solid #ff5000;
+    border-radius: 3px;
+    text-align: center;
+    width:70px;
+    margin: 0!important;
+}
+.tellNumDiv input{
+    width:102px!important;
+}
+.tellTip{
+    font-size:12px;
+    color:#a5a5a5;
+    margin-left:140px;
+    text-align: left;
+}
+.sendAddressDiv div select{
+    width:107px!important;
+}
+.receiveSend{
+    margin-top:10px;
+    max-width:1045px;
+}

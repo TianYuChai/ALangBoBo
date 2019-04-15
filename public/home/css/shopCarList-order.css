@@ -1,0 +1,161 @@
+.addressText p{
+    font-size:14px;
+    color:#000;
+}
+.addressText a{
+    display: block;
+    text-decoration: none;
+    font-size:12px;
+    color:#488ccb;
+    cursor: pointer;
+}
+.sendTo{
+    font-size:12px;
+    color:#488ccb;
+}
+.addressList p,.addressList input{
+    display: inline-block;
+    vertical-align: top;
+}
+.addressList p{
+    font-size:14px;
+    color:#3c3c3c;
+}
+.addressList p span,.addressList p a{
+    color:#808080!important;
+    margin-left:20px;
+}
+.addressList li{
+    margin-left:8px;
+    padding-left:20px;
+    margin-bottom:10px;
+}
+.addressActive{
+    width:1120px;
+    padding:5px 0 2px 0;
+    background-color: #fffaee;
+    border:1px solid #eba207;
+    margin-top:-8px;
+}
+.newAddressBtn img{
+    width:90px;
+    height:25px;
+    margin-left: 44px;
+}
+.orderText{
+    font-size:14px;
+    color:#000;
+    margin-top:40px;
+}
+.col-gray{
+    color:#979797;
+}
+.orderThead tr th{
+    text-align: center;
+}
+.shopName{
+    text-align: left;
+}
+table th,table td{
+    font-size:12px;
+}
+.shopBaby{
+    margin-left:10px;
+}
+.shopBabyTd{
+    width:400px;
+}
+.shopBaby img{
+    width:80px;
+    height:80px;
+}
+.shopBaby p{
+    color:#606060;
+    margin-left:10px;
+    max-width:220px;
+    text-align: left;
+    margin-bottom:10px;
+}
+.shopBaby p span{
+    display: block;
+    color:#aba2a2!important;
+}
+.shopAttr{
+    vertical-align: top;
+}
+.shopAttr p{
+    margin:0px!important;
+    color:#aba2a2;
+}
+.price,.number,.discount{
+    color:#3c3c3c;
+}
+tbody tr td{
+    vertical-align: top;
+}
+.totalSum{
+    color:#f0bc69;
+}
+.borderTable{
+    border:1px solid #979797;
+    background-color: #fffaee;
+}
+.borderTable tr td{
+    padding:10px 0px;
+}
+.border-bottom{
+    border-bottom:2px solid #eba207;
+}
+.message{
+    font-size: 14px;
+    color:#7b7b7b;
+    margin-top:50px;
+}
+.message input{
+    width: 415px;
+}
+.sendWay{
+    font-size:14px;
+    color:#7b7b7b;
+    margin-top:20px;
+}
+.sendPrice{
+    font-size:12px;
+    color:#f0bc69;
+}
+.allSum{
+    font-size:14px;
+    color:#7b7b7b;
+}
+.allSum span{
+    font-size:16px;
+    color:#eba207;
+}
+.realPrice{
+    font-size:16px;
+    color:#515151;
+}
+.realPrice span{
+    font-size:24px;
+    color:#eba207;
+}
+.submitOrder{
+    text-decoration: none;
+    display: inline-block;
+    font-size:16px;
+    color:#fff;
+    line-height: 40px;
+    padding:0 50px;
+    background-color: #eba207;
+    margin-left:20px;
+}
+.submitOrder:hover{
+    color:#fff;
+}
+.backBtn{
+    width:100px;
+    height:50px;
+}
+.mgb-300{
+    margin-bottom: 300px;
+}

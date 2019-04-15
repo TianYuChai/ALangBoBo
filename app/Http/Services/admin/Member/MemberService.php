@@ -9,7 +9,7 @@ namespace App\Http\Services\admin\Member;
 
 use App\Http\Models\admin\RegisterAuditingModel;
 use App\Http\Models\currency\UserModel;
-use App\Http\Services\BaseService;
+use App\Http\Services\admin\BaseService;
 use Exception;
 
 

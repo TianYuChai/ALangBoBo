@@ -1,0 +1,158 @@
+.shLeftNav{
+    width:120px;
+    text-align:left;
+    padding-left:10px;
+}
+.firstLevel{
+    margin-top:15px;
+}
+.firstLevel ul li{
+    margin-top:10px;
+}
+.firstLevel p{
+    font-size:14px;
+    color:#eba207;
+}
+.shLeftNav a{
+    text-decoration: none;
+}
+.firstLevel ul li a{
+    font-size:12px;
+    color:#747474;
+}
+.firstLevel ul li a.leftNavActive{
+    color:#3561ad!important;
+}
+.navList .goodsType{
+    background-color: #3561ad!important;
+}
+.shInfoTittle{
+    margin-top:10px;
+    width:1045px;
+    border-bottom:2px solid #dfdfdf;
+}
+.shInfoTittle p{
+    font-size:16px;
+    color:#000;
+    margin-left:10px;
+    line-height: 20px;
+    width:100px;
+    border-bottom:2px solid #eba206;
+    text-align: center;
+    margin-bottom:0px!important;
+}
+.shInfoDiv{
+    border:1px solid #dfdfdf;
+    margin-top:40px;
+}
+.shInfoTip{
+    font-size:14px;
+    color:#747474;
+    margin-top:40px;
+    margin-left:50px;
+}
+.shInfoDivIE fieldset{
+    margin-left:270px;
+    margin-top:60px;
+}
+.shangchuan{
+    position: absolute;
+    top:-150px;
+    left:200px;
+    width:300px;
+    height:300px;
+    z-index:999;
+    background-color: #fff;
+    border:1px solid #3561ad;
+}
+.shangchuanType{
+    font-size:12px;
+    color:#999;
+    margin-top:5px;
+}
+.shangchuanSave{
+    font-size:14px;
+    color:#fff;
+    margin-top:10px;
+    padding:2px 15px;
+    background-color: #ff8a09;
+    border: none!important;
+}
+.shPerson{
+    cursor: pointer;
+    border:2px solid #cecece;
+}
+#shInfoForm>fieldset>div{
+    font-size:14px;
+    color:#000;
+}
+.star{
+    display: inline-block;
+    color:#999ca2;
+}
+.nichengDiv,.realNameDiv,.sexDiv,.birthDiv,.liveDiv,.hometownDiv{
+    margin-top:15px;
+}
+.nichengDiv input{
+    width:330px;
+    height:30px;
+    border:1px solid #cecece;
+    margin-left:18px;
+}
+.nichengDivRemark{
+    font-size:12px;
+    color:#999999;
+    margin-left:75px;
+    margin-top:3px;
+}
+.realNameDiv input{
+    width:150px;
+    height:30px;
+    border:1px solid #cecece;
+}
+.sexDiv .sexRadio{
+    display: inline-block;
+    margin-left:20px;
+}
+.birthDiv form{
+    display: inline-block;
+    margin-left:29px;
+}
+.birthDiv select{
+    height:30px;
+    width:80px;
+}
+.liveDiv>div{
+    margin-left:15px;
+}
+.liveDiv select{
+    height:30px;
+}
+.hometownDiv select{
+    height:30px;
+}
+.hometownDiv>div{
+    margin-left:29px;
+}
+#shInfoForm .border-bottom{
+    width:600px;
+    border-bottom:1px solid #dfdfdf;
+    margin-top:20px;
+    margin-bottom:10px;
+}
+.shInfoSave{
+    font-size:16px;
+    color:#fff;
+    padding:2px 15px;
+    background-color: #ff9f15;
+    border: none;
+    border-radius: 3px;
+    margin-left:80px;
+    margin-bottom:50px;
+}
+.shInfoDiv{
+    margin-bottom:200px;
+}
+.pdl-260{
+    padding-left:260px;
+}

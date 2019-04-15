@@ -1,0 +1,19 @@
+.shopLogo{
+    width:157px;
+    display: inline-block;
+    float:left;
+}
+.netShopNameImg{
+    display: inline-block;
+    float:left;
+    margin-top:35px;
+}
+.netShopName{
+    top:0px!important;
+}
+.netShopName p{
+    display: inline-block;
+}
+.shopCode{
+
+}

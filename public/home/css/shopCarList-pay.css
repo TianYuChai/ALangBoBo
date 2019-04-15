@@ -1,0 +1,69 @@
+.payImg{
+    width:74px;
+    height:74px;
+}
+.payTop p{
+    font-size:12px;
+    color:#606060;
+    vertical-align: top;
+}
+.mgt-15{
+    margin-top:15px;
+}
+.payTopDiv{
+    border:1px solid #c7c7c7;
+    padding:10px;
+}
+.payMoney span{
+    display: inline-block;
+    font-size:24px;
+    color:#eba206;
+}
+.payMoney{
+    font-size:12px;
+    color:#606060;
+    margin-top:20px;
+}
+.shopCarPay .shopPayWay{
+    font-size:18px;
+    color:#000000;
+    padding-left:40px;
+    line-height: 42px;
+    border-bottom: 1px solid #c7c7c7;
+}
+.wangyin{
+    display: inline-block;
+    vertical-align: top;
+    width:66px;
+    height:74px;
+    background: url("../images/img/wangyin.png") 0 0 no-repeat;
+    padding:0!important;
+}
+.kuaijie{
+    display: inline-block;
+    width:66px;
+    height:74px;
+    background: url("../images/img/kuaijie.png") 0 0 no-repeat;
+    vertical-align: top;
+    padding:0!important;
+    background-size: 100%;
+}
+.shopCarPay .nav li.active a{
+    border:none!important;
+}
+.shopPayWayList li{
+    float: left;
+    margin-left:40px;
+    margin-top:20px;
+}
+.wangyinActive{
+     background: url("../images/img/wangyinActive.png") 0 0 no-repeat!important;
+     background-size: 100%;
+ }
+.kuaijieActive{
+    background: url("../images/img/kuaijieActive.png") 0 0 no-repeat;
+    background-size: 100%;
+}
+.mgb-300{
+    margin-bottom: 300px;
+}

@@ -1,0 +1,204 @@
+.navList .goodsType{
+    background-color: #3561ad!important;
+}
+.productType{
+    font-size:14px;
+    color:#747474;
+    margin-top:25px;
+}
+.productDetail{
+    padding:10px 10px 0px 10px;
+ }
+.productDetail .type,.productDetail .price,.productDetail .band{
+    border-bottom:1px dashed #dedede;
+    line-height:40px;
+}
+.productDetail .type li{
+    float: left;
+    font-size:14px;
+    color:#747474;
+}
+.productDetail .type li a{
+    color:#000;
+    display: inline-block;
+    font-size:14px;
+    text-align: center;
+    cursor: pointer;
+    margin-left:50px;
+}
+.productDetail .type li a:hover{
+    color:#eba206;
+    text-underline: none;
+}
+.typeActive,.bandActive{
+    color:#eba206!important;
+}
+.productDetail .price li{
+    float: left;
+    font-size:14px;
+    color:#747474;
+}
+.productDetail .priceDiv input{
+    width:60px;
+    height:25px;
+    border:1px solid #dedede;
+    text-indent: 1em;
+}
+.priceIcon1{
+    display: block;
+    width:7px;
+    height:9px;
+    position: absolute;
+    top: 16px;
+    left: 8px;
+    background: url("../images/icon/priceIcon.png") 0 0 no-repeat;
+}
+.priceIcon2{
+    display: block;
+    width:7px;
+    height:9px;
+    position: absolute;
+    top: 16px;
+    left: 80px;
+    background: url("../images/icon/priceIcon.png") 0 0 no-repeat;
+}
+.priceDiv{
+    margin-left:50px;
+}
+.sureBtn button{
+    border:none;
+    width:45px;
+    height:25px;
+    color:#fff;
+    font-size: 12px;
+    line-height: 20px;
+    text-align: center;
+    background-color: #eba206;
+}
+.productDetail .band li{
+    float: left;
+    font-size:14px;
+    color:#747474;
+}
+.productDetail .band li a{
+    color:#000;
+    display: inline-block;
+    font-size:14px;
+    text-align: center;
+    cursor: pointer;
+    margin-left:50px;
+}
+.productDetail .band li a:hover{
+    color:#eba206;
+    text-underline: none;
+}
+/*商品列表*/
+.productList li{
+    float: left;
+    width:228px;
+    border:1px solid #e7e7e7;
+    margin-right:5px;
+    padding-bottom:10px;
+    margin-top:20px;
+}
+.productList li:nth-child(5n){
+    margin-right:0px!important;
+}
+.productList li .productA{
+    display: block;
+    padding:25px 25px 0 25px;
+    text-decoration: none;
+    cursor: pointer;
+}
+.productList li a .productImg{
+    width:180px;
+    height:180px;
+}
+.productList .productText{
+    font-size:14px;
+    color:#000;
+    width:100%;
+    overflow: hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+    margin-top:10px;
+    margin-bottom:5px!important;
+}
+.productList .productPrice{
+    font-size:20px;
+    color:#e01222;
+}
+.liBottom{
+    height:12px;
+}
+.shopIcon{
+    width:8px;
+    height:12px;
+    vertical-align: top;
+    margin-top:4px;
+}
+.shopLink{
+    font-size:12px;
+    color:#888b8f;
+    padding-left:30px;
+    padding-right:25px;
+    padding-bottom:25px;
+    text-decoration: none;
+}
+.shopLink:hover{
+    color:#888b8f;
+}
+.mgl-70{
+    margin-left:70px;
+}
+/*自定义分页样式*/
+.pagination>li>a, .pagination>li>span{
+    color:#3d3d3d;
+}
+.pagination .active{
+    color:#fff!important;
+    background-color: #eba206!important;
+}
+.pagination>li>a.pageAll,.pagination>li>a.toPage{
+    border:none!important;
+}
+.pagination>li>a.pageAll:hover,.pagination>li>a.toPage:hover{
+    background-color: #fff!important;
+    color:#3d3d3d;
+}
+.pageInput{
+    width:40px;
+}
+.pageInput:focus{
+    border-color:#ddd;
+}
+.toPage{
+    margin-top:-3px;
+}
+.toPage p{
+    display: inline-block;
+}
+.pagination>li .pageBtn{
+    display: inline-block;
+    width:44px!important;
+    height:28px!important;
+    line-height: 24px;
+    text-align: center;
+    background-color: #fff;
+    border:1px solid #ccc;
+}
+.paginationDiv{
+    margin-bottom:100px;
+}
+.toPageLi{
+    position: absolute;
+    top:0px;
+    right:-130px;
+}
+.mgt-2{
+    margin-top:2px;
+}
+.mgt-2 a{
+    display: block;
+    color:#3d3d3d!important;
+}

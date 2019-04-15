@@ -1,0 +1,39 @@
+.bannerListImg{
+    width:100px;
+    height:50px;
+}
+.bannerEditBtn{
+    color:#00aaef!important;
+    font-size:14px;
+}
+.bannerDeleteBtn{
+    color:#ee3333!important;
+    font-size:14px;
+}
+.tittleDiv input,.urlDiv input,.remarkDiv textarea,.sortDiv input{
+    width:390px;
+    height:30px;
+    border:1px solid #747474;
+}
+.bannerImgDiv p{
+    margin-left:46px;
+}
+.remarkDiv textarea{
+    max-width:390px;
+    vertical-align: middle;
+}
+.shangchuan{
+    width:300px;
+    height:300px;
+}
+.bannerListSubmit{
+    background-color: #00aaee!important;
+    width:100px;
+    line-height:40px;
+    border:none;
+    color:#fff;
+    font-size:16px;
+    text-align: center;
+    border-radius: 3px;
+    margin-top:20px;
+}

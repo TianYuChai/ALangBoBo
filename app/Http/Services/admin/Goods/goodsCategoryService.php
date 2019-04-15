@@ -9,7 +9,7 @@ namespace App\Http\Services\admin\Goods;
 
 use App\Http\Models\admin\goods\goodsCategoryAttributeModel;
 use App\Http\Models\admin\goods\goodsCategoryModel;
-use App\Http\Services\BaseService;
+use App\Http\Services\admin\BaseService;
 use Exception;
 use Prophecy\Exception\Prediction\NoCallsException;
 

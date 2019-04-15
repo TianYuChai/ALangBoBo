@@ -1,0 +1,21 @@
+.cancelAccountDiv input,.cancelMobileDiv input{
+    width:320px;
+    height:30px;
+}
+.cancelAccountForm{
+    width:390px;
+}
+.verifyCodeDiv input{
+    width:200px;
+    height:30px;
+}
+.verifyCodeDiv button{
+    width:115px;
+    height:30px;
+    border:none;
+    background-color: #808080;
+    color:#fff;
+}
+.cencelReasonDiv p{
+    vertical-align: top;
+}

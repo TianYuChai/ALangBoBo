@@ -8,7 +8,8 @@
 namespace App\Http\Services\admin\Goods;
 
 use App\Http\Models\admin\goods\BannerModel;
-use App\Http\Services\BaseService;
+
+use App\Http\Services\admin\BaseService;
 use Exception;
 use FileUpload;
 

@@ -1,0 +1,332 @@
+.pd0{
+    padding-left:0px!important;
+    padding-right:0px!important;
+}
+/*头部导航*/
+.topDiv,.topDiv img{
+    width:100%;
+}
+.rightNav{
+    position: fixed;
+    right:0;
+    top:0;
+    width:30px;
+    height:100%;
+    background-color: #1a1a1a;
+}
+.topNav{
+    width:100%;
+    height: 42px;
+    background: url("../images/img/topNavBg.png") 0 0 repeat;
+}
+.db-n{
+    display:none!important;
+}
+.locationIcon{
+    display: inline-block;
+    width:20px;
+    height:24px;
+    background: url("../images/icon/location.png") 0 0 no-repeat;
+}
+.inline-block{
+    display: inline-block!important;
+}
+.cityName{
+    color:#999;
+    font-size:14px;
+}
+.leftNavList li a{
+    text-decoration: none;
+    display: block;
+    font-size:14px;
+    color:#3561ad;
+    line-height: 42px; /* 设置垂直居中 */
+    cursor: pointer;
+}
+.lightGray{
+    color:#999!important;
+}
+.search{
+    position: absolute;
+    top: 1px;
+    width:250px;
+}
+.mgl-80{
+    margin-left:80px;
+}
+.rightNavList .rightNavLi{
+    float: left;
+    padding-right:10px;
+    padding-left:10px;
+    border-right:1px solid #999;
+    height:18px;
+    margin-top:12px;
+}
+.rightNavList li a{
+    text-decoration: none;
+    font-size:14px;
+    color:#999;
+    /*line-height: 42px; /!* 设置垂直居中 *!/*/
+    cursor: pointer;
+}
+.shopCar{
+    width:134px;
+    height:40px;
+    background: url("../images/img/carBg.png") center -1px no-repeat;
+}
+.br-n{
+    border-right:none!important;
+}
+.shopCar img{
+    width:22px;
+    margin-top:8px;
+    margin-left:15px;
+}
+.shopCar span{
+    font-size:14px;
+    color:#fff;
+    display: inline-block;
+    vertical-align: middle;
+    margin-top: -15px;
+    margin-left:10px;
+}
+.shopCar i{
+    display: inline-block;
+    position: absolute;
+    left:38px;
+    top:-13px;
+    width:12px;
+    height:12px;
+    background-color: #fff;
+    color:#eba206;
+    font-size: 10px;
+    line-height: 12px;
+    font-style:normal;
+    text-align: center;
+}
+/*注册标题*/
+.tittle{
+    height:140px;
+}
+.tittle img{
+    display: inline-block;
+    width:157px;
+    margin-top:20px;
+    margin-left:30px;
+}
+.tittle p{
+    display: inline-block;
+    font-size:24px;
+    color:#000;
+    margin-left:40px;
+    vertical-align: top;
+    margin-top:60px;
+}
+.level1{
+    width:100%;
+    border-bottom:2px solid #e6e6e6;
+    margin-top:10px;
+}
+.step1{
+    /*margin-left:200px;*/
+}
+.stepActive{
+    border-bottom:2px solid #eba206;
+}
+.step1,.step2,.step3{
+    width:260px;
+    font-size:20px;
+    color:#000;
+    text-align: center;
+    /*padding-left:20px;*/
+}
+.step2Div{
+    margin-top:40px!important;
+}
+.step2Div fieldSet{
+    text-align: right!important;
+    padding-right:390px;
+}
+/*.step2,.step3{*/
+    /*margin-left:130px;*/
+/*}*/
+.mgl-250{
+    margin-left:250px;
+}
+.mgl-400{
+    margin-left:400px;
+}
+.registerOver img{
+    width:88px;
+    margin-top:130px;
+}
+.step1Div,.step2Div{
+    margin-top:60px;
+}
+.step1 p,.step2 p,.step3 p{
+    line-height:40px;
+}
+.stepPart fieldset{
+    border:none;
+    text-align: center;
+}
+.accountDiv,.passwordDiv{
+    font-size:14px;
+    color:#606060;
+}
+.xieyiDiv{
+    margin-right:190px;
+    margin-top:55px;
+}
+.step1Div .accountDiv input,.step1Div .passwordDiv input,.step2Div .nameDiv input,.step2Div .idDiv input,.step2Div .mobileDiv input{
+    width:320px;
+    height:40px;
+    border:1px solid #cccccc;
+    text-indent: 2em;
+    margin-left:20px;
+}
+.shopChoice{
+    margin-top:30px;
+}
+.step1Btn button,.step2Btn button{
+    width:180px;
+    height:36px;
+    background-color:#ededed;
+    color:#999999;
+    font-size:16px;
+    outline: none!important;
+    border:none!important;
+    cursor: pointer;
+    margin-top:25px;
+}
+.userInfo{
+    color:#ff0000;
+    font-size:14px;
+    margin-top:25px;
+    margin-right:320px;
+    margin-bottom:30px;
+}
+.stepBtnActive{
+    background-color: #eba206!important;
+    color:#fff!important;
+}
+.stepActive span{
+    background-color: #eba206!important;
+}
+.level1 span{
+    display: inline-block;
+    width:24px;
+    height:24px;
+    color:#fff;
+    background-color: #cccccc;
+    border-radius: 50%;
+    line-height: 24px;
+    text-align: center;
+    font-size:16px;
+    margin-right:10px;
+}
+.hidden{
+    display:none;
+}
+.verifyCode{
+    width:178px!important;
+    height:40px;
+    border:1px solid #cccccc;
+    margin-left:20px;
+    text-indent: 2em;
+    outline:none!important;
+}
+.verifyCode:focus{
+    border:1px solid #cccccc!important;
+}
+.verifyBtn{
+    width:140px;
+    height:44px;
+    background-color: #c3c3c3;
+    color:#000;
+    font-size:14px;
+    text-align: center;
+    line-height: 44px;
+    outline: none!important;
+    border:none!important;
+    cursor: pointer;
+    vertical-align: top;
+}
+.step2Btn button{
+    margin-right:90px;
+}
+/*.step2Btn button:focus{*/
+    /*outline: none!important;*/
+/*}*/
+.pdr-390{
+    padding-right:390px;
+}
+.registerOverRight{
+    margin-top:130px;
+    text-align: center;
+    display: inline-block;
+    margin-left:50px;
+}
+.registerOverRight p{
+    font-size:14px;
+    color:#4e4e4e;
+}
+.registerOverRight>p>span{
+    color:#ff0000!important;
+}
+.registerOverRight a{
+    text-decoration: none;
+    font-size:14px;
+    color:#4e4e4e;
+}
+.idImgDiv div{
+    display: inline-block;
+}
+.idImgDiv img{
+    vertical-align:middle;
+    margin-right:-5px;
+}
+.idImgDiv input{
+    position: absolute;
+    top:0px;
+    right:10px;
+    width:110px;
+    height:100px;
+    border:1px solid red;
+    -webkit-opacity: 0;
+    /* Netscape and Older than Firefox 0.9 */
+    -moz-opacity: 0;
+    /* Safari 1.x (pre WebKit!) 老式khtml内核的Safari浏览器*/
+    -khtml-opacity: 0;
+    /* IE9 + etc...modern browsers */
+    opacity: 0;
+    /* IE 4-9 */
+    filter:alpha(opacity=0);
+    /*This works in IE 8 & 9 too*/
+    -ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+    /*IE4-IE9*/
+    cursor: pointer;
+}
+.faceCheckDiv{
+    margin-right:213px;
+}
+.xieyiDiv a{
+    color:#488ccb;
+}
+.copyRight{
+    text-align: center;
+    margin-top:100px;
+}
+.copyRightTip{
+    font-size:14px;
+    color:#000;
+}
+.bottomImg{
+    margin-top:30px;
+}
+.stepPartLast{
+    margin-bottom:350px;
+}
+.mgb-300{
+    margin-bottom:300px;
+}

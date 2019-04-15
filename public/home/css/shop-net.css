@@ -1,0 +1,213 @@
+.netShopSearch{
+    margin-left:470px!important;
+    text-align: right;
+}
+.netShopSearch form{
+    width:500px;
+}
+.netShopAddress,.netShopName p{
+    font-size:14px;
+    color:#737373;
+    margin-top:30px;
+ }
+.netShopNameImg{
+    width:293px;
+}
+.netShopName p{
+    margin-top:5px!important;
+    margin-left:30px;
+}
+.searchDiv i{
+    display: block;
+    width:25px;
+    height:22px;
+    position: absolute;
+    top:5px;
+    left:5px;
+    background: url("../images/icon/searchIcon.png") center center no-repeat;
+    background-size: 100%;
+}
+.searchDiv input{
+    text-indent: 3em;
+}
+.netShopName{
+    position: absolute;
+    top:35px;
+    left:0px;
+    z-index: -9999;
+}
+.navLine{
+    width:100%;
+    border-top:1px solid #a6a6a6;
+    border-bottom: 1px solid #a6a6a6;
+    height:36px;
+}
+.netShopNav li{
+    /*z-index:-999;*/
+}
+.netShopNav{
+    margin-bottom:0px!important;
+}
+.netShopNav>li{
+    float: left;
+    position: relative;
+}
+.allTypeLi>ul>li{
+    width:130px;
+    text-align: center;
+    margin:auto;
+    height:30px;
+    background-color: rgba(255,255,255,.6);
+}
+.allTypeLi>ul>li>a{
+    display: block;
+    font-size:14px;
+    color:#000;
+    line-height: 30px;
+    text-decoration: none;
+}
+.netShopNav>li>a{
+    display: block;
+    font-size:14px;
+    color:#000;
+    line-height: 36px;
+    padding:0 35px;
+    text-decoration: none;
+}
+.netShopNav li ul{
+    display: none;
+}
+.netShopNav>li:hover>ul{
+    display: block;
+    position: absolute;
+    top:35px;
+    width:130px;
+    text-align: center;
+    z-index:999999;
+}
+.netShopNav>li:hover>ul>li a{
+    display:block;
+    width:130px;
+    text-align: center;
+    margin:auto;
+    /*height:50px;*/
+}
+.netShopNav>li:hover ul>li a:hover{
+    text-decoration:underline;
+}
+.bannerDiv{
+    width:100%;
+}
+.bannerDiv img{
+    width:1200px;
+}
+.netShopFengexian{
+    display: block;
+    width:100%;
+    margin:40px auto;
+}
+#myCarousel .carousel-indicators{
+    left:50%!important;
+}
+.netShopNewicon{
+    width:52px;
+    display: block;
+    margin:10px auto;
+}
+.netShopNew ul li{
+    float: left;
+    width:260px;
+    margin-right:40px;
+    margin-bottom:5px;
+}
+.netShopNew p{
+    margin:10px auto 0;
+    width:260px;
+    text-overflow:ellipsis;
+    overflow:hidden;
+    white-space:nowrap;
+    text-align: center;
+    font-size:14px;
+    color:#bcbcbc;
+}
+.netShopNew ul li a{
+    display: block;
+    text-decoration: none;
+    cursor: pointer;
+}
+.netShopNew ul li:nth-child(4n){
+    margin-right:0!important;
+}
+.allGoodsTittle{
+    width:100%;
+    height:34px;
+    background-color: #bfbfbf;
+    color:#fff;
+    font-size:16px;
+}
+.allGoodsTittle p{
+    line-height: 34px;
+    margin-left:20px;
+}
+.allGoodsTittle a{
+    display: block;
+    text-decoration: none;
+    color:#fff;
+    font-size:16px;
+    line-height: 34px;
+    margin-right:20px;
+}
+.allGoodsList{
+    margin-top:15px;
+}
+.allGoodsList li{
+    width:225px;
+    margin-right:10px;
+    background-color: #f6f6f6;
+    float: left;
+    margin-top:15px;
+    border:1px solid #fff;
+}
+.allGoodsList li:hover{
+    border:1px solid #0c8f9b;
+}
+.allGoodsList li:nth-child(5n){
+    margin-right:0!important;
+}
+.allGoodsList li a{
+    display: block;
+    padding:30px 25px;
+    text-decoration: none;
+}
+.allGoodsList li a img{
+    display: block;
+    width:172px;
+    margin:0 auto;
+}
+.allGoodsList li a .allGoodsText{
+    font-size:14px;
+    color:#000000;
+    margin-top:10px;
+    width:172px;
+    text-overflow:ellipsis;
+    overflow:hidden;
+    white-space:nowrap;
+}
+.allGoodsPrice{
+    font-size:14px;
+    color:#e01222;
+    margin:0!important;
+}
+.allGoodsPrice span{
+    font-size:20px;
+}
+.mgb-200{
+    margin-bottom:200px;
+}
+.shopCode{
+    width:130px;
+    height:130px;
+    position: absolute;
+    top:-35px;
+    right:-200px;
+}
