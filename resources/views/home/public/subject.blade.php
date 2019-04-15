@@ -9,18 +9,18 @@
     <meta charset="utf-8">
     <meta name="renderer" content="webkit">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>@yield('title', '阿朗博波商户平台')</title>
+    <title>@yield('title', '阿郎博波商务网')</title>
     @section('css')
         @include('home.public.public_css')
     @show
 </head>
 <body class="bg-white">
     <div class="relative">
-        @section('header_img')
-            <div class="topDiv">
-                <img src="{{ asset('home/images/img/firstImg.png') }}" alt=""/>
-            </div>
-        @show
+        {{--@section('header_img')--}}
+            {{--<div class="topDiv">--}}
+                {{--<img src="{{ asset('home/images/img/firstImg.png') }}" alt=""/>--}}
+            {{--</div>--}}
+        {{--@show--}}
         {{--导航栏--}}
         @section('header')
             @include('home.public.header')

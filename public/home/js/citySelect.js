@@ -87,3 +87,10 @@ function addArray(){
    // console.log(arr);
 };
 
+function comparison(str) {
+    var arr = {account: '账号', password: '密码'};
+    return '请填写' + arr[str];
+}
+
+
+

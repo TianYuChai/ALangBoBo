@@ -1,4 +1,7 @@
 @extends('home.public.subject')
+<div class="topDiv">
+    <img src="{{ asset('home/images/img/firstImg.png') }}" alt=""/>
+</div>
 @section('content')
     <!--搜索部分-->
     <div class="container searchPart">
