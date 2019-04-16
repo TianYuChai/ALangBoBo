@@ -296,7 +296,7 @@
             console.log('验证数据: ' + JSON.stringify(btn));
             console.log('当前提交对象: ' + stage);
             processing(btn, stage);
-            if(!$('#layui-layer1').length) {
+            if(!$('.layui-layer-msg').length) {
                 if(stage == "user_info") {
                     $('.user_info').addClass('hidden');
                     $('.account_info').removeClass('hidden');
