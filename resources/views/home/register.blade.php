@@ -13,7 +13,7 @@
     <div class="registerStep">
         <!--第一步-->
         <!--通过添加 类 hidden 控制其它步骤隐藏-->
-        <div class="stepPart mgb-300">
+        <div class="stepPart mgb-300 user_info">
             <!--1.设置用户名-->
             <div class="level1 clearfix">
                 <div class="mgl-250">
@@ -24,7 +24,7 @@
                 </div>
             </div>
             <div class="step1Div">
-                <form class="cmxform" id="verifyForm1">
+                <form class="cmxform" id="user_info">
                     <fieldset class="fieldset clearfix">
                         <div class="accountDiv relative">
                             账号
@@ -58,7 +58,7 @@
             </div>
         </div>
         <!--第二步-->
-        <div class="stepPart hidden">
+        <div class="stepPart hidden account_info">
             <!--2.填写账号信息-->
             <div class="level1 clearfix">
                 <div class="mgl-250">
@@ -70,8 +70,8 @@
             </div>
             <!--当注册第一步选择的是 买家 ，则显示此第二步样式-->
             <!--当注册第一步选择的是 买家 ，同样其它两个样式 hidden 隐藏-->
-            <div class="step2Div">
-                <form class="cmxform" id="verifyForm2" method="get" action="">
+            <div class="step2Div hidden buyer_info">
+                <form class="cmxform" id="buyer_info">
                     <fieldset class="fieldset clearfix">
                         <p class="userInfo">用户资料填写：</p>
                         <div class="nameDiv relative">
@@ -90,22 +90,24 @@
                             验证码
                             <input type="text" placeholder="验证码" class="verifyCode" id="verifyCode" name="verifyCode" autocomplete="off">
                             <!--<button class="verifyBtn">获取验证码</button>-->
-                            <button class="teleCodeBtn get-code verifyBtn">获取验证码</button>
+                            <button class="teleCodeBtn get-code verifyBtn" onClick="return false;">获取验证码</button>
                         </div>
                         <div class="xieyiDiv">
-                            <input type="checkbox"/>
+                            <input type="checkbox" name="type" value="1" checked/>
                             <label for="">我已阅读和同意 <a href="">《注册协议》</a></label>
                         </div>
                         <div class="step2Btn">
-                            <button class="submit stepBtnActive" type="submit" >确定</button>
+                            <button class="submit stepBtnActive"
+                                    onClick="return false;"
+                                    data-stage="buyer_info">确定</button>
                         </div>
                     </fieldset>
                 </form>
             </div>
             <!--当注册第一步选择的是 企业商户 ，则显示此第二步样式-->
             <!--当注册第一步选择的是 企业商户 ，同样其它两个样式 hidden 隐藏-->
-            <div class="step2Div hidden">
-                <form class="cmxform" id="qiyeVerifyForm2" method="get" action="">
+            <div class="step2Div hidden enterprise_info">
+                <form class="cmxform" id="qiyeVerifyForm2">
                     <fieldset class="fieldset clearfix">
                         <p class="userInfo">企业商户资料填写：</p>
                         <div class="nameDiv relative">
@@ -119,13 +121,13 @@
                         <div class="idImgDiv mgt-30 relative">
                             <div class="relative">
                                 <p class="inline-block mgr-20">身份证正面</p>
-                                <img src="../images/img/idImg.png" alt="" class="personalImg"/>
+                                <img src="{{ asset('home/images/img/idImg.png') }}" alt="" class="personalImg"/>
                                 <input type="file" class="file" id="zheng" name="zheng">
                                 <input type="file" class="file-input" /> 
                             </div>
                             <div class="relative">
                                 <p class="inline-block mgr-20">身份证反面</p>
-                                <img src="../images/img/idImg.png" alt="" class="personalImg"/>
+                                <img src="{{ asset('home/images/img/idImg.png') }}" alt="" class="personalImg"/>
                                 <input type="file" class="file" id="fan" name="fan">
                             </div>
                         </div>
@@ -141,7 +143,7 @@
                         </div>
                         <div class="idImgDiv mgt-30 relative faceCheckDiv">
                             <p class="inline-block mgr-20">人脸识别</p>
-                            <img src="../images/img/idImg.png" alt="" class="personalImg"/>
+                            <img src="{{ asset('home/images/img/idImg.png') }}" alt="" class="personalImg"/>
                             <input type="file" class="file" id="renlian" name="renlian">
                         </div>
                         <div class="nameDiv relative mgt-30">
@@ -154,39 +156,41 @@
                         </div>
                         <div class="idImgDiv mgt-30 relative faceCheckDiv">
                             <p class="inline-block mgr-20">营业执照上传</p>
-                            <img src="../images/img/idImg.png" alt="" class="personalImg"/>
+                            <img src="{{ asset('home/images/img/idImg.png') }}" alt="" class="personalImg"/>
                             <input type="file" class="file" id="yyzz" name="yyzz">
                         </div>
                         <div class="idImgDiv mgt-30 relative">
                             <div class="relative">
                                 <p class="inline-block">食品行业证件上传</p>
-                                <img src="../images/img/idImg.png" alt="" class="personalImg"/>
+                                <img src="{{ asset('home/images/img/idImg.png') }}" alt="" class="personalImg"/>
                                 <input type="file" class="file" id="food" name="food">
                             </div>
                             <div class="relative">
                                 <p class="inline-block">美容或理发行业</p>
-                                <img src="../images/img/idImg.png" alt="" class="personalImg"/>
+                                <img src="{{ asset('home/images/img/idImg.png') }}" alt="" class="personalImg"/>
                                 <input type="file" class="file" id="mrlf" name="mrlf">
                             </div>
                         </div>
                         <div class="idImgDiv mgt-30 relative faceCheckDiv">
                             <p class="inline-block">其它行业证件上传</p>
-                            <img src="../images/img/idImg.png" alt="" class="personalImg"/>
+                            <img src="{{ asset('home/images/img/idImg.png') }}" alt="" class="personalImg"/>
                             <input type="file" class="file" id="qt" name="qt">
                         </div>
                         <div class="xieyiDiv">
-                            <input type="checkbox"/>
+                            <input type="checkbox" name="type" value="1" checked/>
                             <label for="">我已阅读和同意 <a href="">《注册协议》</a></label>
                         </div>
                         <div class="step2Btn">
-                            <button class="submit stepBtnActive" type="submit" >确定</button>
+                            <button class="submit stepBtnActive"
+                                    onClick="return false;"
+                                    data-stage="enterprise_info" >确定</button>
                         </div>
                     </fieldset>
                 </form>
             </div>
             <!--当注册第一步选择的是 个人商户 ，则显示此第二步样式-->
             <!--当注册第一步选择的是 个人商户 ，同样其它两个样式 hidden 隐藏-->
-            <div class="step2Div hidden">
+            <div class="step2Div hidden personal_info">
                 <form class="cmxform" id="gerenVerifyForm2" method="get" action="">
                     <fieldset class="fieldset clearfix">
                         <p class="userInfo">个人商户资料填写：</p>
@@ -201,12 +205,12 @@
                         <div class="idImgDiv mgt-30 relative">
                             <div class="relative">
                                 <p class="inline-block mgr-20">身份证正面</p>
-                                <img src="../images/img/idImg.png" alt="" class="personalImg"/>
+                                <img src="{{ asset('home/images/img/idImg.png') }}" alt="" class="personalImg"/>
                                 <input type="file" class="file" id="zheng2" name="zheng">
                             </div>
                             <div class="relative">
                                 <p class="inline-block mgr-20">身份证反面</p>
-                                <img src="../images/img/idImg.png" alt="" class="personalImg"/>
+                                <img src="{{ asset('home/images/img/idImg.png') }}" alt="" class="personalImg"/>
                                 <input type="file" class="file" id="fan2" name="fan">
                             </div>
                         </div>
@@ -222,7 +226,7 @@
                         </div>
                         <div class="idImgDiv mgt-30 relative faceCheckDiv">
                             <p class="inline-block mgr-20">人脸识别</p>
-                            <img src="../images/img/idImg.png" alt="" class="personalImg"/>
+                            <img src="{{ asset('home/images/img/idImg.png') }}" alt="" class="personalImg"/>
                             <input type="file" class="file" id="renlian2" name="renlian">
                         </div>
                         <div class="nameDiv relative mgt-30">
@@ -235,15 +239,17 @@
                         </div>
                         <div class="idImgDiv mgt-30 relative faceCheckDiv">
                             <p class="inline-block mgr-20">个人证件或作品上传</p>
-                            <img src="../images/img/idImg.png" alt="" class="personalImg"/>
+                            <img src="{{ asset('home/images/img/idImg.png') }}" alt="" class="personalImg"/>
                             <input type="file" class="file" id="zuopin" name="zuopin">
                         </div>
                         <div class="xieyiDiv">
-                            <input type="checkbox"/>
+                            <input type="checkbox" name="type" value="1" checked/>
                             <label for="">我已阅读和同意 <a href="">《注册协议》</a></label>
                         </div>
                         <div class="step2Btn">
-                            <button class="submit stepBtnActive" type="submit" >确定</button>
+                            <button class="submit stepBtnActive"
+                                    onClick="return false;"
+                                    data-stage="personal_info">确定</button>
                         </div>
                     </fieldset>
                 </form>
@@ -263,7 +269,7 @@
             <div class="step3Div">
                 <form class="cmxform" id="verifyForm3" method="get" action="">
                     <div class="registerOver clearfix">
-                        <img src="../images/img/registerOver.png" alt="" class="mgl-400"/>
+                        <img src="{{ asset('home/images/img/registerOver.png') }}" alt="" class="mgl-400"/>
                         <div class="registerOverRight">
                             <p class="">注册完成您的用户名：<span>1111</span>，您已成为了本站的正式会员！</p>
                             <p>5秒钟后自动转到首页！</p>
@@ -281,49 +287,127 @@
 
 @section('section')
     <script type="text/javascript">
-        var str = [];
-        var user_info = ['account', 'password', 'category'];
+        var category = 0;
+        var info = ['buyer_info', 'enterprise_info', 'personal_info'];
         $('.stepBtnActive').on('click', function () {
-            var btn = $('form').serializeArray();
             var that = $(this);
             var stage = that.data('stage');
+            var btn = $('#'+ stage).serializeArray();
+            console.log('验证数据: ' + JSON.stringify(btn));
+            console.log('当前提交对象: ' + stage);
             processing(btn, stage);
-            console.log(str);
+            if(!$('#layui-layer1').length) {
+                if(stage == "user_info") {
+                    $('.user_info').addClass('hidden');
+                    $('.account_info').removeClass('hidden');
+                    $('.' + info[category]).removeClass('hidden');
+                }
+            }
         });
+        /*数据处理*/
         function processing(data, type) {
             $.each(data, function (k, val) {
                 if(type == "user_info") {
-                    if($.inArray(val['name'], user_info) != -1) {
-                        if(val['value'] == '') {
-                            layer.msg(comparison(val['name']));return false;
-                        } else {
-                            if(val['name'] == 'password') {
-                                if(/.*[\u4e00-\u9fa5]+.*$/.test(val['value'])) {
-                                    layer.msg('不可使用中文作为账户密码!');return false;
-                                }
-                                if(val['value'].length < 6 || val['value'].length > 12) {
-                                    layer.msg('密码长度需为6-12个字符');return false;
-                                }
+                    if(val['value'] == '') {
+                        layer.msg(comparison(val['name']));return false;
+                    } else {
+                        if(val['name'] == 'password') {
+                            if(/.*[\u4e00-\u9fa5]+.*$/.test(val['value'])) {
+                                layer.msg('不可使用中文作为账户密码!');return false;
                             }
-                            var temporary = new Array();
-                            temporary[val['name']] = val['value'];
-                            if(str.length > 0) {
-                                for (var i = 0; i < str.length; i++) {
-                                   if(typeof str[i][val['name']] != 'undefined') {
-                                       str[i][val['name']] = val['value'];
-                                   } else {
-                                       str.push(temporary);
-                                   }
-                                }
-                            } else {
-                                str.push(temporary);
+                            if(val['value'].length < 6 || val['value'].length > 12) {
+                                layer.msg('密码长度需为6-12个字符');return false;
+                            }
+                        }
+                        if(val['name'] == 'category') {
+                            category = val['value'];
+                        }
+                    }
+                } else if (type == "buyer_info") {
+                    if(val['value'] == '') {
+                        layer.msg(comparison(val['name']));return false;
+                    } else {
+                        if(val['name'] == 'mobile') {
+                            console.log('手机号：'+ isPhoneNo(val['value']));
+                            if(!isPhoneNo(val['value'])) {
+                                layer.msg('请填写正确的手机号'); return false;
+                            }
+                        }
+                        if(val['name'] == 'id') {
+                            console.log('身份证号：'+ isCardNo(val['value']));
+                            if(!isCardNo(val['value'])){
+                                layer.msg('请填写正确的身份证号'); return false;
                             }
                         }
                     }
-                } else if (type == "one") {
-
                 }
             });
-        };
+        }
+        /*监听-账号*/
+        $('.account').bind('change', function() {
+            var that = $(this);
+            $.ajax({
+                headers: {
+                    'X-CSRF-TOKEN': "{{ csrf_token() }}"
+                },
+                method:"POST",
+                url:"{!! route('index.verifivWhetExist') !!}",
+                data:{account: that.val()},
+                success:function (res) {
+                    if(res.status == 200) {
+                        layer.msg(res.info);
+                        setTimeout(function () {
+                            window.location.href = res.url;
+                        }, 1000)
+                    }
+                },
+                error:function (XMLHttpRequest) {
+                    //返回提示信息
+                    try {
+                        var errors = XMLHttpRequest.responseJSON.errors;
+                        for (var value in errors) {
+                            layer.msg(errors[value][0]);return;
+                        }
+                    } catch (e) {
+                        var errors = JSON.parse(XMLHttpRequest.responseText)['errors']['info'];
+                        layer.msg(errors[0]);return;
+                    }
+                }
+            });
+        });
+        /*验证码*/
+        $('.verifyBtn').on('click', function () {
+            var that = $(this);
+            var mobile = $.trim(that.parent().prev().children().val());
+            if(!mobile) {
+                layer.msg('请填写手机号'); return;
+            }
+            if(!isPhoneNo(mobile)) {
+                layer.msg('请填写正确的手机号'); return;
+            }
+            $.ajax({
+                headers: {
+                    'X-CSRF-TOKEN': "{{ csrf_token() }}"
+                },
+                method:"POST",
+                url:"{!! route('backstage.banner.store') !!}",
+                data:{mobile: mobile},
+                success:function (res) {
+                    if(res.status == 200) {
+                        layer.msg(res.info);
+                        setTimeout(function () {
+                            window.location.href = res.url;
+                        }, 1000)
+                    }
+                },
+                error:function (XMLHttpRequest) {
+                    //返回提示信息
+                    var errors = XMLHttpRequest.responseJSON.errors;
+                    for (var value in errors) {
+                        layer.msg(errors[value][0]);return;
+                    }
+                }
+            });
+        })
     </script>
 @endsection

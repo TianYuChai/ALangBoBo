@@ -24,6 +24,7 @@ Route::group(['namespace' => 'home'], function () {
     Route::get('/', 'IndexController@index');
     /*首页-注册*/
     Route::get('register', ['as' => 'index.register', 'uses' => 'RegisterController@index']);
+    Route::post('verifivWhetExist', ['as' => 'index.verifivWhetExist', 'uses' => 'RegisterController@verifivWhetExist']);
 
     Route::group(['prefix' => 'index'], function () {
 

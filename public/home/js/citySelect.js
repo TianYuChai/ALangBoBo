@@ -88,9 +88,22 @@ function addArray(){
 };
 
 function comparison(str) {
-    var arr = {account: '账号', password: '密码'};
+    var arr = {account: '账号', password: '密码', name: '姓名', id: '身份证号', mobile: '手机号', verifyCode: '验证码'};
     return '请填写' + arr[str];
 }
+
+// 验证手机号
+function isPhoneNo(phone) {
+    var pattern = /^1[34578]\d{9}$/;
+    return pattern.test(phone);
+}
+
+// 验证身份证
+function isCardNo(card) {
+    var pattern = /(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/;
+    return pattern.test(card);
+}
+
 
 
 
