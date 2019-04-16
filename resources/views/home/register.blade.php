@@ -344,7 +344,7 @@
             });
         }
         /*监听-账号*/
-        $('.account').bind('change', function() {
+        $('.account').bind("input propertychange", function() {
             var that = $(this);
             $.ajax({
                 headers: {
