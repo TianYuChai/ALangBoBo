@@ -328,8 +328,10 @@
                                     layer.msg(errors[value][0]);return;
                                 }
                             } catch (e) {
-                                var errors = JSON.parse(XMLHttpRequest.responseText)['errors']['info'];
-                                layer.msg(errors[0]);return;
+                                var errors = JSON.parse(XMLHttpRequest.responseText)['errors'];
+                                for (var value in errors) {
+                                    layer.msg(errors[value][0]);return;
+                                }
                             }
                         }
                     });

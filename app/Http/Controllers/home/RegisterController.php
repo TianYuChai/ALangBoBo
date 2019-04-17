@@ -9,6 +9,7 @@ namespace App\Http\Controllers\home;
 
 use App\Http\Models\currency\UserModel;
 use App\Http\Requests\home\RegisterRequest;
+use App\Http\Services\RegisterService;
 use Illuminate\Support\Facades\Redis;
 use Illuminate\Http\Request;
 use Exception;
@@ -21,9 +22,16 @@ class RegisterController extends BaseController
         return view('home.register');
     }
 
-    public function create(RegisterRequest $request)
+    public function create(RegisterRequest $request, RegisterService $registerService)
     {
-        dd($request->all());
+        try {
+            $registerService->dataFiltering($request);
+        } catch (Exception $e) {
+            return $this->ajaxReturn([
+                'info' => $e->getMessage(),
+                'status' => 100
+            ], 510);
+        }
     }
     /**
      * 验证注册内容是否可用
