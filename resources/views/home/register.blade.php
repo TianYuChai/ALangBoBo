@@ -93,7 +93,7 @@
                             <button class="teleCodeBtn get-code verifyBtn" onClick="return false;">获取验证码</button>
                         </div>
                         <div class="xieyiDiv">
-                            <input type="checkbox" name="type" value="1" checked/>
+                            <input type="checkbox" name="type" value="1" class="type" checked/>
                             <label for="">我已阅读和同意 <a href="">《注册协议》</a></label>
                         </div>
                         <div class="step2Btn">
@@ -177,7 +177,7 @@
                             <input type="file" class="file" id="qt" name="qt">
                         </div>
                         <div class="xieyiDiv">
-                            <input type="checkbox" name="type" value="1" checked/>
+                            <input type="checkbox" name="type" value="1" class="type" checked/>
                             <label for="">我已阅读和同意 <a href="">《注册协议》</a></label>
                         </div>
                         <div class="step2Btn">
@@ -243,7 +243,7 @@
                             <input type="file" class="file" id="zuopin" name="zuopin">
                         </div>
                         <div class="xieyiDiv">
-                            <input type="checkbox" name="type" value="1" checked/>
+                            <input type="checkbox" name="type" value="1" class="type" checked/>
                             <label for="">我已阅读和同意 <a href="">《注册协议》</a></label>
                         </div>
                         <div class="step2Btn">
@@ -302,6 +302,38 @@
                     $('.account_info').removeClass('hidden');
                     $('.' + info[category]).removeClass('hidden');
                 }
+                if($.inArray(stage, info) != -1) {
+                    var type = that.parent().prev().children('input').is(':checked');
+                    if(!type) {
+                        layer.msg('请先阅读注册协议');return false;
+                    }
+                    var data = goEmpty($('form').serializeArray());
+                    $.ajax({
+                        headers: {
+                            'X-CSRF-TOKEN': "{{ csrf_token() }}"
+                        },
+                        method:"POST",
+                        url:"{!! route('index.regists.create') !!}",
+                        data:data,
+                        success:function (res) {
+                            if(res.status == 200) {
+
+                            }
+                        },
+                        error:function (XMLHttpRequest) {
+                            //返回提示信息
+                            try {
+                                var errors = XMLHttpRequest.responseJSON.errors;
+                                for (var value in errors) {
+                                    layer.msg(errors[value][0]);return;
+                                }
+                            } catch (e) {
+                                var errors = JSON.parse(XMLHttpRequest.responseText)['errors']['info'];
+                                layer.msg(errors[0]);return;
+                            }
+                        }
+                    });
+                }
             }
         });
         /*数据处理*/
@@ -346,23 +378,47 @@
         /*监听-账号*/
         $('.account').bind("input propertychange", function() {
             var that = $(this);
+            monitor(that, 'account');
+        });
+        /*监听-姓名*/
+        $('.name').bind("input propertychange", function() {
+            var that = $(this);
+            monitor(that, 'name');
+        });
+        /*监听-身份证号*/
+        $('#id').bind("input propertychange", function() {
+            var that = $(this);
+            monitor(that, 'id');
+        });
+        /*监听-身份证号*/
+        $('.mobile').bind("input propertychange", function() {
+            var that = $(this);
+            monitor(that, 'mobile');
+        });
+        /*监听-提交*/
+        function monitor(that, parameter)
+        {
+            var val = that.val();
+            if(!val) {
+                return;
+            }
+            var data = {};
+            data[parameter] = val;
             $.ajax({
                 headers: {
                     'X-CSRF-TOKEN': "{{ csrf_token() }}"
                 },
                 method:"POST",
                 url:"{!! route('index.verifivWhetExist') !!}",
-                data:{account: that.val()},
+                data:data,
                 success:function (res) {
                     if(res.status == 200) {
-                        layer.msg(res.info);
-                        setTimeout(function () {
-                            window.location.href = res.url;
-                        }, 1000)
+                        $(".stepBtnActive").removeAttr('disabled');
                     }
                 },
                 error:function (XMLHttpRequest) {
                     //返回提示信息
+                    $(".stepBtnActive").attr('disabled','disabled');
                     try {
                         var errors = XMLHttpRequest.responseJSON.errors;
                         for (var value in errors) {
@@ -374,7 +430,7 @@
                     }
                 }
             });
-        });
+        }
         /*验证码*/
         $('.verifyBtn').on('click', function () {
             var that = $(this);
@@ -390,24 +446,62 @@
                     'X-CSRF-TOKEN': "{{ csrf_token() }}"
                 },
                 method:"POST",
-                url:"{!! route('backstage.banner.store') !!}",
+                url:"{!! route('index.shortMessage') !!}",
                 data:{mobile: mobile},
                 success:function (res) {
                     if(res.status == 200) {
                         layer.msg(res.info);
-                        setTimeout(function () {
-                            window.location.href = res.url;
-                        }, 1000)
+                        countDown(29, 59);
                     }
                 },
                 error:function (XMLHttpRequest) {
                     //返回提示信息
-                    var errors = XMLHttpRequest.responseJSON.errors;
-                    for (var value in errors) {
-                        layer.msg(errors[value][0]);return;
+                    try {
+                        if(XMLHttpRequest.status == 429) {
+                            layer.msg('请求过快, 请稍后再试');return;
+                        }
+                        var errors = XMLHttpRequest.responseJSON.errors;
+                        for (var value in errors) {
+                            layer.msg(errors[value][0]);return;
+                        }
+                    } catch (e) {
+                        var errors = JSON.parse(XMLHttpRequest.responseText)['errors']['info'];
+                        layer.msg(errors[0]);return;
                     }
                 }
             });
-        })
+        });
+
+        /*倒计时*/
+        function countDown(m, s) {
+            $('.verifyBtn').attr('disabled','disabled');
+            var time = setInterval(function(){
+                if(s < 10){
+                    $('.verifyBtn').text(m+':0'+s);
+                }else{
+                    $('.verifyBtn').text(m+':'+s);
+                }
+                s--;
+                if(s < 0) {
+                    clearInterval(time);
+                    $('.verifyBtn').text('获取验证码');
+                    $('.verifyBtn').removeAttr('disabled');
+                }
+            }, 1000);
+        }
+        /*数据去null*/
+        function goEmpty(data) {
+            var notEmpty = [];
+            var hash = {};
+            $.each(data, function (key, value) {
+                if(value['value'] != '') {
+                    if(!hash[value['name']]) {
+                        notEmpty.push(value);
+                        hash[value['name']] = true;
+                    }
+                }
+            });
+            return notEmpty;
+        }
     </script>
 @endsection

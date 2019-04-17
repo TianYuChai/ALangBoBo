@@ -28,7 +28,8 @@
         },
         "files": [
             "Common/function.php",
-            "Common/FileUpload.php"
+            "Common/FileUpload.php",
+            "Common/shortMessage.php"
         ]
     },
     "autoload-dev": {
