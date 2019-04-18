@@ -315,6 +315,9 @@
                     if(!type) {
                         layer.msg('请先阅读注册协议');return false;
                     }
+                    if(stage != 'buyer_info') {
+
+                    }
                     var data = goEmpty($('form').serializeArray());
                     $.ajax({
                         headers: {
@@ -552,6 +555,9 @@
         }
         /*调用摄像头*/
         $('#face').click(function () {
+            if($('input[name="zheng"]').val() == '') {
+                layer.msg('请先上传身份证');return false;
+            }
             var constraints = {
                 video: {width: 500, height: 500},
                 audio: false
@@ -580,7 +586,35 @@
             var canvas = document.getElementById("canvas");
             var ctx = canvas.getContext('2d');
             ctx.drawImage(video, 0, 0, 500, 250);
+            //处理canvas图片
             canvas.toDataURL();
+            $.ajax({
+                headers: {
+                    'X-CSRF-TOKEN': "{{ csrf_token() }}"
+                },
+                method:"POST",
+                url:"{!! route("file.upload") !!}",
+                processData: false,
+                contentType: false,
+                data:formData,
+                success:function (res) {
+                    if(res.status == 200) {
+                        image.val(res.url[0]);
+                    }
+                },
+                error:function (XMLHttpRequest) {
+                    //返回提示信息
+                    try {
+                        var errors = XMLHttpRequest.responseJSON.errors;
+                        for (var value in errors) {
+                            layer.msg(errors[value][0]);return;
+                        }
+                    } catch (e) {
+                        var errors = JSON.parse(XMLHttpRequest.responseText)['errors']['info'];
+                        layer.msg(errors[0]);return;
+                    }
+                }
+            });
         }
     </script>
 @endsection
