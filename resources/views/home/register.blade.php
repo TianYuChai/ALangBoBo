@@ -106,7 +106,7 @@
             </div>
             <!--当注册第一步选择的是 企业商户 ，则显示此第二步样式-->
             <!--当注册第一步选择的是 企业商户 ，同样其它两个样式 hidden 隐藏-->
-            <div class="step2Div hidden enterprise_info">
+            <div class="step2Div  hidden enterprise_info">
                 <form class="cmxform" id="qiyeVerifyForm2">
                     <fieldset class="fieldset clearfix">
                         <p class="userInfo">企业商户资料填写：</p>
@@ -122,13 +122,14 @@
                             <div class="relative">
                                 <p class="inline-block mgr-20">身份证正面</p>
                                 <img src="{{ asset('home/images/img/idImg.png') }}" alt="" class="personalImg"/>
-                                <input type="file" class="file" id="zheng" name="zheng">
-                                <input type="file" class="file-input" /> 
+                                <input type="file" class="file" id="zheng" accept="image/*">
+                                <input type="hidden" name="zheng">
                             </div>
                             <div class="relative">
                                 <p class="inline-block mgr-20">身份证反面</p>
                                 <img src="{{ asset('home/images/img/idImg.png') }}" alt="" class="personalImg"/>
-                                <input type="file" class="file" id="fan" name="fan">
+                                <input type="file" class="file" id="fan" accept="image/*">
+                                <input type="hidden" name="fan">
                             </div>
                         </div>
                         <div class="mobileDiv relative mgt-30">
@@ -139,12 +140,12 @@
                             验证码
                             <input type="text" placeholder="验证码" class="verifyCode" id="verifyCode2" name="verifyCode" autocomplete="off">
                             <!--<button class="verifyBtn">获取验证码</button>-->
-                            <button class="teleCodeBtn get-code verifyBtn">获取验证码</button>
+                            <button class="teleCodeBtn get-code verifyBtn" onClick="return false;">获取验证码</button>
                         </div>
                         <div class="idImgDiv mgt-30 relative faceCheckDiv">
                             <p class="inline-block mgr-20">人脸识别</p>
-                            <img src="{{ asset('home/images/img/idImg.png') }}" alt="" class="personalImg"/>
-                            <input type="file" class="file" id="renlian" name="renlian">
+                            <img src="{{ asset('home/images/img/idImg.png') }}" alt="" class="personalImg" id="face"/>
+                            {{--<input type="file" class="file" id="renlian" name="renlian">--}}
                         </div>
                         <div class="nameDiv relative mgt-30">
                             店名
@@ -157,24 +158,28 @@
                         <div class="idImgDiv mgt-30 relative faceCheckDiv">
                             <p class="inline-block mgr-20">营业执照上传</p>
                             <img src="{{ asset('home/images/img/idImg.png') }}" alt="" class="personalImg"/>
-                            <input type="file" class="file" id="yyzz" name="yyzz">
+                            <input type="file" class="file" id="yyzz" accept="image/*">
+                            <input type="hidden" name="yyzz">
                         </div>
                         <div class="idImgDiv mgt-30 relative">
                             <div class="relative">
                                 <p class="inline-block">食品行业证件上传</p>
                                 <img src="{{ asset('home/images/img/idImg.png') }}" alt="" class="personalImg"/>
-                                <input type="file" class="file" id="food" name="food">
+                                <input type="file" class="file" id="food" accept="image/*">
+                                <input type="hidden" name="food">
                             </div>
                             <div class="relative">
                                 <p class="inline-block">美容或理发行业</p>
                                 <img src="{{ asset('home/images/img/idImg.png') }}" alt="" class="personalImg"/>
-                                <input type="file" class="file" id="mrlf" name="mrlf">
+                                <input type="file" class="file" id="mrlf" accept="image/*">
+                                <input type="hidden" name="mrlf">
                             </div>
                         </div>
                         <div class="idImgDiv mgt-30 relative faceCheckDiv">
                             <p class="inline-block">其它行业证件上传</p>
                             <img src="{{ asset('home/images/img/idImg.png') }}" alt="" class="personalImg"/>
-                            <input type="file" class="file" id="qt" name="qt">
+                            <input type="file" class="file" id="qt" accept="image/*">
+                            <input type="hidden" name="qt">
                         </div>
                         <div class="xieyiDiv">
                             <input type="checkbox" name="type" value="1" class="type" checked/>
@@ -206,12 +211,14 @@
                             <div class="relative">
                                 <p class="inline-block mgr-20">身份证正面</p>
                                 <img src="{{ asset('home/images/img/idImg.png') }}" alt="" class="personalImg"/>
-                                <input type="file" class="file" id="zheng2" name="zheng">
+                                <input type="file" class="file" id="zheng" accept="image/*">
+                                <input type="hidden" name="zheng">
                             </div>
                             <div class="relative">
                                 <p class="inline-block mgr-20">身份证反面</p>
                                 <img src="{{ asset('home/images/img/idImg.png') }}" alt="" class="personalImg"/>
-                                <input type="file" class="file" id="fan2" name="fan">
+                                <input type="file" class="file" id="fan" accept="image/*">
+                                <input type="hidden" name="fan">
                             </div>
                         </div>
                         <div class="mobileDiv relative mgt-30">
@@ -240,7 +247,8 @@
                         <div class="idImgDiv mgt-30 relative faceCheckDiv">
                             <p class="inline-block mgr-20">个人证件或作品上传</p>
                             <img src="{{ asset('home/images/img/idImg.png') }}" alt="" class="personalImg"/>
-                            <input type="file" class="file" id="zuopin" name="zuopin">
+                            <input type="file" class="file" id="zuopin" accept="image/*">
+                            <input type="hidden" name="zuopin">
                         </div>
                         <div class="xieyiDiv">
                             <input type="checkbox" name="type" value="1" class="type" checked/>
@@ -473,7 +481,44 @@
                 }
             });
         });
-
+        /*图片-上传*/
+        $("input[type='file']").on('change', function () {
+            var that = $(this);
+            var file = that[0].files[0];
+            var image = $('input[name='+that.attr('id')+']');
+            var image_path = image.val();
+            that.prev().attr('src', URL.createObjectURL(file)).css({"width":"117px","height":"101px"});
+            var formData = new FormData();
+            formData.append('file', file);
+            formData.append('image_path', image_path);
+            $.ajax({
+                headers: {
+                    'X-CSRF-TOKEN': "{{ csrf_token() }}"
+                },
+                method:"POST",
+                url:"{!! route("file.upload") !!}",
+                processData: false,
+                contentType: false,
+                data:formData,
+                success:function (res) {
+                    if(res.status == 200) {
+                        image.val(res.url[0]);
+                    }
+                },
+                error:function (XMLHttpRequest) {
+                    //返回提示信息
+                    try {
+                        var errors = XMLHttpRequest.responseJSON.errors;
+                        for (var value in errors) {
+                            layer.msg(errors[value][0]);return;
+                        }
+                    } catch (e) {
+                        var errors = JSON.parse(XMLHttpRequest.responseText)['errors']['info'];
+                        layer.msg(errors[0]);return;
+                    }
+                }
+            });
+        });
         /*倒计时*/
         function countDown(m, s) {
             $('.verifyBtn').attr('disabled','disabled');
@@ -504,6 +549,38 @@
                 }
             });
             return notEmpty;
+        }
+        /*调用摄像头*/
+        $('#face').click(function () {
+            var constraints = {
+                video: {width: 500, height: 500},
+                audio: false
+            };
+            //获得video摄像头区域
+            var promise = navigator.mediaDevices.getUserMedia(constraints);
+            promise.then(function (MediaStream) {
+                layer.alert('请对准摄像头, 五秒后自动拍照', {icon: 6}, function () {
+                    layer.close(index);
+                    $(this).after('<video id="video" width="500" height="300" autoplay></video>' +
+                        '<canvas id="canvas" width="450" height="250"></canvas>');
+                    var video = document.getElementById("video");
+                    video.srcObject = MediaStream;
+                    video.play();
+                    setTimeout(function () {
+                        takePhoto();
+                    }, 5000)
+                });
+            }).catch((err)=>{
+                layer.msg(err.name + ': 系统未监测到您的摄像设备, 请先安装摄像设备');
+            });
+        });
+        function takePhoto() {
+            //获得Canvas对象
+            var video = document.getElementById("video");
+            var canvas = document.getElementById("canvas");
+            var ctx = canvas.getContext('2d');
+            ctx.drawImage(video, 0, 0, 500, 250);
+            canvas.toDataURL();
         }
     </script>
 @endsection

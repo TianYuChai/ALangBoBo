@@ -9,7 +9,7 @@ namespace App\Http\Controllers\home;
 
 use App\Http\Models\currency\UserModel;
 use App\Http\Requests\home\RegisterRequest;
-use App\Http\Services\RegisterService;
+use App\Http\Services\home\RegisterService;
 use Illuminate\Support\Facades\Redis;
 use Illuminate\Http\Request;
 use Exception;
@@ -25,7 +25,12 @@ class RegisterController extends BaseController
     public function create(RegisterRequest $request, RegisterService $registerService)
     {
         try {
-            $registerService->dataFiltering($request);
+            $data = $registerService->dataFiltering($request);
+            $registerService->addData($data);
+            return $this->ajaxReturn([
+                'info' => '注册成功',
+                'status' => 200
+            ], 200);
         } catch (Exception $e) {
             return $this->ajaxReturn([
                 'info' => $e->getMessage(),

@@ -5,8 +5,9 @@
  * Date: 2019/4/17
  * Time: 21:54
  */
-namespace App\Http\Services;
+namespace App\Http\Services\home;
 
+use App\Http\Models\currency\MerchantModel;
 use App\Http\Models\currency\UserModel;
 use App\Http\Services\home\BaseService;
 use Redis;
@@ -15,9 +16,11 @@ use Exception;
 class RegisterService extends BaseService
 {
     protected $model;
-    public function __construct(UserModel $model)
+    protected $merchat;
+    public function __construct(UserModel $model, MerchantModel $merchantModel)
     {
         $this->model = $model;
+        $this->merchat = $merchantModel;
     }
 
     /**
@@ -33,10 +36,18 @@ class RegisterService extends BaseService
         $verifyCode = intval($data['verifyCode']);
         $this->verifyCode($mobile, $verifyCode);
         $category = intval(trim($data['category']));
-        $res = $this->categoryHandleData($category, $data);
+        $res = $this->categoryHandleData($category, $data->toArray());
         return $res;
     }
+    public function addData($data)
+    {
+        $user = $this->model::create($data['user']);
 
+        if(!empty($data['merchant'])) {
+            $data['merchant']['uid'] = $user->id;
+            $this->merchat::create($data['merchant']);
+        }
+    }
     /**
      * 验证验证码
      *
@@ -53,6 +64,7 @@ class RegisterService extends BaseService
         if($verifyCode != $redisVerifyCode) {
             throw new Exception('验证码错误, 请输入正确的验证码');
         }
+        Redis::del($mobile);
     }
 
     /**
@@ -67,12 +79,13 @@ class RegisterService extends BaseService
     {
         $result['user'] = [
             'account' => trim($data['account']),
-            'password' => trim($data['password']),
+            'password' => bcrypt(trim($data['password'])),
             'category' => intval(trim($data['category'])),
             'name' => trim($data['name']),
-            'caid' => trim($data['id']),
+            'card' => trim($data['id']),
             'number' => trim($data['mobile']),
-            'type' => intval(trim($data['type']))
+            'type' => intval(trim($data['type'])),
+            'status' => $data['category'] == '0' ? 1 : 0
         ];
         switch ($category) {
             case 1:
