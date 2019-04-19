@@ -587,19 +587,22 @@
             var ctx = canvas.getContext('2d');
             ctx.drawImage(video, 0, 0, 500, 250);
             //处理canvas图片
-            canvas.toDataURL();
+            var face_img = canvas.toDataURL().substring(src.indexOf(",")+ 1);
+            var formData = new FormData();
+            formData.append('face_img', face_img);
+            formData.append('crid_img', $('input[name="zheng"]').val());
             $.ajax({
                 headers: {
                     'X-CSRF-TOKEN': "{{ csrf_token() }}"
                 },
                 method:"POST",
-                url:"{!! route("file.upload") !!}",
+                url:"{!! route("index.face") !!}",
                 processData: false,
                 contentType: false,
                 data:formData,
                 success:function (res) {
                     if(res.status == 200) {
-                        image.val(res.url[0]);
+
                     }
                 },
                 error:function (XMLHttpRequest) {

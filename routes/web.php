@@ -18,7 +18,8 @@ Route::post('fileupload', ['as' => 'file.upload', 'uses' => 'FileController@file
 /**
  * 短信发送
  */
-Route::post('shortMessage', ['as' => 'index.shortMessage', 'uses' => 'shortMessageController@index']);//->middleware('throttle:1,3')
+Route::post('shortMessage', ['as' => 'index.shortMessage', 'uses' => 'shortMessageController@index'])->middleware('throttle:1,3');
+Route::post('faceRecognition', ['as' => 'index.face', 'uses' => 'faceRecognitionController@index']);
 /**
  * 前台管理路由设置
  */

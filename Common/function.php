@@ -185,3 +185,17 @@ function is_idcard($number)
     }
     return $result;
 }
+
+/**
+ * 图片转码base64
+ * 图片：路径
+ * @param $image_file
+ * @return string 不带入data:image/jpg;base64,
+ */
+function base64EncodeImage ($image_file) {
+    $base64_image = '';
+    $image_info = getimagesize($image_file);
+    $image_data = fread(fopen($image_file, 'r'), filesize($image_file));
+    $base64_image = chunk_split(base64_encode($image_data));
+    return $base64_image;
+}
