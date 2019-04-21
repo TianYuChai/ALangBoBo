@@ -588,7 +588,7 @@
             var ctx = canvas.getContext('2d');
             ctx.drawImage(video, 0, 0, 500, 250);
             //处理canvas图片
-            var face_img = canvas.toDataURL().substring(src.indexOf(",")+ 1);
+            var face_img = canvas.toDataURL().substring(canvas.toDataURL().indexOf(",")+ 1);
             var formData = new FormData();
             formData.append('face_img', face_img);
             formData.append('crid_img', $('input[name="zheng"]').val());
