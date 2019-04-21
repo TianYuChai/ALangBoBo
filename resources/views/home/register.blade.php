@@ -555,6 +555,7 @@
         }
         /*调用摄像头*/
         $('#face').click(function () {
+            var that = $(this);
             if($('input[name="zheng"]').val() == '') {
                 layer.msg('请先上传身份证');return false;
             }
@@ -567,7 +568,7 @@
             promise.then(function (MediaStream) {
                 layer.alert('请对准摄像头, 五秒后自动拍照', {icon: 6}, function (index) {
                     layer.close(index);
-                    $(this).after('<video id="video" width="500" height="300" autoplay></video>' +
+                    that.after('<video id="video" width="500" height="300" autoplay></video>' +
                         '<canvas id="canvas" width="450" height="250"></canvas>');
                     var video = document.getElementById("video");
                     video.srcObject = MediaStream;
