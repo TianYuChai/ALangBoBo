@@ -564,9 +564,8 @@
             };
             //获得video摄像头区域
             var promise = navigator.mediaDevices.getUserMedia(constraints);
-            consonle.log(promise);
             promise.then(function (MediaStream) {
-                layer.alert('请对准摄像头, 五秒后自动拍照', {icon: 6}, function () {
+                layer.alert('请对准摄像头, 五秒后自动拍照', {icon: 6}, function (index) {
                     layer.close(index);
                     $(this).after('<video id="video" width="500" height="300" autoplay></video>' +
                         '<canvas id="canvas" width="450" height="250"></canvas>');
