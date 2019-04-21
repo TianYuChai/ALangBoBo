@@ -14,6 +14,8 @@ class faceRecognitionController extends BaseController
 {
     public function index(Request $request)
     {
-        dd($request->all());
+        $face_img = $request->face_img;
+        $crid_img = base64EncodeImage($request->crid_img);
+        dd($crid_img);
     }
 }
