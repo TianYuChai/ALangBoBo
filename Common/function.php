@@ -192,10 +192,10 @@ function is_idcard($number)
  * @param $image_file
  * @return string 不带入data:image/jpg;base64,
  */
-function base64EncodeImage($image_file) {
-    $base64_image = '';
-    $image_info = getimagesize($image_file);
-    $image_data = fread(fopen($image_file, 'r'), filesize($image_file));
-    $base64_image = chunk_split(base64_encode($image_data));
-    return $base64_image;
+function imgtobase64($img)
+{
+    $imageInfo = getimagesize($img);
+    $base64 = "" . chunk_split(base64_encode(file_get_contents($img)));
+    # file_get_contents可替换为 fread(fopen($img, 'r'), filesize($img));
+    return $base64;
 }

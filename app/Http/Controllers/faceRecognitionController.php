@@ -16,7 +16,7 @@ class faceRecognitionController extends BaseController
     public function index(Request $request)
     {
         $face_img = $request->face_img;
-        $crid_img = base64EncodeImage(FileUpload::url('image', $request->crid_img));
+        $crid_img = imgtobase64(FileUpload::url('image', $request->crid_img));
         dd($crid_img);
     }
 }
