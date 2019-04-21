@@ -591,6 +591,11 @@
             $("#video").hide();
             //处理canvas图片
             var face_img = canvas.toDataURL().substring(canvas.toDataURL().indexOf(",")+ 1);
+            var image = new Image();
+            // canvas.toDataURL 返回的是一串Base64编码的URL
+            // 指定格式 PNG
+            image.src = canvas.toDataURL("image/png");
+            console.log(image);return;
             var formData = new FormData();
             formData.append('face_img', face_img);
             formData.append('crid_img', $('input[name="zheng"]').val());
