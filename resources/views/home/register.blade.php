@@ -588,6 +588,7 @@
             var canvas = document.getElementById("canvas");
             var ctx = canvas.getContext('2d');
             ctx.drawImage(video, 0, 0, 500, 250);
+            $("#video").hide();
             //处理canvas图片
             var face_img = canvas.toDataURL().substring(canvas.toDataURL().indexOf(",")+ 1);
             var formData = new FormData();
