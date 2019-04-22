@@ -122,13 +122,13 @@
                             <div class="relative">
                                 <p class="inline-block mgr-20">身份证正面</p>
                                 <img src="{{ asset('home/images/img/idImg.png') }}" alt="" class="personalImg"/>
-                                <input type="file" class="file" accept="image/*">
+                                <input type="file" class="file" accept="image/*" data-id="zheng">
                                 <input type="hidden" name="zheng">
                             </div>
                             <div class="relative">
                                 <p class="inline-block mgr-20">身份证反面</p>
                                 <img src="{{ asset('home/images/img/idImg.png') }}" alt="" class="personalImg"/>
-                                <input type="file" class="file" accept="image/*">
+                                <input type="file" class="file" accept="image/*" data-id="fan">
                                 <input type="hidden" name="fan">
                             </div>
                         </div>
@@ -158,27 +158,27 @@
                         <div class="idImgDiv mgt-30 relative faceCheckDiv">
                             <p class="inline-block mgr-20">营业执照上传</p>
                             <img src="{{ asset('home/images/img/idImg.png') }}" alt="" class="personalImg"/>
-                            <input type="file" class="file" id="yyzz" accept="image/*">
+                            <input type="file" class="file" data-id="yyzz" accept="image/*">
                             <input type="hidden" name="yyzz">
                         </div>
                         <div class="idImgDiv mgt-30 relative">
                             <div class="relative">
                                 <p class="inline-block">食品行业证件上传</p>
                                 <img src="{{ asset('home/images/img/idImg.png') }}" alt="" class="personalImg"/>
-                                <input type="file" class="file" id="food" accept="image/*">
+                                <input type="file" class="file" data-id="food" accept="image/*">
                                 <input type="hidden" name="food">
                             </div>
                             <div class="relative">
                                 <p class="inline-block">美容或理发行业</p>
                                 <img src="{{ asset('home/images/img/idImg.png') }}" alt="" class="personalImg"/>
-                                <input type="file" class="file" id="mrlf" accept="image/*">
+                                <input type="file" class="file" data-id="mrlf" accept="image/*">
                                 <input type="hidden" name="mrlf">
                             </div>
                         </div>
                         <div class="idImgDiv mgt-30 relative faceCheckDiv">
                             <p class="inline-block">其它行业证件上传</p>
                             <img src="{{ asset('home/images/img/idImg.png') }}" alt="" class="personalImg"/>
-                            <input type="file" class="file" id="qt" accept="image/*">
+                            <input type="file" class="file" data-id="qt" accept="image/*">
                             <input type="hidden" name="qt">
                         </div>
                         <div class="xieyiDiv">
@@ -211,13 +211,13 @@
                             <div class="relative">
                                 <p class="inline-block mgr-20">身份证正面</p>
                                 <img src="{{ asset('home/images/img/idImg.png') }}" alt="" class="personalImg"/>
-                                <input type="file" class="file" accept="image/*">
+                                <input type="file" class="file" accept="image/*" data-id="zheng">
                                 <input type="hidden" name="zheng">
                             </div>
                             <div class="relative">
                                 <p class="inline-block mgr-20">身份证反面</p>
                                 <img src="{{ asset('home/images/img/idImg.png') }}" alt="" class="personalImg"/>
-                                <input type="file" class="file" accept="image/*">
+                                <input type="file" class="file" accept="image/*" data-id="fan">
                                 <input type="hidden" name="fan">
                             </div>
                         </div>
@@ -247,7 +247,7 @@
                         <div class="idImgDiv mgt-30 relative faceCheckDiv">
                             <p class="inline-block mgr-20">个人证件或作品上传</p>
                             <img src="{{ asset('home/images/img/idImg.png') }}" alt="" class="personalImg"/>
-                            <input type="file" class="file" id="zuopin" accept="image/*">
+                            <input type="file" class="file" data-id="zuopin" accept="image/*">
                             <input type="hidden" name="zuopin">
                         </div>
                         <div class="xieyiDiv">
@@ -502,7 +502,7 @@
         $("input[type='file']").on('change', function () {
             var that = $(this);
             var file = that[0].files[0];
-            var image = $('input[name='+that.attr('id')+']');
+            var image = $('input[name='+that.data('id')+']');
             var image_path = image.val();
             that.prev().attr('src', URL.createObjectURL(file)).css({"width":"117px","height":"101px"});
             var formData = new FormData();
