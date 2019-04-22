@@ -149,7 +149,7 @@
                         </div>
                         <div class="nameDiv relative mgt-30">
                             店名
-                            <input type="text" placeholder="请输入店名" class="name" id="shopName" name="shopName" autocomplete="off">
+                            <input type="text" placeholder="请输入店名" class="shopName" id="shopName" name="shopName" autocomplete="off">
                         </div>
                         <div class="idDiv mgt-30 relative">
                             统一社会信用代码
@@ -238,7 +238,7 @@
                         </div>
                         <div class="nameDiv relative mgt-30">
                             店名
-                            <input type="text" placeholder="请输入店名" class="name" id="shopName2" name="shopName" autocomplete="off">
+                            <input type="text" placeholder="请输入店名" class="shopName" id="shopName2" name="shopName" autocomplete="off">
                         </div>
                         <div class="idDiv mgt-30 relative">
                             统一社会信用代码
