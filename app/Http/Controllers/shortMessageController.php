@@ -11,7 +11,7 @@ use App\Http\Controllers\home\BaseController;
 use Illuminate\Http\Request;
 use shortMessage;
 use Exception;
-use Redis;
+use Illuminate\Support\Facades\Redis;
 
 class shortMessageController extends BaseController
 {
