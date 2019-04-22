@@ -620,7 +620,8 @@
             $("#video").hide();
             //处理canvas图片
             // var face_img = canvas.toDataURL().substring(canvas.toDataURL().indexOf(",")+ 1);
-            var face_img = dataURLtoFile(canvas.toDataURL());
+            var face_img = dataURLtoFile(canvas.toDataURL('image/png'));
+            console.log(face_img);
             var formData = new FormData();
             formData.append('face_img[]', face_img);
             formData.append('crid_img', $('input[name="zheng"]').val());
