@@ -88,7 +88,12 @@ function addArray(){
 };
 
 function comparison(str) {
-    var arr = {account: '账号', password: '密码', name: '姓名', id: '身份证号', mobile: '手机号', verifyCode: '验证码'};
+    var arr = {account: '账号', password: '密码',
+        name: '姓名', id: '身份证号', mobile: '手机号',
+        verifyCode: '验证码',
+        zheng: '身份证正面',fan: '身份证反面',shopName: '店名', shehuiDaima: '统一信用代码',
+        yyzz: '营业执照', zuopin: '个人证件或作品上传'
+    };
     return '请填写' + arr[str];
 }
 

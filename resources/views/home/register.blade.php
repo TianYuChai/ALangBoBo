@@ -386,6 +386,11 @@
                             }
                         }
                     }
+                } else {
+                    var tip = comparison(val['name']);
+                    if(tip) {
+                        layer.msg(tip);return false;
+                    }
                 }
             });
         }
