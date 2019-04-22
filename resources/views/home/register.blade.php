@@ -623,7 +623,7 @@
             var face_img = dataURLtoFile(canvas.toDataURL('image/png'));
             console.log(face_img);
             var formData = new FormData();
-            formData.append('face_img[]', face_img);
+            formData.append('face_img', face_img);
             formData.append('crid_img', $('input[name="zheng"]').val());
             $.ajax({
                 headers: {

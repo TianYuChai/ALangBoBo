@@ -81,9 +81,9 @@ class FileUpload
     {
         //生成文件名拼接后缀名
         if(!$type) {
-            $file_name = self::getUploadFileName(12). '.'. $type;
-        } else {
             $file_name = self::getUploadFileName(12). '.' .$file->getClientOriginalExtension();
+        } else {
+            $file_name = self::getUploadFileName(12). '.'. $type;
         }
         //获取文件路径地址
         $path = $file->getRealPath();
