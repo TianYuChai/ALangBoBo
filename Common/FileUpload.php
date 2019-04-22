@@ -77,10 +77,14 @@ class FileUpload
      * @param $file
      * @return string
      */
-    protected static function getManyImageInfo($file)
+    public static function getManyImageInfo($file, $type)
     {
         //生成文件名拼接后缀名
-        $file_name = self::getUploadFileName(12). '.' .$file->getClientOriginalExtension();
+        if(!$type) {
+            $file_name = self::getUploadFileName(12). '.'. $type;
+        } else {
+            $file_name = self::getUploadFileName(12). '.' .$file->getClientOriginalExtension();
+        }
         //获取文件路径地址
         $path = $file->getRealPath();
         //上传到指定地址

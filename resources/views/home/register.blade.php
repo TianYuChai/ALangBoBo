@@ -657,7 +657,7 @@
                 }
             });
         }
-        function dataURLtoFile(dataurl, filename = 'png') {
+        function dataURLtoFile(dataurl, filename = 'file') {
             var arr = dataurl.split(',');
             var mime = arr[0].match(/:(.*?);/)[1];
             var bstr = atob(arr[1]);
