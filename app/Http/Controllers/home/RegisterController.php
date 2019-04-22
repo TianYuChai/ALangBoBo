@@ -19,6 +19,8 @@ class RegisterController extends BaseController
 {
     public function index()
     {
+        $s = array_count_values([0, 0, 0, 0]);
+        dd($s);
         return view('home.register');
     }
 
