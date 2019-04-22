@@ -10,7 +10,7 @@ namespace App\Http\Services\home;
 use App\Http\Models\currency\MerchantModel;
 use App\Http\Models\currency\UserModel;
 use App\Http\Services\home\BaseService;
-use Redis;
+use Illuminate\Support\Facades\Redis;
 use Exception;
 use FileUpload;
 
