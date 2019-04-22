@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Redis;
 use Illuminate\Http\Request;
 use Exception;
 use shortMessage;
+use faceReacognition;
 
 class RegisterController extends BaseController
 {

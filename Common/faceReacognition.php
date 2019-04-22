@@ -24,6 +24,14 @@ class faceReacognition
        return self::send($img_1, $img_2, $type);
     }
 
+    /**
+     * 发送阿里云请求
+     *
+     * @param $img_1
+     * @param $img_2
+     * @param $type
+     * @return mixed
+     */
     public static function send($img_1, $img_2, $type)
     {
         $data = [
@@ -36,13 +44,48 @@ class faceReacognition
             $data['content_1'] = $img_1;
             $data['content_2'] = $img_2;
         }
-        $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, "https://dtplus-cn-shanghai.data.aliyuncs.com/face/verify");
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
-        curl_setopt($ch, CURLOPT_POST, TRUE);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
-        $res = curl_exec( $ch );
-        curl_close( $ch );
-        return json_decode($res);
+        $url = "https://dtplus-cn-shanghai.data.aliyuncs.com/face/verify";
+        $options = array(
+            'http' => array(
+                'header' => array(
+                    'accept'=> "application/json",
+                    'content-type'=> "application/json",
+                    'date'=> gmdate("D, d M Y H:i:s \G\M\T"),
+                    'authorization' => ''
+                ),
+                'method' => "POST", //可以是 GET, POST, DELETE, PUT
+                'content' =>  json_encode($data)//如有数据，请用json_encode()进行编码
+            )
+        );
+        $http = $options['http'];
+        $header = $http['header'];
+        $urlObj = parse_url($url);
+        if(empty($urlObj["query"]))
+            $path = $urlObj["path"];
+        else
+            $path = $urlObj["path"]."?".$urlObj["query"];
+        $body = $http['content'];
+        if(empty($body))
+            $bodymd5 = $body;
+        else
+            $bodymd5 = base64_encode(md5($body,true));
+        $stringToSign = $http['method']."\n".$header['accept']."\n".$bodymd5."\n".$header['content-type']."\n".$header['date']."\n".$path;
+        $signature = base64_encode(
+            hash_hmac(
+                "sha1",
+                $stringToSign,
+                self::$_AccSecret, true));
+        $authHeader = "Dataplus ".self::$_AccKey.":"."$signature";
+        $options['http']['header']['authorization'] = $authHeader;
+        $options['http']['header'] = implode(
+            array_map(
+                function($key, $val){
+                    return $key.":".$val."\r\n";
+                },
+                array_keys($options['http']['header']),
+                $options['http']['header']));
+        $context = stream_context_create($options);
+        $file = file_get_contents($url, false, $context );
+        return json_decode($file);
     }
 }
