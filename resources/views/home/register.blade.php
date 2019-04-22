@@ -395,10 +395,8 @@
                         }
                     }
                 } else {
-                    var tip = comparison(val['name']);
-                    if(tip) {
-                        layer.msg(tip);return false;
-                    }
+                    tip = comparison(val['name']);
+                    console.log(tip);return;
                 }
             });
         }
