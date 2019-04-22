@@ -294,6 +294,7 @@
         var category = 0;
         var whether = false;
         var info = ['buyer_info', 'enterprise_info', 'personal_info'];
+        var img_name = ['food', 'mrlf', 'qt'];
         $('.stepBtnActive').on('click', function () {
             var that = $(this);
             var stage = that.data('stage');
@@ -395,9 +396,10 @@
                         }
                     }
                 } else {
-                    tip = comparison(val['name']);
-                    if(tip) {
-                        layer.msg(tip); return false;
+                    if($.inArray(val['name'], img_name) == -1) {
+                        if(val['value'] == '') {
+                            layer.msg(comparison(val['name']));return false;
+                        }
                     }
                 }
             });
