@@ -44,7 +44,6 @@ class faceReacognition
             $data['content_1'] = $img_1;
             $data['content_2'] = $img_2;
         }
-        dd($data);
         $url = "https://dtplus-cn-shanghai.data.aliyuncs.com/face/verify";
         $options = array(
             'http' => array(
