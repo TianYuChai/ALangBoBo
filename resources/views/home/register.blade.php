@@ -94,7 +94,7 @@
                         </div>
                         <div class="xieyiDiv">
                             <input type="checkbox" name="type" value="1" class="type" checked/>
-                            <label for="">我已阅读和同意 <a href="">《注册协议》</a></label>
+                            <label for="">我已阅读和同意 <a href="javascript:void(0)" id="agreement">《注册协议》</a></label>
                         </div>
                         <div class="step2Btn">
                             <button class="submit stepBtnActive"
@@ -183,7 +183,7 @@
                         </div>
                         <div class="xieyiDiv">
                             <input type="checkbox" name="type" value="1" class="type" checked/>
-                            <label for="">我已阅读和同意 <a href="">《注册协议》</a></label>
+                            <label for="">我已阅读和同意 <a href="javascript:void(0)" id="agreement">《注册协议》</a></label>
                         </div>
                         <div class="step2Btn">
                             <button class="submit stepBtnActive"
@@ -252,7 +252,7 @@
                         </div>
                         <div class="xieyiDiv">
                             <input type="checkbox" name="type" value="1" class="type" checked/>
-                            <label for="">我已阅读和同意 <a href="">《注册协议》</a></label>
+                            <label for="">我已阅读和同意 <a href="javascript:void(0)" id="agreement">《注册协议》</a></label>
                         </div>
                         <div class="step2Btn">
                             <button class="submit stepBtnActive"
@@ -659,6 +659,7 @@
                 }
             });
         }
+        //base64转换成file对象
         function dataURLtoFile(dataurl, filename = 'file') {
             var arr = dataurl.split(',');
             var mime = arr[0].match(/:(.*?);/)[1];
@@ -673,5 +674,14 @@
             //转换成成blob对象
             //return new Blob([u8arr],{type:mime});
         }
+        //注册协议
+        $('#agreement').click(function () {
+            layer.open({
+                type: 1,
+                skin: 'layui-layer-rim', //加上边框
+                area: ['420px', '240px'], //宽高
+                content: ''
+            });
+        })
     </script>
 @endsection

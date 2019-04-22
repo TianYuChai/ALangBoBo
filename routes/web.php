@@ -19,6 +19,7 @@ Route::post('fileupload', ['as' => 'file.upload', 'uses' => 'FileController@file
  * 短信发送
  */
 Route::post('shortMessage', ['as' => 'index.shortMessage', 'uses' => 'shortMessageController@index'])->middleware('throttle:1,3');
+//人脸识别
 Route::post('faceRecognition', ['as' => 'index.face', 'uses' => 'faceRecognitionController@index']);
 /**
  * 前台管理路由设置
@@ -30,6 +31,7 @@ Route::group(['namespace' => 'home'], function () {
     Route::get('register', ['as' => 'index.register', 'uses' => 'RegisterController@index']);
     Route::post('verifivWhetExist', ['as' => 'index.verifivWhetExist', 'uses' => 'RegisterController@verifivWhetExist']);
     Route::post('regists/create', ['as' => 'index.regists.create', 'uses' => 'RegisterController@create']);
+    Route::get('login', ['as' => 'index.login', 'uses' => 'LoginController@index']);
     Route::group(['prefix' => 'index'], function () {
 
     });

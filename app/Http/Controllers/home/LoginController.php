@@ -9,5 +9,8 @@ namespace App\Http\Controllers\home;
 
 class LoginController extends BaseController
 {
-
+    public function index()
+    {
+        return view('home.login');
+    }
 }

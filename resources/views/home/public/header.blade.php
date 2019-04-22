@@ -35,7 +35,7 @@
                     <![endif]-->
                 </li>
                 <li class="fl mgl-80 relative">
-                    <a class="mgr-20" href="" target="_blank">登录</a>
+                    <a class="mgr-20" href="{{ route('index.login') }}" target="_blank">登录</a>
                 </li>
                 <li class="fl relative">
                     <a class="lightGray" href="{{ route('index.register') }}" target="_blank">注册</a>
