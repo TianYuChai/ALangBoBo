@@ -44,11 +44,11 @@ class FileUpload
         $result = [];
         if(is_array($file)) {
             foreach ($file as $item) {
+                dd($item);
                 if(!$item->isValid()) {
                     throw new Exception("上传文件错误, 请联系管理员！");
                 }
                 $file_type = $item->getClientOriginalExtension();
-                dd($file_type);
                 if(in_array($file_type, self::$image_type)) {
                     $result[] = self::getManyImageInfo($item);
                 } else if(in_array($file_type, self::$file_type)) {
