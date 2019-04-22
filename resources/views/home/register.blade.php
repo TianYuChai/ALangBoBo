@@ -585,9 +585,9 @@
         /*调用摄像头*/
         $('#face').click(function () {
             var that = $(this);
-            // if($('input[name="zheng"]').val() == '') {
-            //     layer.msg('请先上传身份证');return false;
-            // }
+            if($('input[name="zheng"]').val() == '') {
+                layer.msg('请先上传身份证');return false;
+            }
             var constraints = {
                 video: {width: 500, height: 500},
                 audio: false
@@ -639,6 +639,7 @@
                         whether = res.info;
                         console.log('人脸识别2: ' + whether);
                         if(!whether) {
+                            $('#face').show();
                             layer.msg('请上传正确且清晰的图片');return false;
                         }
                     }
