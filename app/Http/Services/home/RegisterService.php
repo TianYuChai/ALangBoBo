@@ -12,6 +12,7 @@ use App\Http\Models\currency\UserModel;
 use App\Http\Services\home\BaseService;
 use Redis;
 use Exception;
+use FileUpload;
 
 class RegisterService extends BaseService
 {
@@ -39,6 +40,12 @@ class RegisterService extends BaseService
         $res = $this->categoryHandleData($category, $data->toArray());
         return $res;
     }
+
+    /**
+     * 添加数据
+     *
+     * @param $data
+     */
     public function addData($data)
     {
         $user = $this->model::create($data['user']);
@@ -47,7 +54,9 @@ class RegisterService extends BaseService
             $data['merchant']['uid'] = $user->id;
             $this->merchat::create($data['merchant']);
         }
+        return $user;
     }
+
     /**
      * 验证验证码
      *
@@ -69,8 +78,7 @@ class RegisterService extends BaseService
 
     /**
      * 根据注册类别的不同，进行不同的数据处理过程
-     * 商家需要有商家编号
-     * 
+     *
      * @param int $category
      * @param array $data
      * @return mixed
@@ -92,19 +100,88 @@ class RegisterService extends BaseService
                 $result;
             break;
             case 2:
-                $result['merchant'] = [
-
-                ];
+                $res = $this->verifiEnter($data);
+                $result['merchant'] = $res;
             break;
             case 3:
-                $result['merchant'] = [
-
-                ];
+                $res = $this->verifiPersonal($data);
+                $result['merchant'] = $res;
             break;
             default:
                 $result;
             break;
         }
         return $result;
+    }
+
+    /**
+     * 验证企业商户
+     *
+     * @param $data
+     * @return array
+     * @throws Exception
+     */
+    protected function verifiEnter($data)
+    {
+        $result = $this->cadrImage($data);
+        if(!FileUpload::exists('image', $data['yyzz'])) {
+            throw new Exception('营业执照图错误, 请重新上传');
+        }
+        if(isset($data['food']) && !FileUpload::exists('image', $data['food'])) {
+            throw new Exception('食品行业证件图错误, 请重新上传');
+        }
+        if(isset($data['mrlf']) && !FileUpload::exists('image', $data['mrlf'])) {
+            throw new Exception('美容或理发行业图错误, 请重新上传');
+        }
+        if(isset($data['qt']) && !FileUpload::exists('image', $data['qt'])) {
+            throw new Exception('其它行业证件图错误, 请重新上传');
+        }
+        $result['bus_license'] = $data['yyzz'];
+        $result['food_industry'] = isset($data['food'])?? "";
+        $result['hairdressing'] = isset($data['mrlf']) ?? "";
+        $result['other'] = isset($data['qt']) ?? "";
+        $result['category'] = 1;
+        return $result;
+    }
+
+    /**
+     * 验证个人商户
+     *
+     * @param $data
+     * @return array
+     * @throws Exception
+     */
+    public function verifiPersonal($data)
+    {
+        $result = $this->cadrImage($data);
+        if(!FileUpload::exists('image', $data['zuopin'])) {
+            throw new Exception('个人证件或作品图错误, 请重新上传');
+        }
+        $result['personal'] = $data['zuopin'];
+        $result['category'] = 2;
+        return $result;
+    }
+
+    /**
+     * 验证身份证
+     *
+     * @param $data
+     * @return array
+     * @throws Exception
+     */
+    protected function cadrImage($data)
+    {
+        if(!FileUpload::exists('image', $data['zheng'])) {
+            throw new Exception('身份证正面图错误, 请重新上传');
+        }
+        if(!FileUpload::exists('image', $data['fan'])) {
+            throw new Exception('身份证反面图错误, 请重新上传');
+        }
+        return [
+            'card_positive' => $data['zheng'],
+            'card_opposite' => $data['fan'],
+            'shop_name' => trim($data['shopName']),
+            'credit_code' => trim($data['shehuiDaima'])
+        ];
     }
 }

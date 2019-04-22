@@ -278,11 +278,7 @@
                 <form class="cmxform" id="verifyForm3" method="get" action="">
                     <div class="registerOver clearfix">
                         <img src="{{ asset('home/images/img/registerOver.png') }}" alt="" class="mgl-400"/>
-                        <div class="registerOverRight">
-                            <p class="">注册完成您的用户名：<span>1111</span>，您已成为了本站的正式会员！</p>
-                            <p>5秒钟后自动转到首页！</p>
-                            <p>马上进入 <a href="">个人中心</a> <a href="">返回网站首页</a></p>
-                        </div>
+                        <div class="registerOverRight"></div>
                     </div>
                 </form>
             </div>
@@ -317,7 +313,9 @@
                         layer.msg('请先阅读注册协议');return false;
                     }
                     if(stage != 'buyer_info') {
-
+                        if(!whether) {
+                            layer.msg('请先进行人脸识别');return false;
+                        }
                     }
                     var data = goEmpty($('form').serializeArray());
                     $.ajax({
@@ -329,7 +327,17 @@
                         data:data,
                         success:function (res) {
                             if(res.status == 200) {
-
+                                var htm = '';
+                                $('.' + stage).addClass('hidden');
+                                $('.stepPartLast').removeClass('hidden');
+                                if(res.data['category'] == 0) {
+                                    htm = '<p>注册完成! 您的用户名：</p><span>'+res.data['account']+'</span>，您已成为了本站的正式会员！' +
+                                        '<p><span class="down">5</span>秒钟后自动跳转到首页！</p><p>马上进入 <a href="">个人中心</a> <a href="">返回网站首页</a></p>'
+                                } else {
+                                    htm = '<p>注册完成, 请耐心等待审核！审核周期：1-2小时</p><p><span class="down">5</span>秒钟后自动跳转到首页！</p>';
+                                }
+                                $('.registerOverRight').append(htm);
+                                down();
                             }
                         },
                         error:function (XMLHttpRequest) {
@@ -542,6 +550,17 @@
                     clearInterval(time);
                     $('.verifyBtn').text('获取验证码');
                     $('.verifyBtn').removeAttr('disabled');
+                }
+            }, 1000);
+        }
+        function down() {
+            var s = 5;
+            var time = setInterval(function(){
+                $('.down').text(s);
+                s--;
+                if(s < 0) {
+                    clearInterval(time);
+                    window.location.href = "{{ url('/') }}";
                 }
             }, 1000);
         }

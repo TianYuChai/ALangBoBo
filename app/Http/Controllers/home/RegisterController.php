@@ -26,9 +26,13 @@ class RegisterController extends BaseController
     {
         try {
             $data = $registerService->dataFiltering($request);
-            $registerService->addData($data);
+            $user = $registerService->addData($data);
             return $this->ajaxReturn([
                 'info' => '注册成功',
+                'data' => [
+                    'account' => $user->account,
+                    'category' => $user->category
+                ],
                 'status' => 200
             ], 200);
         } catch (Exception $e) {
