@@ -303,6 +303,7 @@
             console.log('当前提交对象: ' + stage);
             processing(btn, stage);
             if(!$('.layui-layer-msg').length) {
+                console.log('人脸识别1: ' + whether);
                 if(stage == "user_info") {
                     $('.user_info').addClass('hidden');
                     $('.account_info').removeClass('hidden');
@@ -314,6 +315,7 @@
                         layer.msg('请先阅读注册协议');return false;
                     }
                     if(stage != 'buyer_info') {
+                        console.log('人脸识别3: ' + whether);
                         if(!whether) {
                             layer.msg('请先进行人脸识别');return false;
                         }
@@ -633,6 +635,7 @@
                 success:function (res) {
                     if(res.status == 200) {
                         whether = res.info;
+                        console.log('人脸识别2: ' + whether);
                         if(!whether) {
                             layer.msg('请上传正确且清晰的图片');return false;
                         }
