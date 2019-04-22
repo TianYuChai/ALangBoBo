@@ -122,13 +122,13 @@
                             <div class="relative">
                                 <p class="inline-block mgr-20">身份证正面</p>
                                 <img src="{{ asset('home/images/img/idImg.png') }}" alt="" class="personalImg"/>
-                                <input type="file" class="file" id="zheng" accept="image/*">
+                                <input type="file" class="file" accept="image/*">
                                 <input type="hidden" name="zheng">
                             </div>
                             <div class="relative">
                                 <p class="inline-block mgr-20">身份证反面</p>
                                 <img src="{{ asset('home/images/img/idImg.png') }}" alt="" class="personalImg"/>
-                                <input type="file" class="file" id="fan" accept="image/*">
+                                <input type="file" class="file" accept="image/*">
                                 <input type="hidden" name="fan">
                             </div>
                         </div>
@@ -211,13 +211,13 @@
                             <div class="relative">
                                 <p class="inline-block mgr-20">身份证正面</p>
                                 <img src="{{ asset('home/images/img/idImg.png') }}" alt="" class="personalImg"/>
-                                <input type="file" class="file" id="zheng" accept="image/*">
+                                <input type="file" class="file" accept="image/*">
                                 <input type="hidden" name="zheng">
                             </div>
                             <div class="relative">
                                 <p class="inline-block mgr-20">身份证反面</p>
                                 <img src="{{ asset('home/images/img/idImg.png') }}" alt="" class="personalImg"/>
-                                <input type="file" class="file" id="fan" accept="image/*">
+                                <input type="file" class="file" accept="image/*">
                                 <input type="hidden" name="fan">
                             </div>
                         </div>
