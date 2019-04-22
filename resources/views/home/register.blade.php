@@ -585,9 +585,9 @@
         /*调用摄像头*/
         $('#face').click(function () {
             var that = $(this);
-            if($('input[name="zheng"]').val() == '') {
-                layer.msg('请先上传身份证');return false;
-            }
+            // if($('input[name="zheng"]').val() == '') {
+            //     layer.msg('请先上传身份证');return false;
+            // }
             var constraints = {
                 video: {width: 500, height: 500},
                 audio: false
@@ -619,7 +619,9 @@
             ctx.drawImage(video, 0, 0, 500, 250);
             $("#video").hide();
             //处理canvas图片
-            var face_img = canvas.toDataURL().substring(canvas.toDataURL().indexOf(",")+ 1);
+            // var face_img = canvas.toDataURL().substring(canvas.toDataURL().indexOf(",")+ 1);
+            var face_img = dataURLtoFile(canvas.toDataURL());
+            console.log(face_img);return;
             var formData = new FormData();
             formData.append('face_img', face_img);
             formData.append('crid_img', $('input[name="zheng"]').val());
@@ -654,6 +656,20 @@
                     }
                 }
             });
+        }
+        function dataURLtoFile(dataurl, filename = 'file') {
+            var arr = dataurl.split(',');
+            var mime = arr[0].match(/:(.*?);/)[1];
+            var bstr = atob(arr[1]);
+            var n = bstr.length;
+            var u8arr = new Uint8Array(n);
+            while(n--){
+                u8arr[n] = bstr.charCodeAt(n);
+            }
+            //转换成file对象
+            return new File([u8arr], filename, {type:mime});
+            //转换成成blob对象
+            //return new Blob([u8arr],{type:mime});
         }
     </script>
 @endsection
