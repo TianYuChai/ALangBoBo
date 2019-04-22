@@ -640,7 +640,7 @@
                         console.log('人脸识别2: ' + whether);
                         if(!whether) {
                             $('#face').show();
-                            canvas.hide();
+                            $('#canvas').hide();
                             layer.msg('请上传正确且清晰的图片');return false;
                         }
                     }
