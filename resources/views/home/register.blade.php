@@ -107,7 +107,7 @@
             <!--当注册第一步选择的是 企业商户 ，则显示此第二步样式-->
             <!--当注册第一步选择的是 企业商户 ，同样其它两个样式 hidden 隐藏-->
             <div class="step2Div  hidden enterprise_info">
-                <form class="cmxform" id="qiyeVerifyForm2">
+                <form class="cmxform" id="enterprise_info">
                     <fieldset class="fieldset clearfix">
                         <p class="userInfo">企业商户资料填写：</p>
                         <div class="nameDiv relative">
@@ -196,7 +196,7 @@
             <!--当注册第一步选择的是 个人商户 ，则显示此第二步样式-->
             <!--当注册第一步选择的是 个人商户 ，同样其它两个样式 hidden 隐藏-->
             <div class="step2Div hidden personal_info">
-                <form class="cmxform" id="gerenVerifyForm2" method="get" action="">
+                <form class="cmxform" id="personal_info">
                     <fieldset class="fieldset clearfix">
                         <p class="userInfo">个人商户资料填写：</p>
                         <div class="nameDiv relative">
@@ -229,12 +229,12 @@
                             验证码
                             <input type="text" placeholder="验证码" class="verifyCode" id="verifyCode3" name="verifyCode" autocomplete="off">
                             <!--<button class="verifyBtn">获取验证码</button>-->
-                            <button class="teleCodeBtn get-code verifyBtn">获取验证码</button>
+                            <button class="teleCodeBtn get-code verifyBtn" onClick="return false;">获取验证码</button>
                         </div>
                         <div class="idImgDiv mgt-30 relative faceCheckDiv">
                             <p class="inline-block mgr-20">人脸识别</p>
-                            <img src="{{ asset('home/images/img/idImg.png') }}" alt="" class="personalImg"/>
-                            <input type="file" class="file" id="renlian2" name="renlian">
+                            <img src="{{ asset('home/images/img/idImg.png') }}" alt="" class="personalImg" id="face"/>
+                            {{--<input type="file" class="file" id="renlian2" name="renlian">--}}
                         </div>
                         <div class="nameDiv relative mgt-30">
                             店名
