@@ -396,7 +396,9 @@
                     }
                 } else {
                     tip = comparison(val['name']);
-                    console.log(tip);return;
+                    if(tip) {
+                        layer.msg(tip); return false;
+                    }
                 }
             });
         }

@@ -94,7 +94,8 @@ function comparison(str) {
         zheng: '身份证正面',fan: '身份证反面',shopName: '店名', shehuiDaima: '统一信用代码',
         yyzz: '营业执照', zuopin: '个人证件或作品上传'
     };
-    return '请填写' + arr[str];
+
+    return arr[str] == 'undefined' ? '' : '请填写' + arr[str];
 }
 
 // 验证手机号
