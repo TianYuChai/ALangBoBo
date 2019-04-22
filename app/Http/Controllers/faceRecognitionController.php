@@ -22,14 +22,23 @@ class faceRecognitionController extends BaseController
             $crid_img = imgtobase64(FileUpload::url('image', $request->crid_img));
             $res = faceReacognition::entrance($crid_img, $face_img, 1);
             if(isset($res->confidence)) {
-                $data['contrast_value'] = intval($res->confidence);
+                if(intval($res->confidence) >= 75) {
+                    $contrast_value = true;
+                } else {
+                    $contrast_value = false;
+                }
             } else {
-                foreach ($res->rectA as $recta) {
-
+                $recta = array_count_values($res->rectA);
+                if(count($res->rectA) == $recta[0]) {
+                    throw new Exception('未能识别身份证上人脸, 请重新上传');
+                }
+                $rectb = array_count_values($res->rectB);
+                if(count($res->rectB) == $rectb[0]) {
+                    throw new Exception('未能识别人脸, 请重新识别');
                 }
             }
             return $this->ajaxReturn([
-                'info' => '',
+                'info' => $contrast_value,
                 'status' => 200
             ], 200);
         } catch (Exception $e) {

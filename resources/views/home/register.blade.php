@@ -296,6 +296,7 @@
 @section('section')
     <script type="text/javascript">
         var category = 0;
+        var whether = false;
         var info = ['buyer_info', 'enterprise_info', 'personal_info'];
         $('.stepBtnActive').on('click', function () {
             var that = $(this);
@@ -605,7 +606,10 @@
                 data:formData,
                 success:function (res) {
                     if(res.status == 200) {
-
+                        whether = res.info;
+                        if(!whether) {
+                            layer.msg('请上传正确且清晰的图片');return false;
+                        }
                     }
                 },
                 error:function (XMLHttpRequest) {
