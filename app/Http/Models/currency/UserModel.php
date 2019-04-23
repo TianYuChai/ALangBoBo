@@ -5,13 +5,15 @@ namespace App\Http\Models\currency;
 use App\Http\Models\admin\RegisterAuditingModel;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class UserModel extends Model
+class UserModel extends Authenticatable
 {
     /*用户表*/
     protected $table = 'users';
     protected $guarded  = ['id'];
 
+    protected $rememberTokenName = '';
     /**
      * 账户类别
      * @var array

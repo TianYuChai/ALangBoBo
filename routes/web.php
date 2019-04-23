@@ -32,6 +32,7 @@ Route::group(['namespace' => 'home'], function () {
     Route::post('verifivWhetExist', ['as' => 'index.verifivWhetExist', 'uses' => 'RegisterController@verifivWhetExist']);
     Route::post('regists/create', ['as' => 'index.regists.create', 'uses' => 'RegisterController@create']);
     Route::get('login', ['as' => 'index.login', 'uses' => 'LoginController@index']);
+    Route::post('logi/operation', ['as' => 'index.login.operation', 'uses' => 'LoginController@operation']);
     Route::group(['prefix' => 'index'], function () {
 
     });

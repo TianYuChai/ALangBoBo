@@ -40,10 +40,10 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
-        'api' => [
-            'driver' => 'token',
-            'provider' => 'users',
-        ],
+//        'api' => [
+//            'driver' => 'token',
+//            'provider' => 'users',
+//        ],
         //后台管理登陆
         'backstage' => [
             'driver' => 'session',
@@ -71,7 +71,7 @@ return [
     'providers' => [
         'users' => [
             'driver' => 'eloquent',
-            'model' => App\User::class,
+            'model' => \App\Http\Models\currency\UserModel::class,
         ],
         'backstage' => [
             'driver' => 'eloquent',

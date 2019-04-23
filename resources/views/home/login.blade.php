@@ -50,7 +50,7 @@
                                     </li>
                                     <li class="loginPassWord mgt-20 relative">
                                         <i class="iconTel iconPassword"></i>
-                                        <input type="text"  name="password" id="password" class = "password" placeholder="密码" autocomplete="off"/>
+                                        <input type="password"  name="password" id="password" class = "password" placeholder="密码" autocomplete="off"/>
                                     </li>
                                 </ul>
                                 <input type="hidden" name="type" value="pass">
@@ -69,7 +69,7 @@
                                 <ul class="reg-box loginList">
                                     <li class="loginTel relative mgt-20">
                                         <i class="iconTel"></i>
-                                        <input type="text" name="mobile" id="mobile" placeholder="手机号" class="mobile" autocomplete="off"/>
+                                        <input type="text" name="account" id="mobile" placeholder="手机号" class="mobile" autocomplete="off"/>
                                     </li>
                                     <li class="loginPassWord mgt-20 relative">
                                         <i class="iconTel iconPassword"></i>
@@ -106,7 +106,53 @@
         $('.loginBtn').click(function () {
             var that = $(this);
             var data = that.parent('form').serializeArray();
-            console.log(data);
+            for (var i= 0; i< data.length; i++) {
+                if(data[i]['value'] == "") {
+                    layer.msg(comparison(data[i]['name']));return false;
+                }
+                if(data[i]['name'] == "mobile") {
+                    if(!isPhoneNo(data[i]['value'])) {
+                        layer.msg('请填写正确的手机号'); return;
+                    }
+                }
+                if(data[i]['name'] == 'password') {
+                    if(data[i]['value'].length <6 || data[i]['value'].length > 12) {
+                        layer.msg('密码错误'); return;
+                    }
+                }
+            }
+            $.ajax({
+                headers: {
+                    'X-CSRF-TOKEN': "{{ csrf_token() }}"
+                },
+                method:"POST",
+                url:"{!! route('index.login.operation') !!}",
+                data:data,
+                success:function (res) {
+                    if(res.status == 200) {
+                        layer.msg(res.info);
+                    }
+                },
+                error:function (XMLHttpRequest, textStatus, errorThrown) {
+                    //返回提示信息
+                    try {
+                        if(XMLHttpRequest.status == 429) {
+                            layer.msg('请求过快, 请稍后再试');return;
+                        }
+                        if(XMLHttpRequest.status == 401) {
+                            var errors = JSON.parse(XMLHttpRequest.responseText)['errors']['info'];
+                            layer.msg(errors[0]);return;
+                        }
+                        var errors = XMLHttpRequest.responseJSON.errors;
+                        for (var value in errors) {
+                            layer.msg(errors[value][0]);return;
+                        }
+                    } catch (e) {
+                        var errors = JSON.parse(XMLHttpRequest.responseText)['errors']['info'];
+                        layer.msg(errors[0]);return;
+                    }
+                }
+            });
         });
         $('.verifyBtn').on('click', function () {
             var that = $(this);
