@@ -19,7 +19,7 @@
         <div class="container relative">
             <div class="loginBox">
                 <div class="loginNotice">
-                    <img src="../images/img/loginNotice.png" alt=""/>
+                    <img src="{{ asset('home/images/img/loginNotice.png') }}" alt=""/>
                     <p>阿郎博波不会以任何理由要求您转账汇款，谨防诈骗。</p>
                 </div>
                 <!--账户登录  手机登录 tab切换-->
@@ -37,46 +37,53 @@
                     <!--tab1 账户登录-->
                     <div class="tab-pane fade in active" id="accountLogin">
                         <div class="pdl-20 pdr-20">
-                            <form action="" method="post">
+                            <form method="post">
                                 <ul class="reg-box loginList">
                                     <li class="loginTel relative mgt-20">
                                         <i class="iconTel"></i>
-                                        <input type="text" name="phone" id="phone" placeholder="手机号/用户名/邮箱" class="phone" autocomplete="off"/>
+                                        <input type="text"
+                                               name="account"
+                                               id="account"
+                                               placeholder="用户名/邮箱"
+                                               class="phone"
+                                               autocomplete="off"/>
                                     </li>
                                     <li class="loginPassWord mgt-20 relative">
                                         <i class="iconTel iconPassword"></i>
-                                        <input type="text"  name="password" id="password"  class = "password" placeholder="密码" autocomplete="off"/>
+                                        <input type="text"  name="password" id="password" class = "password" placeholder="密码" autocomplete="off"/>
                                     </li>
                                 </ul>
+                                <input type="hidden" name="type" value="pass">
                                 <a class="forgetWord mgt-20">忘记密码？</a>
-                                <button type="submit" class="loginBtn mgt-20">立即登录</button>
+                                <button type="submit" class="loginBtn mgt-20" onclick="return false;">立即登录</button>
                             </form>
                             <div class="register">
-                                <a href="../html/register.html"><span>></span>立即注册</a>
+                                <a href="{{ route('index.register') }}"><span>></span>立即注册</a>
                             </div>
                         </div>
                     </div>
                     <!--tab2 手机登录-->
                     <div class="tab-pane fade in" id="mobileLogin">
                         <div class="pdl-20 pdr-20">
-                            <form action="" method="post">
+                            <form method="post">
                                 <ul class="reg-box loginList">
                                     <li class="loginTel relative mgt-20">
                                         <i class="iconTel"></i>
-                                        <input type="text" name="mobile" id="mobile" placeholder="手机号/用户名/邮箱" class="mobile" autocomplete="off"/>
+                                        <input type="text" name="mobile" id="mobile" placeholder="手机号" class="mobile" autocomplete="off"/>
                                     </li>
                                     <li class="loginPassWord mgt-20 relative">
                                         <i class="iconTel iconPassword"></i>
                                         <input type="text" placeholder="验证码" class="verifyCode" id="verifyCode" name="verifyCode" autocomplete="off">
                                         <!--<button class="verifyBtn">获取验证码</button>-->
-                                        <button class="teleCodeBtn get-code verifyBtn">获取验证码</button>
+                                        <button class="teleCodeBtn get-code verifyBtn" onclick="return false;">获取验证码</button>
                                     </li>
                                 </ul>
+                                <input type="hidden" name="type" value="short">
                                 <a class="forgetWord mgt-20">忘记密码？</a>
-                                <button type="submit" class="loginBtn mgt-20">立即登录</button>
+                                <button type="submit" class="loginBtn mgt-20" onclick="return false;">立即登录</button>
                             </form>
                             <div class="register">
-                                <a href="../html/register.html"><span>></span>立即注册</a>
+                                <a href="{{ route('index.register') }}"><span>></span>立即注册</a>
                             </div>
                         </div>
                     </div>
@@ -92,4 +99,70 @@
     </div>
 @endsection
 @section('shop')
+@endsection
+
+@section('section')
+    <script type="text/javascript">
+        $('.loginBtn').click(function () {
+            var that = $(this);
+            var data = that.parent('form').serializeArray();
+            console.log(data);
+        });
+        $('.verifyBtn').on('click', function () {
+            var that = $(this);
+            var mobile = $.trim($('#mobile').val());
+            if(!mobile) {
+                layer.msg('请填写手机号'); return;
+            }
+            if(!isPhoneNo(mobile)) {
+                layer.msg('请填写正确的手机号'); return;
+            }
+            $.ajax({
+                headers: {
+                    'X-CSRF-TOKEN': "{{ csrf_token() }}"
+                },
+                method:"POST",
+                url:"{!! route('index.shortMessage') !!}",
+                data:{mobile: mobile},
+                success:function (res) {
+                    if(res.status == 200) {
+                        layer.msg(res.info);
+                        countDown(29, 59);
+                    }
+                },
+                error:function (XMLHttpRequest) {
+                    //返回提示信息
+                    try {
+                        if(XMLHttpRequest.status == 429) {
+                            layer.msg('请求过快, 请稍后再试');return;
+                        }
+                        var errors = XMLHttpRequest.responseJSON.errors;
+                        for (var value in errors) {
+                            layer.msg(errors[value][0]);return;
+                        }
+                    } catch (e) {
+                        var errors = JSON.parse(XMLHttpRequest.responseText)['errors']['info'];
+                        layer.msg(errors[0]);return;
+                    }
+                }
+            });
+        });
+        /*倒计时*/
+        function countDown(m, s) {
+            $('.verifyBtn').attr('disabled','disabled');
+            var time = setInterval(function(){
+                if(s < 10){
+                    $('.verifyBtn').text(m+':0'+s);
+                }else{
+                    $('.verifyBtn').text(m+':'+s);
+                }
+                s--;
+                if(s < 0) {
+                    clearInterval(time);
+                    $('.verifyBtn').text('获取验证码');
+                    $('.verifyBtn').removeAttr('disabled');
+                }
+            }, 1000);
+        }
+    </script>
 @endsection

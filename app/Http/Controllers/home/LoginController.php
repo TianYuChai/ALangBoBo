@@ -13,4 +13,5 @@ class LoginController extends BaseController
     {
         return view('home.login');
     }
+
 }

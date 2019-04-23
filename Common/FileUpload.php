@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Storage;
  */
 class FileUpload
 {
-    private static $image_type = ['gif', 'jpg', 'jpeg', 'png'];//图片上传格式，用于区分是否是可上传图片
+    private static $image_type = ['gif', 'jpg', 'jpeg', 'png', 'JPG'];//图片上传格式，用于区分是否是可上传图片
     private static $file_type = ['txt', 'xls', 'docx', 'dox', 'ppt'];//文件上传格式，用于区分是否是可上传文件
     private static $pic_dir = 'images';          //默认图片上传目录
     private static $file_dir = 'files';          //默认文件上传目录
