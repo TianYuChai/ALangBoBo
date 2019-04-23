@@ -18,9 +18,11 @@ class faceRecognitionController extends BaseController
     public function index(Request $request)
     {
         try {
-            $face_img = FileUpload::url('image', FileUpload::getManyImageInfo($request->face_img, 'png'));
+            $face_img_data = FileUpload::getManyImageInfo($request->face_img, 'png');
+            $face_img = FileUpload::url('image', $face_img_data);
             $crid_img = FileUpload::url('image', $request->crid_img);
             $res = faceReacognition::entrance($crid_img, $face_img, 0);
+            FileUpload::del('image', $face_img_data);
             if(isset($res->confidence)) {
                 if(intval($res->confidence) >= 60) {
                     $contrast_value = true;
