@@ -332,6 +332,7 @@
                             if(res.status == 200) {
                                 var htm = '';
                                 $('.' + stage).addClass('hidden');
+                                $('.account_info').addClass('hidden');
                                 $('.stepPartLast').removeClass('hidden');
                                 if(res.data['category'] == 0) {
                                     htm = '<p>注册完成! 您的用户名：</p><span>'+res.data['account']+'</span>，您已成为了本站的正式会员！' +
