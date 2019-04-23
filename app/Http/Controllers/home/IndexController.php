@@ -14,7 +14,6 @@ class IndexController extends BaseController
     public function index(IndexService $indexService)
     {
         $data = $indexService->entrance();
-
         return view('home.index', compact('data'));
     }
 }

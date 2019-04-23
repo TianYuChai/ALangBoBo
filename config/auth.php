@@ -72,6 +72,7 @@ return [
         'users' => [
             'driver' => 'eloquent',
             'model' => \App\Http\Models\currency\UserModel::class,
+            'table' => 'users'
         ],
         'backstage' => [
             'driver' => 'eloquent',

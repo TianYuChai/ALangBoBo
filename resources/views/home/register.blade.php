@@ -422,7 +422,7 @@
             var that = $(this);
             monitor(that, 'id');
         });
-        /*监听-身份证号*/
+        /*监听-号码*/
         $('.mobile').bind("input propertychange", function() {
             var that = $(this);
             monitor(that, 'mobile');

@@ -7,6 +7,7 @@
  */
 namespace App\Http\Controllers\home;
 
+use App\Http\Models\currency\UserModel;
 use App\Http\Services\home\LoginService;
 use Illuminate\Http\Request;
 use Exception;
@@ -15,6 +16,7 @@ class LoginController extends BaseController
 {
     public function index()
     {
+//        dd(auth()->guard('web')->user());
         return view('home.login');
     }
 
@@ -40,6 +42,22 @@ class LoginController extends BaseController
                 'info' => $e->getMessage(),
                 'status' => $e->getCode()
             ], $e->getCode());
+        }
+    }
+
+    public function verfMobile(Request $request)
+    {
+        try {
+            $item = UserModel::where('number', $request->mobile)->first();
+            if(!$item) {
+                throw new Exception('该账户未注册，请先前往注册');
+            }
+            return $this->ajaxReturn();
+        } catch (Exception $e) {
+            return $this->ajaxReturn([
+                'info' => $e->getMessage(),
+                'status' => 510
+            ], 510);
         }
     }
 }

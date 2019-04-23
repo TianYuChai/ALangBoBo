@@ -11,6 +11,7 @@ use App\Http\Models\admin\RegisterAuditingModel;
 use App\Http\Models\currency\MerchantModel;
 use App\Http\Models\currency\UserModel;
 use Exception;
+use Illuminate\Auth\SessionGuard;
 use Illuminate\Support\Facades\Redis;
 use Illuminate\Support\Facades\Auth;
 
@@ -30,7 +31,7 @@ class LoginService extends BaseService
         }
         if($type == 'short') {
             $this->vefiShort($data['account'], $data['verifyCode']);
-            $this->authCodeLogin($data['account']);
+            $item = $this->authCodeLogin($data['account']);
         } else {
             $item = $this->passwordLogin([
                 'account' => trim($data['account']),
@@ -38,19 +39,19 @@ class LoginService extends BaseService
             ]);
         }
         if(!$item) {
-            throw new Exception('操作错误, 账号不存在');
+            throw new Exception('账号不存在, 请先前往注册', 510);
         }
         $user = auth()->guard('web')->user();
         if($user->status != 1) {
             switch ($user->status) {
                 case 0:
-                    if(is_null($user->merchant)) {
+                    if(is_null($user->registerauditing)) {
                         throw new Exception('账号正在审核中, 请耐心等候', 401);
                     } else {
                         throw new Exception('账号已被驳回, 驳回理由:' +
                             $user->registerauditing['reject'] + ', 本站同时已清除该账户注册信息, 请重新进行注册提交', 401);
                         $this->removeAccount($user->id);
-//                        $item->delete();
+                        UserModel::destroy($user->id);
                     }
                     break;
                 case 2:
@@ -80,13 +81,21 @@ class LoginService extends BaseService
     /**
      * 短信验证码登陆
      *
+     * 先判断用户是否存在
+     * 如果存在进行存入，不存在则提示
      * @param $account
+     * @return bool
+     * @throws Exception
+     *
      */
     protected function authCodeLogin($account)
     {
-        return Auth::guard('web')->attempt([
-            'number' => $account
-        ]);
+        $item = UserModel::where('number', $account)->first();
+        if(!$item) {
+            throw new Exception('账号不存在, 请先前往注册', 510);
+        }
+        Auth::guard('web')->login($item);
+        return true;
     }
 
     /**

@@ -3,8 +3,6 @@
 namespace App\Http\Models\currency;
 
 use App\Http\Models\admin\RegisterAuditingModel;
-use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class UserModel extends Authenticatable
@@ -13,7 +11,15 @@ class UserModel extends Authenticatable
     protected $table = 'users';
     protected $guarded  = ['id'];
 
+    /**
+     * 改写
+     * @var string
+     */
     protected $rememberTokenName = '';
+    protected $hidden = [   //在模型数组或 JSON 显示中隐藏某些属性
+        'password'
+    ];
+
     /**
      * 账户类别
      * @var array
