@@ -22,7 +22,7 @@ class faceRecognitionController extends BaseController
             $crid_img = FileUpload::url('image', $request->crid_img);
             $res = faceReacognition::entrance($crid_img, $face_img, 0);
             if(isset($res->confidence)) {
-                if(intval($res->confidence) >= 75) {
+                if(intval($res->confidence) >= 60) {
                     $contrast_value = true;
                 } else {
                     $contrast_value = false;
