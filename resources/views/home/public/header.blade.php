@@ -34,12 +34,21 @@
                     </div>
                     <![endif]-->
                 </li>
-                <li class="fl mgl-80 relative">
-                    <a class="mgr-20" href="{{ route('index.login') }}" target="_blank">登录</a>
-                </li>
-                <li class="fl relative">
-                    <a class="lightGray" href="{{ route('index.register') }}" target="_blank">注册</a>
-                </li>
+                @if(!auth()->guard('web')->check())
+                    <li class="fl mgl-80 relative">
+                        <a class="mgr-20" href="{{ route('index.login') }}" target="_blank">登录</a>
+                    </li>
+                    <li class="fl relative">
+                        <a class="lightGray" href="{{ route('index.register') }}" target="_blank">注册</a>
+                    </li>
+                @else
+                    <li class="fl mgl-80 relative">
+                        <a class="mgr-20" href="{{ route('personal.index') }}" target="_blank">{{ auth()->guard('web')->user()->account }}</a>
+                    </li>
+                    <li class="fl relative">
+                        <a class="lightGray" href="{{ route('index.login.loginout') }}" >退出</a>
+                    </li>
+                @endif
             </ul>
         </div>
         <div class="fr">

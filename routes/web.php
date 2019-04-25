@@ -18,7 +18,7 @@ Route::post('fileupload', ['as' => 'file.upload', 'uses' => 'FileController@file
 /**
  * 短信发送
  */
-Route::post('shortMessage', ['as' => 'index.shortMessage', 'uses' => 'shortMessageController@index']);//->middleware('throttle:1,3')
+Route::post('shortMessage', ['as' => 'index.shortMessage', 'uses' => 'shortMessageController@index'])->middleware('throttle:1,3');//
 //人脸识别
 Route::post('faceRecognition', ['as' => 'index.face', 'uses' => 'faceRecognitionController@index']);
 /**
@@ -34,9 +34,13 @@ Route::group(['namespace' => 'home'], function () {
     Route::get('login', ['as' => 'index.login', 'uses' => 'LoginController@index']);
     Route::post('logi/operation', ['as' => 'index.login.operation', 'uses' => 'LoginController@operation']);
     Route::post('login/verfMobile', ['as' => 'index.login.verfMobile', 'uses' => 'LoginController@verfMobile']);
-    Route::group(['prefix' => 'index'], function () {
 
+    Route::group(['middleware' => 'auth:web'], function () {
+        Route::get('login/loginout', ['as' =>'index.login.loginout', 'uses' => 'LoginController@loginout']);
+
+        Route::group(['namespace' => 'personal', 'prefix' => 'personal'], function () {
+            Route::get('personal/index', ['as' => 'personal.index', 'uses' => 'PersonalContentController@index']);
+        });
     });
-
 
 });

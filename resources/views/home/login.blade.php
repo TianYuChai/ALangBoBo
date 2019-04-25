@@ -130,7 +130,7 @@
                 data:data,
                 success:function (res) {
                     if(res.status == 200) {
-                        layer.msg(res.info);
+                        window.location.href = res.url;
                     }
                 },
                 error:function (XMLHttpRequest, textStatus, errorThrown) {

@@ -11,6 +11,7 @@ use App\Http\Models\currency\UserModel;
 use App\Http\Services\home\LoginService;
 use Illuminate\Http\Request;
 use Exception;
+use Illuminate\Support\Facades\Auth;
 
 class LoginController extends BaseController
 {
@@ -33,7 +34,7 @@ class LoginController extends BaseController
         try{
             $loginService->dataFiltering($request);
             return $this->ajaxReturn([
-                'url' => '',
+                'url' => route('personal.index'),
                 'status' => 200
             ], 200);
         } catch (Exception $e) {
@@ -45,6 +46,12 @@ class LoginController extends BaseController
         }
     }
 
+    /**
+     * 验证账号是否注册
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function verfMobile(Request $request)
     {
         try {
@@ -59,5 +66,16 @@ class LoginController extends BaseController
                 'status' => 510
             ], 510);
         }
+    }
+
+    /**
+     * 退出登陆
+     *
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
+    public function loginout()
+    {
+        Auth::guard('web')->logout();
+        return redirect(route('index.login'));
     }
 }
