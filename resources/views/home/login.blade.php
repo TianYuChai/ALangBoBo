@@ -154,23 +154,32 @@
                 }
             });
         });
+        /*监听-手机号*/
         $('#mobile').blur(function () {
-            var val = $(this).val();
+            monitor('number', $(this).val());
+        });
+        /*监听-账号*/
+        $("#account").blur(function () {
+            monitor('account', $(this).val());
+        });
+        /*监听-提交*/
+        function monitor(type, value)
+        {
+            var clas = type == 'number' ? "verifyBtn" : "loginBtn";
             $.ajax({
                 headers: {
                     'X-CSRF-TOKEN': "{{ csrf_token() }}"
                 },
                 method:"POST",
                 url:"{!! route('index.login.verfMobile') !!}",
-                data:{mobile: val},
+                data:{val: value, type: type},
                 success:function (res) {
                     if(res.status == 200) {
-                        // layer.msg(res.info);
-                        $('.verifyBtn').removeAttr('disabled');
+                        $('.'+ clas).removeAttr('disabled');
                     }
                 },
                 error:function (XMLHttpRequest) {
-                    $('.verifyBtn').attr('disabled','disabled');
+                    $('.'+ clas).attr('disabled','disabled');
                     //返回提示信息
                     try {
                         if(XMLHttpRequest.status == 429) {
@@ -186,7 +195,7 @@
                     }
                 }
             });
-        });
+        }
         $('.verifyBtn').on('click', function () {
             var that = $(this);
             var mobile = $.trim($('#mobile').val());

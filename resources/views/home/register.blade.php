@@ -94,7 +94,7 @@
                         </div>
                         <div class="xieyiDiv">
                             <input type="checkbox" name="type" value="1" class="type" checked/>
-                            <label for="">我已阅读和同意 <a href="javascript:void(0)" id="agreement">《注册协议》</a></label>
+                            <label for="">我已阅读和同意 <a href="javascript:void(0)" class="agreement" data-type="user">《注册协议》</a></label>
                         </div>
                         <div class="step2Btn">
                             <button class="submit stepBtnActive"
@@ -183,7 +183,7 @@
                         </div>
                         <div class="xieyiDiv">
                             <input type="checkbox" name="type" value="1" class="type" checked/>
-                            <label for="">我已阅读和同意 <a href="javascript:void(0)" id="agreement">《注册协议》</a></label>
+                            <label for="">我已阅读和同意 <a href="javascript:void(0)" class="agreement" data-type="business">《注册协议》</a></label>
                         </div>
                         <div class="step2Btn">
                             <button class="submit stepBtnActive"
@@ -252,7 +252,7 @@
                         </div>
                         <div class="xieyiDiv">
                             <input type="checkbox" name="type" value="1" class="type" checked/>
-                            <label for="">我已阅读和同意 <a href="javascript:void(0)" id="agreement">《注册协议》</a></label>
+                            <label for="">我已阅读和同意 <a href="javascript:void(0)" class="agreement" data-type="business">《注册协议》</a></label>
                         </div>
                         <div class="step2Btn">
                             <button class="submit stepBtnActive"
@@ -408,22 +408,23 @@
             });
         }
         /*监听-账号*/
-        $('.account').bind("input propertychange", function() {
+        $('.account').blur(function() {
             var that = $(this);
             monitor(that, 'account');
         });
         /*监听-姓名*/
-        $('.name').bind("input propertychange", function() {
+        $('.name').blur(function() {
             var that = $(this);
             monitor(that, 'name');
         });
         /*监听-身份证号*/
-        $('#id').bind("input propertychange", function() {
+        $('#id').blur(function() {
             var that = $(this);
             monitor(that, 'id');
         });
         /*监听-号码*/
-        $('.mobile').bind("input propertychange", function() {
+        // .bind("input propertychange",
+        $('.mobile').blur(function() {
             var that = $(this);
             monitor(that, 'mobile');
         });
@@ -676,12 +677,15 @@
             //return new Blob([u8arr],{type:mime});
         }
         //注册协议
-        $('#agreement').click(function () {
+        $('.agreement').click(function () {
+            var type = $(this).data('type');
             layer.open({
                 type: 1,
+                title:type == 'user' ? '用户协议' : '商家入驻协议',
+                time:30000,
                 skin: 'layui-layer-rim', //加上边框
-                area: ['420px', '240px'], //宽高
-                content: ''
+                area: ['75%', '100%'], //宽高
+                content: type == 'user' ? user : business
             });
         })
     </script>

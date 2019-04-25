@@ -39,7 +39,7 @@ class LoginService extends BaseService
             ]);
         }
         if(!$item) {
-            throw new Exception('账号不存在, 请先前往注册', 510);
+            throw new Exception('账号密码错误', 510);
         }
         $user = auth()->guard('web')->user();
         if($user->status != 1) {

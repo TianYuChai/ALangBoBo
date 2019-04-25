@@ -17,7 +17,6 @@ class LoginController extends BaseController
 {
     public function index()
     {
-//        dd(auth()->guard('web')->user());
         return view('home.login');
     }
 
@@ -55,7 +54,11 @@ class LoginController extends BaseController
     public function verfMobile(Request $request)
     {
         try {
-            $item = UserModel::where('number', $request->mobile)->first();
+            $type = $request->type;
+            if(!in_array($type, ['number', 'account'])) {
+                throw new Exception('类型错误');
+            }
+            $item = UserModel::where($type , $request->val)->first();
             if(!$item) {
                 throw new Exception('该账户未注册，请先前往注册');
             }

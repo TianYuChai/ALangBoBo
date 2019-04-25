@@ -85,8 +85,13 @@ class RegisterService extends BaseService
      */
     protected function categoryHandleData(int $category, array $data)
     {
+        $account = trim($data['account']);
+        $item = $this->model::where('account', $account)->first();
+        if($item) {
+            throw new Exception('账号已存在');
+        }
         $result['user'] = [
-            'account' => trim($data['account']),
+            'account' => $account,
             'password' => bcrypt(trim($data['password'])),
             'category' => intval(trim($data['category'])),
             'name' => trim($data['name']),
