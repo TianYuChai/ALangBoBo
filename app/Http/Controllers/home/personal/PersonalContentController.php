@@ -15,7 +15,11 @@ class PersonalContentController extends BaseController
 
     public function index()
     {
-
         return view(self::ROUTE . 'index');
+    }
+
+    public function merchantData()
+    {
+        return view(self::ROUTE. 'merchant_data');
     }
 }

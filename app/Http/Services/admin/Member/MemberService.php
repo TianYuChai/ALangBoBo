@@ -119,4 +119,19 @@ class MemberService extends BaseService
         $data->status = 1;
         $data->save();
     }
+
+    /**
+     * 根据类别生成商家编号
+     *
+     * @param $category_id
+     * @return string
+     */
+    public function merchNumber($category_id)
+    {
+        $count = UserModel::where([
+            'category' => $category_id,
+            'status' => 1
+        ])->count();
+        return $category_id == 1 ? 'busi' : 'pers' . sprintf("%04d", $count);
+    }
 }

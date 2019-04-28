@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\admin\member;
 
 use App\Http\Controllers\admin\BaseController;
+use App\Http\Models\currency\MerchantModel;
 use App\Http\Models\currency\UserModel;
 use App\Http\Services\admin\Member\MemberService;
 use Illuminate\Http\Request;
@@ -77,6 +78,7 @@ class MemberController extends BaseController
     /**
      * 会员过审
      * 为后期业务扩展未和驳回合并成一个函数
+     * 根据会员类别生成商家编号
      *
      * @param $id
      * @param MemberService $memberService
@@ -86,6 +88,12 @@ class MemberController extends BaseController
     {
         try{
             $item = $memberService->checkMemberStatus($id);
+            if($item != 0) {
+                $code = $memberService->merchNumber($item->category);
+                MerchantModel::where('uid', $item->id)->update([
+                    'code' => $code
+                ]);
+            }
             $item->status = 1;
             $item->save();
         } catch (Exception $e) {

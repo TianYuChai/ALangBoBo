@@ -40,6 +40,7 @@ Route::group(['namespace' => 'home'], function () {
 
         Route::group(['namespace' => 'personal', 'prefix' => 'personal'], function () {
             Route::get('personal/index', ['as' => 'personal.index', 'uses' => 'PersonalContentController@index']);
+            Route::get('personal/merchant_data', ['as' => 'personal.merchant_data', 'uses' => 'PersonalContentController@merchantData']);
         });
     });
 

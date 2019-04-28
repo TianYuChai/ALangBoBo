@@ -1,109 +1,20 @@
 @extends('home.public.subject')
+@section('title', '阿朗博波-个人商务中心')
 @section('css')
 @parent
-    <link rel="stylesheet" type="text/css" href="../common/bootstrap.min.css"><!--可无视-->
+    <link rel="stylesheet" type="text/css" href="{{ asset('home/common/bootstrap.min.css') }}"><!--可无视-->
     <script src="http://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="../common/citySelect.css">
-    <link href="../css/index.css" rel="stylesheet">
-    <link rel="stylesheet" href="../css/merchantCenter_shInfo.css"/>
-    <link rel="stylesheet" href="../css/merchantCenter_accountCenter.css"/>
+    <link rel="stylesheet" href="{{ asset('home/common/citySelect.css') }}">
+    <link href="{{ asset('home/css/index.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset('home/css/merchantCenter_shInfo.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('home/css/merchantCenter_accountCenter.css') }}"/>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/distpicker/2.0.3/distpicker.js"></script>
 @endsection
 @section('content')
     <!--搜索部分-->
-    <div class="container searchPart">
-        <div class="relative">
-            <img src="../images/img/logo.png" alt="" class="logoImg"/>
-        </div>
-        <div class="searchForm">
-            <form action="" method="post">
-                <fieldset class="fieldset">
-                    <div class="searchDiv">
-                        <input type="text" placeholder=""/>
-                        <button type="submit" class="searchBtn">搜索</button>
-                    </div>
-                </fieldset>
-            </form>
-            <div class="hotSearch">
-                <ul class="hotSearchList clearfix">
-                    <li>
-                        <a href=""  class="active mgl-10">水饺</a>
-                    </li>
-                    <li>
-                        <a href="">大衣</a>
-                    </li>
-                    <li>
-                        <a href="">三亚</a>
-                    </li>
-                    <li>
-                        <a href="">水饺</a>
-                    </li>
-                    <li>
-                        <a href="">大衣</a>
-                    </li>
-                    <li>
-                        <a href="">三亚</a>
-                    </li>
-                    <li>
-                        <a href="">水饺</a>
-                    </li>
-                    <li>
-                        <a href="">大衣</a>
-                    </li>
-                    <li>
-                        <a href="">三亚</a>
-                    </li>
-                    <li>
-                        <a href="">水饺</a>
-                    </li>
-                    <li>
-                        <a href="">大衣</a>
-                    </li>
-                    <li>
-                        <a href="">三亚</a>
-                    </li>
-                    <li>
-                        <a href="">水饺</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </div>
+    @include('home.public.search')
     <!--分类导航-->
-    <div class="typeNav">
-        <div class="container">
-            <ul class="navList clearfix">
-                <li class="goodsType">
-                    <a href="">商品分类</a>
-                    <a class="typeIcon"></a>
-                </li>
-                <li class="navLi">
-                    <a href="">首页</a>
-                </li>
-                <li class="navLi">
-                    <a href="">黑名单公示</a>
-                </li>
-                <li class="navLi">
-                    <a href="">投诉结果公示</a>
-                </li>
-                <li class="navLi">
-                    <a href="">预售产品</a>
-                </li>
-                <li class="navLi">
-                    <a href="">兼职工</a>
-                </li>
-                <li class="navLi">
-                    <a href="">直营店和加盟</a>
-                </li>
-                <li class="navLi">
-                    <a href="">白露倩影系列</a>
-                </li>
-                <li class="navLi">
-                    <a href="">美容类</a>
-                </li>
-            </ul>
-        </div>
-    </div>
+    @include('home.public.category')
     <!--内容区-->
     <div class="container clearfix">
         <!--左边菜单栏-->
@@ -112,14 +23,12 @@
                 <li class="firstLevel">
                     <p>商户中心</p>
                     <ul>
+                        @include('home.personal.head_portrait')
                         <li>
-                            <img src="../images/img/shPerson.png.png" alt=""/>
+                            <a href="{{ route('personal.merchant_data') }}">用户资料</a>
                         </li>
                         <li>
-                            <a href="../html/merchantCenter_shInfo.html">商户资料</a>
-                        </li>
-                        <li>
-                            <a href="../html/merchantCenter_accountCenter.html"  class="leftNavActive">帐户中心</a>
+                            <a href="{{ route('personal.index') }}"  class="leftNavActive">帐户中心</a>
                         </li>
                         <li>
                             <a href="../html/merchantCenter_address.html">收/发货地址</a>
