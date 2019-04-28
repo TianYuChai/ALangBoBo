@@ -88,9 +88,8 @@
         <!--右边内容区-->
         <div class="fl mgt-30">
             <div class="shInfoTittle">
-                <!--此处需要判断当前用户为个人还是商户 ，如为个人则显示  个人资料  ，
-                如为商户则显示  商户资料   -&#45;&#45;即  个人资料 与 商户资料 同调此页面-->
-                <!--头部tittle标签同理-->
+                {{--此处需要判断当前用户为个人还是商户 ，如为个人则显示  个人资料  ，--}}
+                {{--如为商户则显示  商户资料   -&#45;&#45;即  个人资料 与 商户资料 同调此页面--}}
                 <p>{{ auth()->guard('web')->user()->category == 0 ? "个人资料" : "商户资料" }}</p>
             </div>
             <div class="shInfoDiv shInfoDivIE">
@@ -99,13 +98,16 @@
                     <fieldset>
                         <div class="tl relative">
                             当前头像：
-                            <img src="{{ asset('home/images/img/shPerson.png.png') }}" alt="" class="shPerson"/>
+                            <img src="{{ !empty(auth()->guard('web')->user()->headimg) ?
+                            FileUpload::url('image', auth()->guard('web')->user()->headimg)
+                            : asset('home/images/img/shPerson.png.png') }}" alt="" class="shPerson" style="width: 87px;height: 87px;"/>
                             <div class="shangchuan" style="display:none">
                                 <form name="form0" id="form0">
-                                    <input type="file" name="file0" id="file0" multiple="multiple" />
-                                    <p class="shangchuanType">仅支持JPG、GIF、PNG图片文件，且文件小于5M</p>
+                                    <input type="file" name="file0" id="file0" accept="image/*"/>
+                                    <p class="shangchuanType">仅支持jpg、gif、png、jpeg图片文件，且文件小于5M</p>
+                                    <input type="hidden" name="head">
                                     <img src="" id="img0" style="width: 300px;height: 200px;">
-                                    <button type="submit" class="shangchuanSave">保存</button>
+                                    <button type="submit" class="shangchuanSave" onclick="return false;">保存</button>
                                 </form>
                             </div>
                         </div>
@@ -190,11 +192,48 @@
 <script>
     // 上传预览功能
     $("#file0").change(function(){
+        var size = this.files[0].size / 1024;
+        var type = this.files[0].type;
+        var img_type = (type.substr(type.lastIndexOf("/"))).toLowerCase();
+        if(img_type!="/jpg" && img_type!="/gif" && img_type!="/png" && img_type!="/jpeg" || size > 5120) {
+            $(".shangchuan").fadeOut();
+            setTimeout(function () {
+                layer.msg('图片类型错误或超出5M, 请重新选择图片');
+            }, 300);
+            return false;
+        }
         var objUrl = getObjectURL(this.files[0]) ;//获取文件信息
-
-        // if (objUrl) {
-        //     $("#img0").attr("src", objUrl);
-        // }
+        var formData = new FormData();
+        formData.append('file', this.files[0]);
+        formData.append('image_path', $('input[name="head"]').val());
+        $.ajax({
+            headers: {
+                'X-CSRF-TOKEN': "{{ csrf_token() }}"
+            },
+            method:"POST",
+            url:"{!! route("file.upload") !!}",
+            processData: false,
+            contentType: false,
+            data:formData,
+            success:function (res) {
+                if(res.status == 200) {
+                    $('input[name="head"]').val(res.url[0]);
+                    $("#img0").attr("src", objUrl);
+                }
+            },
+            error:function (XMLHttpRequest) {
+                //返回提示信息
+                try {
+                    var errors = XMLHttpRequest.responseJSON.errors;
+                    for (var value in errors) {
+                        layer.msg(errors[value][0]);return;
+                    }
+                } catch (e) {
+                    var errors = JSON.parse(XMLHttpRequest.responseText)['errors']['info'];
+                    layer.msg(errors[0]);return;
+                }
+            }
+        });
     }) ;
     function getObjectURL(file) {
         var url = null;
@@ -216,8 +255,43 @@
         }
 
     });
+    $('.shangchuanSave').click(function () {
+        var that = $(this);
+        var head_img = $('input[name="head"]').val();
+        if(!head_img) {
+            layer.msg('请先选择图片'); return false;
+        }
+        $.ajax({
+            headers: {
+                'X-CSRF-TOKEN': "{{ csrf_token() }}"
+            },
+            method:"POST",
+            url:"{!! route("personal.pictureUpload") !!}",
+            data:{head_img: head_img},
+            success:function (res) {
+                if(res.status == 200) {
+                    $(".shangchuan").fadeOut();
+                    window.location.reload();
+                }
+            },
+            error:function (XMLHttpRequest) {
+                //返回提示信息
+                try {
+                    var errors = XMLHttpRequest.responseJSON.errors;
+                    for (var value in errors) {
+                        layer.msg(errors[value][0]);return;
+                    }
+                } catch (e) {
+                    var errors = JSON.parse(XMLHttpRequest.responseText)['errors']['info'];
+                    layer.msg(errors[0]);return;
+                }
+            }
+        });
+    });
     //出生年月日  ( 此处也可替换成您觉得方便的年月日方法，随意 )
     function YYYYMMDDstart(){
+        var ymd = "{{ auth()->guard('web')->user()->account }}";
+
         MonHead = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
         //先给年下拉框赋内容
         var y  = new Date().getFullYear();

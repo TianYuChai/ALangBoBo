@@ -39,8 +39,9 @@ Route::group(['namespace' => 'home'], function () {
         Route::get('login/loginout', ['as' =>'index.login.loginout', 'uses' => 'LoginController@loginout']);
 
         Route::group(['namespace' => 'personal', 'prefix' => 'personal'], function () {
-            Route::get('personal/index', ['as' => 'personal.index', 'uses' => 'PersonalContentController@index']);
-            Route::get('personal/merchant_data', ['as' => 'personal.merchant_data', 'uses' => 'PersonalContentController@merchantData']);
+            Route::get('index', ['as' => 'personal.index', 'uses' => 'PersonalContentController@index']);
+            Route::get('merchant_data', ['as' => 'personal.merchant_data', 'uses' => 'PersonalContentController@merchantData']);
+            Route::post('pictureUpload', ['as' => 'personal.pictureUpload', 'uses' => 'PersonalContentController@pictureUpload']);
         });
     });
 
