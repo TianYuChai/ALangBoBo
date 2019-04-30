@@ -94,7 +94,7 @@
             </div>
             <div class="shInfoDiv shInfoDivIE">
                 <p class="shInfoTip">亲爱的{{ auth()->guard('web')->user()->account }}用户，填写真实的资料，有助于好友找到你哦。</p>
-                <form class="cmxform" id="shInfoForm" method="get" action="">
+                <form class="cmxform" id="shInfoForm">
                     <fieldset>
                         <div class="tl relative">
                             当前头像：
@@ -138,7 +138,7 @@
                         </div>
                         <div class="birthDiv clearfix">
                             生日：
-                            <form name="reg_testdate" class="">
+                            <form name="reg_testdate">
                                 <select name="YYYY" onChange="YYYYDD(this.value)">
                                     <option value="">年</option>
                                 </select>
@@ -152,34 +152,36 @@
                         </div>
                         <div class="liveDiv">
                             居住地：
-                            <div data-toggle="distpicker" class="distpicker inline-block">
+                            <div data-toggle="distpicker" class="distpicker inline-block" id="distpicker">
+                                <?php $live = auth()->guard('web')->user()->live ?  explode('/', auth()->guard('web')->user()->live) : ""?>
                                 <div class="inline-block">
-                                    <select data-province="---- 选择省份 ----" class="outline"></select>
+                                    <select  id="eprovinceName" data-province="{{ $live ? $live[0] : "---- 选择省份 ----" }}" class="outline"></select>
                                 </div>
                                 <div class="inline-block">
-                                    <select data-city="---- 选择市/区 ----" class="outline"></select>
+                                    <select data-city="{{ $live ? $live[1] : "---- 选择市/区 ----" }}" class="outline"></select>
                                 </div>
                                 <div class="inline-block">
-                                    <select data-district="---- 选择县/市/区 ----" class="outline"></select>
+                                    <select data-district="{{ $live ? $live[2] : "---- 选择县/市/区 ----" }}" class="outline"></select>
                                 </div>
                             </div>
                         </div>
                         <div class="hometownDiv">
                             家乡：
                             <div data-toggle="distpicker" class="distpicker inline-block">
+                                <?php $home = auth()->guard('web')->user()->home ?  explode('/', auth()->guard('web')->user()->home) : ""?>
                                 <div class="inline-block">
-                                    <select data-province="---- 选择省份 ----" class="outline"></select>
+                                    <select data-province="{{ $home ? $home[0]: "---- 选择省份 ----" }}" class="outline"></select>
                                 </div>
                                 <div class="inline-block">
-                                    <select data-city="---- 选择市/区 ----" class="outline"></select>
+                                    <select data-city="{{ $home ? $home[1] : "---- 选择市/区 ----" }}" class="outline"></select>
                                 </div>
                                 <div class="inline-block">
-                                    <select data-district="---- 选择县/市/区 ----" class="outline"></select>
+                                    <select data-district="{{ $home ? $home[2] : "---- 选择县/市/区 ----" }}" class="outline"></select>
                                 </div>
                             </div>
                         </div>
                         <div class="border-bottom"></div>
-                        <button class="shInfoSave" type="submit">保存</button>
+                        <button class="shInfoSave" type="submit" onclick="return false">保存</button>
                     </fieldset>
                 </form>
             </div>
@@ -290,8 +292,10 @@
     });
     //出生年月日  ( 此处也可替换成您觉得方便的年月日方法，随意 )
     function YYYYMMDDstart(){
-        var ymd = "{{ auth()->guard('web')->user()->account }}";
-
+        var datebirth = "{{ auth()->guard('web')->user()->datebirth }}" ? "{{ auth()->guard('web')->user()->datebirth }}" : "";
+        if(datebirth) {
+            var birth = datebirth.split('/');
+        }
         MonHead = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
         //先给年下拉框赋内容
         var y  = new Date().getFullYear();
@@ -302,12 +306,12 @@
         for (var i = 1; i < 13; i++)
             document.reg_testdate.MM.options.add(new Option(" " + i + " 月", i));
 
-        document.reg_testdate.YYYY.value = y;
-        document.reg_testdate.MM.value = new Date().getMonth() + 1;
+        document.reg_testdate.YYYY.value = birth ? birth[0] : y;
+        document.reg_testdate.MM.value = birth ? birth[1] : new Date().getMonth() + 1;
         var n = MonHead[new Date().getMonth()];
         if (new Date().getMonth() ==1 && IsPinYear(YYYYvalue)) n++;
         writeDay(n); //赋日期下拉框Author:meizz
-        document.reg_testdate.DD.value = new Date().getDate();
+        document.reg_testdate.DD.value = birth ? birth[2] : new Date().getDate();
     }
     if(document.attachEvent)
         window.attachEvent("onload", YYYYMMDDstart);
@@ -343,5 +347,9 @@
     {
         e.options.length = 1;
     }
+
+    $('.shInfoSave').click(function () {
+       console.log($("#eprovinceName").val());
+    });
 </script>
 @endsection
