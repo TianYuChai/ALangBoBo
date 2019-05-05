@@ -43,7 +43,7 @@
                     </li>
                 @else
                     <li class="fl mgl-80 relative">
-                        <a class="mgr-20" href="{{ route('personal.index') }}" target="_blank">{{ auth()->guard('web')->user()->account }}</a>
+                        <a class="mgr-20" href="{{ route('personal.index') }}" target="_blank">{{ Auth::guard('web')->user()->account }}</a>
                     </li>
                     <li class="fl relative">
                         <a class="lightGray" href="{{ route('index.login.loginout') }}" >退出</a>

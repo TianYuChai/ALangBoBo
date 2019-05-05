@@ -54,6 +54,11 @@ class UserModel extends Authenticatable
     {
         return $this->hasOne(RegisterAuditingModel::class, 'uid', 'id');
     }
+
+    public function capital()
+    {
+        return $this->hasMany(CapitalModel::class, 'uid', 'id');
+    }
     /**
      * 账户类别展示
      * @return mixed
@@ -127,5 +132,30 @@ class UserModel extends Authenticatable
         if(!empty($search) || $search == "0") {
             return $query->where('status', intval($search));
         }
+    }
+
+    /**
+     * 查询当前用户冻结金额
+     *
+     * @return mixed
+     */
+    public function getFrozenCapitalAttribute()
+    {
+        return $this->capital()->where([
+            'category' => 300,
+            'status' => 1003
+        ])->sum('money');
+    }
+
+    /**
+     * 可用金额
+     *
+     * @return mixed
+     */
+    public function getAvailableMoneyAttribute()
+    {
+        return $this->capital()->where(function ($query) {
+                $query->whereIn('category', [100, 300, 500])->where('status', 1001);
+        })->sum('money');
     }
 }

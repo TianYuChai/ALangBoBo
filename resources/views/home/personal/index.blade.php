@@ -94,11 +94,11 @@
             <div class="shInfoDiv">
                 <div class="jine clearfix">
                     <div class="fl mgr-80">
-                        <p>冻结信用保证金：<span>500.00</span> 元    </p>
+                        <p>冻结信用保证金：<span>{{ Auth::guard('web')->user()->frozen_capital }}</span> 元    </p>
                         <a href="">解冻</a>
                     </div>
                     <div class="fl">
-                        <p>帐户可用余额：<span>0.00</span> 元</p>
+                        <p>帐户可用余额：<span>{{ Auth::guard('web')->user()->available_money }}</span> 元</p>
                         <a href="">解冻</a>
                     </div>
                 </div>
@@ -129,104 +129,27 @@
                                     <th>商户店铺</th>
                                     <th>交易日期</th>
                                     <th>交易金额</th>
-                                    <th>交易方式</th>
+                                    <th>交易流向</th>
                                     <th>备注</th>
                                 </tr>
                                 </thead>
                                 <tbody class="tbody">
-                                <tr>
-                                    <td>282000717334027218</td>
-                                    <td> 包大圣 </td>
-                                    <td> 2019.1.25 15:30:25 </td>
-                                    <td> 500元 </td>
-                                    <td> 网银付款 </td>
-                                    <td> 实缴 </td>
-                                </tr>
-                                <tr>
-                                    <td>282000717334027218</td>
-                                    <td> 包大圣 </td>
-                                    <td> 2019.1.25 15:30:25 </td>
-                                    <td> 500元 </td>
-                                    <td> 网银付款 </td>
-                                    <td> 实缴 </td>
-                                </tr>
-                                <tr>
-                                    <td>282000717334027218</td>
-                                    <td> 包大圣 </td>
-                                    <td> 2019.1.25 15:30:25 </td>
-                                    <td> 500元 </td>
-                                    <td> 网银付款 </td>
-                                    <td> 实缴 </td>
-                                </tr>
-                                <tr>
-                                    <td>282000717334027218</td>
-                                    <td> 包大圣 </td>
-                                    <td> 2019.1.25 15:30:25 </td>
-                                    <td> 500元 </td>
-                                    <td> 网银付款 </td>
-                                    <td> 实缴 </td>
-                                </tr><tr>
-                                    <td>282000717334027218</td>
-                                    <td> 包大圣 </td>
-                                    <td> 2019.1.25 15:30:25 </td>
-                                    <td> 500元 </td>
-                                    <td> 网银付款 </td>
-                                    <td> 实缴 </td>
-                                </tr>
-                                <tr>
-                                    <td>282000717334027218</td>
-                                    <td> 包大圣 </td>
-                                    <td> 2019.1.25 15:30:25 </td>
-                                    <td> 500元 </td>
-                                    <td> 网银付款 </td>
-                                    <td> 实缴 </td>
-                                </tr>
-                                <tr>
-                                    <td>282000717334027218</td>
-                                    <td> 包大圣 </td>
-                                    <td> 2019.1.25 15:30:25 </td>
-                                    <td> 500元 </td>
-                                    <td> 网银付款 </td>
-                                    <td> 实缴 </td>
-                                </tr><tr>
-                                    <td>282000717334027218</td>
-                                    <td> 包大圣 </td>
-                                    <td> 2019.1.25 15:30:25 </td>
-                                    <td> 500元 </td>
-                                    <td> 网银付款 </td>
-                                    <td> 实缴 </td>
-                                </tr>
-                                <tr>
-                                    <td>282000717334027218</td>
-                                    <td> 包大圣 </td>
-                                    <td> 2019.1.25 15:30:25 </td>
-                                    <td> 500元 </td>
-                                    <td> 网银付款 </td>
-                                    <td> 实缴 </td>
-                                </tr>
-                                <tr>
-                                    <td>282000717334027218</td>
-                                    <td> 包大圣 </td>
-                                    <td> 2019.1.25 15:30:25 </td>
-                                    <td> 500元 </td>
-                                    <td> 网银付款 </td>
-                                    <td> 实缴 </td>
-                                </tr><tr>
-                                    <td>282000717334027218</td>
-                                    <td> 包大圣 </td>
-                                    <td> 2019.1.25 15:30:25 </td>
-                                    <td> 500元 </td>
-                                    <td> 网银付款 </td>
-                                    <td> 实缴 </td>
-                                </tr>
-                                <tr>
-                                    <td>282000717334027218</td>
-                                    <td> 包大圣 </td>
-                                    <td> 2019.1.25 15:30:25 </td>
-                                    <td> 500元 </td>
-                                    <td> 网银付款 </td>
-                                    <td> 实缴 </td>
-                                </tr>
+                                    @foreach($items as $item)
+                                        <tr>
+                                            <td>{{ $item->order_id }}</td>
+                                            <td> 包大圣 </td>
+                                            <td> {{ $item->trans_at }} </td>
+                                            <td> {{ $item->money }} 元 </td>
+                                            <td>
+                                                @if($item->category == 100 || $item->category == 600)
+                                                    {{ $item->category_name }} ({{ $item->trademode_name }})
+                                                @else
+                                                    {{ $item->category_name }}
+                                                @endif
+                                            </td>
+                                            <td> {{ $item->memo }} </td>
+                                        </tr>
+                                    @endforeach
                                 </tbody>
                             </table>
                         </div>
@@ -455,4 +378,6 @@
             </div>
         </div>
     </div>
+@endsection
+@section('shop')
 @endsection

@@ -42,6 +42,7 @@ Route::group(['namespace' => 'home'], function () {
             Route::get('index', ['as' => 'personal.index', 'uses' => 'PersonalContentController@index']);
             Route::get('merchant_data', ['as' => 'personal.merchant_data', 'uses' => 'PersonalContentController@merchantData']);
             Route::post('pictureUpload', ['as' => 'personal.pictureUpload', 'uses' => 'PersonalContentController@pictureUpload']);
+            Route::post('homeLive', ['as' => 'personal.homeLive', 'uses' => 'PersonalContentController@homeLive']);
         });
     });
 

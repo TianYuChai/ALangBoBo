@@ -114,7 +114,7 @@
                         <div class="nichengDiv">
                             昵称：
                             <input type="text" class="nicheng" value="{{ auth()->guard('web')->user()->account }}" readonly>
-                            <p class="nichengDivRemark">*昵称须知：与阿郎博波业务或者卖家品牌冲突的昵称，阿郎博波有可以收回</p>
+                            <p class="nichengDivRemark">*昵称须知：与阿郎博波业务或者卖家品牌冲突的昵称，阿郎博波有权收回</p>
                         </div>
                         <div class="realNameDiv">
                             真实姓名：
@@ -155,13 +155,13 @@
                             <div data-toggle="distpicker" class="distpicker inline-block" id="distpicker">
                                 <?php $live = auth()->guard('web')->user()->live ?  explode('/', auth()->guard('web')->user()->live) : ""?>
                                 <div class="inline-block">
-                                    <select  id="eprovinceName" data-province="{{ $live ? $live[0] : "---- 选择省份 ----" }}" class="outline"></select>
+                                    <select  data-name="live_eprovince" data-province="{{ $live ? $live[0] : "---- 选择省份 ----" }}" class="outline"></select>
                                 </div>
                                 <div class="inline-block">
-                                    <select data-city="{{ $live ? $live[1] : "---- 选择市/区 ----" }}" class="outline"></select>
+                                    <select data-name="live_city" data-city="{{ $live ? $live[1] : "---- 选择市/区 ----" }}" class="outline"></select>
                                 </div>
                                 <div class="inline-block">
-                                    <select data-district="{{ $live ? $live[2] : "---- 选择县/市/区 ----" }}" class="outline"></select>
+                                    <select data-name="live_district" data-district="{{ $live ? $live[2] : "---- 选择县/市/区 ----" }}" class="outline"></select>
                                 </div>
                             </div>
                         </div>
@@ -170,13 +170,13 @@
                             <div data-toggle="distpicker" class="distpicker inline-block">
                                 <?php $home = auth()->guard('web')->user()->home ?  explode('/', auth()->guard('web')->user()->home) : ""?>
                                 <div class="inline-block">
-                                    <select data-province="{{ $home ? $home[0]: "---- 选择省份 ----" }}" class="outline"></select>
+                                    <select data-name="home_eprovince" data-province="{{ $home ? $home[0]: "---- 选择省份 ----" }}" class="outline"></select>
                                 </div>
                                 <div class="inline-block">
-                                    <select data-city="{{ $home ? $home[1] : "---- 选择市/区 ----" }}" class="outline"></select>
+                                    <select data-name="home_city" data-city="{{ $home ? $home[1] : "---- 选择市/区 ----" }}" class="outline"></select>
                                 </div>
                                 <div class="inline-block">
-                                    <select data-district="{{ $home ? $home[2] : "---- 选择县/市/区 ----" }}" class="outline"></select>
+                                    <select data-name="home_district" data-district="{{ $home ? $home[2] : "---- 选择县/市/区 ----" }}" class="outline"></select>
                                 </div>
                             </div>
                         </div>
@@ -349,7 +349,38 @@
     }
 
     $('.shInfoSave').click(function () {
-       console.log($("#eprovinceName").val());
+        var obj = {};
+        $(".inline-block").find('select').each(function () {
+            obj[$(this).data('name')] = $(this).val();
+        });
+        $.ajax({
+            headers: {
+                'X-CSRF-TOKEN': "{{ csrf_token() }}"
+            },
+            method:"POST",
+            url:"{!! route("personal.homeLive") !!}",
+            data:{home_live: obj},
+            success:function (res) {
+                if(res.status == 200) {
+                    layer.msg(res.info);
+                    setTimeout(function () {
+                        window.location.reload();
+                    }, 300);
+                }
+            },
+            error:function (XMLHttpRequest) {
+                //返回提示信息
+                try {
+                    var errors = XMLHttpRequest.responseJSON.errors;
+                    for (var value in errors) {
+                        layer.msg(errors[value][0]);return;
+                    }
+                } catch (e) {
+                    var errors = JSON.parse(XMLHttpRequest.responseText)['errors']['info'];
+                    layer.msg(errors[0]);return;
+                }
+            }
+        });
     });
 </script>
 @endsection
