@@ -30,7 +30,7 @@
                             <a href="{{ route('personal.index') }}">帐户中心</a>
                         </li>
                         <li>
-                            <a href="../html/merchantCenter_address.html">收/发货地址</a>
+                            <a href="{{ route('personal.address') }}">地址管理</a>
                         </li>
                         <li>
                             <a href="../html/shopCarList-sum.html">我的购物车</a>
@@ -352,6 +352,11 @@
         var obj = {};
         $(".inline-block").find('select').each(function () {
             obj[$(this).data('name')] = $(this).val();
+        });
+        $.each($('#shInfoForm').serializeArray(), function (k, val) {
+            if(val['name'] == 'sex') {
+                obj[val['name']] = val['value'];
+            }
         });
         $.ajax({
             headers: {

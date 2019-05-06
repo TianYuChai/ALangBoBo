@@ -8,16 +8,19 @@
 namespace App\Http\Services\home;
 
 use App\Http\Models\currency\CapitalModel;
+use App\Http\Models\home\personal\AddressModel;
 use Illuminate\Support\Facades\Auth;
 
 class PersanalService extends BaseService
 {
     protected $userId = null;
     protected $capital;
-    public function __construct(CapitalModel $capital)
+    protected $address;
+    public function __construct(CapitalModel $capital, AddressModel $addressModel)
     {
         $this->userId =  Auth::guard('web')->user()->id;
         $this->capital = $capital;
+        $this->address = $addressModel;
     }
 
     /**
@@ -31,5 +34,50 @@ class PersanalService extends BaseService
             'category' => 300,
             'status' => 1001
         ])->sum('money');
+    }
+
+    /**
+     * 地址信息
+     * @return array
+     */
+    public function address()
+    {
+        $harvest = $this->harvestAddress();
+        $shipping = $this->shippingAddress();
+        return [
+          'harvests' => [
+              'harvest' => $harvest,
+              'harvest_count' => $harvest->count()
+          ],
+          'shippings' => [
+              'shipping' => $shipping,
+              'shipping_count' => $shipping->count()
+          ]
+        ];
+    }
+
+    /**
+     * 获取收货地址
+     * @return mixed
+     */
+    protected function harvestAddress()
+    {
+        return $this->address::where([
+            'uid' => $this->userId,
+            'category' => 800
+        ])->get();
+    }
+
+    /**
+     * 获取发货地址
+     *
+     * @return mixed
+     */
+    protected function shippingAddress()
+    {
+        return $this->address::where([
+            'uid' => $this->userId,
+            'category' => 900
+        ])->get();
     }
 }

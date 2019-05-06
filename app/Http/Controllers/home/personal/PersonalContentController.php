@@ -21,29 +21,49 @@ class PersonalContentController extends BaseController
 {
     const ROUTE = HOME_PERSONAL; //视图路径
     protected $userId = null;
-
+    protected $model;
     /**
      * php 魔术方法获取用户id
      *
      * PersonalContentController constructor.
      */
-    public function __construct()
+    public function __construct(CapitalModel $model)
     {
-        $this->middleware(function ($request, $next) {
+        $this->middleware(function ($request, $next) use ($model){
             $this->userId = Auth::guard('web')->user()->id;
+            $this->model = $model;
             return $next($request);
         });
     }
 
+    /**
+     * 交易记录
+     * alltrade 所有记录
+     * withdraw 提现记录
+     * recharge 充值记录
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function index()
     {
-        $items = CapitalModel::where(function ($query) {
+        //所有记录
+        $items['alltrade'] = $this->model::where(function ($query) {
             $query->where('uid', $this->userId)->where('status', '!=', 1003);
         })->orderBy('updated_at', 'desc')->get();
-
+        //提现记录
+        $items['withdraw'] = $this->model::where(function ($query) {
+           $query->where('uid', $this->userId)->where('category', 200);
+        })->orderBy('updated_at', 'desc')->get();
+        //充值记录
+        $items['recharge'] = $this->model::where(function ($query) {
+            $query->where('uid', $this->userId)->whereIn('category', [100, 600]);
+        })->orderBy('updated_at', 'desc')->get();
         return view(self::ROUTE . 'index', compact('items'));
     }
 
+    /**
+     * 个人中心
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function merchantData()
     {
         return view(self::ROUTE. 'merchant_data');
@@ -84,7 +104,8 @@ class PersonalContentController extends BaseController
             $home = $home_live['home_eprovince'] . '/' . $home_live['home_city'] . '/' . $home_live['home_district'];
             UserModel::where('id', $request->user()->id)->update([
                 'live' => $live,
-                'home' => $home
+                'home' => $home,
+                'sex' => $home_live['sex']
             ]);
             return $this->ajaxReturn();
         } catch (Exception $e) {
@@ -93,5 +114,18 @@ class PersonalContentController extends BaseController
                 'status' => 510
             ], 510);
         }
+    }
+
+    /**
+     * 地址信息展示
+     * 从service类中获取地址信息所需数据
+     *
+     * @param PersanalService $service
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function address(PersanalService $service)
+    {
+        $items = $service->address();
+        return view(self::ROUTE. 'address', compact('items'));
     }
 }
