@@ -9,6 +9,7 @@ class AddressModel extends Model
     /*地址表*/
     protected $table = 'address';
 
+    protected $guarded = ['id'];
     /**
      * 地址类别
      *

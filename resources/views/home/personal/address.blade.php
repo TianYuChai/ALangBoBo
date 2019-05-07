@@ -202,10 +202,6 @@
                                 <form class="cmxform" id="sendForm">
                                     <fieldset class="fieldset clearfix">
                                         <a class="addLink">新增收货地址</a>
-                                        <div class="postNumDiv mgt-20 linkManDiv">
-                                            <span class="receiveStar">*</span> 联系人：
-                                            <input type="text" class="linkMan" id="linkMan" name="linkMan" autocomplete="off">
-                                        </div>
                                         <div class="addressDiv sendAddressDiv mgt-20">
                                             <span class="receiveStar">*</span>所在地区：
                                             <div data-toggle="distpicker" class="distpicker inline-block">
@@ -228,13 +224,17 @@
                                             邮政编码：
                                             <input type="text" class="sendPostNum"  name="code" autocomplete="off">
                                         </div>
+                                        <div class="postNumDiv mgt-20 linkManDiv">
+                                            <span class="receiveStar">*</span> 联系人：
+                                            <input type="text" class="linkMan" id="linkMan" name="contacts" autocomplete="off">
+                                        </div>
                                         <div class="tellNumDiv mgt-20">
                                             电话号码：
-                                            <input type="text" class="sendPostNum inline-block" name="tel[]" autocomplete="off">
+                                            <input type="text" class="sendPostNum inline-block"  autocomplete="off">
                                             <span>-</span>
-                                            <input type="text" class="sendPostNum inline-block" name="tel[]" autocomplete="off">
+                                            <input type="text" class="sendPostNum inline-block" autocomplete="off">
                                             <span>-</span>
-                                            <input type="text" class="sendPostNum inline-block" name="tel[]" autocomplete="off">
+                                            <input type="text" class="sendPostNum inline-block" autocomplete="off">
                                             <p class="tellTip">区号-电话-分机号码</p>
                                         </div>
                                         <div class="receiveNameDiv sendMobileDiv  mgt-20">
@@ -245,7 +245,7 @@
                                             <span class="receiveStar">*</span> 公司名称：
                                             <input type="text" class="companyName"  name="corname" autocomplete="off">
                                         </div>
-                                        <button type="submit" class="addressSave" onclick="return false" data-type="sendAddress">保存设置</button>
+                                        <button type="submit" class="addressSave" onclick="return false" data-type="sendForm">保存设置</button>
                                     </fieldset>
                                 </form>
                                 <!--receiveAddressList发货地址列表-->
@@ -273,19 +273,20 @@
                                         @foreach($items['shippings']['shipping'] as $item)
                                             <tr>
                                                 <td>
-                                                    <input type="radio" checked/> 默认
+                                                    <input type="radio" {{ $item->whether_retreat_address ? "checked" : ($item->whether_delivery_address ? "checked" : "") }} /> 默认
                                                 </td>
-                                                <td> <input type="radio" checked/> 默认 </td>
+                                                <td>
+                                                    <input type="radio" {{ $item->whether_retreat_address ? "checked" : ($item->whether_return_address ? "checked" : "") }} /> 默认
+                                                </td>
                                                 <td> {{ $item->contacts }} </td>
                                                 <td> {{ $item->address }} </td>
                                                 <td> {{ $item->detailed }} </td>
                                                 <td> {{ $item->code ?? "未填写" }} </td>
                                                 <td> {{ $item->tel ?? "未填写" }} </td>
                                                 <td> {{ $item->number }} </td>
-                                                <td> {{ $item-> }} </td>
+                                                <td> {{ $item->corname }} </td>
                                                 <td>
-                                                    {{--<a href="javascript:void(0);" class="editBtn">编辑</a>--}}
-                                                    <a href="javascript:void(0);" onclick='deleteTr(this);' class="deleteBtn">删除</a> </td>
+                                                    <a href="javascript:void(0);" onclick='deleteTr(this, "{{ route('personal.addressdel', ['id' => $item->id]) }}");' class="deleteBtn">删除</a> </td>
                                             </tr>
                                         @endforeach
                                         </tbody>
@@ -311,27 +312,70 @@
             if(type == 'receiveForm') {
                 obj['status'] = check;
             }
+            if(type == "sendForm") {
+                var tel = {};
+                $('.tellNumDiv').find('input').each(function (k, val) {
+                    tel[k] = $(this).val();
+                });
+               obj['tel'] = tel;
+            }
             $("."+ type + 'address').find('select').each(function () {
                 if(!$(this).val()) {
                     layer.msg('请选择地址信息');return false;
                 }
                 obj[$(this).data('name')] = $(this).val();
             });
-            $.each($('#'+ type).serializeArray(), function (k, val) {
-                if(val['name'] != 'code' || val['name'] !='tel') {
-                    if(val['value'] == "") {
-                        layer.msg('必填项不可为空');return false;
-                    }
-                }
-                if(val['name'] == 'number') {
-                    if(!isPhoneNo(val['value'])) {
-                        layer.msg('请填写正确的手机号'); return false;
-                    }
-                }
-                obj[val['name']] = val['value'];
-            });
             if(!$('.layui-layer-msg').length) {
-                console.log(obj);
+                $.each($('#'+ type).serializeArray(), function (k, val) {
+                    if(val['name'] != 'code' || val['name'] !='tel') {
+                        if(val['value'] == "") {
+                            layer.msg('必填项不可为空');return false;
+                        }
+                    }
+                    if(val['name'] == 'number') {
+                        if(!isPhoneNo(val['value'])) {
+                            layer.msg('请填写正确的手机号'); return false;
+                        }
+                    }
+                    obj[val['name']] = val['value'];
+                });
+            }
+            if(!$('.layui-layer-msg').length) {
+                obj['type'] = type;
+                $.ajax({
+                    headers: {
+                        'X-CSRF-TOKEN': "{{ csrf_token() }}"
+                    },
+                    method:"POST",
+                    url:"{{ route("personal.createaddress") }}",
+                    data:obj,
+                    success:function (res) {
+                        if(res.status == 200) {
+                            layer.msg(res.info);
+                            setTimeout(function () {
+                                window.location.reload();
+                            }, 300)
+                        }
+                    },
+                    error:function (XMLHttpRequest, textStatus, errorThrown) {
+                        //返回提示信息
+                        try {
+                            if(XMLHttpRequest.status == 401) {
+                                var errors = JSON.parse(XMLHttpRequest.responseText)['errors']['info'];
+                                layer.msg(errors[0]);return;
+                            }
+                            var errors = XMLHttpRequest.responseJSON.errors;
+                            for (var value in errors) {
+                                layer.msg(errors[value][0]);return;
+                            }
+                        } catch (e) {
+                            var errors = JSON.parse(XMLHttpRequest.responseText)['errors'];
+                            for (var value in errors) {
+                                layer.msg(errors[value][0]);return;
+                            }
+                        }
+                    }
+                });
             }
         });
         //删除操作

@@ -7,9 +7,15 @@
  */
 namespace App\Http\Services\home;
 
+use Illuminate\Support\Facades\Auth;
+
 class BaseService {
+    protected $userId = null;
+
     public function __construct()
     {
-//        $this->User = auth()->guard('backstage')->user();
+        if(Auth::guard('web')->check()) {
+            $this->userId = Auth::guard('web')->id();
+        }
     }
 }

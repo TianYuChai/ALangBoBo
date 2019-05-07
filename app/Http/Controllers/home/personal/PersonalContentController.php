@@ -11,11 +11,12 @@ use App\Http\Controllers\home\BaseController;
 use App\Http\Models\currency\CapitalModel;
 use App\Http\Models\currency\UserModel;
 use App\Http\Models\home\personal\AddressModel;
+use App\Http\Requests\home\persanal\PersanalAddressRequest;
 use App\Http\Services\home\PersanalService;
+use App\Http\Services\home\persanal\PersanalAddressService;
 use Illuminate\Http\Request;
 use Exception;
 use FileUpload;
-use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 
 class PersonalContentController extends BaseController
@@ -132,11 +133,41 @@ class PersonalContentController extends BaseController
         return view(self::ROUTE. 'address', compact('items'));
     }
 
+    /**
+     * 删除地址信息
+     *
+     * @param $id
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function addressDel($id)
     {
         try {
             $this->addressModel::destroy($id);
             return $this->ajaxReturn();
+        } catch (Exception $e) {
+            return $this->ajaxReturn([
+                'info' => $e->getMessage(),
+                'status' => 510
+            ], 510);
+        }
+    }
+
+    /**
+     * 添加地址信息
+     *
+     * @param PersanalAddressRequest $addressRequest
+     * @param PersanalAddressService $addressService
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function createAddress(PersanalAddressRequest $addressRequest, PersanalAddressService $addressService)
+    {
+        try {
+            $data = $addressService->addressFilter($addressRequest);
+            $addressService->create($data);
+            return $this->ajaxReturn([
+                'status' => 200,
+                'info' => '添加成功'
+            ], 200);
         } catch (Exception $e) {
             return $this->ajaxReturn([
                 'info' => $e->getMessage(),
