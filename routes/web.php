@@ -44,6 +44,7 @@ Route::group(['namespace' => 'home'], function () {
             Route::post('pictureUpload', ['as' => 'personal.pictureUpload', 'uses' => 'PersonalContentController@pictureUpload']);
             Route::post('homeLive', ['as' => 'personal.homeLive', 'uses' => 'PersonalContentController@homeLive']);
             Route::get('address', ['as' => 'personal.address', 'uses' => 'PersonalContentController@address']);
+            Route::get('address/{id}/del', ['as' => 'personal.addressdel', 'uses' => 'PersonalContentController@addressDel']);
         });
     });
 

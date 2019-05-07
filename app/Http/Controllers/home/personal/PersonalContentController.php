@@ -10,6 +10,7 @@ namespace App\Http\Controllers\home\personal;
 use App\Http\Controllers\home\BaseController;
 use App\Http\Models\currency\CapitalModel;
 use App\Http\Models\currency\UserModel;
+use App\Http\Models\home\personal\AddressModel;
 use App\Http\Services\home\PersanalService;
 use Illuminate\Http\Request;
 use Exception;
@@ -22,16 +23,18 @@ class PersonalContentController extends BaseController
     const ROUTE = HOME_PERSONAL; //视图路径
     protected $userId = null;
     protected $model;
+    protected $addressModel;
     /**
      * php 魔术方法获取用户id
      *
      * PersonalContentController constructor.
      */
-    public function __construct(CapitalModel $model)
+    public function __construct(CapitalModel $model, AddressModel $addressModel)
     {
-        $this->middleware(function ($request, $next) use ($model){
+        $this->middleware(function ($request, $next) use ($model, $addressModel){
             $this->userId = Auth::guard('web')->user()->id;
             $this->model = $model;
+            $this->addressModel = $addressModel;
             return $next($request);
         });
     }
@@ -127,5 +130,18 @@ class PersonalContentController extends BaseController
     {
         $items = $service->address();
         return view(self::ROUTE. 'address', compact('items'));
+    }
+
+    public function addressDel($id)
+    {
+        try {
+            $this->addressModel::destroy($id);
+            return $this->ajaxReturn();
+        } catch (Exception $e) {
+            return $this->ajaxReturn([
+                'info' => $e->getMessage(),
+                'status' => 510
+            ], 510);
+        }
     }
 }

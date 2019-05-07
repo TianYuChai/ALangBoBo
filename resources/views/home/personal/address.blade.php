@@ -112,43 +112,48 @@
                     <div id="myTabContent" class="tab-content">
                         <!--tab1 收货地址-->
                         <div class="tab-pane fade in active" id="receiveAddress">
-                            <form class="cmxform" id="receiveForm" method="get" action="">
+                            <form class="cmxform" id="receiveForm">
                                 <fieldset class="fieldset clearfix">
                                     <a class="addLink">新增收货地址</a>
                                     <div class="addressDiv mgt-20">
                                         <span class="receiveStar">*</span>地址信息：
                                         <div data-toggle="distpicker" class="distpicker inline-block">
-                                            <div class="inline-block">
-                                                <select data-province="- 省份 -" class="outline"></select>
+                                            <div class="inline-block receiveFormaddress">
+                                                <select data-name="eprovince" data-province="- 省份 -" class="outline"></select>
                                             </div>
-                                            <div class="inline-block">
-                                                <select data-city="-市/区 -" class="outline"></select>
+                                            <div class="inline-block receiveFormaddress">
+                                                <select data-name="city" data-city="-市/区 -" class="outline"></select>
                                             </div>
-                                            <div class="inline-block">
-                                                <select data-district="- 县/市/区 --" class="outline"></select>
+                                            <div class="inline-block receiveFormaddress">
+                                                <select data-name="district" data-district="- 县/市/区 --" class="outline"></select>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="detailInfoDiv mgt-20">
                                         <span class="receiveStar">*</span>详细地址：
-                                        <textarea name="" cols="30" rows="10" placeholder="请输入详细地址信息，如道路、门牌号、小区、楼栋号、单元等信息"></textarea>
+                                        <textarea name="detailed"
+                                                  cols="30"
+                                                  rows="10"
+                                                  placeholder="请输入详细地址信息，如道路、门牌号、小区、楼栋号、单元等信息"></textarea>
                                     </div>
                                     <div class="postNumDiv mgt-20">
                                         邮政编码：
-                                        <input type="text" class="postNum" id="postNum" name="postNum" autocomplete="off">
+                                        <input type="text" class="postNum" id="postNum" name="code" autocomplete="off">
                                     </div>
                                     <div class="receiveNameDiv mgt-20">
                                         <span class="receiveStar">*</span>收货人姓名：
-                                        <input type="text" class="receiveName" id="receiveName" name="receiveName" autocomplete="off">
+                                        <input type="text"
+                                               class="receiveName"
+                                               name="contacts" autocomplete="off">
                                     </div>
                                     <div class="receiveNameDiv mgt-20">
                                         <span class="receiveStar">*</span>手机号码：
-                                        <input type="text" class="mobile" id="mobile" name="mobile" autocomplete="off">
+                                        <input type="text" class="mobile" name="number" autocomplete="off">
                                     </div>
                                     <div class="morenDiv mgt-20">
-                                        <input type="checkbox"/>设置为默认收货地址
+                                        <input type="checkbox" name="status" value="1"/>设置为默认收货地址
                                     </div>
-                                    <button type="submit" class="addressSave">保存</button>
+                                    <button type="submit" class="addressSave" onclick="return false" data-type="receiveForm">保存</button>
                                 </fieldset>
                             </form>
                             <!--收货地址列表-->
@@ -172,13 +177,19 @@
                                     <tbody class="tbody tl">
                                     @foreach($items['harvests']['harvest'] as $item)
                                         <tr>
-                                            <td>默默</td>
-                                            <td> 安徽省滁州市 </td>
-                                            <td> 南谯区凤凰街道123号 </td>
-                                            <td> 239060 </td>
-                                            <td> 15623563256 </td>
-                                            <td><a href="javascript:void(0);" onclick='deleteTr(this);' class="deleteBtn">删除</a> </td>
-                                            <td><p class="morenP">默认地址</p></td>
+                                            <td>{{ $item->contacts }}</td>
+                                            <td> {{ $item->address }} </td>
+                                            <td> {{ $item->detailed }} </td>
+                                            <td> {{ $item->code ?? "未填写" }} </td>
+                                            <td> {{ $item->number }} </td>
+                                            <td><a href="javascript:void(0);" onclick='deleteTr(this, "{{ route('personal.addressdel', ['id' => $item->id]) }}");' class="deleteBtn">删除</a> </td>
+                                            <td>
+                                                @if($item->whether_rece_address)
+                                                    <p class="morenP">默认地址</p>
+                                                @else
+                                                    <p>非默认地址</p>
+                                                @endif
+                                            </td>
                                         </tr>
                                     @endforeach
                                     </tbody>
@@ -188,7 +199,7 @@
                         @if(Auth::guard('web')->user()->category != 0)
                             <!--tab2 发货地址-->
                             <div class="tab-pane fade in" id="sendAddress">
-                                <form class="cmxform" id="sendForm" method="get" action="">
+                                <form class="cmxform" id="sendForm">
                                     <fieldset class="fieldset clearfix">
                                         <a class="addLink">新增收货地址</a>
                                         <div class="postNumDiv mgt-20 linkManDiv">
@@ -198,54 +209,50 @@
                                         <div class="addressDiv sendAddressDiv mgt-20">
                                             <span class="receiveStar">*</span>所在地区：
                                             <div data-toggle="distpicker" class="distpicker inline-block">
-                                                <div class="inline-block">
-                                                    <select data-province="- 省份 -" class="outline"></select>
+                                                <div class="inline-block sendFormaddress">
+                                                    <select data-name="eprovince" data-province="- 省份 -" class="outline"></select>
                                                 </div>
-                                                <div class="inline-block">
-                                                    <select data-city="-市/区 -" class="outline"></select>
+                                                <div class="inline-block sendFormaddress">
+                                                    <select data-name="city" data-city="-市/区 -" class="outline"></select>
                                                 </div>
-                                                <div class="inline-block">
-                                                    <select data-district="- 县/市/区 --" class="outline"></select>
+                                                <div class="inline-block sendFormaddress">
+                                                    <select data-name="district" data-district="- 县/市/区 --" class="outline"></select>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="detailInfoDiv sendDetailDiv mgt-20">
                                             <span class="receiveStar">*</span>街道地址：
-                                            <textarea name="" cols="30" rows="10" placeholder="不需要重复填写省/市/区"></textarea>
+                                            <textarea name="detailed" cols="30" rows="10" placeholder="不需要重复填写省/市/区"></textarea>
                                         </div>
                                         <div class="postNumDiv sendPostNumDiv mgt-20">
                                             邮政编码：
-                                            <input type="text" class="sendPostNum" id="sendPostNum" name="sendPostNum" autocomplete="off">
+                                            <input type="text" class="sendPostNum"  name="code" autocomplete="off">
                                         </div>
                                         <div class="tellNumDiv mgt-20">
                                             电话号码：
-                                            <input type="text" class="sendPostNum inline-block" name="tellNum" autocomplete="off">
+                                            <input type="text" class="sendPostNum inline-block" name="tel[]" autocomplete="off">
                                             <span>-</span>
-                                            <input type="text" class="sendPostNum inline-block" name="tellNum" autocomplete="off">
+                                            <input type="text" class="sendPostNum inline-block" name="tel[]" autocomplete="off">
                                             <span>-</span>
-                                            <input type="text" class="sendPostNum inline-block" name="tellNum" autocomplete="off">
+                                            <input type="text" class="sendPostNum inline-block" name="tel[]" autocomplete="off">
                                             <p class="tellTip">区号-电话-分机号码</p>
                                         </div>
                                         <div class="receiveNameDiv sendMobileDiv  mgt-20">
                                             <span class="receiveStar">*</span>手机号码：
-                                            <input type="text" class="sendMobile" id="sendMobile" name="sendMobile" autocomplete="off">
+                                            <input type="text" class="sendMobile" name="number" autocomplete="off">
                                         </div>
                                         <div class="postNumDiv companyNameDiv mgt-20">
                                             <span class="receiveStar">*</span> 公司名称：
-                                            <input type="text" class="companyName" id="companyName" name="companyName" autocomplete="off">
+                                            <input type="text" class="companyName"  name="corname" autocomplete="off">
                                         </div>
-                                        <div class="detailInfoDiv sendInfoDiv mgt-20">
-                                            备注：
-                                            <textarea name="" cols="30" rows="10" placeholder="请输入详细地址信息，如道路、门牌号、小区、楼栋号、单元等信息"></textarea>
-                                        </div>
-                                        <button type="submit" class="addressSave">保存设置</button>
+                                        <button type="submit" class="addressSave" onclick="return false" data-type="sendAddress">保存设置</button>
                                     </fieldset>
                                 </form>
                                 <!--receiveAddressList发货地址列表-->
                                 <div class="sendAddressList">
                                     <div class="saveAddressTip">
                                         <img src="{{ asset('home/images/icon/addressIcon.png') }}"/>
-                                        <p>已保存 <span>2</span>条地址，还能保存 <span>18</span>条地址</p>
+                                        <p>已保存 <span>{{ $items['shippings']['shipping_count'] }}</span>条地址，还能保存 <span>{{ 20 - $items['shippings']['shipping_count'] }}</span>条地址</p>
                                     </div>
                                     <table align="center" class="table tl" frame="box" border="1">
                                         <thead class="thead">
@@ -263,166 +270,24 @@
                                         </tr>
                                         </thead>
                                         <tbody class="tbody tl">
-                                        <tr>
-                                            <td>
-                                                <input type="radio"/> 默认
-                                            </td>
-                                            <td> <input type="radio"/> 默认 </td>
-                                            <td> 邓思杰 </td>
-                                            <td> 浙江省杭州市西湖区 </td>
-                                            <td> 西湖小区2-23 </td>
-                                            <td> 310051 </td>
-                                            <td> 0550-3745632 </td>
-                                            <td> 15632365236 </td>
-                                            <td> 阿郎博波 </td>
-                                            <td>
-                                                {{--<a href="javascript:void(0);" class="editBtn">编辑</a>--}}
-                                                <a href="javascript:void(0);" onclick='deleteTr(this);' class="deleteBtn">删除</a> </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <input type="radio"/> 默认
-                                            </td>
-                                            <td> <input type="radio"/> 默认 </td>
-                                            <td> 邓思杰 </td>
-                                            <td> 浙江省杭州市西湖区 </td>
-                                            <td> 西湖小区2-23 </td>
-                                            <td> 310051 </td>
-                                            <td> 0550-3745632 </td>
-                                            <td> 15632365236 </td>
-                                            <td> 阿郎博波 </td>
-                                            <td>
-                                                <a href="javascript:void(0);" class="editBtn">编辑</a>
-                                                <a href="javascript:void(0);" onclick='deleteTr(this);' class="deleteBtn">删除</a> </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <input type="radio"/> 默认
-                                            </td>
-                                            <td> <input type="radio"/> 默认 </td>
-                                            <td> 邓思杰 </td>
-                                            <td> 浙江省杭州市西湖区 </td>
-                                            <td> 西湖小区2-23 </td>
-                                            <td> 310051 </td>
-                                            <td> 0550-3745632 </td>
-                                            <td> 15632365236 </td>
-                                            <td> 阿郎博波 </td>
-                                            <td>
-                                                <a href="javascript:void(0);" class="editBtn">编辑</a>
-                                                <a href="javascript:void(0);" onclick='deleteTr(this);' class="deleteBtn">删除</a> </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <input type="radio"/> 默认
-                                            </td>
-                                            <td> <input type="radio"/> 默认 </td>
-                                            <td> 邓思杰 </td>
-                                            <td> 浙江省杭州市西湖区 </td>
-                                            <td> 西湖小区2-23 </td>
-                                            <td> 310051 </td>
-                                            <td> 0550-3745632 </td>
-                                            <td> 15632365236 </td>
-                                            <td> 阿郎博波 </td>
-                                            <td>
-                                                <a href="javascript:void(0);" class="editBtn">编辑</a>
-                                                <a href="javascript:void(0);" onclick='deleteTr(this);' class="deleteBtn">删除</a> </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <input type="radio"/> 默认
-                                            </td>
-                                            <td> <input type="radio"/> 默认 </td>
-                                            <td> 邓思杰 </td>
-                                            <td> 浙江省杭州市西湖区 </td>
-                                            <td> 西湖小区2-23 </td>
-                                            <td> 310051 </td>
-                                            <td> 0550-3745632 </td>
-                                            <td> 15632365236 </td>
-                                            <td> 阿郎博波 </td>
-                                            <td>
-                                                <a href="javascript:void(0);" class="editBtn">编辑</a>
-                                                <a href="javascript:void(0);" onclick='deleteTr(this);' class="deleteBtn">删除</a> </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <input type="radio"/> 默认
-                                            </td>
-                                            <td> <input type="radio"/> 默认 </td>
-                                            <td> 邓思杰 </td>
-                                            <td> 浙江省杭州市西湖区 </td>
-                                            <td> 西湖小区2-23 </td>
-                                            <td> 310051 </td>
-                                            <td> 0550-3745632 </td>
-                                            <td> 15632365236 </td>
-                                            <td> 阿郎博波 </td>
-                                            <td>
-                                                <a href="javascript:void(0);" class="editBtn">编辑</a>
-                                                <a href="javascript:void(0);" onclick='deleteTr(this);' class="deleteBtn">删除</a> </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <input type="radio"/> 默认
-                                            </td>
-                                            <td> <input type="radio"/> 默认 </td>
-                                            <td> 邓思杰 </td>
-                                            <td> 浙江省杭州市西湖区 </td>
-                                            <td> 西湖小区2-23 </td>
-                                            <td> 310051 </td>
-                                            <td> 0550-3745632 </td>
-                                            <td> 15632365236 </td>
-                                            <td> 阿郎博波 </td>
-                                            <td>
-                                                <a href="javascript:void(0);" class="editBtn">编辑</a>
-                                                <a href="javascript:void(0);" onclick='deleteTr(this);' class="deleteBtn">删除</a> </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <input type="radio"/> 默认
-                                            </td>
-                                            <td> <input type="radio"/> 默认 </td>
-                                            <td> 邓思杰 </td>
-                                            <td> 浙江省杭州市西湖区 </td>
-                                            <td> 西湖小区2-23 </td>
-                                            <td> 310051 </td>
-                                            <td> 0550-3745632 </td>
-                                            <td> 15632365236 </td>
-                                            <td> 阿郎博波 </td>
-                                            <td>
-                                                <a href="javascript:void(0);" class="editBtn">编辑</a>
-                                                <a href="javascript:void(0);" onclick='deleteTr(this);' class="deleteBtn">删除</a> </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <input type="radio"/> 默认
-                                            </td>
-                                            <td> <input type="radio"/> 默认 </td>
-                                            <td> 邓思杰 </td>
-                                            <td> 浙江省杭州市西湖区 </td>
-                                            <td> 西湖小区2-23 </td>
-                                            <td> 310051 </td>
-                                            <td> 0550-3745632 </td>
-                                            <td> 15632365236 </td>
-                                            <td> 阿郎博波 </td>
-                                            <td>
-                                                <a href="javascript:void(0);" class="editBtn">编辑</a>
-                                                <a href="javascript:void(0);" onclick='deleteTr(this);' class="deleteBtn">删除</a> </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <input type="radio"/> 默认
-                                            </td>
-                                            <td> <input type="radio"/> 默认 </td>
-                                            <td> 邓思杰 </td>
-                                            <td> 浙江省杭州市西湖区 </td>
-                                            <td> 西湖小区2-23 </td>
-                                            <td> 310051 </td>
-                                            <td> 0550-3745632 </td>
-                                            <td> 15632365236 </td>
-                                            <td> 阿郎博波 </td>
-                                            <td>
-                                                <a href="javascript:void(0);" class="editBtn">编辑</a>
-                                                <a href="javascript:void(0);" onclick='deleteTr(this);' class="deleteBtn">删除</a> </td>
-                                        </tr>
+                                        @foreach($items['shippings']['shipping'] as $item)
+                                            <tr>
+                                                <td>
+                                                    <input type="radio" checked/> 默认
+                                                </td>
+                                                <td> <input type="radio" checked/> 默认 </td>
+                                                <td> {{ $item->contacts }} </td>
+                                                <td> {{ $item->address }} </td>
+                                                <td> {{ $item->detailed }} </td>
+                                                <td> {{ $item->code ?? "未填写" }} </td>
+                                                <td> {{ $item->tel ?? "未填写" }} </td>
+                                                <td> {{ $item->number }} </td>
+                                                <td> {{ $item-> }} </td>
+                                                <td>
+                                                    {{--<a href="javascript:void(0);" class="editBtn">编辑</a>--}}
+                                                    <a href="javascript:void(0);" onclick='deleteTr(this);' class="deleteBtn">删除</a> </td>
+                                            </tr>
+                                        @endforeach
                                         </tbody>
                                     </table>
                                 </div>
@@ -437,20 +302,88 @@
 @section('shop')
 @endsection
 @section('section')
-    <script>
-        //    删除操作
-        function deleteTr(nowTr){
-            //多一个parent就代表向前一个标签,
-            // 本删除范围为<td><tr>两个标签,即向前两个parent
-            //如果多一个parent就会删除整个table
-            $(nowTr).parent().parent().remove();
-            $(this).closest('tr').remove();  //清空当前行
+    <script type="text/javascript">
+        var check = false;
+        $('.addressSave').click(function () {
+            var obj = {};
+            var that = $(this);
+            var type = that.data('type');
+            if(type == 'receiveForm') {
+                obj['status'] = check;
+            }
+            $("."+ type + 'address').find('select').each(function () {
+                if(!$(this).val()) {
+                    layer.msg('请选择地址信息');return false;
+                }
+                obj[$(this).data('name')] = $(this).val();
+            });
+            $.each($('#'+ type).serializeArray(), function (k, val) {
+                if(val['name'] != 'code' || val['name'] !='tel') {
+                    if(val['value'] == "") {
+                        layer.msg('必填项不可为空');return false;
+                    }
+                }
+                if(val['name'] == 'number') {
+                    if(!isPhoneNo(val['value'])) {
+                        layer.msg('请填写正确的手机号'); return false;
+                    }
+                }
+                obj[val['name']] = val['value'];
+            });
+            if(!$('.layui-layer-msg').length) {
+                console.log(obj);
+            }
+        });
+        //删除操作
+        function deleteTr(nowTr, url){
+            layer.confirm('是否进行该操作？', {
+                btn: ['是','否'] //按钮
+            },  function(index){
+                layer.close(index);
+                $.ajax({
+                    headers: {
+                        'X-CSRF-TOKEN': "{{ csrf_token() }}"
+                    },
+                    method:"GET",
+                    url:url,
+                    success:function (res) {
+                        if(res.status == 200) {
+                            layer.msg(res.info);
+                            $(nowTr).parent().parent().remove();
+                            $(this).closest('tr').remove();  //清空当前行
+                        }
+                    },
+                    error:function (XMLHttpRequest, textStatus, errorThrown) {
+                        //返回提示信息
+                        try {
+                            if(XMLHttpRequest.status == 401) {
+                                var errors = JSON.parse(XMLHttpRequest.responseText)['errors']['info'];
+                                layer.msg(errors[0]);return;
+                            }
+                            var errors = XMLHttpRequest.responseJSON.errors;
+                            for (var value in errors) {
+                                layer.msg(errors[value][0]);return;
+                            }
+                        } catch (e) {
+                            var errors = JSON.parse(XMLHttpRequest.responseText)['errors']['info'];
+                            layer.msg(errors[0]);return;
+                        }
+                    }
+                });
+            });
         }
-        //    全选删除
-        $(".clear").on('click',function(){
-            $("table tbody tr").remove();
-            $("table tfoot tr").remove();
-        })
+        $('input[name=status]').change(function () {
+           if($(this).is(':checked')) {
+               check = true;
+           } else {
+               check = false;
+           }
+        });
+        // //全选删除
+        // $(".clear").on('click',function(){
+        //     $("table tbody tr").remove();
+        //     $("table tfoot tr").remove();
+        // })
     </script>
 @endsection
 
