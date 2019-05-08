@@ -273,10 +273,10 @@
                                         @foreach($items['shippings']['shipping'] as $item)
                                             <tr>
                                                 <td>
-                                                    <input type="radio" {{ $item->whether_retreat_address ? "checked" : ($item->whether_delivery_address ? "checked" : "") }} /> 默认
+                                                    <input type="radio" data-type="delivery_goods" data-action="{{ route('personal.handleaddress', ['id' => $item->id]) }}" {{ $item->whether_retreat_address ? "checked" : ($item->whether_delivery_address ? "checked" : "") }} /> 默认
                                                 </td>
                                                 <td>
-                                                    <input type="radio" {{ $item->whether_retreat_address ? "checked" : ($item->whether_return_address ? "checked" : "") }} /> 默认
+                                                    <input type="radio" data-type="return_goods" data-action="{{ route('personal.handleaddress', ['id' => $item->id]) }}" {{ $item->whether_retreat_address ? "checked" : ($item->whether_return_address ? "checked" : "") }} /> 默认
                                                 </td>
                                                 <td> {{ $item->contacts }} </td>
                                                 <td> {{ $item->address }} </td>
@@ -422,6 +422,40 @@
            } else {
                check = false;
            }
+        });
+        $("input[type=radio]").change(function () {
+            var that = $(this);
+            var type = that.data('type');
+            var url = that.data('action') + '?type=' + type;
+            $.ajax({
+                headers: {
+                    'X-CSRF-TOKEN': "{{ csrf_token() }}"
+                },
+                method:"GET",
+                url:url,
+                success:function (res) {
+                    if(res.status == 200) {
+                        $("input[data-type='"+type+"']:checked").prop('checked',false);
+                        that.prop('checked', true);
+                    }
+                },
+                error:function (XMLHttpRequest, textStatus, errorThrown) {
+                    //返回提示信息
+                    try {
+                        if(XMLHttpRequest.status == 401) {
+                            var errors = JSON.parse(XMLHttpRequest.responseText)['errors']['info'];
+                            layer.msg(errors[0]);return;
+                        }
+                        var errors = XMLHttpRequest.responseJSON.errors;
+                        for (var value in errors) {
+                            layer.msg(errors[value][0]);return;
+                        }
+                    } catch (e) {
+                        var errors = JSON.parse(XMLHttpRequest.responseText)['errors']['info'];
+                        layer.msg(errors[0]);return;
+                    }
+                }
+            });
         });
         // //全选删除
         // $(".clear").on('click',function(){

@@ -175,4 +175,37 @@ class PersonalContentController extends BaseController
             ], 510);
         }
     }
+
+    /**
+     * 更新处理地址状态
+     *
+     * @param $id
+     * @param Request $request
+     * @param PersanalAddressService $addressService
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function handleAddress($id, Request $request, PersanalAddressService $addressService)
+    {
+        try {
+            $type = $request->type == "delivery_goods" ? 700 : 701;
+            $addressService->handleStatus($type);
+            $item = $this->addressModel::where([
+                'id' => $id,
+                'uid' => $this->userId,
+                'category' => 900,
+            ])->first();
+            if($item->status == 699) {
+                $item->status = $type;
+            } else {
+                $item->status = $item->status == $type ? $item->status : 703;
+            }
+            $item->save();
+            return $this->ajaxReturn();
+        } catch (Exception $e) {
+            return $this->ajaxReturn([
+                'info' => $e->getMessage(),
+                'status' => 510
+            ], 510);
+        }
+    }
 }

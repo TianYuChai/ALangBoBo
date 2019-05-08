@@ -50,6 +50,30 @@ class PersanalAddressService extends BaseService
     }
 
     /**
+     * 更新地址状态
+     *
+     *
+     * @param $status
+     */
+    public function handleStatus($status)
+    {
+        $item = $this->model::where([
+            'uid' => $this->userId,
+            'category' => 900,
+            'status' => 703
+        ])->first();
+        if($item){
+            $item->status = $status == 700 ? 701 : 700;
+            $item->save();
+        } else {
+            $this->model::where([
+                'uid' => $this->userId,
+                'category' => 900,
+                'status' => $status
+            ])->update(['status' => 699]);
+        }
+    }
+    /**
      * 公用信息处理
      *
      * @param $data
@@ -81,6 +105,14 @@ class PersanalAddressService extends BaseService
      */
     protected function receivingAddress($res, $data)
     {
+        $status = $data['status'] ? 702 : 699;
+        if($status == 702) {
+            $this->model::where([
+                'uid' => $this->userId,
+                'category' => 800,
+                'status' => 702
+            ])->update(['status' => 699]);
+        }
         return array_merge($res, [
             'category' => 800,
             'status' => $data['status'] ? 702 : 699
