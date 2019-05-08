@@ -49,7 +49,7 @@
                             <a href="">商家入驻费</a>
                         </li>
                         <li>
-                            <a href="../html/shopManage_cancelAccount.html">商户注销帐户</a>
+                            <a href="{{ route('personal.cancellationuser') }}">商户注销帐户</a>
                         </li>
                     </ul>
                 </li>

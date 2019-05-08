@@ -10,6 +10,8 @@ namespace App\Http\Services\home;
 use App\Http\Models\currency\CapitalModel;
 use App\Http\Models\home\personal\AddressModel;
 use Illuminate\Support\Facades\Auth;
+use Redis;
+use Exception;
 
 class PersanalService extends BaseService
 {
@@ -21,6 +23,25 @@ class PersanalService extends BaseService
         $this->userId =  Auth::guard('web')->user()->id;
         $this->capital = $capital;
         $this->address = $addressModel;
+    }
+
+    /**
+     * 验证短信
+     *
+     * @param $mobile
+     * @param $code
+     */
+    public function vefiShort($code)
+    {
+        $mobile = Auth::guard('web')->user()->number;
+        $redisVerifyCode = Redis::get($mobile);
+        if(is_null($redisVerifyCode)) {
+            throw new Exception('验证码已过期, 请重新发送验证码', 510);
+        }
+        if($code != $redisVerifyCode) {
+            throw new Exception('验证码错误, 请输入正确的验证码', 510);
+        }
+        Redis::del($mobile);
     }
 
     /**

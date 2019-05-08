@@ -11,6 +11,7 @@ use App\Http\Controllers\home\BaseController;
 use App\Http\Models\currency\CapitalModel;
 use App\Http\Models\currency\UserModel;
 use App\Http\Models\home\personal\AddressModel;
+use App\Http\Models\home\personal\CancellModel;
 use App\Http\Requests\home\persanal\PersanalAddressRequest;
 use App\Http\Services\home\PersanalService;
 use App\Http\Services\home\persanal\PersanalAddressService;
@@ -200,6 +201,41 @@ class PersonalContentController extends BaseController
                 $item->status = $item->status == $type ? $item->status : 703;
             }
             $item->save();
+            return $this->ajaxReturn();
+        } catch (Exception $e) {
+            return $this->ajaxReturn([
+                'info' => $e->getMessage(),
+                'status' => 510
+            ], 510);
+        }
+    }
+
+    /**
+     * 注销账户
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function cancellationUser()
+    {
+        return view(self::ROUTE. 'cancellationUser');
+    }
+
+    /**
+     * 账户注销处理
+     *
+     * @param Request $request
+     * @param PersanalService $service
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function cancellHandleUser(Request $request, PersanalService $service)
+    {
+        try {
+            $service->vefiShort($request->verifyCode);
+            CancellModel::updateOrCreate([
+                'uid' => $request->user()->id
+            ],[
+                'uid' => $request->user()->id
+            ]);
             return $this->ajaxReturn();
         } catch (Exception $e) {
             return $this->ajaxReturn([

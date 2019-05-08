@@ -47,6 +47,8 @@ Route::group(['namespace' => 'home'], function () {
             Route::get('address/{id}/del', ['as' => 'personal.addressdel', 'uses' => 'PersonalContentController@addressDel']);
             Route::post('createAddress', ['as' => 'personal.createaddress', 'uses' => 'PersonalContentController@createAddress']);
             Route::get('handleAddress{id}', ['as' => 'personal.handleaddress', 'uses' => 'PersonalContentController@handleAddress']);
+            Route::get('cancellationUser', ['as' => 'personal.cancellationuser', 'uses' => 'PersonalContentController@cancellationUser']);
+            Route::post("cancellHandleUser", ['as' => 'personal.cancellhandleuser', 'uses' => 'PersonalContentController@cancellHandleUser']);
         });
     });
 
