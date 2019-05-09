@@ -116,7 +116,7 @@
                     }
                 }
                 if(data[i]['name'] == 'password') {
-                    if(data[i]['value'].length <6 || data[i]['value'].length > 12) {
+                    if(data[i]['value'].length < 6 || data[i]['value'].length > 12) {
                         layer.msg('密码错误'); return;
                     }
                 }
@@ -204,7 +204,7 @@
                 shadeClose: true,
                 shade: 0.8,
                 content: "{{ route('index.login.forgetpass') }}", //iframe的url
-                area: ['25%', '36%'], //宽高
+                area: ['500px', 'auto'], //宽高
             });
         });
         $('.verifyBtn').on('click', function () {

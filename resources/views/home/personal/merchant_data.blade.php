@@ -138,7 +138,7 @@
                         </div>
                         <div class="birthDiv clearfix">
                             生日：
-                            <form name="reg_testdate">
+                            <form name="reg_testdate" id="ymd">
                                 <select name="YYYY" onChange="YYYYDD(this.value)">
                                     <option value="">年</option>
                                 </select>
@@ -357,6 +357,10 @@
             if(val['name'] == 'sex') {
                 obj[val['name']] = val['value'];
             }
+        });
+        $('#ymd').find('select').each(function () {
+            that = $(this);
+            obj[that.attr('name')] = that.val();
         });
         $.ajax({
             headers: {

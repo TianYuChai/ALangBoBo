@@ -82,8 +82,44 @@ class LoginController extends BaseController
         return redirect(route('index.login'));
     }
 
+    /**
+     * 忘记密码
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function forgetPass()
     {
         return view('home.forgetPass');
+    }
+
+    public function handleForgetPass(Request $request, LoginService $loginService)
+    {
+        try {
+            $mobile = trim($request->mobile);
+            $code = trim($request->verifyCode);
+            $password = trim($request->password);
+            if(!is_mobile($mobile)) {
+                throw new Exception('请输入正确的手机号码');
+            }
+            if(stringLen($password) < 6 || stringLen($password) > 12) {
+                throw new Exception('密码长度错误, 请重新输入');
+            }
+            $item = UserModel::where('number', $mobile)->first();
+            if(!$item) {
+                throw new Exception('该手机号，并未绑定账户');
+            }
+            if($item->status != 1) {
+                throw new Exception('该账户目前不可进行密码修改');
+            }
+            $loginService->vefiShort($mobile, $code);
+            $item->password = bcrypt(trim($password));
+            $item->save();
+            return $this->ajaxReturn();
+        } catch (Exception $e) {
+            return $this->ajaxReturn([
+                'info' => $e->getMessage(),
+                'status' => 510
+            ], 510);
+        }
     }
 }

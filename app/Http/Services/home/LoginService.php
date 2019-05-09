@@ -104,7 +104,7 @@ class LoginService extends BaseService
      * @param $mobile
      * @param $code
      */
-    protected function vefiShort($mobile, $code)
+    public function vefiShort($mobile, $code)
     {
         $redisVerifyCode = Redis::get($mobile);
         if(is_null($redisVerifyCode)) {

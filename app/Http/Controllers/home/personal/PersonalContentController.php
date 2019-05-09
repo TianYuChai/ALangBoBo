@@ -107,10 +107,16 @@ class PersonalContentController extends BaseController
             $home_live = $request->home_live;
             $live = $home_live['live_eprovince'] . '/' . $home_live['live_city'] . '/' . $home_live['live_district'];
             $home = $home_live['home_eprovince'] . '/' . $home_live['home_city'] . '/' . $home_live['home_district'];
+            if(date('Y', time()) != $home_live['YYYY'] &&
+                date('M', time()) != $home_live['MM'] &&
+                date('D', time()) != $home_live['DD']) {
+                $time = $home_live['YYYY'] . '/' . $home_live['MM'] . '/' . $home_live['DD'];
+            }
             UserModel::where('id', $request->user()->id)->update([
                 'live' => $live,
                 'home' => $home,
-                'sex' => $home_live['sex']
+                'sex' => $home_live['sex'],
+                'datebirth' => $time ?? ""
             ]);
             return $this->ajaxReturn();
         } catch (Exception $e) {

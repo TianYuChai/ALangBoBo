@@ -14,7 +14,7 @@
 @section('header')
 @endsection
 <!--内容区-->
-<div class="container">
+<div>
     <!--右边内容区-->
     <div class="fl" style="width: 100%;">
         <div>
@@ -37,10 +37,8 @@
                     <div class="mgt-30 relative verifyCodeDiv mgt-20 tr">
                         验证码：
                         <input type="text" placeholder="验证码" class="verifyCode" id="verifyCode" name="verifyCode" autocomplete="off">
-                        <!--<button class="verifyBtn">获取验证码</button>-->
                         <button class="teleCodeBtn get-code verifyBtn" onclick="return false;">获取验证码</button>
                     </div>
-
                     <div class="border-bottom"></div>
                     <button class="shInfoSave" type="submit" onclick="return false;">确定</button>
                 </fieldset>
@@ -61,10 +59,12 @@
             if(val['value'] == '') {
                 layer.msg('请填写验证码'); return false;
             }
-            if(val['name'] == 'verifyCode' && (val['value'].length < 6 || val['value'].length >6)) {
+            if(val['name'] == 'verifyCode' && (val['value'].length < 6 || val['value'].length > 6)) {
                 layer.msg('验证码错误, 请填写正确的验证码'); return false;
             }
-            if(val['name'])
+            if(val['name'] == "password" && (val['value'].length < 6 || val['value'].length > 12)) {
+                layer.msg('密码格式不争取'); return false;
+            }
             obj[val['name']] = val['value'];
         });
         if(!$('.layui-layer-msg').length) {
