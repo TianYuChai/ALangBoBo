@@ -92,6 +92,13 @@ class LoginController extends BaseController
         return view('home.forgetPass');
     }
 
+    /**
+     * 忘记密码处理
+     *
+     * @param Request $request
+     * @param LoginService $loginService
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function handleForgetPass(Request $request, LoginService $loginService)
     {
         try {

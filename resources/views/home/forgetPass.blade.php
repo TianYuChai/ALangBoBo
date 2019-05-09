@@ -16,7 +16,7 @@
 <!--内容区-->
 <div>
     <!--右边内容区-->
-    <div class="fl" style="width: 100%;">
+    <div class="fl" style="text-align: center">
         <div>
             <form class="cancelAccountForm" id="shInfoForm">
                 <fieldset>

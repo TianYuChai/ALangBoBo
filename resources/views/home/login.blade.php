@@ -204,7 +204,7 @@
                 shadeClose: true,
                 shade: 0.8,
                 content: "{{ route('index.login.forgetpass') }}", //iframe的url
-                area: ['500px', 'auto'], //宽高
+                area: ['1244px', '320px'], //宽高
             });
         });
         $('.verifyBtn').on('click', function () {
