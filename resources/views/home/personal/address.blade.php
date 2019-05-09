@@ -22,7 +22,7 @@
         <div class="fl mgt-30">
             <ul class="shLeftNav">
                 <li class="firstLevel">
-                    <p>商户中心</p>
+                    <p>{{ Auth::guard('web')->user()->category !=0 ? "商户":"个人" }}中心</p>
                     <ul>
                         <li>
                             @include('home.personal.head_portrait')
@@ -49,7 +49,7 @@
                             <a href="">商家入驻费</a>
                         </li>
                         <li>
-                            <a href="{{ route('personal.cancellationuser') }}">商户注销帐户</a>
+                            <a href="{{ route('personal.cancellationuser') }}">注销帐户</a>
                         </li>
                     </ul>
                 </li>

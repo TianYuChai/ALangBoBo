@@ -21,7 +21,7 @@
         <div class="fl mgt-30">
             <ul class="shLeftNav">
                 <li class="firstLevel">
-                    <p>商户中心</p>
+                    <p>{{ Auth::guard('web')->user()->category !=0 ? "商户":"个人" }}中心</p>
                     <ul>
                         <li>
                             @include('home.personal.head_portrait')
@@ -48,7 +48,7 @@
                             <a href="">商家入驻费</a>
                         </li>
                         <li>
-                            <a href="{{ route('personal.cancellationuser') }}" class="leftNavActive">商户注销帐户</a>
+                            <a href="{{ route('personal.cancellationuser') }}" class="leftNavActive">注销帐户</a>
                         </li>
                     </ul>
                 </li>
@@ -228,10 +228,13 @@
                     $('.verifyBtn').text(m+':'+s);
                 }
                 s--;
-                if(s < 0) {
+                if(m == 0 && s < 0) {
                     clearInterval(time);
                     $('.verifyBtn').text('获取验证码');
                     $('.verifyBtn').removeAttr('disabled');
+                    return;
+                } else if(s < 0){
+                    countDown(m-1, 59);
                 }
             }, 1000);
         }

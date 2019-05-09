@@ -12,3 +12,5 @@ define('ADMIN_CSS', '/admin');
 define('ADMIN_GOODS_CATEGORY', 'admin.goods.');
 //前台个人中心管理路径
 define('HOME_PERSONAL', 'home.personal.');
+//个人中心商户管理路径
+define('HOME_PERSONAL_SHOP', 'home.personal.shop.');

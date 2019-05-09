@@ -114,6 +114,7 @@ class LoginService extends BaseService
             throw new Exception('验证码错误, 请输入正确的验证码', 510);
         }
         Redis::del($mobile);
+        return true;
     }
 
     /**

@@ -4,6 +4,7 @@ namespace App\Http;
 
 use App\Http\Middleware\afterMiddleware;
 use App\Http\Middleware\beforeMiddleware;
+use App\Http\Middleware\home\ShopMiddleware;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
 class Kernel extends HttpKernel
@@ -71,5 +72,6 @@ class Kernel extends HttpKernel
         'signed' => \Illuminate\Routing\Middleware\ValidateSignature::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'before' => \App\Http\Middleware\admin\backstage\beforeMiddleware::class,
+        'shop' => \App\Http\Middleware\home\ShopMiddleware::class,
     ];
 }

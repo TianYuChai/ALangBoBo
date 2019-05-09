@@ -16,9 +16,9 @@
 <!--内容区-->
 <div>
     <!--右边内容区-->
-    <div class="fl" style="text-align: center">
+    <div>
         <div>
-            <form class="cancelAccountForm" id="shInfoForm">
+            <form class="cancelAccountForm" id="shInfoForm" style="margin: auto">
                 <fieldset>
                     <div class="cancelMobileDiv tr mgt-20">
                         手机号：
@@ -59,11 +59,11 @@
             if(val['value'] == '') {
                 layer.msg('请填写验证码'); return false;
             }
-            if(val['name'] == 'verifyCode' && (val['value'].length < 6 || val['value'].length > 6)) {
+            if(val['name'] == 'verifyCode' && val['value'].length != 6) {
                 layer.msg('验证码错误, 请填写正确的验证码'); return false;
             }
             if(val['name'] == "password" && (val['value'].length < 6 || val['value'].length > 12)) {
-                layer.msg('密码格式不争取'); return false;
+                layer.msg('密码格式不正确'); return false;
             }
             obj[val['name']] = val['value'];
         });
@@ -73,12 +73,14 @@
                     'X-CSRF-TOKEN': "{{ csrf_token() }}"
                 },
                 method:"POST",
-                url:"{{ route("personal.cancellhandleuser") }}",
+                url:"{{ route("index.login.handleforgetpass") }}",
                 data:obj,
                 success:function (res) {
                 if(res.status == 200) {
                     layer.msg(res.info);
                     setTimeout(function () {
+                        var index = parent.layer.getFrameIndex(window.name); //获取窗口索引
+                        parent.layer.close(index);
                         window.location.reload();
                     }, 300)
                 }
@@ -106,7 +108,7 @@
     });
     $('.verifyBtn').on('click', function () {
         var that = $(this);
-        var mobile = $.trim($('#cancelMobile').val());
+        var mobile = $.trim($('input[name=mobile]').val());
         if(!mobile) {
             layer.msg('请填写手机号'); return;
         }
@@ -153,10 +155,13 @@
                 $('.verifyBtn').text(m+':'+s);
             }
             s--;
-            if(s < 0) {
+            if(m == 0 && s < 0) {
                 clearInterval(time);
                 $('.verifyBtn').text('获取验证码');
                 $('.verifyBtn').removeAttr('disabled');
+                return false;
+            } else if(s < 0){
+                countDown(m-1, 59);
             }
         }, 1000);
     }

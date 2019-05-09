@@ -35,10 +35,12 @@ Route::group(['namespace' => 'home'], function () {
     Route::post('logi/operation', ['as' => 'index.login.operation', 'uses' => 'LoginController@operation']);
     Route::post('login/verfMobile', ['as' => 'index.login.verfMobile', 'uses' => 'LoginController@verfMobile']);
     Route::get('login/forgetPass', ['as' => 'index.login.forgetpass', 'uses' => 'LoginController@forgetPass']);
+    Route::post('login/handleForgetPass', ['as' => 'index.login.handleforgetpass', 'uses' => 'LoginController@handleForgetPass']);
 
     Route::group(['middleware' => 'auth:web'], function () {
         Route::get('login/loginout', ['as' =>'index.login.loginout', 'uses' => 'LoginController@loginout']);
         Route::group(['namespace' => 'personal', 'prefix' => 'personal'], function () {
+            /*用户中心*/
             Route::get('index', ['as' => 'personal.index', 'uses' => 'PersonalContentController@index']);
             Route::get('merchant_data', ['as' => 'personal.merchant_data', 'uses' => 'PersonalContentController@merchantData']);
             Route::post('pictureUpload', ['as' => 'personal.pictureUpload', 'uses' => 'PersonalContentController@pictureUpload']);
@@ -49,6 +51,11 @@ Route::group(['namespace' => 'home'], function () {
             Route::get('handleAddress{id}', ['as' => 'personal.handleaddress', 'uses' => 'PersonalContentController@handleAddress']);
             Route::get('cancellationUser', ['as' => 'personal.cancellationuser', 'uses' => 'PersonalContentController@cancellationUser']);
             Route::post("cancellHandleUser", ['as' => 'personal.cancellhandleuser', 'uses' => 'PersonalContentController@cancellHandleUser']);
+            /*用户中心--商户*/
+            Route::group(['namespace' => 'shop', 'middleware' => 'shop'], function () {
+                /*店铺店招*/
+                Route::get('shop/index', ['as' => 'personal.shop.index', 'uses'=> 'PersonalShopController@index']);
+            });
         });
     });
 

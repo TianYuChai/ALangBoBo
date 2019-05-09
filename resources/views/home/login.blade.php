@@ -256,10 +256,13 @@
                     $('.verifyBtn').text(m+':'+s);
                 }
                 s--;
-                if(s < 0) {
+                if(m == 0 && s < 0) {
                     clearInterval(time);
                     $('.verifyBtn').text('获取验证码');
                     $('.verifyBtn').removeAttr('disabled');
+                    return;
+                } else if(s < 0){
+                    countDown(m-1, 59);
                 }
             }, 1000);
         }

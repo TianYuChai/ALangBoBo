@@ -118,9 +118,11 @@ class LoginController extends BaseController
             if($item->status != 1) {
                 throw new Exception('该账户目前不可进行密码修改');
             }
-            $loginService->vefiShort($mobile, $code);
-            $item->password = bcrypt(trim($password));
-            $item->save();
+            $status = $loginService->vefiShort($mobile, $code);
+            if($status) {
+                $item->password = bcrypt(trim($password));
+                $item->save();
+            }
             return $this->ajaxReturn();
         } catch (Exception $e) {
             return $this->ajaxReturn([
