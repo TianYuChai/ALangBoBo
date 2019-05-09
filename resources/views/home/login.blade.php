@@ -54,7 +54,7 @@
                                     </li>
                                 </ul>
                                 <input type="hidden" name="type" value="pass">
-                                <a class="forgetWord mgt-20">忘记密码？</a>
+                                <a class="forgetWord mgt-20 forgetPass">忘记密码？</a>
                                 <button type="submit" class="loginBtn mgt-20" onclick="return false;">立即登录</button>
                             </form>
                             <div class="register">
@@ -79,7 +79,7 @@
                                     </li>
                                 </ul>
                                 <input type="hidden" name="type" value="short">
-                                <a class="forgetWord mgt-20">忘记密码？</a>
+                                <a class="forgetWord mgt-20 forgetPass">忘记密码？</a>
                                 <button type="submit" class="loginBtn mgt-20" onclick="return false;">立即登录</button>
                             </form>
                             <div class="register">
@@ -196,6 +196,17 @@
                 }
             });
         }
+        /*忘记密码*/
+        $('.forgetPass').on('click', function () {
+            layer.open({
+                type: 2,
+                title: '忘记密码',
+                shadeClose: true,
+                shade: 0.8,
+                content: "{{ route('index.login.forgetpass') }}", //iframe的url
+                area: ['25%', '36%'], //宽高
+            });
+        });
         $('.verifyBtn').on('click', function () {
             var that = $(this);
             var mobile = $.trim($('#mobile').val());

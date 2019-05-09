@@ -34,10 +34,10 @@ Route::group(['namespace' => 'home'], function () {
     Route::get('login', ['as' => 'index.login', 'uses' => 'LoginController@index']);
     Route::post('logi/operation', ['as' => 'index.login.operation', 'uses' => 'LoginController@operation']);
     Route::post('login/verfMobile', ['as' => 'index.login.verfMobile', 'uses' => 'LoginController@verfMobile']);
+    Route::get('login/forgetPass', ['as' => 'index.login.forgetpass', 'uses' => 'LoginController@forgetPass']);
 
     Route::group(['middleware' => 'auth:web'], function () {
         Route::get('login/loginout', ['as' =>'index.login.loginout', 'uses' => 'LoginController@loginout']);
-
         Route::group(['namespace' => 'personal', 'prefix' => 'personal'], function () {
             Route::get('index', ['as' => 'personal.index', 'uses' => 'PersonalContentController@index']);
             Route::get('merchant_data', ['as' => 'personal.merchant_data', 'uses' => 'PersonalContentController@merchantData']);

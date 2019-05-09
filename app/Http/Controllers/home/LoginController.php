@@ -81,4 +81,9 @@ class LoginController extends BaseController
         Auth::guard('web')->logout();
         return redirect(route('index.login'));
     }
+
+    public function forgetPass()
+    {
+        return view('home.forgetPass');
+    }
 }
