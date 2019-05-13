@@ -39,6 +39,9 @@ Route::group(['prefix' => 'backstage', 'namespace' => 'admin'], function () {
             /*会员-驳回记录*/
             Route::get('member/reject/index', ['as' => 'backstage.mreject.index', 'uses' => 'MemberRejectController@index']);
             Route::get('memeber/reject/{id}/cancel', ['as' => 'backstage.mreject.cancel', 'uses' => 'MemberRejectController@cancel']);
+            /*会员-注销申请*/
+            Route::get('member/cancel/index', ['as' => 'backstage.cancel.index', 'uses' => 'MemberCancelController@index']);
+            Route::get('member/cancel/{id}/agree', ['as' => 'backstage.cancel.agree', 'uses' => 'MemberCancelController@agree']);
         });
 
         /**

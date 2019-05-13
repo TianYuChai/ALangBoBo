@@ -21,6 +21,12 @@
                             <cite>驳回记录</cite>
                         </a>
                     </li>
+                    <li>
+                        <a _href="{{ route('backstage.cancel.index') }}">
+                            <i class="iconfont">&#xe6a7;</i>
+                            <cite>注销申请</cite>
+                        </a>
+                    </li>
                 </ul>
             </li>
             <li>

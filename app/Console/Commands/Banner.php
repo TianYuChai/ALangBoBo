@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use App\Http\Models\admin\goods\BannerModel;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Auth;
 
 class Banner extends Command
 {

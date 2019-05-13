@@ -41,7 +41,7 @@ class MemberService extends BaseService
     public function checkMemberStatus($id)
     {
         $item = $this->checkMember($id);
-        if($item->status != 0) {
+        if($item->merchant->status != 0) {
             throw new Exception('不符合过审条件');
         }
         return $item;
@@ -105,8 +105,7 @@ class MemberService extends BaseService
      */
     public function saelUpMemberGoods($data)
     {
-        $data->status = 2;
-        $data->save();
+
     }
 
     /**
@@ -116,8 +115,7 @@ class MemberService extends BaseService
      */
     public function stopMemberGoods($data)
     {
-        $data->status = 1;
-        $data->save();
+
     }
 
     /**

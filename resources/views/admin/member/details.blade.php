@@ -17,9 +17,21 @@
         </tr>
         </thead>
         <tbody>
-        <tr><td>账户</td><td>{{ $item->account }}</td></tr>
+        <tr><td>账号</td><td>{{ $item->account }}</td></tr>
         <tr><td>账户类别</td><td>{{ $item->category_name }}</td></tr>
         <tr><td>账户状态</td><td>{{ $item->status_name }}</td></tr>
+        <tr><td>头像</td>
+            <td>
+                @if(!empty($item->headimg))
+                    <div class="layui-inline" onclick="imgshow(this, '{{ FileUpload::url("image", $item->headimg) }}')">
+                        <img class="layui-circle"
+                             src="{{ FileUpload::url('image', $item->headimg) }}">
+                    </div>
+                @else
+                    用户未上传
+                @endif
+            </td>
+        </tr>
         </tbody>
     </table>
     <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
@@ -41,7 +53,10 @@
         <tbody>
         <tr><td>真实姓名</td><td>{{ $item->name }}</td></tr>
         <tr><td>身份证</td><td>{{ $item->card }}</td></tr>
-        <tr><td>手机号码</td><td>{{ $item->number }}</td></tr>
+        <tr><td>生日</td><td>{{ $item->datebirth ?? "" }}</td></tr>
+        <tr><td>性别</td><td>{{ $item->sex ? $item->sex == 0 ? "男": "女":"" }}</td></tr>
+        <tr><td>家乡</td><td>{{ $item->home ?? "" }}</td></tr>
+        <tr><td>居住地</td><td>{{ $item->live ?? "" }}</td></tr>
         </tbody>
     </table>
     @if($item->category != 0)

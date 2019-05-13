@@ -31,10 +31,10 @@
                             <a href="{{ route('personal.merchant_data') }}">商户资料</a>
                         </li>
                         <li>
-                            <a href="../html/merchantCenter_accountCenter.html">帐户中心</a>
+                            <a href="{{ route('personal.index') }}">帐户中心</a>
                         </li>
                         <li>
-                            <a href="../html/merchantCenter_address.html">收/发货地址</a>
+                            <a href="{{ route('personal.address') }}">地址管理</a>
                         </li>
                         <li>
                             <a href="../html/shopCarList-sum.html">我的购物车</a>
@@ -43,13 +43,13 @@
                             <a href="../html/merchantCenter_buyThings.html">已买到的宝贝</a>
                         </li>
                         <li>
-                            <a href="">信用保证金</a>
+                            <a href="{{ route('personal.creditmargin') }}">信用保证金</a>
                         </li>
                         <li>
                             <a href="">商家入驻费</a>
                         </li>
                         <li>
-                            <a href="../html/shopManage_cancelAccount.html">商户注销帐户</a>
+                            <a href="{{ route('personal.cancellationuser') }}">商户注销帐户</a>
                         </li>
                     </ul>
                 </li>

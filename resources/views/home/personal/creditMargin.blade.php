@@ -1,7 +1,7 @@
 @extends('home.public.subject')
-@section('title', '阿朗博波-个人商务中心')
+@section('title', '阿朗博波-信用保证金')
 @section('css')
-@parent
+    @parent
     <link rel="stylesheet" type="text/css" href="{{ asset('home/common/bootstrap.min.css') }}"><!--可无视-->
     <script src="http://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="{{ asset('home/common/citySelect.css') }}">
@@ -28,7 +28,7 @@
                             <a href="{{ route('personal.merchant_data') }}">用户资料</a>
                         </li>
                         <li>
-                            <a href="{{ route('personal.index') }}"  class="leftNavActive">帐户中心</a>
+                            <a href="{{ route('personal.index') }}">帐户中心</a>
                         </li>
                         <li>
                             <a href="{{ route('personal.address') }}">地址管理</a>
@@ -40,7 +40,7 @@
                             <a href="../html/merchantCenter_buyThings.html">已买到的宝贝</a>
                         </li>
                         <li>
-                            <a href="{{ route('personal.creditmargin') }}">信用保证金</a>
+                            <a href="{{ route('personal.creditmargin') }}" class="leftNavActive">信用保证金</a>
                         </li>
                         <li>
                             <a href="">商家入驻费</a>
@@ -89,33 +89,25 @@
         <!--右边内容区-->
         <div class="fl mgt-30 rightWidth">
             <div class="shInfoTittle">
-                <p>帐户中心</p>
+                <p>信用保证金</p>
             </div>
             <div class="shInfoDiv">
                 <div class="jine clearfix">
-                    <div class="fl mgr-80">
+                    <div class="fl  mgr-80">
                         <p>冻结信用保证金：<span>{{ Auth::guard('web')->user()->frozen_capital }}</span> 元    </p>
                         <a href="">解冻</a>
                     </div>
-                    <div class="fl">
-                        <p>帐户可用余额：<span>{{ Auth::guard('web')->user()->available_money }}</span> 元</p>
-                        <a href="">提现</a>
-                    </div>
+                    {{--<div class="fl">--}}
+                        {{--<p>帐户可用余额：<span>{{ Auth::guard('web')->user()->available_money }}</span> 元</p>--}}
+                        {{--<a href="">解冻</a>--}}
+                    {{--</div>--}}
                 </div>
                 <!--列表部分-->
                 <div class="pdlr-50">
                     <ul id="myTab" class="nav nav-tabs accountList">
                         <li class="active">
                             <a href="#allTrade" data-toggle="tab">
-                                交易记录全部
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#withdraw" data-toggle="tab" >提现</a>
-                        </li>
-                        <li>
-                            <a href="#recharge" data-toggle="tab">
-                                充值
+                                交易记录
                             </a>
                         </li>
                     </ul>
@@ -126,92 +118,27 @@
                                 <thead class="thead">
                                 <tr>
                                     <th>订单号</th>
-                                    <th>操作人</th>
                                     <th>交易日期</th>
                                     <th>交易金额</th>
-                                    <th>交易类型</th>
+                                    <th>交易流向</th>
+                                    <th>备注</th>
                                 </tr>
                                 </thead>
                                 <tbody class="tbody">
-                                    @foreach($items['alltrade'] as $item)
-                                        <tr>
-                                            <td>{{ $item->order_id }}</td>
-                                            <td> {{ Auth::guard('web')->user()->account }} </td>
-                                            <td> {{ $item->trans_at }} </td>
-                                            <td> {{ $item->money }} 元 </td>
-                                            <td>
-                                                @if($item->category == 100 || $item->category == 600)
-                                                    {{ $item->category_name }} ({{ $item->trademode_name }})
-                                                @else
-                                                    {{ $item->category_name }}
-                                                @endif
-                                            </td>
-                                        </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
-                        </div>
-                        <!--tab2 提现-->
-                        <div class="tab-pane fade in" id="withdraw">
-                            <table align="center" class="table" frame="box" border="1">
-                                <thead class="thead">
-                                <tr>
-                                    <th>订单号</th>
-                                    <th>提现人</th>
-                                    <th>提现日期</th>
-                                    <th>提现金额</th>
-                                    <th>提现方式</th>
-                                    <th>状态</th>
-                                </tr>
-                                </thead>
-                                <tbody class="tbody">
-                                @foreach($items['withdraw'] as $item)
+                                @foreach($items['alltrade'] as $item)
                                     <tr>
-                                        <td> {{ $item->order_id }} </td>
+                                        <td>{{ $item->order_id }}</td>
                                         <td> {{ Auth::guard('web')->user()->account }} </td>
-                                        <td> {{ $item->created_at }} </td>
-                                        <td> {{ $item->money }}元 </td>
-                                        <td> {{ $item->trademode_name }} </td>
+                                        <td> {{ $item->trans_at }} </td>
+                                        <td> {{ $item->money }} 元 </td>
                                         <td>
-                                            @if($item->status == 1001)
-                                                成功
+                                            @if($item->category == 100 || $item->category == 600)
+                                                {{ $item->category_name }} ({{ $item->trademode_name }})
                                             @else
-                                                失败
+                                                {{ $item->category_name }}
                                             @endif
                                         </td>
-                                    </tr>
-                                @endforeach
-                                </tbody>
-                            </table>
-                        </div>
-                        <!--tab3 充值-->
-                        <div class="tab-pane fade in" id="recharge">
-                            <table align="center" class="table" frame="box" border="1">
-                                <thead class="thead">
-                                <tr>
-                                    <th>订单号</th>
-                                    <th>充值对象</th>
-                                    <th>充值日期</th>
-                                    <th>充值金额</th>
-                                    <th>充值方式</th>
-                                    <th>状态</th>
-                                </tr>
-                                </thead>
-                                <tbody class="tbody">
-                                @foreach($items['recharge'] as $item)
-                                    <tr>
-                                        <td> {{ $item->order_id }} </td>
-                                        <td> {{ Auth::guard('web')->user()->account }} </td>
-                                        <td> {{ $item->created_at }} </td>
-                                        <td> {{ $item->money }}元 </td>
-                                        <td> {{ $item->trademode_name }} </td>
-                                        <td>
-                                            @if($item->status == 1001)
-                                                成功
-                                            @else
-                                                失败
-                                            @endif
-                                        </td>
+                                        <td> {{ $item->memo }} </td>
                                     </tr>
                                 @endforeach
                                 </tbody>
@@ -222,7 +149,7 @@
             </div>
         </div>
     </div>
-    @section('shop')
-    @endsection
+@section('shop')
+@endsection
 @endsection
 

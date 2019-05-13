@@ -135,7 +135,7 @@ class UserModel extends Authenticatable
     }
 
     /**
-     * 查询当前用户冻结金额
+     * 查询当前用户信用保证金冻结金额
      *
      * @return mixed
      */

@@ -24,7 +24,7 @@ Route::post('faceRecognition', ['as' => 'index.face', 'uses' => 'faceRecognition
 /**
  * 前台管理路由设置
  */
-Route::group(['namespace' => 'home'], function () {
+Route::group(['namespace' => 'home', 'middleware' => 'listenState'], function () {
     /*首页*/
     Route::get('/', 'IndexController@index');
     /*首页-注册*/
@@ -51,6 +51,7 @@ Route::group(['namespace' => 'home'], function () {
             Route::get('handleAddress{id}', ['as' => 'personal.handleaddress', 'uses' => 'PersonalContentController@handleAddress']);
             Route::get('cancellationUser', ['as' => 'personal.cancellationuser', 'uses' => 'PersonalContentController@cancellationUser']);
             Route::post("cancellHandleUser", ['as' => 'personal.cancellhandleuser', 'uses' => 'PersonalContentController@cancellHandleUser']);
+            Route::get("creditMargin", ['as' => 'personal.creditmargin', 'uses' => 'PersonalCreditMarginController@index']);
             /*用户中心--商户*/
             Route::group(['namespace' => 'shop', 'middleware' => 'shop'], function () {
                 /*店铺店招*/

@@ -94,6 +94,7 @@ class MemberController extends BaseController
                     'code' => $code
                 ]);
             }
+            MerchantModel::where('uid', $item->id)->update(['status' => 1]);
             $item->status = 1;
             $item->save();
         } catch (Exception $e) {
@@ -142,6 +143,8 @@ class MemberController extends BaseController
                throw new Exception('操作记录有误, 请联系管理员');
             }
             $memberService->saelUpMemberGoods($item);
+            $item->status = 2;
+            $item->save();
             return $this->ajaxReturn();
         } catch (Exception $e) {
             return $this->ajaxReturn([
@@ -162,10 +165,12 @@ class MemberController extends BaseController
     {
         try {
             $item = $memberService->checkMember($id);
-            if($item->status != 2) {
+            if(!in_array($item->status, [2, 3])) {
                 throw new Exception('操作记录有误, 请联系管理员');
             }
             $memberService->stopMemberGoods($item);
+            $item->status = 1;
+            $item->save();
             return $this->ajaxReturn();
         } catch (Exception $e) {
             return $this->ajaxReturn([

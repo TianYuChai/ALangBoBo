@@ -43,7 +43,7 @@
                             <a href="../html/merchantCenter_buyThings.html">已买到的宝贝</a>
                         </li>
                         <li>
-                            <a href="">信用保证金</a>
+                            <a href="{{ route('personal.creditmargin') }}">信用保证金</a>
                         </li>
                         <li>
                             <a href="">商家入驻费</a>
