@@ -66,5 +66,18 @@ Route::group(['prefix' => 'backstage', 'namespace' => 'admin'], function () {
                 Route::get('goods/banner/{id}/del', ['as' => 'backstage.banner.del', 'uses' => 'GoodsBannerController@del']);
             });
         });
+
+        /**
+         * 系统设置
+         */
+        Route::group(['namespace' => 'setup'], function () {
+            /*商家-入驻费*/
+            Route::group(['prefix' => 'settled'], function () {
+                Route::get('setup/settled/index', ['as' => 'backstage.settled.index', 'uses' => 'SettledInController@index']);
+                Route::get('setup/settled/create', ['as' => 'backstage.settled.create', 'uses' => 'SettledInController@create']);
+                Route::post('setup/settled/store', ['as' => 'backstage.settled.store', 'uses' => 'SettledInController@store']);
+                Route::get('setup/settled/{id}/del', ['as' => 'backstage.settled.del', 'uses' => 'SettledInController@del']);
+            });
+        });
     });
 });

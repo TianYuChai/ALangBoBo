@@ -107,14 +107,14 @@
             <li>
                 <a href="javascript:;">
                     <i class="iconfont">&#xe6ce;</i>
-                    <cite>系统统计</cite>
+                    <cite>系统设置</cite>
                     <i class="iconfont nav_right">&#xe697;</i>
                 </a>
                 <ul class="sub-menu">
                     <li>
-                        <a _href="./pages/echarts/echarts1.html">
+                        <a _href="{{ route('backstage.settled.index') }}">
                             <i class="iconfont">&#xe6a7;</i>
-                            <cite>拆线图</cite>
+                            <cite>商家入驻费</cite>
                         </a>
                     </li>
                     <li>

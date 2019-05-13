@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="{{ asset('home/common/citySelect.css') }}">
     <link href="{{ asset('home/css/index.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('home/css/merchantCenter_shInfo.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('home/css/merchantCenter_address.css') }}"/>
     <link rel="stylesheet" href="{{ asset('home/css/merchantCenter_accountCenter.css') }}"/>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/distpicker/2.0.3/distpicker.js"></script>
 @endsection
@@ -92,57 +93,54 @@
                 <p>信用保证金</p>
             </div>
             <div class="shInfoDiv">
-                <div class="jine clearfix">
-                    <div class="fl  mgr-80">
-                        <p>冻结信用保证金：<span>{{ Auth::guard('web')->user()->frozen_capital }}</span> 元    </p>
-                        <a href="">解冻</a>
-                    </div>
-                    {{--<div class="fl">--}}
-                        {{--<p>帐户可用余额：<span>{{ Auth::guard('web')->user()->available_money }}</span> 元</p>--}}
-                        {{--<a href="">解冻</a>--}}
-                    {{--</div>--}}
-                </div>
-                <!--列表部分-->
-                <div class="pdlr-50">
-                    <ul id="myTab" class="nav nav-tabs accountList">
-                        <li class="active">
-                            <a href="#allTrade" data-toggle="tab">
-                                交易记录
-                            </a>
-                        </li>
-                    </ul>
-                    <div id="myTabContent" class="tab-content accountListDiv">
-                        <!--tab1 交易记录全部-->
-                        <div class="tab-pane fade in active" id="allTrade">
-                            <table align="center" class="table" frame="box" border="1">
-                                <thead class="thead">
-                                <tr>
-                                    <th>订单号</th>
-                                    <th>交易日期</th>
-                                    <th>交易金额</th>
-                                    <th>交易流向</th>
-                                    <th>备注</th>
-                                </tr>
-                                </thead>
-                                <tbody class="tbody">
-                                @foreach($items['alltrade'] as $item)
+                <div class="receiveSend">
+                    <div id="myTabContent" class="tab-content">
+                        <!--tab1 收货地址-->
+                        <div class="tab-pane fade in active" id="receiveAddress">
+                            <form class="cmxform" id="receiveForm">
+                                <fieldset class="fieldset clearfix">
+                                    <div class="receiveNameDiv mgt-20" style="text-align:left">
+                                        <span class="receiveStar">*</span>充值方式：
+                                        <div  class="distpicker inline-block">
+                                            <div class="inline-block receiveFormaddress">
+                                                <select >
+                                                    <option value="Alipay">支付宝</option>
+                                                    <option value="WeChat">微信</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="receiveNameDiv mgt-20" style="text-align:left">
+                                        <span class="receiveStar">*</span>充值金额：
+                                        <input type="text" class="mobile" name="number" autocomplete="off">
+                                    </div>
+                                    <button type="submit" class="addressSave" onclick="return false" data-type="receiveForm">充值</button>
+                                </fieldset>
+                            </form>
+                            <div class="receiveAddressList">
+                                <table align="center" class="table tl" frame="box" border="1">
+                                    <thead class="thead">
                                     <tr>
-                                        <td>{{ $item->order_id }}</td>
-                                        <td> {{ Auth::guard('web')->user()->account }} </td>
-                                        <td> {{ $item->trans_at }} </td>
-                                        <td> {{ $item->money }} 元 </td>
-                                        <td>
-                                            @if($item->category == 100 || $item->category == 600)
-                                                {{ $item->category_name }} ({{ $item->trademode_name }})
-                                            @else
-                                                {{ $item->category_name }}
-                                            @endif
-                                        </td>
-                                        <td> {{ $item->memo }} </td>
+                                        <th>订单号</th>
+                                        <th>充值对象</th>
+                                        <th>充值日期</th>
+                                        <th>充值金额</th>
+                                        <th>充值方式</th>
+                                        <th>状态</th>
                                     </tr>
-                                @endforeach
-                                </tbody>
-                            </table>
+                                    </thead>
+                                    <tbody class="tbody tl">
+                                        <tr>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -150,6 +148,11 @@
         </div>
     </div>
 @section('shop')
+@endsection
+@section('section')
+    <script type="text/javascript">
+
+    </script>
 @endsection
 @endsection
 
