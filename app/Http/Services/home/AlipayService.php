@@ -41,7 +41,7 @@ class AlipayService extends BaseService
         ];
         $this->config['notify_url'] = route('index.alipay.notify');
         $this->config['return_url'] = route('index.alipay.returnurl');
-        $alipay = Pay::alipay(config('alipay.pay'))->web($order);
+        $alipay = Pay::alipay($this->config)->web($order);
         return $alipay;
     }
 
@@ -64,6 +64,6 @@ class AlipayService extends BaseService
      */
     public function vailet()
     {
-        return Pay::alipay(config('alipay.pay'))->verify();
+        return Pay::alipay($this->config)->verify();
     }
 }
