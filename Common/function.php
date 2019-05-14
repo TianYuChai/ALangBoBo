@@ -16,9 +16,9 @@ function regularHaveSinoram(string $str)
 {
     if(!is_array($str)) {
         if (preg_match('/^[\x{4e00}-\x{9fa5}]+$/u', $str) > 0) {
-            $res = 'whole';
+            $res = false;
         } else if(preg_match('/[\x{4e00}-\x{9fa5}]/u', $str) > 0) {
-            $res = 'contain';
+            $res = false;
         } else {
             $res = true;
         }
@@ -197,4 +197,15 @@ function imgtobase64($img)
     $base64_image  = base64_encode(file_get_contents($img));
     return $base64_image;
 
+}
+
+/**
+ * 生成订单号
+ *
+ * @return string
+ */
+function create_order_no() {
+    $order_no = date('Ymd').substr(time(), -5) .
+        substr(microtime(), 2, 5) . sprintf('%02d', rand(1000, 9999));
+    return $order_no;
 }

@@ -52,6 +52,7 @@ Route::group(['namespace' => 'home', 'middleware' => 'listenState'], function ()
             Route::get('cancellationUser', ['as' => 'personal.cancellationuser', 'uses' => 'PersonalContentController@cancellationUser']);
             Route::post("cancellHandleUser", ['as' => 'personal.cancellhandleuser', 'uses' => 'PersonalContentController@cancellHandleUser']);
             Route::get("creditMargin", ['as' => 'personal.creditmargin', 'uses' => 'PersonalCreditMarginController@index']);
+            Route::post('pay', ['as' => 'personal.pay', 'uses' => 'PersonalCreditMarginController@pay']);
             /*用户中心--商户*/
             Route::group(['namespace' => 'shop', 'middleware' => 'shop'], function () {
                 /*店铺店招*/

@@ -209,7 +209,7 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
         'FileUpload' => FileUpload::class,
-        'Input' => \Illuminate\Support\Facades\Input::class
+        'Input' => \Illuminate\Support\Facades\Input::class,
     ],
 
 ];
