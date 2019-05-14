@@ -13,6 +13,7 @@ class CapitalModel extends Model
 {
     /*资金表*/
     protected $table = 'capital';
+    protected $guarded = ['id'];
     /**
      * 交易类别
      *

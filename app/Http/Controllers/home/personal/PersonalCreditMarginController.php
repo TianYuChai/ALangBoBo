@@ -12,10 +12,10 @@ use App\Http\Models\currency\CapitalModel;
 use App\Http\Models\setup\SettledModel;
 use App\Http\Services\home\AlipayService;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Exception;
+use Log;
 
 class PersonalCreditMarginController extends BaseController
 {
@@ -72,13 +72,14 @@ class PersonalCreditMarginController extends BaseController
                 throw new Exception('保证金充值需大于100元');
             }
             if($method == 'Alipay') {
-                $data = $alipayService->entrance($money);
+                $money = 0.01;
+                $result = $alipayService->entrance($money);
             } else if($method == ''){
 
             } else {
                 throw new Exception('类别错误');
             }
-            return $data;
+            return $result;
         } catch (Exception $e) {
             return $this->ajaxReturn([
                 'status' => 510,
@@ -87,8 +88,29 @@ class PersonalCreditMarginController extends BaseController
         }
     }
 
+    /**
+     * 异步回调
+     *
+     * @param AlipayService $alipayService
+     * @return mixed
+     */
     public function notify(AlipayService $alipayService)
     {
+        try {
+            $result = $alipayService->notify();
+        } catch (Exception $e) {
+            Log::info('支付宝异步回调:' . $e->getMessage());
+        }
+        return $result;
+    }
 
+    /**
+     * 同步回调
+     *
+     * @param AlipayService $alipayService
+     */
+    public function returnUrl(AlipayService $alipayService)
+    {
+        $alipayService->vailet();
     }
 }

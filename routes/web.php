@@ -21,6 +21,9 @@ Route::post('fileupload', ['as' => 'file.upload', 'uses' => 'FileController@file
 Route::post('shortMessage', ['as' => 'index.shortMessage', 'uses' => 'shortMessageController@index'])->middleware('throttle:1,3');//
 //人脸识别
 Route::post('faceRecognition', ['as' => 'index.face', 'uses' => 'faceRecognitionController@index']);
+//支付宝回调地址
+Route::get('notify', ['as' => 'index.alipay.notify', 'uses' => 'PersonalCreditMarginController@notify']);
+Route::get('returnUrl', ['as' => 'index.alipay.returnurl', 'uses' => 'PersonalCreditMarginController@returnUrl']);
 /**
  * 前台管理路由设置
  */
