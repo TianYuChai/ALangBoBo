@@ -94,7 +94,6 @@ class PesonalBusinResidFeeController extends BaseController
     public function notify(businAlipayService $alipayService)
     {
         try {
-            Log::info('触发回调2');
             $result = $alipayService->notify();
         } catch (Exception $e) {
             Log::info('支付宝异步回调错误:' . $e->getMessage());
