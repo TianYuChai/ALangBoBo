@@ -81,7 +81,7 @@ class businAlipayService extends BaseService
                 $merchant = MerchantModel::where('uid', intval($user_reghare[0]))->first();
                 if($merchant) {
                     $time = strtotime($merchant->due_at) == false ? Carbon::now() : Carbon::parse($merchant->due_at);
-                    $merchant->due_at = $time->modify('+'.$user_reghare[1].' days')->toDateTimeString();
+                    $merchant->due_at = $time->modify('+'.intval($user_reghare[1]).' days')->toDateTimeString();
                     Log::info('1', $merchant->toArray());
                     $merchant->save();
                 }
