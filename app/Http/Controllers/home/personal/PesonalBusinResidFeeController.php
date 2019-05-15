@@ -41,7 +41,6 @@ class PesonalBusinResidFeeController extends BaseController
      */
     public function index()
     {
-        dd(route('index.busin.notify'));
         $items = $this->capitalModel::where([
             'uid' => $this->userId,
             'category' => 600,
