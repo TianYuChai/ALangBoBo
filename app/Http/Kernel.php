@@ -6,6 +6,7 @@ use App\Http\Middleware\afterMiddleware;
 use App\Http\Middleware\beforeMiddleware;
 use App\Http\Middleware\home\listenStateMiddleware;
 use App\Http\Middleware\home\ShopMiddleware;
+use App\Http\Middleware\home\whiterloginMiddleware;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
 class Kernel extends HttpKernel
@@ -74,6 +75,7 @@ class Kernel extends HttpKernel
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'before' => \App\Http\Middleware\admin\backstage\beforeMiddleware::class,
         'shop' => \App\Http\Middleware\home\ShopMiddleware::class,
-        'listenState' => listenStateMiddleware::class
+        'listenState' => listenStateMiddleware::class,
+        'whiterlogin' => whiterloginMiddleware::class
     ];
 }

@@ -1,4 +1,10 @@
 <?php
+/**
+ * Created by PhpStorm.
+ * User: chai
+ * Date: 2019/5/15
+ * Time: 9:32
+ */
 
 namespace App\Http\Middleware\home;
 
@@ -9,7 +15,7 @@ use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 
-class ShopMiddleware
+class whiterloginMiddleware
 {
     /**
      * Handle an incoming request.
@@ -20,7 +26,7 @@ class ShopMiddleware
      */
     public function handle($request, Closure $next)
     {
-        if(Auth::guard('web')->user()->category == 0) {
+        if(Auth::guard('web')->check()) {
             return redirect()->route('personal.index');
         }
         return $next($request);

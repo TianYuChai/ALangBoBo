@@ -33,14 +33,16 @@ Route::group(['namespace' => 'home', 'middleware' => 'listenState'], function ()
     /*首页*/
     Route::get('/', 'IndexController@index');
     /*首页-注册*/
-    Route::get('register', ['as' => 'index.register', 'uses' => 'RegisterController@index']);
-    Route::post('verifivWhetExist', ['as' => 'index.verifivWhetExist', 'uses' => 'RegisterController@verifivWhetExist']);
-    Route::post('regists/create', ['as' => 'index.regists.create', 'uses' => 'RegisterController@create']);
-    Route::get('login', ['as' => 'index.login', 'uses' => 'LoginController@index']);
-    Route::post('logi/operation', ['as' => 'index.login.operation', 'uses' => 'LoginController@operation']);
-    Route::post('login/verfMobile', ['as' => 'index.login.verfMobile', 'uses' => 'LoginController@verfMobile']);
-    Route::get('login/forgetPass', ['as' => 'index.login.forgetpass', 'uses' => 'LoginController@forgetPass']);
-    Route::post('login/handleForgetPass', ['as' => 'index.login.handleforgetpass', 'uses' => 'LoginController@handleForgetPass']);
+    Route::group(['middleware' => 'whiterlogin'], function () {
+        Route::get('register', ['as' => 'index.register', 'uses' => 'RegisterController@index']);
+        Route::post('verifivWhetExist', ['as' => 'index.verifivWhetExist', 'uses' => 'RegisterController@verifivWhetExist']);
+        Route::post('regists/create', ['as' => 'index.regists.create', 'uses' => 'RegisterController@create']);
+        Route::get('login', ['as' => 'index.login', 'uses' => 'LoginController@index']);
+        Route::post('logi/operation', ['as' => 'index.login.operation', 'uses' => 'LoginController@operation']);
+        Route::post('login/verfMobile', ['as' => 'index.login.verfMobile', 'uses' => 'LoginController@verfMobile']);
+        Route::get('login/forgetPass', ['as' => 'index.login.forgetpass', 'uses' => 'LoginController@forgetPass']);
+        Route::post('login/handleForgetPass', ['as' => 'index.login.handleforgetpass', 'uses' => 'LoginController@handleForgetPass']);
+    });
 
     Route::group(['middleware' => 'auth:web'], function () {
         Route::get('login/loginout', ['as' =>'index.login.loginout', 'uses' => 'LoginController@loginout']);
