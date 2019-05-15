@@ -99,10 +99,9 @@ class PersonalCreditMarginController extends BaseController
     public function notify(AlipayService $alipayService)
     {
         try {
-            Log::info('支付宝异步回调: 已执行到');
             $result = $alipayService->notify();
         } catch (Exception $e) {
-            Log::info('支付宝异步回调:' . $e->getMessage());
+            Log::info('支付宝异步回调错误:' . $e->getMessage());
         }
         return $result;
     }
