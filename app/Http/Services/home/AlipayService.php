@@ -40,10 +40,9 @@ class AlipayService extends BaseService
             'total_amount' => $item->money,
             'subject' => '阿郎博波商务中心',
             'body' => '保证金充值',
-            'request_from_url' => route('personal.creditmargin')
         ];
         $this->config['notify_url'] = route('index.alipay.notify');
-        $this->config['return_url'] = route('index.alipay.returnurl');
+        $this->config['return_url'] = route('personal.creditmargin');
         $alipay = Pay::alipay($this->config)->web($order);
         return $alipay;
     }
