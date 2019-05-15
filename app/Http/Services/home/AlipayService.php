@@ -56,12 +56,12 @@ class AlipayService extends BaseService
     {
         $vailet = $this->vailet();
         Log::info('保证金---支付宝异步回调处理-------start');
-        $data = json_decode($vailet->all());
-        if($data->trade_status == 'TRADE_SUCCESS' || $data->trade_status == 'TRADE_FINISHED'
-            && $data->app_id == $this->config['app_id']) {
+        $data = $vailet->all();
+        if($data['trade_status'] == 'TRADE_SUCCESS' || $data['trade_status'] == 'TRADE_FINISHED'
+            && $data['app_id'] == $this->config['app_id']) {
             $item = $this->capitalmode::where([
-                'order_id' => strval($data->out_trade_no),
-                'money' => $data->receipt_amount,
+                'order_id' => strval($data['out_trade_no']),
+                'money' => $data['receipt_amount'],
                 'category' => 300,
                 'status' => 1002
             ])->first();
