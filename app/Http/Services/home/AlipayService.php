@@ -38,7 +38,8 @@ class AlipayService extends BaseService
         $order = [
             'out_trade_no' => $item->order_id,
             'total_amount' => $item->money,
-            'subject' => '阿郎博波保证金充值',
+            'subject' => '阿郎博波商务中心',
+            'body' => '保证金充值'
         ];
         $this->config['notify_url'] = route('index.alipay.notify');
         $this->config['return_url'] = route('index.alipay.returnurl');

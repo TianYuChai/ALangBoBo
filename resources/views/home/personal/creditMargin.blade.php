@@ -145,7 +145,7 @@
                                                 <td>{{ $item->created_at }}</td>
                                                 <td>{{ $item->money }}</td>
                                                 <td>{{ $item->trade_mode }}</td>
-                                                <td>{{ $item->status_name }}</td>
+                                                <td>{{ $item->status == 1002 ? "未支付" : $item->status_name }}</td>
                                             </tr>
                                         @endforeach
                                     </tbody>
