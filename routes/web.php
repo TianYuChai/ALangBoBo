@@ -61,6 +61,7 @@ Route::group(['namespace' => 'home', 'middleware' => 'listenState'], function ()
             Route::get("creditMargin", ['as' => 'personal.creditmargin', 'uses' => 'PersonalCreditMarginController@index']);
             Route::post('pay', ['as' => 'personal.pay', 'uses' => 'PersonalCreditMarginController@pay']);
             Route::get('businresidfee', ['as' => 'personal.businresidfee', 'uses' => 'PesonalBusinResidFeeController@index']);
+            Route::post('businresidfee/pay', ['as' => 'personal.businresidfee.pay', 'uses' => 'PesonalBusinResidFeeController@pay']);
             /*用户中心--商户*/
             Route::group(['namespace' => 'shop', 'middleware' => 'shop'], function () {
                 /*店铺店招*/

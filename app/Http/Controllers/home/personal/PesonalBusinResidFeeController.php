@@ -53,6 +53,13 @@ class PesonalBusinResidFeeController extends BaseController
         return view(self::ROUTE . 'businResidFee', compact('data'));
     }
 
+    /**
+     * 支付
+     * 
+     * @param Request $request
+     * @param businAlipayService $alipayService
+     * @return \Illuminate\Http\JsonResponse|\Symfony\Component\HttpFoundation\Response
+     */
     public function pay(Request $request, businAlipayService $alipayService)
     {
         try {
@@ -63,12 +70,13 @@ class PesonalBusinResidFeeController extends BaseController
                 throw new Exception('请重新选择支付');
             }
             if($method == 'Alipay') {
-                $alipayService->entrance($item);
+                $result = $alipayService->entrance($item);
             } else if($method == 'WeChat') {
 
             } else {
                 throw new Exception('类别错误');
             }
+            return $result;
         } catch (Exception $e) {
             return $this->ajaxReturn([
                 'status' => 510,

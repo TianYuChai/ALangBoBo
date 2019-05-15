@@ -172,7 +172,7 @@
                         'X-CSRF-TOKEN': "{{ csrf_token() }}"
                     },
                     method:"POST",
-                    url:"{{ route("personal.pay") }}",
+                    url:"{{ route("personal.businresidfee.pay") }}",
                     data:obj,
                     dateType:'html',
                     success:function (res) {
