@@ -23,7 +23,7 @@ Route::post('shortMessage', ['as' => 'index.shortMessage', 'uses' => 'shortMessa
 Route::post('faceRecognition', ['as' => 'index.face', 'uses' => 'faceRecognitionController@index']);
 //支付宝回调地址
 Route::group(['namespace' => 'home\personal'], function () {
-    Route::get('notify', ['as' => 'index.alipay.notify', 'uses' => 'PersonalCreditMarginController@notify']);
+    Route::post('notify', ['as' => 'index.alipay.notify', 'uses' => 'PersonalCreditMarginController@notify']);
     Route::get('returnUrl', ['as' => 'index.alipay.returnurl', 'uses' => 'PersonalCreditMarginController@returnUrl']);
 });
 /**
