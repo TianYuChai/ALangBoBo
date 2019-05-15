@@ -137,7 +137,7 @@ function verificationUrl(string $url)
  * @param $type
  * @return false|string
  */
-function getTime($type)
+function getTime($type = '')
 {
     switch ($type) {
         case 'ymd':
