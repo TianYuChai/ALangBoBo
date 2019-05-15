@@ -28,6 +28,7 @@
             <tr>
                 <th>费用名</th>
                 <th>费用金额</th>
+                <th>时长</th>
                 <th>费用排序</th>
                 <th>操作</th>
             </tr>
@@ -39,6 +40,7 @@
                         {{ $item->name }}
                     </td>
                     <td>{{ $item->moneys }}</td>
+                    <td>{{ $item->duration }} 天</td>
                     <td>{{ $item->sort }}</td>
                     <td class="td-manage">
                         <a title="封停" onclick="member_sealup(this,'{{ route('backstage.settled.del', ['id' => $item->id]) }}')" href="javascript:void(0);">

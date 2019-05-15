@@ -60,7 +60,7 @@ class PersonalContentController extends BaseController
         })->orderBy('updated_at', 'desc')->get();
         //充值记录
         $items['recharge'] = $this->model::where(function ($query) {
-            $query->where('uid', $this->userId)->whereIn('category', [100, 600]);
+            $query->where('uid', $this->userId)->whereIn('category', [100, 300, 600]);
         })->orderBy('updated_at', 'desc')->get();
         return view(self::ROUTE . 'index', compact('items'));
     }

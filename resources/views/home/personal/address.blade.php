@@ -46,7 +46,7 @@
                             <a href="{{ route('personal.creditmargin') }}">信用保证金</a>
                         </li>
                         <li>
-                            <a href="">商家入驻费</a>
+                            <a href="{{ route('personal.businresidfee') }}">商家入驻费</a>
                         </li>
                         <li>
                             <a href="{{ route('personal.cancellationuser') }}">注销帐户</a>
@@ -171,7 +171,7 @@
                                         <th>邮编</th>
                                         <th>电话/手机</th>
                                         <th>操作</th>
-                                        <th></th>
+                                        r
                                     </tr>
                                     </thead>
                                     <tbody class="tbody tl">

@@ -53,12 +53,17 @@ class SettledInController extends BaseController
     {
         try {
             $money = trim($request->money);
+            $duration = trim($request->duration);
             if(!regularHaveSinoram($request->money)) {
                 throw new Exception('金额错误');
+            }
+            if(!regularHaveSinoram($duration)) {
+                throw new Exception('时长错误');
             }
             $this->model::create([
                 'name' => trim($request->name),
                 'money' => $money,
+                'duration' => $duration,
                 'sort' => intval(trim($request->sort))
             ]);
             return $this->ajaxReturn();

@@ -1,5 +1,5 @@
 @extends('home.public.subject')
-@section('title', '阿朗博波-信用保证金')
+@section('title', '阿朗博波-商家入驻费')
 @section('css')
     @parent
     <link rel="stylesheet" type="text/css" href="{{ asset('home/common/bootstrap.min.css') }}"><!--可无视-->
@@ -41,10 +41,10 @@
                             <a href="../html/merchantCenter_buyThings.html">已买到的宝贝</a>
                         </li>
                         <li>
-                            <a href="{{ route('personal.creditmargin') }}" class="leftNavActive">信用保证金</a>
+                            <a href="{{ route('personal.creditmargin') }}">信用保证金</a>
                         </li>
                         <li>
-                            <a href="{{ route('personal.businresidfee') }}">商家入驻费</a>
+                            <a href="{{ route('personal.businresidfee') }}" class="leftNavActive">商家入驻费</a>
                         </li>
                         <li>
                             <a href="{{ route('personal.cancellationuser') }}">注销帐户</a>
@@ -90,12 +90,11 @@
         <!--右边内容区-->
         <div class="fl mgt-30 rightWidth">
             <div class="shInfoTittle">
-                <p>信用保证金</p>
+                <p>商家入驻费</p>
             </div>
             <div class="shInfoDiv">
                 <div class="receiveSend">
                     <div id="myTabContent" class="tab-content">
-                        <!--tab1 收货地址-->
                         <div class="tab-pane fade in active" id="receiveAddress">
                             <form class="cmxform" id="receiveForm">
                                 <fieldset class="fieldset clearfix">
@@ -111,22 +110,22 @@
                                         </div>
                                     </div>
                                     <div class="receiveNameDiv mgt-20" style="text-align:left">
-                                        <span class="receiveStar">*</span>充值金额：
-                                        <input type="text" class="mobile" name="money" autocomplete="off">
+                                        <span class="receiveStar">*</span>充值选择：
+                                        <div  class="distpicker inline-block">
+                                            <div class="inline-block receiveFormaddress">
+                                                <select name="recharge">
+                                                    @foreach($data['recharge_options'] as $option)
+                                                        <option value="{{ $option->id }}">{{ $option->name .'----'. $option->moneys }}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                        </div>
                                     </div>
                                     <button type="submit" class="addressSave recharge" onclick="return false">充值</button>
                                 </fieldset>
                             </form>
                             <div class="receiveAddressList">
                                 <div class="saveAddressTip">
-                                    <p>
-                                        @foreach($data['group_message'] as $datum)
-                                            @if($datum->status != 1002)
-                                                <span>{{ $datum->status_name }}金额 : </span>
-                                                <span>{{ $datum->price }}元</span>
-                                            @endif
-                                        @endforeach
-                                    </p>
                                 </div>
                                 <table align="center" class="table tl" frame="box" border="1">
                                     <thead class="thead">
@@ -139,15 +138,15 @@
                                     </tr>
                                     </thead>
                                     <tbody class="tbody tl">
-                                        @foreach($data['items'] as $item)
-                                            <tr>
-                                                <td>{{ $item->order_id }}</td>
-                                                <td>{{ $item->created_at }}</td>
-                                                <td>{{ $item->money }}</td>
-                                                <td>{{ $item->trade_mode }}</td>
-                                                <td>{{ $item->status == 1002 ? "未支付" : $item->status_name }}</td>
-                                            </tr>
-                                        @endforeach
+                                    @foreach($data['items'] as $item)
+                                        <tr>
+                                            <td>{{ $item->order_id }}</td>
+                                            <td>{{ $item->created_at }}</td>
+                                            <td>{{ $item->money }}</td>
+                                            <td>{{ $item->trade_mode }}</td>
+                                            <td>{{ $item->status == 1002 ? "未支付" : "已支付" }}</td>
+                                        </tr>
+                                    @endforeach
                                     </tbody>
                                 </table>
                             </div>
@@ -165,16 +164,6 @@
             var obj = {};
             var message = $('#receiveForm').serializeArray();
             $.each(message, function (k, val) {
-                if(val['name'] == 'money') {
-                    if(!val['value']) {
-                        layer.msg('请填入充值金额');
-                    }
-                    if(!$('.layui-layer-msg').length) {
-                        if(val['value'] < 100) {
-                            layer.msg('充值金额需大于100元');
-                        }
-                    }
-                }
                 obj[val['name']] = val['value'];
             });
             if(!$('.layui-layer-msg').length) {

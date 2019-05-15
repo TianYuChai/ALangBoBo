@@ -24,7 +24,7 @@ Route::post('faceRecognition', ['as' => 'index.face', 'uses' => 'faceRecognition
 //支付宝回调地址
 Route::group(['namespace' => 'home\personal'], function () {
     Route::post('notify', ['as' => 'index.alipay.notify', 'uses' => 'PersonalCreditMarginController@notify']);
-    Route::get('returnUrl', ['as' => 'index.alipay.returnurl', 'uses' => 'PersonalCreditMarginController@returnUrl']);
+    Route::post('busin/notify', ['as' => 'index.busin.notify', 'uses' => 'PesonalBusinResidFeeController@notify']);
 });
 /**
  * 前台管理路由设置
@@ -60,6 +60,7 @@ Route::group(['namespace' => 'home', 'middleware' => 'listenState'], function ()
             Route::post("cancellHandleUser", ['as' => 'personal.cancellhandleuser', 'uses' => 'PersonalContentController@cancellHandleUser']);
             Route::get("creditMargin", ['as' => 'personal.creditmargin', 'uses' => 'PersonalCreditMarginController@index']);
             Route::post('pay', ['as' => 'personal.pay', 'uses' => 'PersonalCreditMarginController@pay']);
+            Route::get('businresidfee', ['as' => 'personal.businresidfee', 'uses' => 'PesonalBusinResidFeeController@index']);
             /*用户中心--商户*/
             Route::group(['namespace' => 'shop', 'middleware' => 'shop'], function () {
                 /*店铺店招*/

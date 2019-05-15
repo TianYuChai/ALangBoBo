@@ -27,6 +27,18 @@
                 </div>
             </div>
             <div class="layui-form-item">
+                <label class="layui-form-label">时长</label>
+                <div class="layui-input-inline">
+                    <input class="layui-input"
+                           type="text"
+                           name="duration"
+                           autocomplete="off"
+                           lay-verify="required|duration"
+                           placeholder="类别：天，例如：名称是月付，对应时长为30"
+                    >
+                </div>
+            </div>
+            <div class="layui-form-item">
                 <label class="layui-form-label">排序</label>
                 <div class="layui-input-inline">
                     <input type="text"
@@ -63,6 +75,14 @@
                         return "请填入数字";
                     }
                 },
+                duration: function (value) {
+                    if(!value) {
+                        return '请填入时长';
+                    }
+                    if(isNaN(value)) {
+                        return "请填入数字";
+                    }
+                }
             });
             //监听提交
             form.on('submit(add)', function(data) {

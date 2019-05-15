@@ -76,7 +76,7 @@ class PersonalCreditMarginController extends BaseController
             if($method == 'Alipay') {
                 $money = 0.01;
                 $result = $alipayService->entrance($money);
-            } else if($method == ''){
+            } else if($method == 'WeChat'){
 
             } else {
                 throw new Exception('类别错误');
@@ -104,15 +104,5 @@ class PersonalCreditMarginController extends BaseController
             Log::info('支付宝异步回调错误:' . $e->getMessage());
         }
         return $result;
-    }
-
-    /**
-     * 同步回调
-     *
-     * @param AlipayService $alipayService
-     */
-    public function returnUrl(AlipayService $alipayService)
-    {
-        $alipayService->vailet();
     }
 }
