@@ -9,6 +9,7 @@ namespace App\Http\Controllers\home\personal;
 
 use App\Http\Controllers\home\BaseController;
 use App\Http\Models\currency\CapitalModel;
+use App\Http\Models\currency\MerchantModel;
 use App\Http\Models\setup\SettledModel;
 use App\Http\Services\home\persanal\businAlipayService;
 use Carbon\Carbon;
