@@ -64,7 +64,6 @@ class businAlipayService extends BaseService
         $vailet = $this->vailet();
         Log::info('入驻费---支付宝异步回调处理-------start');
         $data = $vailet->all();
-        Log::info('入驻费', $vailet->all());
         if($data['trade_status'] == 'TRADE_SUCCESS' || $data['trade_status'] == 'TRADE_FINISHED'
             && $data['app_id'] == $this->config['app_id']) {
             $item = $this->capitalmode::where([
@@ -78,8 +77,10 @@ class businAlipayService extends BaseService
                 $item->trans_at = getTime();
                 $item->save();
                 $user_reghare = explode('-', $data['passback_params']);
+                Log::info('入驻费', $user_reghare);
                 $merchant = MerchantModel::where('uid', intval($user_reghare[0]))->first();
                 if($merchant) {
+                    Log::info('入驻费', '222');
                     $time = strtotime($merchant->due_at) == false ? Carbon::now() : Carbon::parse($merchant->due_at);
                     $merchant->due_at = $time->modify('+'.$user_reghare[1].' days')->toDateTimeString();
                     $merchant->save();
