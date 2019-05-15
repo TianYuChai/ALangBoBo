@@ -15,7 +15,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Exception;
-
+use Log;
 class PesonalBusinResidFeeController extends BaseController
 {
     const ROUTE = HOME_PERSONAL;
@@ -41,6 +41,7 @@ class PesonalBusinResidFeeController extends BaseController
      */
     public function index()
     {
+        dd(route('index.busin.notify'));
         $items = $this->capitalModel::where([
             'uid' => $this->userId,
             'category' => 600,
