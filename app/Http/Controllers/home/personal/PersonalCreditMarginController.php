@@ -27,7 +27,9 @@ class PersonalCreditMarginController extends BaseController
     public function __construct(SettledModel $model, CapitalModel $capitalModel)
     {
         $this->middleware(function ($request, $next) use ($model, $capitalModel){
-            $this->userId = Auth::guard('web')->user()->id;
+            if(Auth::guard('web')->check()) {
+                $this->userId = Auth::guard('web')->user()->id;
+            }
             $this->model = $model;
             $this->capitalModel = $capitalModel;
             return $next($request);
