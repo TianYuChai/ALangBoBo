@@ -55,7 +55,7 @@ class PesonalBusinResidFeeController extends BaseController
 
     /**
      * 支付
-     * 
+     *
      * @param Request $request
      * @param businAlipayService $alipayService
      * @return \Illuminate\Http\JsonResponse|\Symfony\Component\HttpFoundation\Response
