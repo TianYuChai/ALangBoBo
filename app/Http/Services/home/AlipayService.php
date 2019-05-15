@@ -53,8 +53,8 @@ class AlipayService extends BaseService
     public function notify()
     {
         $data = $this->vailet();
-        Log::debug('Alipay notify', $data->all());
-        return $data->success()->send();
+        Log::info('Alipay notify', $data->all());
+        return $data->success();
     }
 
     /**
