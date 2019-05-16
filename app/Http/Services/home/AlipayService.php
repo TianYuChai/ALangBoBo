@@ -85,4 +85,33 @@ class AlipayService extends BaseService
     {
         return Pay::alipay($this->config)->verify();
     }
+
+    /**
+     * @支付宝提现
+     *
+     */
+    public function cashWith($money, $account)
+    {
+        $order_id = create_order_no();
+        $item = $this->capitalmode::create([
+            'uid' => $this->userId,
+            'order_id' => $order_id,
+            'money' => '-'. $money,
+            'trade_mode' => 'Alipay',
+            'memo' => '提现',
+            'category' => 200,
+            'status' => 1002
+        ]);
+        $order = [
+            'out_biz_no' => $item->order_id,
+            'payee_type' => "ALIPAY_LOGONID",
+            'payee_account' => $account,
+            'amount' => $money,
+            'remark' => '阿郎博波转账',
+        ];
+//        $this->config['notify_url'] = route('index.alipay.notify');
+//        $this->config['return_url'] = route('personal.index');
+        $alipay = Pay::alipay($this->config)->transfer($order);
+        return $alipay;
+    }
 }

@@ -13,6 +13,8 @@ use App\Http\Models\currency\UserModel;
 use App\Http\Models\home\personal\AddressModel;
 use App\Http\Models\home\personal\CancellModel;
 use App\Http\Requests\home\persanal\PersanalAddressRequest;
+use App\Http\Services\home\AlipayService;
+use App\Http\Services\home\LoginService;
 use App\Http\Services\home\PersanalService;
 use App\Http\Services\home\persanal\PersanalAddressService;
 use Illuminate\Http\Request;
@@ -247,6 +249,47 @@ class PersonalContentController extends BaseController
             return $this->ajaxReturn([
                 'info' => $e->getMessage(),
                 'status' => 510
+            ], 510);
+        }
+    }
+
+    public function cashWithdrawal(Request $request, AlipayService $alipayService, LoginService $loginService)
+    {
+        try {
+            $method = trim($request->input('method', ''));
+            $money = trim($request->money);
+            $code = trim($request->code);
+            $account = trim($request->account);
+            if(!$money) {
+                throw new Exception('请填入提现金额', 510);
+            }
+            if(!regularHaveSinoram($money)) {
+                throw new Exception('提现金额包含中文', 510);
+            }
+            if(!preg_match('/^[0-9]+(.[0-9]{1,2})?$/', $money)) {
+                throw new Exception('提现金额类型错误', 510);
+            }
+            if($money < 100) {
+                throw new Exception('提现金额需大于100元', 510);
+            }
+            if($money > Auth::guard('web')->user()->available_money) {
+                throw new Exception('超出可提现范围', 510);
+            }
+//            $loginService->vefiShort(Auth::guard('web')->user()->number, $code);
+            if($method == 'Alipay') {
+                $money = 0.2;
+                $result = $alipayService->cashWith($money, $account);
+            } else if($method == 'WeChat') {
+
+            } else {
+                throw new Exception('提现类型错误');
+            }
+            dd($result);
+        } catch (Exception $e) {
+            dd($e->raw);
+            return $this->ajaxReturn([
+                'info' => $e->getMessage(),
+                'status' => $e->getCode()
             ], 510);
         }
     }

@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="{{ asset('home/common/citySelect.css') }}">
     <link href="{{ asset('home/css/index.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('home/css/merchantCenter_shInfo.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('home/css/merchantCenter_address.css') }}"/>
     <link rel="stylesheet" href="{{ asset('home/css/merchantCenter_accountCenter.css') }}"/>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/distpicker/2.0.3/distpicker.js"></script>
 @endsection
@@ -234,7 +235,7 @@
                 closeBtn: 0, //不显示关闭按钮
                 anim: 2,
                 shadeClose: true, //开启遮罩关闭
-                area: ['380px', 'auto'],
+                area: ['620px', '415px'],
                 content: '<div class="tab-pane fade in active" id="receiveAddress">\n' +
                     '                            <form class="cmxform" id="receiveForm">\n' +
                     '                                <fieldset class="fieldset clearfix">\n' +
@@ -251,16 +252,148 @@
                     '                                    </div>\n' +
                     '                                    <div class="receiveNameDiv mgt-20" style="text-align:left">\n' +
                     '                                        <span class="receiveStar">*</span>提现金额：\n' +
-                    '                                        <input type="text" class="mobile" name="money" autocomplete="off">\n' +
-                    '                                    </div><div class="receiveNameDiv mgt-20" style="text-align:left">' +
+                    '                                        <input type="text" class="mobile" name="money" autocomplete="off" style="width: 240px">\n' +
+                    '                                    </div>' +
+                    '                                       <div class="receiveNameDiv mgt-20" style="text-align:left">' +
                     '                                           <span class="receiveStar">*</span>提现账户：' +
-                    '                                           <input type="text" class="mobile" name="money" autocomplete="off">' +
-                '                                        </div>' +
-                    '                                    <button type="submit" class="addressSave recharge" onclick="return false">充值</button>\n' +
+                    '                                           <input type="text" class="mobile" name="account" autocomplete="off" style="width: 240px">' +
+                    '                                    </div> <div class="receiveNameDiv mgt-20" style="text-align:left">' +
+                    '                                                             <span class="receiveStar"></span>' +
+                    '                                                               <span style="color: red">请填入正确账号，根据提现方式不同，填入不同的账号</span>' +
+                    '                                                       </div>' +
+                    '                                    <div class="receiveNameDiv mgt-20" style="text-align:left">' +
+                    '                                    <span class="receiveStar">*</span>手机号：<span style="color: red">验证码会发送到绑定的手机上请注意查收</span></div>' +
+                    '                                    <div class="receiveNameDiv mgt-20" style="text-align:left">' +
+                    '                                   <span class="receiveStar">*</span>验证码：' +
+                    '                                   <input type="text" placeholder="验证码" class="verifyCode" style="width: 240px" id="verifyCode" name="code" autocomplete="off">' +
+                    '                                   <button class="teleCodeBtn get-code verifyBtn" onclick="return false;">获取验证码</button>' +
+                    '                                   </div>' +
+                    '                                    <button type="submit" class="addressSave recharge" onclick="return false">确认提现</button>\n' +
                     '                                </fieldset>\n' +
                     '                            </form></div>'
             });
         });
+        $('body').on('click','.recharge', function () {
+            var obj = {};
+            var data = $('#receiveForm').serializeArray();
+            var money = "{!! Auth::guard('web')->user()->available_money !!}";
+            $.each(data, function (k, val) {
+                if(!val['value']) {
+                    var tip = val['name'] == 'money' ? "请输入提现金额" : val['name'] == 'account' ? "请输入提现账户":"请填入验证码";
+                    layer.msg(tip);return false;
+                }
+                if(val['name'] == 'money') {
+                    if(isNaN(val['value'])) {
+                        layer.msg('请输入正确金额'); return false;
+                    }
+                    if(val['value'] < 100) {
+                        layer.msg('提现金额需大于100元'); return false;
+                    }
+                    if(val['value'] > money) {
+                        layer.msg('大于可提现金额'); return false;
+                    }
+                }
+                if(val['name'] == 'code' && (val['value'].length < 6 || val['value'].length > 6)) {
+                    layer.msg('验证码错误'); return false;
+                }
+                obj[val['name']] = val['value'];
+            });
+            if(!$('.layui-layer-msg').length) {
+                $.ajax({
+                    headers: {
+                        'X-CSRF-TOKEN': "{{ csrf_token() }}"
+                    },
+                    method:"POST",
+                    url:"{{ route("personal.cashWithdrawal") }}",
+                    data:obj,
+                    success:function (res) {
+                        if(res.status == 200) {
+                            layer.msg(res.info);
+                            setTimeout(function () {
+                                window.location.reload();
+                            }, 300)
+                        }
+                    },
+                    error:function (XMLHttpRequest, textStatus, errorThrown) {
+                        //返回提示信息
+                        try {
+                            if(XMLHttpRequest.status == 401) {
+                                var errors = JSON.parse(XMLHttpRequest.responseText)['errors']['info'];
+                                layer.msg(errors[0]);return;
+                            }
+                            var errors = XMLHttpRequest.responseJSON.errors;
+                            for (var value in errors) {
+                                layer.msg(errors[value][0]);return;
+                            }
+                        } catch (e) {
+                            var errors = JSON.parse(XMLHttpRequest.responseText)['errors'];
+                            for (var value in errors) {
+                                layer.msg(errors[value][0]);return;
+                            }
+                        }
+                    }
+                });
+            }
+        });
+        $('body').on('click', '.verifyBtn', function () {
+            var that = $(this);
+            var mobile = "{!! Auth::guard('web')->user()->number !!}";
+            if(!mobile) {
+                layer.msg('请填写手机号'); return;
+            }
+            if(!isPhoneNo(mobile)) {
+                layer.msg('请填写正确的手机号'); return;
+            }
+            $.ajax({
+                headers: {
+                    'X-CSRF-TOKEN': "{{ csrf_token() }}"
+                },
+                method:"POST",
+                url:"{!! route('index.shortMessage') !!}",
+                data:{mobile: mobile},
+                success:function (res) {
+                    if(res.status == 200) {
+                        layer.msg(res.info);
+                        countDown(29, 59);
+                    }
+                },
+                error:function (XMLHttpRequest) {
+                    //返回提示信息
+                    try {
+                        if(XMLHttpRequest.status == 429) {
+                            layer.msg('请求过快, 请稍后再试');return;
+                        }
+                        var errors = XMLHttpRequest.responseJSON.errors;
+                        for (var value in errors) {
+                            layer.msg(errors[value][0]);return;
+                        }
+                    } catch (e) {
+                        var errors = JSON.parse(XMLHttpRequest.responseText)['errors']['info'];
+                        layer.msg(errors[0]);return;
+                    }
+                }
+            });
+        });
+        /*倒计时*/
+        function countDown(m, s) {
+            $('.verifyBtn').attr('disabled','disabled');
+            var time = setInterval(function(){
+                if(s < 10){
+                    $('.verifyBtn').text(m+':0'+s);
+                }else{
+                    $('.verifyBtn').text(m+':'+s);
+                }
+                s--;
+                if(m == 0 && s < 0) {
+                    clearInterval(time);
+                    $('.verifyBtn').text('获取验证码');
+                    $('.verifyBtn').removeAttr('disabled');
+                    return;
+                } else if(s < 0){
+                    countDown(m-1, 59);
+                }
+            }, 1000);
+        }
     </script>
 @endsection
 @endsection
