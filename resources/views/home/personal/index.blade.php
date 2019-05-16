@@ -99,7 +99,7 @@
                     </div>
                     <div class="fl">
                         <p>帐户可用余额：<span>{{ Auth::guard('web')->user()->available_money }}</span> 元</p>
-                        <a href="">提现</a>
+                        <a href="javascript:void(0)" class="tixian">提现</a>
                     </div>
                 </div>
                 <!--列表部分-->
@@ -224,5 +224,44 @@
     </div>
     @section('shop')
     @endsection
+@section('section')
+    <script type="text/javascript">
+        $('.tixian').click(function () {
+            layer.open({
+                title:'提现操作',
+                type: 1,
+                skin: 'layui-layer-demo', //样式类名
+                closeBtn: 0, //不显示关闭按钮
+                anim: 2,
+                shadeClose: true, //开启遮罩关闭
+                area: ['380px', 'auto'],
+                content: '<div class="tab-pane fade in active" id="receiveAddress">\n' +
+                    '                            <form class="cmxform" id="receiveForm">\n' +
+                    '                                <fieldset class="fieldset clearfix">\n' +
+                    '                                    <div class="receiveNameDiv mgt-20" style="text-align:left">\n' +
+                    '                                        <span class="receiveStar">*</span>提现方式：\n' +
+                    '                                        <div  class="distpicker inline-block">\n' +
+                    '                                            <div class="inline-block receiveFormaddress">\n' +
+                    '                                                <select name="method">\n' +
+                    '                                                    <option value="Alipay">支付宝</option>\n' +
+                    '                                                    <option value="WeChat">微信</option>\n' +
+                    '                                                </select>\n' +
+                    '                                            </div>\n' +
+                    '                                        </div>\n' +
+                    '                                    </div>\n' +
+                    '                                    <div class="receiveNameDiv mgt-20" style="text-align:left">\n' +
+                    '                                        <span class="receiveStar">*</span>提现金额：\n' +
+                    '                                        <input type="text" class="mobile" name="money" autocomplete="off">\n' +
+                    '                                    </div><div class="receiveNameDiv mgt-20" style="text-align:left">' +
+                    '                                           <span class="receiveStar">*</span>提现账户：' +
+                    '                                           <input type="text" class="mobile" name="money" autocomplete="off">' +
+                '                                        </div>' +
+                    '                                    <button type="submit" class="addressSave recharge" onclick="return false">充值</button>\n' +
+                    '                                </fieldset>\n' +
+                    '                            </form></div>'
+            });
+        });
+    </script>
+@endsection
 @endsection
 

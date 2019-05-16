@@ -95,7 +95,6 @@
             <div class="shInfoDiv">
                 <div class="receiveSend">
                     <div id="myTabContent" class="tab-content">
-                        <!--tab1 收货地址-->
                         <div class="tab-pane fade in active" id="receiveAddress">
                             <form class="cmxform" id="receiveForm">
                                 <fieldset class="fieldset clearfix">
