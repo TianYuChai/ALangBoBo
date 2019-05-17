@@ -258,28 +258,32 @@ class PersonalContentController extends BaseController
     {
         try {
             $method = trim($request->input('method', ''));
-            $money = trim($request->money);
+            $cash_with_money = trim($request->money);
             $code = trim($request->code);
             $account = trim($request->account);
-            if(!$money) {
+            if(!$cash_with_money) {
                 throw new Exception('请填入提现金额', 510);
             }
-            if(!regularHaveSinoram($money)) {
+            if(!regularHaveSinoram($cash_with_money)) {
                 throw new Exception('提现金额包含中文', 510);
             }
-            if(!preg_match('/^[0-9]+(.[0-9]{1,2})?$/', $money)) {
+            if(!preg_match('/^[0-9]+(.[0-9]{1,2})?$/', $cash_with_money)) {
                 throw new Exception('提现金额类型错误', 510);
             }
-            if($money < 100) {
+            if($cash_with_money < 100) {
                 throw new Exception('提现金额需大于100元', 510);
             }
-            if($money > Auth::guard('web')->user()->available_money) {
-                throw new Exception('超出可提现范围', 510);
+            //计算手续费 提现金额大于1K收千六小于1K收千六+1
+            $cal_value = bcmul($cash_with_money, 0.006, 2);
+            $procedures_fee =  $cash_with_money > 1000 ? $cal_value : bcadd($cal_value, 1, 2);
+            if(bcadd($cash_with_money, $procedures_fee) > Auth::guard('web')->user()->available_money) {
+                throw new Exception('提现失败, 提现金额为:'
+                                .$cash_with_money.'元, 手续费为:'.$procedures_fee.'元, 超出可提现范围', 510);
             }
 //            $loginService->vefiShort(Auth::guard('web')->user()->number, $code);
             if($method == 'Alipay') {
-                $money = 0.2;
-                $result = $alipayService->cashWith($money, $account);
+                $money = 0.5;
+                $result = $alipayService->cashWith($cash_with_money, $procedures_fee, $account);
             } else if($method == 'WeChat') {
 
             } else {
@@ -288,9 +292,10 @@ class PersonalContentController extends BaseController
             dd($result);
         } catch (Exception $e) {
             if(!empty($e->raw)) {
-                $message = '提现失败, 请联系本站';
+                $sub_msg = $e->raw['alipay_fund_trans_toaccount_transfer_response']['sub_msg'];
+                $message = $sub_msg == '收款账号不存在' ? $sub_msg : '提现失败, 请联系本站';
                 Log::info('用户 : ' . $this->userId. ', 提现出现问题, 问题原因: '
-                    .$e->raw['alipay_fund_trans_toaccount_transfer_response']['sub_msg']);
+                    . $sub_msg);
             } else {
                 $message =  $e->getMessage();
             }

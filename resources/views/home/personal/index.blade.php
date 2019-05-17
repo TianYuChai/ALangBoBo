@@ -127,17 +127,16 @@
                                 <thead class="thead">
                                 <tr>
                                     <th>订单号</th>
-                                    <th>操作人</th>
                                     <th>交易日期</th>
                                     <th>交易金额</th>
                                     <th>交易类型</th>
+                                    <th>备注</th>
                                 </tr>
                                 </thead>
                                 <tbody class="tbody">
                                     @foreach($items['alltrade'] as $item)
                                         <tr>
                                             <td>{{ $item->order_id }}</td>
-                                            <td> {{ Auth::guard('web')->user()->account }} </td>
                                             <td> {{ $item->trans_at }} </td>
                                             <td> {{ $item->money }} 元 </td>
                                             <td>
@@ -147,6 +146,7 @@
                                                     {{ $item->category_name }}
                                                 @endif
                                             </td>
+                                            <td> {{ $item->memo }} </td>
                                         </tr>
                                     @endforeach
                                 </tbody>
@@ -158,19 +158,16 @@
                                 <thead class="thead">
                                 <tr>
                                     <th>订单号</th>
-                                    <th>提现人</th>
-                                    <th>提现日期</th>
                                     <th>提现金额</th>
                                     <th>提现方式</th>
                                     <th>状态</th>
+                                    <th>备注</th>
                                 </tr>
                                 </thead>
                                 <tbody class="tbody">
                                 @foreach($items['withdraw'] as $item)
                                     <tr>
                                         <td> {{ $item->order_id }} </td>
-                                        <td> {{ Auth::guard('web')->user()->account }} </td>
-                                        <td> {{ $item->created_at }} </td>
                                         <td> {{ $item->money }}元 </td>
                                         <td> {{ $item->trademode_name }} </td>
                                         <td>
@@ -180,6 +177,7 @@
                                                 失败
                                             @endif
                                         </td>
+                                        <td> {{ $item->memo }} </td>
                                     </tr>
                                 @endforeach
                                 </tbody>
@@ -191,28 +189,28 @@
                                 <thead class="thead">
                                 <tr>
                                     <th>订单号</th>
-                                    <th>充值对象</th>
-                                    <th>充值日期</th>
                                     <th>充值金额</th>
                                     <th>充值方式</th>
                                     <th>状态</th>
+                                    <th>备注</th>
                                 </tr>
                                 </thead>
                                 <tbody class="tbody">
                                 @foreach($items['recharge'] as $item)
                                     <tr>
                                         <td> {{ $item->order_id }} </td>
-                                        <td> {{ Auth::guard('web')->user()->account }} </td>
-                                        <td> {{ $item->created_at }} </td>
                                         <td> {{ $item->money }}元 </td>
                                         <td> {{ $item->trademode_name }} </td>
                                         <td>
                                             @if($item->status == 1001)
                                                 成功
+                                            @elseif($item->status == 1003)
+                                                冻结
                                             @else
                                                 失败
                                             @endif
                                         </td>
+                                        <td> {{ $item->memo }} </td>
                                     </tr>
                                 @endforeach
                                 </tbody>

@@ -9,6 +9,7 @@ namespace App\Http\Services\home;
 
 use App\Http\Models\currency\CapitalModel;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Yansongda\Pay\Pay;
 
@@ -88,17 +89,20 @@ class AlipayService extends BaseService
 
     /**
      * @支付宝提现
-     *
+     * @param $money
+     * @param $procedures_fee
+     * @param $account
+     * @return \Yansongda\Supports\Collection
      */
-    public function cashWith($money, $account)
+    public function cashWith($money, $procedures_fee, $account)
     {
         $order_id = create_order_no();
         $item = $this->capitalmode::create([
             'uid' => $this->userId,
             'order_id' => $order_id,
-            'money' => '-'. $money,
+            'money' => '-'. bcadd($money, $procedures_fee),
             'trade_mode' => 'Alipay',
-            'memo' => '提现',
+            'memo' => '提现, 站方收取手续费金额：'. $procedures_fee.'元，提现账户为:'. $account,
             'category' => 200,
             'status' => 1002
         ]);
@@ -109,8 +113,6 @@ class AlipayService extends BaseService
             'amount' => $money,
             'remark' => '阿郎博波转账',
         ];
-//        $this->config['notify_url'] = route('index.alipay.notify');
-//        $this->config['return_url'] = route('personal.index');
         $alipay = Pay::alipay($this->config)->transfer($order);
         return $alipay;
     }
