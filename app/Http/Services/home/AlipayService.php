@@ -66,6 +66,7 @@ class AlipayService extends BaseService
                 'status' => 1002
             ])->first();
             if($item) {
+                Log::info('保证金---支付宝异步回调处理----------更新');
                 $item->status = 1003;
                 $item->trans_at = getTime();
                 $item->due_at = Carbon::now()->modify('+30 days')->toDateTimeString();
