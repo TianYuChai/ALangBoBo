@@ -38,7 +38,7 @@ Route::group(['namespace' => 'home', 'middleware' => 'listenState'], function ()
         Route::post('verifivWhetExist', ['as' => 'index.verifivWhetExist', 'uses' => 'RegisterController@verifivWhetExist']);
         Route::post('regists/create', ['as' => 'index.regists.create', 'uses' => 'RegisterController@create']);
         Route::get('login', ['as' => 'index.login', 'uses' => 'LoginController@index']);
-        Route::post('logi/operation', ['as' => 'index.login.operation', 'uses' => 'LoginController@operation']);
+        Route::post('login/operation', ['as' => 'index.login.operation', 'uses' => 'LoginController@operation']);
         Route::post('login/verfMobile', ['as' => 'index.login.verfMobile', 'uses' => 'LoginController@verfMobile']);
         Route::get('login/forgetPass', ['as' => 'index.login.forgetpass', 'uses' => 'LoginController@forgetPass']);
         Route::post('login/handleForgetPass', ['as' => 'index.login.handleforgetpass', 'uses' => 'LoginController@handleForgetPass']);
@@ -63,6 +63,7 @@ Route::group(['namespace' => 'home', 'middleware' => 'listenState'], function ()
             Route::get('businresidfee', ['as' => 'personal.businresidfee', 'uses' => 'PesonalBusinResidFeeController@index']);
             Route::post('businresidfee/pay', ['as' => 'personal.businresidfee.pay', 'uses' => 'PesonalBusinResidFeeController@pay']);
             Route::post('cashWithdrawal', ['as' => 'personal.cashWithdrawal', 'uses' => 'PersonalContentController@cashWithdrawal']);
+            Route::get('merchant', ['as' => 'personal.merchant', 'uses' => 'PersonalMerchantController@index']);
             /*用户中心--商户*/
             Route::group(['namespace' => 'shop', 'middleware' => 'shop'], function () {
                 /*店铺店招*/

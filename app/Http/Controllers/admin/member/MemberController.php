@@ -88,13 +88,13 @@ class MemberController extends BaseController
     {
         try{
             $item = $memberService->checkMemberStatus($id);
-            if($item != 0) {
+            if($item->category != 0) {
                 $code = $memberService->merchNumber($item->category);
                 MerchantModel::where('uid', $item->id)->update([
-                    'code' => $code
+                    'code' => $code,
+                    'status' => 1
                 ]);
             }
-            MerchantModel::where('uid', $item->id)->update(['status' => 1]);
             $item->status = 1;
             $item->save();
         } catch (Exception $e) {

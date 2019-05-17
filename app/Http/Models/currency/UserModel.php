@@ -158,4 +158,14 @@ class UserModel extends Authenticatable
                 $query->whereIn('category', [100, 300, 500])->where('status', 1001);
         })->sum('money');
     }
+
+    /**
+     * 是否是商家并且通过审核
+     *
+     * @return bool
+     */
+    public function getWherMerchantAttribute()
+    {
+        return $this->category != 0 && $this->merchant->status == 1 ? true : false;
+    }
 }

@@ -24,9 +24,7 @@
                 <li class="firstLevel">
                     <p>{{ Auth::guard('web')->user()->category !=0 ? "商户":"个人" }}中心</p>
                     <ul>
-                        <li>
-                            @include('home.personal.head_portrait')
-                        </li>
+                        @include('home.personal.head_portrait')
                         <li>
                             <a href="{{ route('personal.merchant_data') }}">商户资料</a>
                         </li>
@@ -103,7 +101,7 @@
                                 收货地址
                             </a>
                         </li>
-                        @if(Auth::guard('web')->user()->category != 0)
+                        @if(Auth::guard('web')->user()->whermerchant)
                             <li>
                                 <a href="#sendAddress" data-toggle="tab">发货地址</a>
                             </li>
@@ -196,7 +194,7 @@
                                 </table>
                             </div>
                         </div>
-                        @if(Auth::guard('web')->user()->category != 0)
+                        @if(Auth::guard('web')->user()->whermerchant)
                             <!--tab2 发货地址-->
                             <div class="tab-pane fade in" id="sendAddress">
                                 <form class="cmxform" id="sendForm">

@@ -136,6 +136,26 @@
                                 </a>
                             @endif
                         @elseif($item->status == 1)
+                            @if($item->category != 0 && $item->merchant->status == 0)
+                                @if(!empty($item->registerauditing))
+                                    <span class="layui-btn layui-btn-normal layui-btn-xs layui-btn-disabled">
+                                    已审核，等待重新提交
+                                </span>
+                                @else
+                                    <a title="过审"
+                                       onclick="member_adopt(this,'{{ route('backstage.member.adopt', ['id' => $item->id]) }}')"
+                                       href="javascript:void(0);"
+                                       class="layui-btn layui-btn-xs">
+                                        过审
+                                    </a>
+                                    <a title="驳回"
+                                       onclick="member_reject(this,'{{ route('backstage.member.reject', ['id' => $item->id]) }}')"
+                                       href="javascript:void(0);"
+                                       class="layui-btn layui-btn-xs">
+                                        驳回
+                                    </a>
+                                @endif
+                            @endif
                             <a title="封停" onclick="member_sealup(this,'{{ route('backstage.member.sealUp', ['id' => $item->id]) }}')" href="javascript:void(0);">
                                 <i class="layui-icon layui-icon-delete"></i>
                             </a>

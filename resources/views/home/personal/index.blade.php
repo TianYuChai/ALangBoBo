@@ -44,6 +44,9 @@
                             <a href="{{ route('personal.creditmargin') }}">信用保证金</a>
                         </li>
                         <li>
+                            <a href="{{ route('personal.merchant') }}">商家入驻</a>
+                        </li>
+                        <li>
                             <a href="{{ route('personal.businresidfee') }}">商家入驻费</a>
                         </li>
                         <li>

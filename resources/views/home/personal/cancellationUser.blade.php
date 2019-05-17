@@ -23,9 +23,7 @@
                 <li class="firstLevel">
                     <p>{{ Auth::guard('web')->user()->category !=0 ? "商户":"个人" }}中心</p>
                     <ul>
-                        <li>
-                            @include('home.personal.head_portrait')
-                        </li>
+                        @include('home.personal.head_portrait')
                         <li>
                             <a href="{{ route('personal.merchant_data') }}">商户资料</a>
                         </li>

@@ -26,9 +26,9 @@ class whiterloginMiddleware
      */
     public function handle($request, Closure $next)
     {
-        if(Auth::guard('web')->check()) {
-            return redirect()->route('personal.index');
-        }
+//        if(Auth::guard('web')->check()) {
+//            return redirect()->route('personal.index');
+//        }
         return $next($request);
     }
 }
