@@ -21,6 +21,7 @@ use Illuminate\Http\Request;
 use Exception;
 use FileUpload;
 use Illuminate\Support\Facades\Auth;
+use Log;
 
 class PersonalContentController extends BaseController
 {
@@ -286,9 +287,15 @@ class PersonalContentController extends BaseController
             }
             dd($result);
         } catch (Exception $e) {
-            dd($e->raw);
+            if(!empty($e->raw)) {
+                $message = '提现失败, 请联系本站';
+                Log::info('用户 : ' . $this->userId. ', 提现出现问题, 问题原因: '
+                    .$e->raw['alipay_fund_trans_toaccount_transfer_response']['sub_msg']);
+            } else {
+                $message =  $e->getMessage();
+            }
             return $this->ajaxReturn([
-                'info' => $e->getMessage(),
+                'info' => $message,
                 'status' => $e->getCode()
             ], 510);
         }
