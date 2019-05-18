@@ -162,13 +162,13 @@
                     </div>
                     <div class="form-group">
                         <label for="inputPassword" class="col-sm-2 control-label">身份证正面照</label>
-                        <div class="col-sm-10" style="float: left">
+                        <div class="col-sm-2" style="float: left">
                             <img src="{{ asset('home/images/img/idImg.png') }}" class="img-rounded">
                             <input type="file" class="file" accept="image/*" data-id="zheng">
                             <input type="hidden" name="zheng">
                         </div>
                         <label for="inputPassword" class="col-sm-2 control-label">身份证反面照</label>
-                        <div class="col-sm-10">
+                        <div class="col-sm-2">
                             <img src="{{ asset('home/images/img/idImg.png') }}" class="img-rounded">
                             <input type="file" class="file" accept="image/*" data-id="fan">
                             <input type="hidden" name="fan">
@@ -176,27 +176,27 @@
                     </div>
                     <div class="form-group">
                         <label for="inputPassword" class="col-sm-2 control-label">人脸识别</label>
-                        <div class="col-sm-10">
+                        <div class="col-sm-2">
                             <img src="{{ asset('home/images/img/idImg.png') }}" class="img-rounded personal" id="face">
                             {{--<input type="file" class="file" data-id="yyzz" accept="image/*">--}}
                             <input type="hidden" name="yyzz">
                         </div>
                     </div>
                     <div class="form-group">
-                        {{--<label for="inputPassword" class="col-sm-2 control-label">营业执照上传</label>--}}
-                        {{--<div class="col-sm-10">--}}
-                            {{--<img src="{{ asset('home/images/img/idImg.png') }}" class="img-rounded">--}}
-                            {{--<input type="file" class="file" data-id="yyzz" accept="image/*">--}}
-                            {{--<input type="hidden" name="yyzz">--}}
-                        {{--</div>--}}
+                        <label for="inputPassword" class="col-sm-2 control-label">营业执照上传</label>
+                        <div class="col-sm-2">
+                            <img src="{{ asset('home/images/img/idImg.png') }}" class="img-rounded">
+                            <input type="file" class="file" data-id="yyzz" accept="image/*">
+                            <input type="hidden" name="yyzz">
+                        </div>
                         <label for="inputPassword" class="col-sm-2 control-label">美容或理发行业</label>
-                        <div class="col-sm-10">
+                        <div class="col-sm-2">
                             <img src="{{ asset('home/images/img/idImg.png') }}" class="img-rounded">
                             <input type="file" class="file" data-id="mrlf" accept="image/*">
                             <input type="hidden" name="mrlf">
                         </div>
                         <label for="inputPassword" class="col-sm-2 control-label">食品行业证件上传</label>
-                        <div class="col-sm-10">
+                        <div class="col-sm-2">
                             <img src="{{ asset('home/images/img/idImg.png') }}" class="img-rounded">
                             <input type="file" class="file" data-id="food" accept="image/*">
                             <input type="hidden" name="food">
@@ -204,7 +204,7 @@
                     </div>
                     <div class="form-group">
                         <label for="inputPassword" class="col-sm-2 control-label">个人证件或作品上传</label>
-                        <div class="col-sm-10">
+                        <div class="col-sm-2">
                             <img src="{{ asset('home/images/img/idImg.png') }}" class="img-rounded">
                             <input type="file" class="file" data-id="zuopin" accept="image/*">
                             <input type="hidden" name="zuopin">
