@@ -43,9 +43,7 @@
                         <li>
                             <a href="{{ route('personal.creditmargin') }}" class="leftNavActive">信用保证金</a>
                         </li>
-                        <li>
-                            <a href="{{ route('personal.businresidfee') }}">商家入驻费</a>
-                        </li>
+                        @include('home.personal.judge_merchange')
                         <li>
                             <a href="{{ route('personal.cancellationuser') }}">注销帐户</a>
                         </li>

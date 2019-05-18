@@ -54,7 +54,7 @@
         <tr><td>真实姓名</td><td>{{ $item->name }}</td></tr>
         <tr><td>身份证</td><td>{{ $item->card }}</td></tr>
         <tr><td>生日</td><td>{{ $item->datebirth ?? "" }}</td></tr>
-        <tr><td>性别</td><td>{{ $item->sex ? $item->sex == 0 ? "男": "女":"" }}</td></tr>
+        <tr><td>性别</td><td>{{ $item->sex != "" || $item->sex == "0" ? $item->sex == 0 ? "男": "女" : "" }}</td></tr>
         <tr><td>家乡</td><td>{{ $item->home ?? "" }}</td></tr>
         <tr><td>居住地</td><td>{{ $item->live ?? "" }}</td></tr>
         </tbody>

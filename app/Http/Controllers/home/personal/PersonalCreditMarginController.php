@@ -74,7 +74,6 @@ class PersonalCreditMarginController extends BaseController
                 throw new Exception('保证金充值需大于100元');
             }
             if($method == 'Alipay') {
-                $money = 0.5;
                 $result = $alipayService->entrance($money);
             } else if($method == 'WeChat'){
 

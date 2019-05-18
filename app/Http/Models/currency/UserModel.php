@@ -166,6 +166,6 @@ class UserModel extends Authenticatable
      */
     public function getWherMerchantAttribute()
     {
-        return $this->category != 0 && $this->merchant->status == 1 ? true : false;
+        return $this->category != 0 && (isset($this->merchant) ? $this->merchant->status == 1 : "") ? true : false;
     }
 }

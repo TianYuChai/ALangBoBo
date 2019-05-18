@@ -62,9 +62,6 @@
                             <a href="{{ route('personal.merchant') }}" class="leftNavActive">商家入驻</a>
                         </li>
                         <li>
-                            <a href="{{ route('personal.businresidfee') }}">商家入驻费</a>
-                        </li>
-                        <li>
                             <a href="{{ route('personal.cancellationuser') }}">注销帐户</a>
                         </li>
                     </ul>
@@ -245,9 +242,9 @@
             var that = $(this);
             var obj = {};
             var data = $('.form-horizontal').serializeArray();
-            // if(!whether) {
-            //     layer.msg('请先进行人脸识别');return false;
-            // }
+            if(!whether) {
+                layer.msg('请先进行人脸识别');return false;
+            }
             $.each(data, function (k, val) {
                 if($.inArray(val['name'], array) != -1) {
                     if(!val['value']) {
