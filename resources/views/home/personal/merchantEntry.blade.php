@@ -418,7 +418,8 @@
                 audio: false
             };
             //获得video摄像头区域
-            var promise = navigator.mediaDevices.getUserMedia(constraints);
+            // var promise = navigator.mediaDevices.getUserMedia(constraints);
+            var promise = navigator.getUserMedia(constraints);
             promise.then(function (MediaStream) {
                 layer.alert('请对准摄像头, 五秒后自动拍照', {icon: 6}, function (index) {
                     layer.close(index);
