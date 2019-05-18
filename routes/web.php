@@ -60,10 +60,12 @@ Route::group(['namespace' => 'home', 'middleware' => 'listenState'], function ()
             Route::post("cancellHandleUser", ['as' => 'personal.cancellhandleuser', 'uses' => 'PersonalContentController@cancellHandleUser']);
             Route::get("creditMargin", ['as' => 'personal.creditmargin', 'uses' => 'PersonalCreditMarginController@index']);
             Route::post('pay', ['as' => 'personal.pay', 'uses' => 'PersonalCreditMarginController@pay']);
-            Route::get('businresidfee', ['as' => 'personal.businresidfee', 'uses' => 'PesonalBusinResidFeeController@index']);
-            Route::post('businresidfee/pay', ['as' => 'personal.businresidfee.pay', 'uses' => 'PesonalBusinResidFeeController@pay']);
             Route::post('cashWithdrawal', ['as' => 'personal.cashWithdrawal', 'uses' => 'PersonalContentController@cashWithdrawal']);
-            Route::get('merchant', ['as' => 'personal.merchant', 'uses' => 'PersonalMerchantController@index']);
+
+            Route::get('businresidfee', ['as' => 'personal.businresidfee', 'uses' => 'PesonalBusinResidFeeController@index'])->middleware('judgemerchant');
+            Route::post('businresidfee/pay', ['as' => 'personal.businresidfee.pay', 'uses' => 'PesonalBusinResidFeeController@pay'])->middleware('judgemerchant');
+            Route::get('merchant', ['as' => 'personal.merchant', 'uses' => 'PersonalMerchantController@index'])->middleware("judgeordinuser");
+            Route::post('store', ['as' => 'personal.store', 'uses' => 'PersonalMerchantController@store'])->middleware("judgeordinuser");
             /*用户中心--商户*/
             Route::group(['namespace' => 'shop', 'middleware' => 'shop'], function () {
                 /*店铺店招*/

@@ -8,4 +8,5 @@ class MerchantModel extends Model
 {
     /*商户表*/
     protected $table = 'merchant';
+    protected $guarded = ['id'];
 }

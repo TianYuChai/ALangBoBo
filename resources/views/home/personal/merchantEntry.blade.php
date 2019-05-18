@@ -20,6 +20,10 @@
             cursor: pointer;
             opacity: 0;
         }
+        img{
+            width: 110px;
+            height: 100px;
+        }
     </style>
 @endsection
 @section('content')
@@ -109,37 +113,11 @@
             <div class="shInfoDiv">
                 <form class="form-horizontal" style="width: 90%; margin-top: 20px;">
                     <div class="form-group">
-                        <label class="col-sm-2 control-label">姓名</label>
-                        <div class="col-sm-10">
-                            <input type="text"
-                                   class="form-control name"
-                                   id="name"
-                                   name="name"
-                                   autocomplete="off" placeholder="请输入姓名">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="inputPassword" class="col-sm-2 control-label">身份证号</label>
-                        <div class="col-sm-10">
-                            <input type="text"
-                                   class="form-control"
-                                   placeholder="请输入身份证号"
-                                   id="id" name="id" autocomplete="off">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="inputPassword" class="col-sm-2 control-label">手机号</label>
-                        <div class="col-sm-10">
-                            <input type="text"
-                                   class="form-control mobile"
-                                   placeholder="请输入手机号" id="mobile" name="mobile" autocomplete="off">
-                        </div>
-                    </div>
-                    <div class="form-group">
                         <label for="inputPassword" class="col-sm-2 control-label">店名</label>
                         <div class="col-sm-10">
                             <input type="text"
                                    class="form-control"
+                                   value="{{ isset($item) ? $item->shop_name : "" }}"
                                    placeholder="请输入店名" id="shopName" name="shopName" autocomplete="off">
                         </div>
                     </div>
@@ -148,6 +126,7 @@
                         <div class="col-sm-10">
                             <input type="text"
                                    class="form-control"
+                                   value="{{ isset($item) ? $item->credit_code : "" }}"
                                    placeholder="请输入统一社会信用代码" id="shehuiDaima" name="shehuiDaima" autocomplete="off">
                         </div>
                     </div>
@@ -155,23 +134,25 @@
                         <label for="inputPassword" class="col-sm-2 control-label">入驻类别</label>
                         <div class="col-sm-10">
                             <select class="form-control" name="category" id="category">
-                                <option value="1">企业商户</option>
-                                <option value="2">个人商户</option>
+                                <option value="1" {{ isset($item) ? $item->category == 1 ? "selected" : "" : "" }}>企业商户</option>
+                                <option value="2" {{ isset($item) ? $item->category == 2 ? "selected" : "" : "" }}>个人商户</option>
                             </select>
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="inputPassword" class="col-sm-2 control-label">身份证正面照</label>
                         <div class="col-sm-2" style="float: left">
-                            <img src="{{ asset('home/images/img/idImg.png') }}" class="img-rounded">
+                            <img src="{{ isset($item) ? FileUpload::url('image', $item->card_positive)
+                             : asset('home/images/img/idImg.png') }}" class="img-rounded">
                             <input type="file" class="file" accept="image/*" data-id="zheng">
-                            <input type="hidden" name="zheng">
+                            <input type="hidden" name="zheng" value="{{ isset($item) ? $item->card_positive : "" }}">
                         </div>
                         <label for="inputPassword" class="col-sm-2 control-label">身份证反面照</label>
                         <div class="col-sm-2">
-                            <img src="{{ asset('home/images/img/idImg.png') }}" class="img-rounded">
+                            <img src="{{ isset($item) ? FileUpload::url('image', $item->card_opposite)
+                             : asset('home/images/img/idImg.png') }}" class="img-rounded">
                             <input type="file" class="file" accept="image/*" data-id="fan">
-                            <input type="hidden" name="fan">
+                            <input type="hidden" name="fan" value="{{ isset($item) ? $item->card_opposite : "" }}">
                         </div>
                     </div>
                     <div class="form-group">
@@ -179,38 +160,41 @@
                         <div class="col-sm-2">
                             <img src="{{ asset('home/images/img/idImg.png') }}" class="img-rounded personal" id="face">
                             {{--<input type="file" class="file" data-id="yyzz" accept="image/*">--}}
-                            <input type="hidden" name="yyzz">
                         </div>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group enterprise" {{ isset($item) ? $item->category == 2 ? "hidden" : "" : "" }}>
                         <label for="inputPassword" class="col-sm-2 control-label">营业执照上传</label>
                         <div class="col-sm-2">
-                            <img src="{{ asset('home/images/img/idImg.png') }}" class="img-rounded">
+                            <img src="{{ isset($item) ? FileUpload::url('image', $item->bus_license)
+                             : asset('home/images/img/idImg.png') }}" class="img-rounded">
                             <input type="file" class="file" data-id="yyzz" accept="image/*">
-                            <input type="hidden" name="yyzz">
+                            <input type="hidden" name="yyzz" value="{{ isset($item) ? $item->bus_license : "" }}">
                         </div>
                         <label for="inputPassword" class="col-sm-2 control-label">美容或理发行业</label>
                         <div class="col-sm-2">
-                            <img src="{{ asset('home/images/img/idImg.png') }}" class="img-rounded">
+                            <img src="{{ isset($item) ? $item->hairdressing != "" ? FileUpload::url('image', $item->hairdressing) : asset('home/images/img/idImg.png')
+                             : asset('home/images/img/idImg.png') }}" class="img-rounded">
                             <input type="file" class="file" data-id="mrlf" accept="image/*">
-                            <input type="hidden" name="mrlf">
+                            <input type="hidden" name="mrlf" value="{{ isset($item) ? $item->hairdressing : "" }}">
                         </div>
                         <label for="inputPassword" class="col-sm-2 control-label">食品行业证件上传</label>
                         <div class="col-sm-2">
-                            <img src="{{ asset('home/images/img/idImg.png') }}" class="img-rounded">
+                            <img src="{{ isset($item) ? $item->food_industry != "" ? FileUpload::url('image', $item->food_industry) : asset('home/images/img/idImg.png')
+                             : asset('home/images/img/idImg.png') }}" class="img-rounded">
                             <input type="file" class="file" data-id="food" accept="image/*">
-                            <input type="hidden" name="food">
+                            <input type="hidden" name="food" value="{{ isset($item) ? $item->food_industry : "" }}">
                         </div>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group personals" style="margin-left: 10px" {{ isset($item) ? $item->category == 1 ? "hidden" : "" : "hidden" }}>
                         <label for="inputPassword" class="col-sm-2 control-label">个人证件或作品上传</label>
                         <div class="col-sm-2">
-                            <img src="{{ asset('home/images/img/idImg.png') }}" class="img-rounded">
+                            <img src="{{ isset($item) ? $item->personal != "" ? FileUpload::url('image', $item->personal) : asset('home/images/img/idImg.png')
+                             : asset('home/images/img/idImg.png') }}" class="img-rounded">
                             <input type="file" class="file" data-id="zuopin" accept="image/*">
-                            <input type="hidden" name="zuopin">
+                            <input type="hidden" name="zuopin" value="{{ isset($item) ? $item->personal : "" }}">
                         </div>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group" style="margin-top: 25px;">
                         <label for="inputPassword" class="col-sm-2 control-label">验证码</label>
                         <div class="col-sm-10">
                             <input type="text"
@@ -238,30 +222,101 @@
 @endsection
 @section('section')
     <script type="text/javascript">
-        var category = 1;
+        if("{{ $wther }}") {
+            layer.msg('正在审核中, 无法进行操作! <a href="javascript:history.go(-1)">点击此处返回之前页面</a>', {
+                icon: 4,
+                shade: 0.4,
+                time:false //取消自动关闭
+            });
+        } else {
+          if("{{ $register  }}") {
+              layer.alert("{!! $register !!}", {
+                  icon: 5,
+                  title: "提示"
+              });
+          }
+        }
+        var category = {!! $category !!};
         var whether = false;
+        var required = {shopName: '店名', shehuiDaima: "统一社会信用代码", zheng: '身份证正面照', fan: '身份证反面照', category: '入驻类别'};
+        var array = ['name', 'id', 'mobile', 'shopName', 'shehuiDaima', 'zheng', 'fan', 'category'];
+        var enter = ['yyzz', 'mrlf', 'food'];
         $('.stepBtnActive').on('click', function () {
             var that = $(this);
             var obj = {};
             var data = $('.form-horizontal').serializeArray();
-            // console.log(category, data);return;
-            if(!whether) {
-                layer.msg('请先进行人脸识别');return false;
-            }
+            // if(!whether) {
+            //     layer.msg('请先进行人脸识别');return false;
+            // }
+            $.each(data, function (k, val) {
+                if($.inArray(val['name'], array) != -1) {
+                    if(!val['value']) {
+                        layer.msg(required[val['name']]+ '不可为空');return false;
+                    } else {
+                        obj[val['name']] = val['value'];
+                    }
+                }
+                if(category == 1) {
+                    if($.inArray(val['name'], enter) != -1) {
+                        if(val['name'] == 'yyzz' && !val['value']) {
+                            layer.msg('请上传营业执照');return false;
+                        }
+                        obj[val['name']] = val['value'];
+                    }
+                } else {
+                    if(val['name'] == 'zuopin' && !val['value']) {
+                        layer.msg('请上传个人证件或作品');return false;
+                    }
+                    obj[val['name']] = val['value'];
+                }
+                if(val['name'] == 'verifyCode') {
+                    if(!val['value']) {
+                        layer.msg('请填写验证码');return false;
+                    }
+                    if(val['value'].length < 6 || val['value'].length > 6) {
+                        layer.msg('验证码错误');return false;
+                    }
+                    obj[val['name']] = val['value'];
+                }
+            });
             if(!$('.layui-layer-msg').length) {
-
+                $.ajax({
+                    headers: {
+                        'X-CSRF-TOKEN': "{{ csrf_token() }}"
+                    },
+                    method:"POST",
+                    url:"{!! route('personal.store') !!}",
+                    data: obj,
+                    success:function (res) {
+                        if(res.status == 200) {
+                            layer.msg('已提交审核, 取消当前操作! <a href="{!! route("personal.index") !!}">点击此处前往账户中心</a>', {
+                                icon: 4,
+                                shade: 0.4,
+                                time:false //取消自动关闭
+                            });
+                        }
+                    },
+                    error:function (XMLHttpRequest) {
+                        //返回提示信息
+                        try {
+                            var errors = XMLHttpRequest.responseJSON.errors;
+                            for (var value in errors) {
+                                layer.msg(errors[value][0]);return;
+                            }
+                        } catch (e) {
+                            var errors = JSON.parse(XMLHttpRequest.responseText)['errors'];
+                            for (var value in errors) {
+                                layer.msg(errors[value][0]);return;
+                            }
+                        }
+                    }
+                });
             }
         });
         /*验证码*/
         $('.verifyBtn').on('click', function () {
             var that = $(this);
-            var mobile = $.trim($('.mobile').val());
-            if(!mobile) {
-                layer.msg('请填写手机号'); return;
-            }
-            if(!isPhoneNo(mobile)) {
-                layer.msg('请填写正确的手机号'); return;
-            }
+            var mobile = "{!! Auth::guard('web')->user()->number !!}";
             $.ajax({
                 headers: {
                     'X-CSRF-TOKEN': "{{ csrf_token() }}"
@@ -358,11 +413,19 @@
         /*监听-身份证号*/
         $('#id').blur(function() {
             var that = $(this);
+            if(!isCardNo(that.val())){
+                $(".stepBtnActive").attr('disabled','disabled');
+                layer.msg('请填写正确的身份证号'); return false;
+            }
             monitor(that, 'id');
         });
         /*监听-号码*/
         $('.mobile').blur(function() {
             var that = $(this);
+            if(!isPhoneNo(that.val())) {
+                $(".stepBtnActive").attr('disabled','disabled');
+                layer.msg('请填写正确的手机号'); return false;
+            }
             monitor(that, 'mobile');
         });
         /*监听-提交*/
@@ -406,6 +469,8 @@
              let that = $(this);
              let val = that.val();
              category = val;
+             $('.personals').toggle();
+             $('.enterprise').toggle();
         });
         /*调用摄像头*/
         $('#face').click(function () {
@@ -419,7 +484,6 @@
             };
             //获得video摄像头区域
             var promise = navigator.mediaDevices.getUserMedia(constraints);
-            // var promise = navigator.getUserMedia(constraints);
             promise.then(function (MediaStream) {
                 layer.alert('请对准摄像头, 五秒后自动拍照', {icon: 6}, function (index) {
                     layer.close(index);
