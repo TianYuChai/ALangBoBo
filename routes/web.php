@@ -70,6 +70,10 @@ Route::group(['namespace' => 'home', 'middleware' => 'listenState'], function ()
             Route::group(['namespace' => 'shop', 'middleware' => 'shop'], function () {
                 /*店铺店招*/
                 Route::get('shop/index', ['as' => 'personal.shop.index', 'uses'=> 'PersonalShopController@index']);
+                Route::post('shop/updateTrademark', ['as' => 'personal.shop.updateTrademark', 'uses' => 'PersonalShopController@updateTrademark']);
+                Route::post('shop/update', ['as' => 'personal.shop.update', 'uses' => 'PersonalShopController@update']);
+                /*店铺分类*/
+                Route::get('shop/menu', ['as' => 'personal.shop.menu', 'uses' => 'PersonalMenuController@index']);
             });
         });
     });
