@@ -154,9 +154,13 @@ class UserModel extends Authenticatable
      */
     public function getAvailableMoneyAttribute()
     {
-        return $this->capital()->where(function ($query) {
-                $query->whereIn('category', [100, 300, 500])->where('status', 1001);
+        $total_fee = $this->capital()->where(function ($query) {
+                $query->where('category', '!=', 600)->whereIn('status', [1001, 1003]);
         })->sum('money');
+        $frozen_fee = $this->capital()->where(function ($query) {
+            $query->where('category', '!=', 600)->whereIn('status', [1003]);
+        })->sum('money');
+        return bcsub($total_fee, $frozen_fee, 2);
     }
 
     /**

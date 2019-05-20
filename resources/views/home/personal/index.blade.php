@@ -21,34 +21,7 @@
         <!--左边菜单栏-->
         <div class="fl mgt-30">
             <ul class="shLeftNav">
-                <li class="firstLevel">
-                    <p>{{ Auth::guard('web')->user()->category !=0 ? "商户":"个人" }}中心</p>
-                    <ul>
-                        @include('home.personal.head_portrait')
-                        <li>
-                            <a href="{{ route('personal.merchant_data') }}">用户资料</a>
-                        </li>
-                        <li>
-                            <a href="{{ route('personal.index') }}"  class="leftNavActive">帐户中心</a>
-                        </li>
-                        <li>
-                            <a href="{{ route('personal.address') }}">地址管理</a>
-                        </li>
-                        <li>
-                            <a href="../html/shopCarList-sum.html">我的购物车</a>
-                        </li>
-                        <li>
-                            <a href="../html/merchantCenter_buyThings.html">已买到的宝贝</a>
-                        </li>
-                        <li>
-                            <a href="{{ route('personal.creditmargin') }}">信用保证金</a>
-                        </li>
-                        @include('home.personal.judge_merchange')
-                        <li>
-                            <a href="{{ route('personal.cancellationuser') }}">注销帐户</a>
-                        </li>
-                    </ul>
-                </li>
+                @include('home.personal.personal')
                 <li class="firstLevel">
                     <p>店铺管理</p>
                     <ul>
@@ -56,7 +29,7 @@
                             <a href="{{ route('personal.shop.index') }}">店招更换</a>
                         </li>
                         <li>
-                            <a href="../html/shopManage_navMenu.html">导航菜单栏</a>
+                            <a href="{{ route('personal.shop.menu') }}">导航菜单栏</a>
                         </li>
                         <li>
                             <a href="../html/shopManage_bannerList.html">店铺轮播</a>
@@ -124,27 +97,36 @@
                             <table align="center" class="table" frame="box" border="1">
                                 <thead class="thead">
                                 <tr>
-                                    <th>订单号</th>
+                                    <th width="185px">订单号</th>
                                     <th>交易日期</th>
-                                    <th>交易金额</th>
-                                    <th>交易类型</th>
+                                    <th width="80px">交易金额</th>
+                                    <th width="80px">交易类型</th>
+                                    <th width="80px">状态</th>
                                     <th>备注</th>
                                 </tr>
                                 </thead>
                                 <tbody class="tbody">
                                     @foreach($items['alltrade'] as $item)
                                         <tr>
-                                            <td>{{ $item->order_id }}</td>
+                                            <td width="185px">{{ $item->order_id }}</td>
                                             <td> {{ $item->trans_at }} </td>
-                                            <td> {{ $item->money }} 元 </td>
-                                            <td>
+                                            <td width="80px"> {{ $item->money }} 元 </td>
+                                            <td width="80px">
                                                 @if($item->category == 100 || $item->category == 600)
                                                     {{ $item->category_name }} ({{ $item->trademode_name }})
                                                 @else
                                                     {{ $item->category_name }}
                                                 @endif
                                             </td>
-                                            <td> {{ $item->memo }} </td>
+                                            <td width="80px">
+                                                @if($item->status == 1002)
+                                                    交易失败
+                                                @else
+                                                    {{ $item->status_name }}
+                                                @endif
+                                            </td>
+                                            <td> {{ $item->memo }}
+                                            </td>
                                         </tr>
                                     @endforeach
                                 </tbody>

@@ -74,6 +74,13 @@ Route::group(['namespace' => 'home', 'middleware' => 'listenState'], function ()
                 Route::post('shop/update', ['as' => 'personal.shop.update', 'uses' => 'PersonalShopController@update']);
                 /*店铺分类*/
                 Route::get('shop/menu', ['as' => 'personal.shop.menu', 'uses' => 'PersonalMenuController@index']);
+                Route::post('shop/menu/store', ['as' => 'personal.menu.store', 'uses' => 'PersonalMenuController@store']);
+                Route::get('shop/mene/{id}/edit', ['as' => 'personal.menu.edit', 'uses' => 'PersonalMenuController@edit']);
+                Route::post('shop/menu/{id}/update', ['as' => 'personal.menu.update', 'uses' => 'PersonalMenuController@update']);
+                Route::get('shop/menu/{id}/del', ['as' => 'personal.menu.del', 'uses' => 'PersonalMenuController@del']);
+                /*店铺轮播图*/
+                Route::get('shop/banner', ['as' => 'personal.shop.banner', 'uses' => 'PersonalBannerController@index']);
+                Route::post('shop/banner/store', ['as' => 'personal.banner.store', 'uses' => 'PersonalBannerController@store']);
             });
         });
     });

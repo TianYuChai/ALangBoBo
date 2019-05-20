@@ -55,7 +55,7 @@ class PersonalContentController extends BaseController
     {
         //所有记录
         $items['alltrade'] = $this->model::where(function ($query) {
-            $query->where('uid', $this->userId)->where('status', '!=', 1003);
+            $query->where('uid', $this->userId);
         })->orderBy('updated_at', 'desc')->get();
         //提现记录
         $items['withdraw'] = $this->model::where(function ($query) {
@@ -254,6 +254,14 @@ class PersonalContentController extends BaseController
         }
     }
 
+    /**
+     * 提现操作
+     *
+     * @param Request $request
+     * @param AlipayService $alipayService
+     * @param LoginService $loginService
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function cashWithdrawal(Request $request, AlipayService $alipayService, LoginService $loginService)
     {
         try {
@@ -280,16 +288,19 @@ class PersonalContentController extends BaseController
                 throw new Exception('提现失败, 提现金额为:'
                                 .$cash_with_money.'元, 手续费为:'.$procedures_fee.'元, 超出可提现范围', 510);
             }
-//            $loginService->vefiShort(Auth::guard('web')->user()->number, $code);
+            $loginService->vefiShort(Auth::guard('web')->user()->number, $code);
             if($method == 'Alipay') {
-                $money = 0.2;
-                $result = $alipayService->cashWith($cash_with_money, $procedures_fee, $account);
+                $cash_with_money = 0.5;
+                $alipayService->cashWith($cash_with_money, $procedures_fee, $account);
             } else if($method == 'WeChat') {
 
             } else {
                 throw new Exception('提现类型错误');
             }
-            dd($result);
+            return $this->ajaxReturn([
+                'status' => 200,
+                'info' => '提现成功, 请前往对应账户中心查询记录'
+            ], 200);
         } catch (Exception $e) {
             if(!empty($e->raw)) {
                 $sub_msg = $e->raw['alipay_fund_trans_toaccount_transfer_response']['sub_msg'];

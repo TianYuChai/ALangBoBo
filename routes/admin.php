@@ -36,6 +36,7 @@ Route::group(['prefix' => 'backstage', 'namespace' => 'admin'], function () {
             Route::get('member/{id}/sealUp', ['as' => 'backstage.member.sealUp', 'uses' => 'MemberController@sealUp']);
             Route::get('member/{id}/stop', ['as' => 'backstage.member.stop', 'uses' => 'MemberController@stop']);
             Route::get('member/{id}/see', ['as' => 'backstage.member.see', 'uses' => 'MemberController@see']);
+            Route::post('member/{id}/updateDistinguish', ['as' => 'backstage.member.updateDistinguish', 'uses' => 'MemberController@updateDistinguish']);
             /*会员-驳回记录*/
             Route::get('member/reject/index', ['as' => 'backstage.mreject.index', 'uses' => 'MemberRejectController@index']);
             Route::get('memeber/reject/{id}/cancel', ['as' => 'backstage.mreject.cancel', 'uses' => 'MemberRejectController@cancel']);

@@ -77,6 +77,7 @@
             <th>账户类别</th>
             <th>真实姓名</th>
             <th>手机号码</th>
+            <th>商铺类别</th>
             <th>注册时间</th>
             <th>状态</th>
             <th>操作</th>
@@ -96,6 +97,19 @@
                     <td>{{ $item->category_name }}</td>
                     <td>{{ $item->name }}</td>
                     <td>{{ $item->number }}</td>
+                    <td>
+                        @if($item->category != 0 && $item->merchant->status == 1)
+                            <div class="layui-input-inline">
+                                <select name="level" id="distinguish" lay-filter="level" data-action="{{ route('backstage.member.updateDistinguish', ['id' => $item->merchant->id]) }}">
+                                    <option value="0" {{ $item->merchant->distinguish == 0 ? 'selected' : '' }}>普通商户</option>
+                                    <option value="1" {{ $item->merchant->distinguish == 1 ? 'selected' : '' }}>加盟店</option>
+                                    <option value="2" {{ $item->merchant->distinguish == 2 ? 'selected' : '' }}>直营店</option>
+                                </select>
+                            </div>
+                        @else
+                           无法操作
+                        @endif
+                    </td>
                     <td>{{ $item->created_at }}</td>
                     <td class="td-status">
                         @if($item->status == 0)
@@ -187,7 +201,6 @@
                 ,type: 'datetime'
                 ,range: true
             });
-
             /*用户-过审*/
             window.member_adopt = function(obj, url)
             {
@@ -337,6 +350,33 @@
                     });
                 })
             };
+            $('#distinguish').change(function () {
+                var distinguish_id = $(this).val();
+                var url = $(this).data('action');
+                $.ajax({
+                    headers: {
+                        'X-CSRF-TOKEN': "{{ csrf_token() }}"
+                    },
+                    method:"post",
+                    url:url,
+                    data:{distinguish_id: distinguish_id},
+                    success:function (res) {
+                        if(res.status == 200) {
+                            layer.msg(res.info);
+                            setTimeout(function () {
+                                window.location.reload();
+                            }, 1000)
+                        }
+                    },
+                    error:function (XMLHttpRequest) {
+                        //返回提示信息
+                        var errors = XMLHttpRequest.responseJSON.errors;
+                        for (var value in errors) {
+                            layer.msg(errors[value][0]);return;
+                        }
+                    }
+                });
+            });
         })
     </script>
 @endsection

@@ -191,4 +191,17 @@ class MemberController extends BaseController
         $item = UserModel::find($id);
         return view('admin.member.details', compact('item'));
     }
+
+    public function updateDistinguish($id, Request $request)
+    {
+        try {
+            MerchantModel::where('id', intval($id))->update(['distinguish' => intval($request->distinguish_id)]);
+            return $this->ajaxReturn();
+        } catch (Exception $e) {
+            return $this->ajaxReturn([
+                'info' => $e->getMessage(),
+                'status' => 510
+            ], 510);
+        }
+    }
 }

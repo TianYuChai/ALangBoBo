@@ -39,6 +39,9 @@
                         <li>
                             <a href="../html/merchantCenter_buyThings.html">已买到的宝贝</a>
                         </li>
+                        <li>
+                            <a href="{{ route('personal.creditmargin') }}">信用保证金</a>
+                        </li>
                         @include('home.personal.judge_merchange')
                         <li>
                             <a href="{{ route('personal.cancellationuser') }}">注销帐户</a>
@@ -55,7 +58,7 @@
                             <a href="{{ route('personal.shop.menu') }}">导航菜单栏</a>
                         </li>
                         <li>
-                            <a href="../html/shopManage_bannerList.html">店铺轮播</a>
+                            <a href="{{ route('personal.shop.banner') }}">店铺轮播</a>
                         </li>
                         <li>
                             <a href="../html/shopManage_productManage.html">商品管理</a>

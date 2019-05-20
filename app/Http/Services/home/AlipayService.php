@@ -32,7 +32,7 @@ class AlipayService extends BaseService
             'order_id' => $order_id,
             'money' => $money,
             'trade_mode' => 'Alipay',
-            'memo' => '保证金',
+            'memo' => '保证金充值',
             'category' => 300,
             'status' => 1002
         ]);
@@ -100,9 +100,9 @@ class AlipayService extends BaseService
         $item = $this->capitalmode::create([
             'uid' => $this->userId,
             'order_id' => $order_id,
-            'money' => '-'. bcadd($money, $procedures_fee),
+            'money' => '-'. bcadd($money, $procedures_fee, 2),
             'trade_mode' => 'Alipay',
-            'memo' => '提现, 站方收取手续费金额：'. $procedures_fee.'元，提现账户为:'. $account,
+            'memo' => '余额提现, 站方收取手续费金额：'. $procedures_fee.'元，提现账户为:'. $account,
             'category' => 200,
             'status' => 1002
         ]);
@@ -111,9 +111,12 @@ class AlipayService extends BaseService
             'payee_type' => "ALIPAY_LOGONID",
             'payee_account' => $account,
             'amount' => $money,
-            'remark' => '阿郎博波转账',
+            'remark' => '阿郎博波商务中心余额提现',
         ];
         $alipay = Pay::alipay($this->config)->transfer($order);
-        return $alipay;
+        if($alipay['msg'] == 'Success') {
+            $this->capitalmode::where('order_id', $alipay['out_biz_no'])->update(['status' => 1001]);
+        }
+        return true;
     }
 }

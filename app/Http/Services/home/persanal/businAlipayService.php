@@ -37,7 +37,7 @@ class businAlipayService extends BaseService
             'order_id' => $order_id,
             'money' => $data->moneys,
             'trade_mode' => 'Alipay',
-            'memo' => '入驻费',
+            'memo' => '入驻费充值',
             'category' => 600,
             'status' => 1002
         ]);
