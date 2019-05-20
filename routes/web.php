@@ -81,6 +81,9 @@ Route::group(['namespace' => 'home', 'middleware' => 'listenState'], function ()
                 /*店铺轮播图*/
                 Route::get('shop/banner', ['as' => 'personal.shop.banner', 'uses' => 'PersonalBannerController@index']);
                 Route::post('shop/banner/store', ['as' => 'personal.banner.store', 'uses' => 'PersonalBannerController@store']);
+                Route::get('shop/banner/{id}/edit', ['as' => 'personal.banner.edit', 'uses' => 'PersonalBannerController@edit']);
+                Route::post('shop/banner/{id}/update', ['as' => 'personal.banner.update', 'uses' => 'PersonalBannerController@update']);
+                Route::get('shop/banner/{id}/del', ['as' => 'personal.banner.del', 'uses' => 'PersonalBannerController@del']);
             });
         });
     });

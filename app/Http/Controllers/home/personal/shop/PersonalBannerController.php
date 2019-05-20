@@ -34,9 +34,19 @@ class PersonalBannerController extends BaseController
 
     public function index()
     {
-        return view(self::ROUTE . 'banner');
+        $items = $this->model::where([
+            'uid' => $this->user->id,
+            'status' => 0
+        ])->orderBy('sort', 'desc')->get();
+        return view(self::ROUTE . 'banner', compact('items'));
     }
 
+    /**
+     * 添加数据
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function store(Request $request)
     {
         try {
@@ -65,6 +75,100 @@ class PersonalBannerController extends BaseController
                 'status' => 200,
                 'info' => '添加成功'
             ], 200);
+        } catch (Exception $e) {
+            return $this->ajaxReturn([
+                'status' => 510,
+                'info' => $e->getMessage()
+            ], 510);
+        }
+    }
+
+    /**
+     * 展示数据
+     *
+     * @param $id
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function edit($id)
+    {
+        try {
+            $item = $this->model::where([
+                'id' => intval($id),
+                'uid' => $this->user->id,
+                'status' => 0
+            ])->first();
+            return $this->ajaxReturn([
+                'status' => 200,
+                'data' => [
+                    'action' => route('personal.banner.update', ['id' => $item->id]),
+                    'url' => $item->url,
+                    'image' => $item->image,
+                    'image_url' => FileUpload::url('image', $item->image),
+                    'sort' => $item->sort
+                ]
+            ], 200);
+        } catch (Exception $e) {
+            return $this->ajaxReturn([
+                'status' => 510,
+                'info' => $e->getMessage()
+            ], 510);
+        }
+    }
+
+    /**
+     * 更新内容
+     *
+     * @param $id
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function update($id, Request $request)
+    {
+        try {
+            $url = trim($request->edit_url);
+            $sort = trim($request->edit_sort);
+            $img = trim($request->img);
+            if(!$url) {
+                throw new Exception('请输入域名地址');
+            }
+            if(!$sort) {
+                throw new Exception('请输入排序值');
+            }
+            if(!regularHaveSinoram($sort)) {
+                throw new Exception('排序值, 不可用');
+            }
+            if(!FileUpload::exists('image', $img)) {
+                throw new Exception('请上传图片');
+            }
+            $this->model::where([
+                'id' => intval($id),
+                'uid' => $this->user->id,
+            ])->update([
+                'uid' => $this->user->id,
+                'url' => $url,
+                'image' => $img,
+                'sort' => intval($sort)
+            ]);
+            return $this->ajaxReturn();
+        } catch (Exception $e) {
+            return $this->ajaxReturn([
+                'status' => 510,
+                'info' => $e->getMessage()
+            ], 510);
+        }
+    }
+
+    /**
+     * 删除数据
+     *
+     * @param $id
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function del($id)
+    {
+        try {
+            $this->model::destroy($id);
+            return $this->ajaxReturn();
         } catch (Exception $e) {
             return $this->ajaxReturn([
                 'status' => 510,

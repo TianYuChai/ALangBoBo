@@ -21,41 +21,35 @@
         <!--左边菜单栏-->
         <div class="fl mgt-30">
             <ul class="shLeftNav">
-                @include('home.personal.personal')
                 <li class="firstLevel">
-                    <p>店铺管理</p>
+                    <p>{{ Auth::guard('web')->user()->whermerchant ? "商户":"个人" }}中心</p>
                     <ul>
+                        @include('home.personal.head_portrait')
                         <li>
-                            <a href="{{ route('personal.shop.index') }}">店招更换</a>
+                            <a href="{{ route('personal.merchant_data') }}">用户资料</a>
                         </li>
                         <li>
-                            <a href="{{ route('personal.shop.menu') }}">导航菜单栏</a>
+                            <a href="{{ route('personal.index') }}" class="leftNavActive">帐户中心</a>
                         </li>
                         <li>
-                            <a href="../html/shopManage_bannerList.html">店铺轮播</a>
+                            <a href="{{ route('personal.address') }}">地址管理</a>
                         </li>
                         <li>
-                            <a href="../html/shopManage_productManage.html">商品管理</a>
+                            <a href="../html/shopCarList-sum.html">我的购物车</a>
                         </li>
                         <li>
-                            <a href="../html/merchantCenter_buyThings.html">订单管理</a>
+                            <a href="../html/merchantCenter_buyThings.html">已买到的宝贝</a>
                         </li>
                         <li>
-                            <a href="../html/merchantCenter_accountCenter.html">账务中心</a>
+                            <a href="{{ route('personal.creditmargin') }}">信用保证金</a>
+                        </li>
+                        @include('home.personal.judge_merchange')
+                        <li>
+                            <a href="{{ route('personal.cancellationuser') }}">注销帐户</a>
                         </li>
                     </ul>
                 </li>
-                <li class="firstLevel">
-                    <p>分享推广</p>
-                    <ul>
-                        <li>
-                            <a href="">生成链接</a>
-                        </li>
-                        <li>
-                            <a href="">推广统计</a>
-                        </li>
-                    </ul>
-                </li>
+                @include('home.personal.merchant_menu')
             </ul>
         </div>
         <!--右边内容区-->

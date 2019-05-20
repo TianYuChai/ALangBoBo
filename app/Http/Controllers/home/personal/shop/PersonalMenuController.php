@@ -86,7 +86,11 @@ class PersonalMenuController extends BaseController
      */
     public function edit($id)
     {
-        $item = $this->categoryModel::where('id', $id)->first();
+        $item = $this->categoryModel::where([
+            'id' => intval($id),
+            'uid' => $this->user->id,
+            'status' => 0
+        ])->first();
         return $this->ajaxReturn([
             'status' => 200,
             'data' => [
@@ -115,7 +119,10 @@ class PersonalMenuController extends BaseController
             if(!$sort) {
                 throw new Exception('请输入分类排序');
             }
-            $this->categoryModel::where('id', $id)->update([
+            $this->categoryModel::where([
+                'id' => intval($id),
+                'uid' => $this->user->id
+            ])->update([
                 'name' => $name,
                 'sort' => $sort
             ]);

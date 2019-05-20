@@ -20,7 +20,7 @@ class ShopMiddleware
      */
     public function handle($request, Closure $next)
     {
-        if(Auth::guard('web')->user()->category == 0) {
+        if(!Auth::guard('web')->user()->whermerchant) {
             return redirect()->route('personal.index');
         }
         return $next($request);

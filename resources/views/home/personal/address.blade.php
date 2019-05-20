@@ -22,7 +22,7 @@
         <div class="fl mgt-30">
             <ul class="shLeftNav">
                 <li class="firstLevel">
-                    <p>{{ Auth::guard('web')->user()->category !=0 ? "商户":"个人" }}中心</p>
+                    <p>{{ Auth::guard('web')->user()->whermerchant ? "商户":"个人" }}中心</p>
                     <ul>
                         @include('home.personal.head_portrait')
                         <li>
@@ -49,40 +49,7 @@
                         </li>
                     </ul>
                 </li>
-                <li class="firstLevel">
-                    <p>店铺管理</p>
-                    <ul>
-                        <li>
-                            <a href="../html/shopManage_shopSign.html">店招更换</a>
-                        </li>
-                        <li>
-                            <a href="../html/shopManage_navMenu.html">导航菜单栏</a>
-                        </li>
-                        <li>
-                            <a href="../html/shopManage_bannerList.html">店铺轮播</a>
-                        </li>
-                        <li>
-                            <a href="../html/shopManage_productManage.html">商品管理</a>
-                        </li>
-                        <li>
-                            <a href="../html/merchantCenter_buyThings.html">订单管理</a>
-                        </li>
-                        <li>
-                            <a href="../html/merchantCenter_accountCenter.html">账务中心</a>
-                        </li>
-                    </ul>
-                </li>
-                <li class="firstLevel">
-                    <p>分享推广</p>
-                    <ul>
-                        <li>
-                            <a href="">生成链接</a>
-                        </li>
-                        <li>
-                            <a href="">推广统计</a>
-                        </li>
-                    </ul>
-                </li>
+                @include('home.personal.merchant_menu')
             </ul>
         </div>
         <!--右边内容区-->

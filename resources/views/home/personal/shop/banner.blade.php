@@ -90,27 +90,31 @@
                     <table align="center" class="table" frame="box">
                         <thead class="thead">
                         <tr>
-                            <th>ID</th>
+                            <th width="120px">url</th>
                             <th>图片</th>
-                            <th>名称</th>
                             <th>排序</th>
                             <th>操作</th>
                         </tr>
                         </thead>
                         <tbody class="tbody tc">
-                        <tr>
-                            <td>1</td>
-                            <td>
-                                <img src="../images/img/bannerListImg.png" alt="" class="bannerListImg"/>
-                            </td>
-                            <td>首页轮播图</td>
-                            <td>1</td>
-                            <td>
-                                <a href="" class="bannerEditBtn mgr-10"><img src="../images/icon/bannerEdit.png" alt=""/>修改</a>
-                                <a href="javascript:void(0);" onclick='deleteTr(this);' class="bannerDeleteBtn"><img
-                                        src="../images/icon/bannerDelete.png" alt=""/>删除</a>
-                            </td>
-                        </tr>
+                            @foreach($items as $item)
+                                <tr>
+                                    <td width="120px">
+                                        <a href="{{ $item->url }}" target="_blank"> {{ $item->url }} </a>
+                                    </td>
+                                    <td>
+                                        <img src="{{ FileUpload::url('image', $item->image) }}" alt="" class="bannerListImg"/>
+                                    </td>
+                                    <td>{{ $item->sort }}</td>
+                                    <td>
+                                        <a href="javascript:void(0)" class="bannerEditBtn mgr-10 edit" data-action="{{ route('personal.banner.edit', ['id' => $item->id]) }}">
+                                            <img src="{{ asset('home/images/icon/bannerEdit.png') }}"/>修改
+                                        </a>
+                                        <a href="javascript:void(0);" onclick='deleteTr(this, "{{ route('personal.banner.del', ['id' => $item->id]) }}");' class="bannerDeleteBtn"><img
+                                                    src="{{ asset('home/images/icon/bannerDelete.png') }}"/>删除</a>
+                                    </td>
+                                </tr>
+                            @endforeach
                         </tbody>
                     </table>
                 </div>
@@ -149,7 +153,7 @@
                                             <div class="relative bannerImgDiv">
                                                 <p class="inline-block mgr-20 mgl-15">图片：</p>
                                                 <img src="{{ asset('home/images/img/idImg.png') }}" class="jmImg"/>
-                                                <input type="file" class="file" data-id="yyzz" accept="image/*">
+                                                <input type="file" class="file" accept="image/*">
                                                 <input type="hidden" name="img" value="">
                                             </div>
                                         </fieldset>
@@ -166,6 +170,58 @@
                         </div>
                     </div>
                 </div>
+                <div class="modal fade" id="editBannerModal" tabindex="-1" role="dialog" aria-labelledby="editBannerModal" aria-hidden="true">
+                    <div class="modal-dialog modalWidth">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                                    &times;
+                                </button>
+                                <h4 class="modal-title" id="myModalLabel-jm">
+                                    <p class="changeContentTip"><img src="{{ asset('home/images/icon/changeContentIcon.png') }}" alt=""/>修改内容</p>
+                                </h4>
+                            </div>
+                            <div class="modal-body">
+                                <div class="changeContent">
+                                    <form class="changeSignForm" id="changeEditForm">
+                                        <fieldset class="fieldset clearfix">
+                                            <div class="urlDiv tr">
+                                                域名：
+                                                <input type="text"
+                                                       class="url"
+                                                       id="url"
+                                                       name="edit_url"
+                                                       autocomplete="off" placeholder="网址">
+                                            </div>
+                                            <div class="sortDiv tr">
+                                                排序：
+                                                <input
+                                                        type="text"
+                                                        class="sort"
+                                                        id="sort"
+                                                        name="edit_sort"
+                                                        autocomplete="off" placeholder="值越大越靠前">
+                                            </div>
+                                            <div class="relative bannerImgDiv">
+                                                <p class="inline-block mgr-20 mgl-15">图片：</p>
+                                                <img src="{{ asset('home/images/img/idImg.png') }}" class="jmImg" id="image"/>
+                                                <input type="file" class="file" accept="image/*">
+                                                <input type="hidden" name="img" value="" id="edit_img">
+                                            </div>
+                                        </fieldset>
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">关闭
+                                </button>
+                                <button type="button" class="btn btn-primary update">
+                                    提交
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -175,6 +231,7 @@
 @section('js')
     @parent
     <script src="{{ asset('home/js/public.js') }}"></script>
+    <script src="http://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
 @endsection
 @section('section')
     <script type="text/javascript">
@@ -189,7 +246,6 @@
                     obj[val['name']] = val['value'];
                 }
             });
-
             if(!$('.layui-layer-msg').length) {
                 $.ajax({
                     headers: {
@@ -227,10 +283,131 @@
                 });
             }
         });
+        $('.edit').click(function () {
+            var url = $(this).data('action');
+            $.ajax({
+                headers: {
+                    'X-CSRF-TOKEN': "{{ csrf_token() }}"
+                },
+                method:"get",
+                url: url,
+                data:"",
+                success:function (res) {
+                    if(res.status == 200) {
+                       $("input[name=edit_url]").val(res.data['url']);
+                       $("input[name=edit_sort]").val(res.data['sort']);
+                       $("#image").attr('src', res.data['image_url']);
+                       $("#edit_img").val(res.data['image']);
+                       $("#editBannerModal").attr('action', res.data['action']);
+                       $("#editBannerModal").modal('show');
+                    }
+                },
+                error:function (XMLHttpRequest, textStatus, errorThrown) {
+                    //返回提示信息
+                    try {
+                        if(XMLHttpRequest.status == 401) {
+                            var errors = JSON.parse(XMLHttpRequest.responseText)['errors']['info'];
+                            layer.msg(errors[0]);return;
+                        }
+                        var errors = XMLHttpRequest.responseJSON.errors;
+                        for (var value in errors) {
+                            layer.msg(errors[value][0]);return;
+                        }
+                    } catch (e) {
+                        var errors = JSON.parse(XMLHttpRequest.responseText)['errors'];
+                        for (var value in errors) {
+                            layer.msg(errors[value][0]);return;
+                        }
+                    }
+                }
+            });
+        });
+        $('.update').click(function () {
+            var obj = {};
+            var message = {edit_url: '域名', edit_sort: '排序', img: '图片'};
+            var data = $('#changeEditForm').serializeArray();
+            var url = $("#editBannerModal").attr('action');
+            $.each(data, function (k, val) {
+                if(!val['value']) {
+                    layer.msg(val['name'] == 'img' ? '请上传' : '请输入' + message[val['name']]); return false;
+                } else {
+                    obj[val['name']] = val['value'];
+                }
+            });
+            if(!$('.layui-layer-msg').length) {
+                $.ajax({
+                    headers: {
+                        'X-CSRF-TOKEN': "{{ csrf_token() }}"
+                    },
+                    method:"POST",
+                    url:url,
+                    data:obj,
+                    success:function (res) {
+                        if(res.status == 200) {
+                            // layer.msg(res.info);
+                            setTimeout(function () {
+                                window.location.reload();
+                            }, 300)
+                        }
+                    },
+                    error:function (XMLHttpRequest, textStatus, errorThrown) {
+                        //返回提示信息
+                        try {
+                            if(XMLHttpRequest.status == 401) {
+                                var errors = JSON.parse(XMLHttpRequest.responseText)['errors']['info'];
+                                layer.msg(errors[0]);return;
+                            }
+                            var errors = XMLHttpRequest.responseJSON.errors;
+                            for (var value in errors) {
+                                layer.msg(errors[value][0]);return;
+                            }
+                        } catch (e) {
+                            var errors = JSON.parse(XMLHttpRequest.responseText)['errors'];
+                            for (var value in errors) {
+                                layer.msg(errors[value][0]);return;
+                            }
+                        }
+                    }
+                });
+            }
+        });
         //删除操作
-        function deleteTr(nowTr){
-            $(nowTr).parent().parent().remove();
-            $(this).closest('tr').remove();  //清空当前行
+        function deleteTr(nowTr, url){
+            layer.confirm('是否删除该条记录?', function(index) {
+                layer.close(index);
+                $.ajax({
+                    headers: {
+                        'X-CSRF-TOKEN': "{{ csrf_token() }}"
+                    },
+                    method:"get",
+                    url: url,
+                    data:"",
+                    success:function (res) {
+                        if(res.status == 200) {
+                            $(nowTr).parent().parent().remove();
+                            $(this).closest('tr').remove();  //清空当前行
+                        }
+                    },
+                    error:function (XMLHttpRequest, textStatus, errorThrown) {
+                        //返回提示信息
+                        try {
+                            if(XMLHttpRequest.status == 401) {
+                                var errors = JSON.parse(XMLHttpRequest.responseText)['errors']['info'];
+                                layer.msg(errors[0]);return;
+                            }
+                            var errors = XMLHttpRequest.responseJSON.errors;
+                            for (var value in errors) {
+                                layer.msg(errors[value][0]);return;
+                            }
+                        } catch (e) {
+                            var errors = JSON.parse(XMLHttpRequest.responseText)['errors'];
+                            for (var value in errors) {
+                                layer.msg(errors[value][0]);return;
+                            }
+                        }
+                    }
+                });
+            });
         };
         /*图片--上传*/
         $("input[type='file']").on('change', function () {
