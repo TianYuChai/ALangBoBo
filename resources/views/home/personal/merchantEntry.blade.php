@@ -374,24 +374,6 @@
             var that = $(this);
             monitor(that, 'name');
         });
-        /*监听-身份证号*/
-        $('#id').blur(function() {
-            var that = $(this);
-            if(!isCardNo(that.val())){
-                $(".stepBtnActive").attr('disabled','disabled');
-                layer.msg('请填写正确的身份证号'); return false;
-            }
-            monitor(that, 'id');
-        });
-        /*监听-号码*/
-        $('.mobile').blur(function() {
-            var that = $(this);
-            if(!isPhoneNo(that.val())) {
-                $(".stepBtnActive").attr('disabled','disabled');
-                layer.msg('请填写正确的手机号'); return false;
-            }
-            monitor(that, 'mobile');
-        });
         /*监听-提交*/
         function monitor(that, parameter)
         {

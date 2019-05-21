@@ -84,6 +84,11 @@ Route::group(['namespace' => 'home', 'middleware' => 'listenState'], function ()
                 Route::get('shop/banner/{id}/edit', ['as' => 'personal.banner.edit', 'uses' => 'PersonalBannerController@edit']);
                 Route::post('shop/banner/{id}/update', ['as' => 'personal.banner.update', 'uses' => 'PersonalBannerController@update']);
                 Route::get('shop/banner/{id}/del', ['as' => 'personal.banner.del', 'uses' => 'PersonalBannerController@del']);
+
+                /*店铺商铺*/
+                Route::get('shop/goods', ['as' => 'personal.shop.goods', 'uses' => 'PersonalGoodsController@index']);
+                Route::post('shop/goods/select', ['as' => 'personal.goods.select', 'uses' => 'PersonalGoodsController@select']);
+                Route::post('shop/goods/attribute', ['as' => 'personal.goods.attribute', 'uses' => 'PersonalGoodsController@attribute']);
             });
         });
     });

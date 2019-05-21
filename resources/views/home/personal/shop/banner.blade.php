@@ -53,7 +53,7 @@
                             <a href="{{ route('personal.shop.banner') }}" class="leftNavActive">店铺轮播</a>
                         </li>
                         <li>
-                            <a href="../html/shopManage_productManage.html">商品管理</a>
+                            <a href="{{ route('personal.shop.goods') }}">商品管理</a>
                         </li>
                         <li>
                             <a href="../html/merchantCenter_buyThings.html">订单管理</a>

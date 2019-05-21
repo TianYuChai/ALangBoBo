@@ -65,6 +65,9 @@ class PersonalBannerController extends BaseController
             if(!FileUpload::exists('image', $img)) {
                 throw new Exception('请上传图片');
             }
+            if($this->model::where('uid', $this->user->id)->count() > 3) {
+                throw new Exception('超出图片限制, 当前已有三张图片');
+            }
             $this->model::create([
                 'uid' => $this->user->id,
                 'url' => $url,
