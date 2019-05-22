@@ -12,6 +12,7 @@ use App\Http\Models\admin\goods\goodsCategoryAttributeModel;
 use App\Http\Models\admin\goods\goodsCategoryModel;
 use App\Http\Models\currency\MerchantCategoryModel;
 use App\Http\Models\home\personal\AddressModel;
+use App\Http\Requests\home\persanal\PersonalGoodsRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Exception;
@@ -126,5 +127,10 @@ class PersonalGoodsController extends BaseController
                 'info' => $e->getMessage()
             ], 510);
         }
+    }
+
+    public function store(PersonalGoodsRequest $request)
+    {
+        dd($request->all());
     }
 }

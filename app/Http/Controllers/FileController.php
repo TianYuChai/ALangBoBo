@@ -23,6 +23,11 @@ class FileController extends BaseController
         try {
             $type = $request->type;
             $image_path = $request->image_path;
+            if(is_array($image_path)) {
+                foreach ($image_path as $item) {
+                    $this->delFile($item);
+                }
+            }
             $this->delFile($image_path);
             $file = $this->uploadFile($type, $request);
             if(is_array($file)) {
@@ -40,6 +45,27 @@ class FileController extends BaseController
         }
     }
 
+    /**
+     * 删除图片
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function del(Request $request)
+    {
+        try {
+            $img_path = trim($request->img_path);
+            if(FileUpload::exists('image', $img_path)) {
+                $this->delFile($request->img_path);
+            }
+            return $this->ajaxReturn();
+        } catch (Exception $e) {
+            return $this->ajaxReturn([
+                'info' => $e->getMessage(),
+                'status' => 510
+            ], 510);
+        }
+    }
     /**
      * 清除上传文件之前文件数据
      *

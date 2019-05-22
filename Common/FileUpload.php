@@ -131,7 +131,7 @@ class FileUpload
      * @param $path
      * @return mixed
      */
-    public static function url($type, $path)
+    public static function url($type, $path = '')
     {
         return Storage::disk($type)->url($path);
     }
