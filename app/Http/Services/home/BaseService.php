@@ -18,4 +18,5 @@ class BaseService {
             $this->userId = Auth::guard('web')->id();
         }
     }
+
 }

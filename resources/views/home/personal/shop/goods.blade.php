@@ -276,7 +276,7 @@
                                                 <label class="col-sm-2 control-label">封面图</label>
                                                 <div class="col-sm-10">
                                                     <img src="{{ asset('home/images/img/idImg.png') }}" class="img-rounded">
-                                                    <input type="file" name="cover" accept="image/*">
+                                                    <input type="file" id="cover" accept="image/*">
                                                     <input type="hidden" name="cover_img">
                                                 </div>
                                             </div>
@@ -362,7 +362,9 @@
             if(!$('.layui-layer-msg').length) {
                 $("#add_goods").ajaxSubmit({
                     success: function (res) {
-
+                        if(res.status == 200) {
+                            window.location.reload();
+                        }
                     },
                     error: function (XMLHttpRequest, textStatus, errorThrown) {
                         //返回提示信息
@@ -469,7 +471,8 @@
                         for (let k in data) {
                             attibute += k;
                             for (let i = 0; i < data[k].length; i++) {
-                                attibute += '<label style="margin-left: 7px"><input type="checkbox" name="'+k+'[]" value="'+data[k][i]['id']+'"> ' + data[k][i]['attribute_value'] + '</label>';
+                                attibute += '<label style="margin-left: 7px">' +
+                                    '<input type="checkbox" name="attribute['+k+'][]" value="'+data[k][i]['id']+'"> ' + data[k][i]['attribute_value'] + '</label>';
                             }
                             attibute += '<br/>';
                         }
@@ -502,7 +505,7 @@
         });
 
         /*封面图片--上传*/
-        $("input[name='cover']").on('change', function () {
+        $("input[id='cover']").on('change', function () {
             var that = $(this);
             var file = that[0].files[0];
             var image = $('input[name="cover_img"]');

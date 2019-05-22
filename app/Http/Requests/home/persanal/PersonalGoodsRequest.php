@@ -53,22 +53,22 @@ class PersonalGoodsRequest extends FormRequest
                     }
             }],
             'total_price' => ['required', function ($attribute, $value, $fail) {
-                    if(!is_numeric($value) || !is_float($value)) {
+                    if(!is_numeric($value)) {
                         return $fail('总价错误, 请重新填写');
                     }
             }],
             'cost_price' => ['required', function ($attribute, $value, $fail) {
-                if(!is_numeric($value) || !is_float($value)) {
+                if(!is_numeric($value)) {
                     return $fail('成本价错误, 请重新填写');
                 }
             }],
             'satis_price' => ['required', function ($attribute, $value, $fail) {
-                if(!is_numeric($value) || !is_float($value)) {
+                if(!is_numeric($value)) {
                     return $fail('满意度价错误, 请重新填写');
                 }
             }],
             'stock' => ['required', function ($attribute, $value, $fail) {
-                if(!is_numeric($value)) {
+                if(!is_int(intval($value))) {
                     return $fail('库存错误, 请重新填写');
                 }
             }],

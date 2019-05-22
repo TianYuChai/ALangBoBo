@@ -13,6 +13,7 @@ use App\Http\Models\admin\goods\goodsCategoryModel;
 use App\Http\Models\currency\MerchantCategoryModel;
 use App\Http\Models\home\personal\AddressModel;
 use App\Http\Requests\home\persanal\PersonalGoodsRequest;
+use App\Http\Services\home\persanal\PersonalGoodsService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Exception;
@@ -129,8 +130,24 @@ class PersonalGoodsController extends BaseController
         }
     }
 
-    public function store(PersonalGoodsRequest $request)
+    /**
+     * 添加商品
+     * 
+     * @param PersonalGoodsRequest $request
+     * @param PersonalGoodsService $service
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function store(PersonalGoodsRequest $request,
+                          PersonalGoodsService $service)
     {
-        dd($request->all());
+        try {
+            $service->dataFiltering($request);
+            return $this->ajaxReturn();
+        } catch (Exception $e) {
+            return $this->ajaxReturn([
+                'status' => 510,
+                'info' => $e->getMessage()
+            ], 510);
+        }
     }
 }
