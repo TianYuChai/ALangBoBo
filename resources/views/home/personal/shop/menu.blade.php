@@ -40,9 +40,6 @@
                         <li>
                             <a href="../html/merchantCenter_buyThings.html">订单管理</a>
                         </li>
-                        <li>
-                            <a href="../html/merchantCenter_accountCenter.html">账务中心</a>
-                        </li>
                     </ul>
                 </li>
                 <li class="firstLevel">

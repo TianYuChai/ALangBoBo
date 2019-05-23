@@ -256,7 +256,7 @@ class PersonalGoodsController extends BaseController
     {
         try {
             $data = $service->dataFiltering($request);
-            $service->update($data);
+            $service->update($id, $data);
             return $this->ajaxReturn();
         } catch (Exception $e) {
             return $this->ajaxReturn([

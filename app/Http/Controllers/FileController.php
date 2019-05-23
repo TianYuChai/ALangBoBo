@@ -8,6 +8,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\admin\BaseController;
+use App\Http\Models\goods\goodsImgModel;
 use Illuminate\Http\Request;
 use FileUpload;
 use Exception;
@@ -27,6 +28,9 @@ class FileController extends BaseController
                 foreach ($image_path as $item) {
                     $this->delFile($item);
                 }
+            }
+            if(!empty($type) && $type == 'goods') {
+                $this->delGoods($image_path);
             }
             $this->delFile($image_path);
             $file = $this->uploadFile($type, $request);
@@ -55,8 +59,12 @@ class FileController extends BaseController
     {
         try {
             $img_path = trim($request->img_path);
+            $type = trim($request->input('type', ''));
             if(FileUpload::exists('image', $img_path)) {
                 $this->delFile($request->img_path);
+            }
+            if(!empty($type)) {
+                $this->delGoods($img_path);
             }
             return $this->ajaxReturn();
         } catch (Exception $e) {
@@ -64,6 +72,18 @@ class FileController extends BaseController
                 'info' => $e->getMessage(),
                 'status' => 510
             ], 510);
+        }
+    }
+
+    /**
+     * 删除对应的商品图片数据
+     *
+     * @param $img
+     */
+    protected function delGoods($img)
+    {
+        if(!is_array($img)) {
+            goodsImgModel::where('img', $img)->delete();
         }
     }
     /**

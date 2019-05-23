@@ -14,6 +14,7 @@ use App\Http\Models\goods\GoodsModel;
 use App\Http\Models\home\personal\AddressModel;
 use App\Http\Services\home\BaseService;
 use Exception;
+use function PHPSTORM_META\type;
 
 class PersonalGoodsService extends BaseService
 {
@@ -81,9 +82,23 @@ class PersonalGoodsService extends BaseService
      *
      * @param $data
      */
-    public function update($data)
+    public function update($id, $data)
     {
-        
+        $number = $data['goods']['stock'];
+        unset($data['goods']['stock']);
+        $this->goods::where([
+            'id' => intval($id),
+            'uid' => $this->userId
+        ])->update($data['goods']);
+        $item = $this->goods::find($id);
+        $stock = bcsub($item->stock, $item->sold) > $number ?
+                    bcsub($item->stock, bcsub(bcsub($item->stock, $item->sold), $number)) :
+                    bcadd($item->stock, bcsub($number, bcsub($item->stock, $item->sold)));
+        $item->stock = intval($stock);
+        $item->save();
+        $this->createAttribute($id, $data['attribute']);
+
+        $this->updateImg($id, $data['images']);
     }
 
     /**
@@ -117,10 +132,12 @@ class PersonalGoodsService extends BaseService
      */
     protected function createImg($id, $data)
     {
-        data_set($data, '*.gid', $id);
-        data_set($data, '*.created_at', getTime());
-        data_set($data, '*.updated_at', getTime());
-        $this->goodsImg::insert($data);
+        if(!empty($data) && is_array($data)) {
+            data_set($data, '*.gid', $id);
+            data_set($data, '*.created_at', getTime());
+            data_set($data, '*.updated_at', getTime());
+            $this->goodsImg::insert($data);
+        }
     }
     /**
      * 商品属性处理
@@ -158,17 +175,19 @@ class PersonalGoodsService extends BaseService
      */
     protected function filteringImg($data)
     {
-        $result[] = [
-            'img' => $data[0],
-            'type' => 1
-        ];
-        foreach ($data[1] as $datum) {
+        if(!empty($data) && is_array($data)) {
             $result[] = [
-                'img' => $datum,
-                'type' => 2
+                'img' => $data[0],
+                'type' => 1
             ];
+            foreach ($data[1] as $datum) {
+                $result[] = [
+                    'img' => $datum,
+                    'type' => 2
+                ];
+            }
+            return $result;
         }
-        return $result;
     }
 
     /**
@@ -193,5 +212,25 @@ class PersonalGoodsService extends BaseService
             $address_id = $data;
         }
         return $address_id;
+    }
+
+    /**
+     * 更新图片数据
+     *
+     * @param $id
+     * @param $data
+     */
+    protected function updateImg($id, $data)
+    {
+        if (!empty($data) && is_array($data)) {
+            $item = $this->goodsImg::where('gid', intval($id))->get(['img'])->toArray();
+            $imgs = array_flatten($item);
+            foreach ($data as $k => $v) {
+                if(in_array($v['img'], $imgs)) {
+                    unset($data[$k]);
+                }
+            }
+            $this->createImg($id, $data);
+        }
     }
 }

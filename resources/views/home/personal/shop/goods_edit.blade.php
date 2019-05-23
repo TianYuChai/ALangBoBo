@@ -314,20 +314,6 @@
             });
         }
     });
-    $('.edit').click(function () {
-        let url = $(this).data('action');
-        layer.open({
-            type: 2,
-            title: '修改商品',
-            shadeClose: true,
-            shade: 0.8,
-            area: ['900px', '90%'],
-            content: url,
-            error: function (res) {
-                console.log(res);
-            }
-        });
-    });
     $('.oper_status').click(function () {
         let url = $(this).data('action');
         layer.confirm('是否进行该操作？', {
@@ -490,6 +476,7 @@
         var formData = new FormData();
         formData.append('file', file);
         formData.append('image_path', image_path);
+        formData.append('type', 'goods');
         $.ajax({
             headers: {
                 'X-CSRF-TOKEN': "{{ csrf_token() }}"
@@ -526,7 +513,6 @@
         for (let i = 0; i < file.length; i++) {
             formData.append('file[]', file[i]);
         }
-
         formData.append('type', 'layui');
         $.ajax({
             headers: {
@@ -575,7 +561,7 @@
                 },
                 type:'POST',
                 url:"{!! route('file.del') !!}",
-                data:{img_path: img_path},
+                data:{img_path: img_path, type: 'goods'},
                 success: function (res) {
                     if(res.status == 200) {
                         that.prev().remove();

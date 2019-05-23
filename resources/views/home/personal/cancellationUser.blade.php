@@ -25,7 +25,7 @@
                     <ul>
                         @include('home.personal.head_portrait')
                         <li>
-                            <a href="{{ route('personal.merchant_data') }}">商户资料</a>
+                            <a href="{{ route('personal.merchant_data') }}">用户资料</a>
                         </li>
                         <li>
                             <a href="{{ route('personal.index') }}">帐户中心</a>
