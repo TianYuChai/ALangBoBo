@@ -11,12 +11,15 @@ use App\Http\Controllers\home\BaseController;
 use App\Http\Models\admin\goods\goodsCategoryAttributeModel;
 use App\Http\Models\admin\goods\goodsCategoryModel;
 use App\Http\Models\currency\MerchantCategoryModel;
+use App\Http\Models\goods\goodsAttributeModel;
+use App\Http\Models\goods\GoodsModel;
 use App\Http\Models\home\personal\AddressModel;
 use App\Http\Requests\home\persanal\PersonalGoodsRequest;
 use App\Http\Services\home\persanal\PersonalGoodsService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Exception;
+use Illuminate\Support\Facades\Input;
 
 class PersonalGoodsController extends BaseController
 {
@@ -28,15 +31,20 @@ class PersonalGoodsController extends BaseController
     public function __construct(MerchantCategoryModel $merchantCategoryModel,
                                 goodsCategoryModel $goodsCategoryModel,
                                 goodsCategoryAttributeModel $goodsCategoryAttributeModel,
-                                AddressModel $addressModel)
+                                AddressModel $addressModel, GoodsModel $goodsModel,
+                                goodsAttributeModel $goodsAttributeModel)
     {
         $this->middleware(function ($request, $next) use ($merchantCategoryModel,
-            $goodsCategoryModel, $goodsCategoryAttributeModel, $addressModel){
+            $goodsCategoryModel, $goodsCategoryAttributeModel, $addressModel, $goodsModel,
+            $goodsAttributeModel){
+
             $this->user = Auth::guard('web')->user();
             $this->merchantCategory = $merchantCategoryModel;
             $this->goodsCategory = $goodsCategoryModel;
             $this->goodsAttribute = $goodsCategoryAttributeModel;
             $this->addressModel = $addressModel;
+            $this->goodsModel = $goodsModel;
+            $this->goodsAttributes = $goodsAttributeModel;
             return $next($request);
         });
     }
@@ -48,22 +56,30 @@ class PersonalGoodsController extends BaseController
      */
     public function index()
     {
+        $keywords = trim(Input::get('title', ''));
+        $sort = trim(Input::get('sort', 'updated_at'));
+        $items = $this->goodsModel::where('uid', $this->user->id)
+                        ->SearchTitle($keywords)->orderBy($sort, 'desc')->paginate(parent::$page_limit);
+        //店铺分类
         $merchantCategorys = $this->merchantCategory::where([
             'uid' => $this->user->id,
             'status' => 0,
         ])->orderBy('sort', 'desc')->get();
+        //商品分类
         $goodsCategorys = $this->goodsCategory::where([
             'status' => 0,
             'p_id' => 0
         ])->orderBy('sort', 'desc')->get();
+        //地址
         $address = $this->addressModel::where([
             'uid' => $this->user->id,
             'category' => 900
-        ])->get();
+        ])->where('status', 700)->orWhere('status', 703)->get();
         return view(self::Route . 'goods', [
             'menuCategorys' => $merchantCategorys,
             'goodsCategorys' => $goodsCategorys,
-            'address' => $address
+            'address' => $address,
+            'items' => $items
         ]);
     }
 
@@ -141,7 +157,128 @@ class PersonalGoodsController extends BaseController
                           PersonalGoodsService $service)
     {
         try {
-            $service->dataFiltering($request);
+            $data = $service->dataFiltering($request);
+            $service->create($data);
+            return $this->ajaxReturn();
+        } catch (Exception $e) {
+            return $this->ajaxReturn([
+                'status' => 510,
+                'info' => $e->getMessage()
+            ], 510);
+        }
+    }
+
+    /**
+     * 修改商品状态
+     *
+     * @param $id
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function operStatus($id)
+    {
+        try {
+            $item = $this->goodsModel::where([
+                'id' => intval($id),
+                'uid' => $this->user->id
+            ])->first();
+            if(!$item) {
+                throw new Exception('数据不存在, 请刷新重试');
+            }
+            $item->status = $item->status == 0 ? 1 : 0;
+            $item->save();
+            return $this->ajaxReturn();
+        } catch (Exception $e) {
+            return $this->ajaxReturn([
+                'status' => 510,
+                'info' => $e->getMessage()
+            ], 510);
+        }
+    }
+
+    /**
+     * 展示修改数据
+     * 考虑分类后期多的情况，此处三层分类分开查询。不做无限分类操作
+     *
+     * @param $id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function edit($id)
+    {
+        $item = $this->goodsModel::where([
+            'id' => intval($id),
+            'uid' => $this->user->id
+        ])->first();
+        //店铺分类
+        $merchantCategorys = $this->merchantCategory::where([
+            'uid' => $this->user->id,
+            'status' => 0,
+        ])->orderBy('sort', 'desc')->get();
+        //商品分类
+        $goodsMainCategorys = $this->goodsCategory::where([
+            'status' => 0,
+            'p_id' => 0
+        ])->orderBy('sort', 'desc')->get();
+        $goodsSubCategorys = $this->goodsCategory::where([
+            'status' => 0,
+            'level' => 2
+        ])->orderBy('sort', 'desc')->get();
+        $goodsThreeCategorys = $this->goodsCategory::where([
+            'status' => 0,
+            'level' => 3
+        ])->orderBy('sort', 'desc')->get();
+        //地址
+        $address = $this->addressModel::where([
+            'uid' => $this->user->id,
+            'category' => 900
+        ])->where('status', 700)->orWhere('status', 703)->get();
+        return view(self::Route . 'goods_edit', [
+            'menuCategorys' => $merchantCategorys,
+            'goodsCategorys' => [
+                'mainCategorys' => $goodsMainCategorys,
+                'goodsSubCategorys' => $goodsSubCategorys,
+                'goodsThreeCategorys' => $goodsThreeCategorys
+            ],
+            'address' => $address,
+            'item' => $item
+        ]);
+    }
+
+    /**
+     * 更新数据
+     *
+     * @param $id
+     * @param PersonalGoodsRequest $request
+     * @param PersonalGoodsService $service
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function update($id, PersonalGoodsRequest $request,
+                                PersonalGoodsService $service)
+    {
+        try {
+            $data = $service->dataFiltering($request);
+            $service->update($data);
+            return $this->ajaxReturn();
+        } catch (Exception $e) {
+            return $this->ajaxReturn([
+                'status' => 510,
+                'info' => $e->getMessage()
+            ], 510);
+        }
+    }
+
+    /**
+     * 删除已选商品属性
+     *
+     * @param $id
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function delAttribute($id)
+    {
+        try {
+            if(!$this->goodsAttributes::where('id', intval($id))->exists()) {
+                throw new Exception('数据错误, 请刷新重试');
+            }
+            $this->goodsAttributes::destroy($id);
             return $this->ajaxReturn();
         } catch (Exception $e) {
             return $this->ajaxReturn([

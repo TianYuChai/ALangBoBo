@@ -91,6 +91,10 @@ Route::group(['namespace' => 'home', 'middleware' => 'listenState'], function ()
                 Route::post('shop/goods/select', ['as' => 'personal.goods.select', 'uses' => 'PersonalGoodsController@select']);
                 Route::post('shop/goods/attribute', ['as' => 'personal.goods.attribute', 'uses' => 'PersonalGoodsController@attribute']);
                 Route::post('shop/goods/store', ['as' => 'personal.goods.store', 'uses' => 'PersonalGoodsController@store']);
+                Route::get('shop/goods/{id}/operStatus', ['as' => 'personal.goods.operstatus', 'uses' => 'PersonalGoodsController@operstatus']);
+                Route::get('shop/goods/{id}/edit', ['as' =>'personal.goods.edit', 'uses' => 'PersonalGoodsController@edit']);
+                Route::post('shop/goods/{id}/update', ['as' => 'personal.goods.update', 'uses' => 'PersonalGoodsController@update']);
+                Route::get('shop/goods/{id}/delattribute', ['as' => 'personal.goods.delattribute', 'uses' => 'PersonalGoodsController@delAttribute']);
             });
         });
     });

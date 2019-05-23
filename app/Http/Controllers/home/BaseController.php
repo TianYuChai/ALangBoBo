@@ -11,6 +11,7 @@ use App\Http\Controllers\Controller;
 
 class BaseController extends Controller
 {
+    protected static $page_limit = 6;
     /**
      * ajax提交返回
      * @param array $data

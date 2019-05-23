@@ -97,49 +97,59 @@
                     <p><img src="{{ asset('home/images/icon/productList.png') }}" alt=""/>产品列表</p>
                     <a href="javascript:void(0)"  data-toggle="modal" data-target="#editProduct">+添加商品</a>
                 </div>
-                <div class="orderSearch clearfix">
-                    <input type="text" placeholder="输入产品名称"/>
-                    <a>查询</a>
-                </div>
+                <form action="" method="get" id="subForm">
+                    <div class="orderSearch clearfix">
+                        <input type="text" placeholder="输入产品名称" name="title" value="{{ Input::get('title', '') }}"/>
+                        <a onclick="document:subForm.submit()">查询</a>
+                    </div>
+                </form>
                 <div class="orderList">
                     <table align="center" class="table tl" frame="box">
                         <thead class="thead" style="border:1px solid #e8e8e8;background-color: #ebecf0;">
                         <tr>
-                            <th width="50" class="tc"><input type="checkbox" class="checkAll"/></th>
-                            <th class="tl" width="320">商品名称</th>
-                            <th class="tl" width="100">价格 <a href=""><img src="{{ asset('home/images/icon/sortIcon.png') }}" alt=""/></a></th>
-                            <th class="tl" width="100">库存 <a href=""><img src="{{ asset('home/images/icon/sortIcon.png') }}" alt=""/></a></th>
-                            <th class="tl" width="100">销量 <a href=""><img src="{{ asset('home/images/icon/sortIcon.png') }}" alt=""/></a></th>
-                            <th class="tl" width="120">创建时间 <a href=""><img src="{{ asset('home/images/icon/sortIcon.png') }}" alt=""/></a></th>
-                            <th class="tl" width="120">发布时间 <a href=""><img src="{{ asset('home/images/icon/sortIcon.png') }}" alt=""/></a></th>
+                            <th class="tl" width="200">商品名称</th>
+                            <th class="tl" width="90">商品图片</th>
+                            <th class="tl" width="100">价格 <a href="/personal/shop/goods?sort=total_fee"><img src="{{ asset('home/images/icon/sortIcon.png') }}" alt=""/></a></th>
+                            <th class="tl" width="100">库存 <a href="/personal/shop/goods?sort=stock"><img src="{{ asset('home/images/icon/sortIcon.png') }}" alt=""/></a></th>
+                            <th class="tl" width="100">销量 <a href="/personal/shop/goods?sort=sold"><img src="{{ asset('home/images/icon/sortIcon.png') }}" alt=""/></a></th>
+                            <th class="tl" width="100">可售数量</th>
+                            <th class="tl" width="120">状态</th>
+                            <th class="tl" width="120">发布时间 <a href="/personal/shop/goods?sort=created_at"><img src="{{ asset('home/images/icon/sortIcon.png') }}" alt=""/></a></th>
                             <th class="tl">操作</th>
                         </tr>
                         </thead>
                         <tbody class="listTbody">
-                        <tr>
-                            <td class="tc checkboxTd"><input type="checkbox" name="checkbox"/></td>
-                            <td>
-                                <div class="clearfix">
-                                    <img src="../images/img/productListImg.png" alt="" class="fl productListImg"/>
-                                    <p class="fl productName">原创复古医生包 头层牛皮单肩斜挎包 真皮
-                                        女包口金包手提包小挎包 </p>
-                                </div>
-                            </td>
-                            <td>￥100.00</td>
-                            <td>150</td>
-                            <td>0</td>
-                            <td>
-                                <p>2018-09-02</p>
-                                <p class="productStatus">出售中</p>
-                            </td>
-                            <td>2019-02-02</td>
-                            <td class="productOperat">
-                                <a href="" class="block">编辑商品</a>
-                                <a href="" class="block mgt-10">立即下架</a>
-                            </td>
-                        </tr>
+                            @foreach($items as $item)
+                                <tr>
+                                    <td>
+                                        <p class="fl productName">{{ $item->title }}</p>
+                                    </td>
+                                    <td>
+                                        <div class="clearfix">
+                                            <img src="{{ FileUpload::url('image', $item->cost_img) }}"
+                                                 style="width: 52px; height: 54px" class="fl productListImg"/>
+                                        </div>
+                                    </td>
+                                    <td>￥{{ $item->total_price }}</td>
+                                    <td>{{ $item->stock }}</td>
+                                    <td>{{ $item->sold }}</td>
+                                    <td>{{ $item->stocks }}</td>
+                                    <td>
+                                        <p class="productStatus">{{ $item->status_name }}</p>
+                                    </td>
+                                    <td>{{ $item->created_at }}</td>
+                                    <td class="productOperat">
+                                        <a href="javascript:void(0)" class="block edit" data-action="{{ route('personal.goods.edit', ['id' => $item->id]) }}">编辑商品</a>
+                                        <a href="javascript:void(0)" class="block mgt-10 oper_status"
+                                           data-action="{{ route('personal.goods.operstatus', ['id' => $item->id]) }}">立即{{ $item->status == 0 ? '下架' : '出售' }}</a>
+                                    </td>
+                                </tr>
+                            @endforeach
                         </tbody>
                     </table>
+                    <div style="text-align: right;">
+                        {!! $items->links() !!}
+                    </div>
                     <div class="modal fade" id="editProduct" tabindex="-1" role="dialog" aria-labelledby="editProduct" aria-hidden="true">
                         <div class="modal-dialog modalWidth">
                             <div class="modal-content">
@@ -160,19 +170,19 @@
                                                 <label class="col-sm-2 control-label">商品名称</label>
                                                 <div class="col-sm-10">
                                                     <input type="text" class="form-control"
-                                                            name="title" placeholder="请输入商品名称">
+                                                            name="title" placeholder="请输入商品名称" autocomplete="off">
                                                 </div>
                                             </div>
                                             <div class="form-group">
                                                 <label for="inputPassword" class="col-sm-2 control-label">商品分类</label>
                                                 <div class="col-sm-10 goods">
-                                                    <select class="form-control goods_cate" name="main_category">
+                                                    <select class="form-control goods_cate" name="category[]">
                                                         @foreach($goodsCategorys as $goodsCategory)
                                                             <option value="{{ $goodsCategory->id }}"> {{ $goodsCategory->cate_name }} </option>
                                                         @endforeach
                                                     </select>
-                                                    <select class="form-control goods_cate second" name="second_category" style="margin-top: 10px" hidden></select>
-                                                    <select class="form-control goods_cate three" name="three_category" style="margin-top: 10px" hidden></select>
+                                                    <select class="form-control goods_cate second" name="category[]" style="margin-top: 10px" hidden></select>
+                                                    <select class="form-control goods_cate three" name="category[]" style="margin-top: 10px" hidden></select>
                                                 </div>
                                             </div>
                                             <div class="form-group goods_attribute" hidden>
@@ -182,7 +192,7 @@
                                             <div class="form-group">
                                                 <label for="inputPassword" class="col-sm-2 control-label">导航分类</label>
                                                 <div class="col-sm-10">
-                                                    <select class="form-control" name="navi_category">
+                                                    <select class="form-control" name="nav_category">
                                                         @foreach($menuCategorys as $menuCategory)
                                                             <option value="{{ $menuCategory->id }}">{{ $menuCategory->name }}</option>
                                                         @endforeach
@@ -207,7 +217,7 @@
                                                     <input type="text" class="form-control money"
                                                            name="total_price" placeholder="单位：元"
                                                            onkeyup="this.value= this.value.match(/\d+(\.\d{0,2})?/) ? this.value.match(/\d+(\.\d{0,2})?/)[0] : ''"
-                                                           onblur="this.v();">
+                                                           onblur="this.v();" autocomplete="off">
                                                 </div>
                                             </div>
                                             <div class="form-group">
@@ -217,7 +227,7 @@
                                                     <input type="text" class="form-control"
                                                            name="cost_price" placeholder="单位：元"
                                                            onkeyup="this.value= this.value.match(/\d+(\.\d{0,2})?/) ? this.value.match(/\d+(\.\d{0,2})?/)[0] : ''"
-                                                           onblur="this.v();">
+                                                           onblur="this.v();" autocomplete="off">
                                                 </div>
                                             </div>
                                             <div class="form-group">
@@ -227,7 +237,7 @@
                                                     <input type="text" class="form-control"
                                                            name="satis_price" placeholder="单位：元"
                                                            onkeyup="this.value= this.value.match(/\d+(\.\d{0,2})?/) ? this.value.match(/\d+(\.\d{0,2})?/)[0] : ''"
-                                                           onblur="this.v();">
+                                                           onblur="this.v();" autocomplete="off">
                                                 </div>
                                             </div>
                                             <div class="form-group">
@@ -237,7 +247,7 @@
                                                     <input type="text" class="form-control"
                                                            name="delivery_price" placeholder="不填写, 默认包邮"
                                                            onkeyup="this.value= this.value.match(/\d+(\.\d{0,2})?/) ? this.value.match(/\d+(\.\d{0,2})?/)[0] : ''"
-                                                           onblur="this.v();">
+                                                           onblur="this.v();" autocomplete="off">
                                                 </div>
                                             </div>
                                             <div class="form-group">
@@ -247,7 +257,7 @@
                                                     <input type="text" class="form-control"
                                                            name="free_shipping" placeholder="满多少包邮"
                                                            onkeyup="this.value= this.value.match(/\d+(\.\d{0,2})?/) ? this.value.match(/\d+(\.\d{0,2})?/)[0] : ''"
-                                                           onblur="this.v();">
+                                                           onblur="this.v();" autocomplete="off">
                                                 </div>
                                             </div>
                                             <div class="form-group">
@@ -256,7 +266,7 @@
                                                     <input type="text" class="form-control"
                                                            name="stock" placeholder="请输入库存"
                                                            onkeyup="(this.v=function(){this.value=this.value.replace(/[^0-9-]+/,'');}).call(this)"
-                                                           onblur="this.v();">
+                                                           onblur="this.v();" autocomplete="off">
                                                 </div>
                                             </div>
                                             <div class="form-group">
@@ -294,7 +304,7 @@
                                             <div class="form-group">
                                                 <label class="col-sm-2 control-label">详情</label>
                                                 <div class="col-sm-10">
-                                                    <script id="ue-container" name="content"  type="text/plain"></script>
+                                                    <script id="ue-container" name="content"  type="text/plain" style="height: 450px;"></script>
                                                 </div>
                                             </div>
                                         </form>
@@ -363,7 +373,10 @@
                 $("#add_goods").ajaxSubmit({
                     success: function (res) {
                         if(res.status == 200) {
-                            window.location.reload();
+                            layer.msg(res.info);
+                            setTimeout(function () {
+                                window.location.reload();
+                            }, 500);
                         }
                     },
                     error: function (XMLHttpRequest, textStatus, errorThrown) {
@@ -387,12 +400,58 @@
                 });
             }
         });
-
-        //删除操作
-        function deleteTr(nowTr){
-            $(nowTr).parent().parent().remove();
-            $(this).closest('tr').remove();  //清空当前行
-        }
+        $('.edit').click(function () {
+            let url = $(this).data('action');
+            layer.open({
+                type: 2,
+                title: '修改商品',
+                shadeClose: true,
+                shade: 0.8,
+                area: ['950px', '85%'],
+                content: url,
+            });
+        });
+        $('.oper_status').click(function () {
+            let url = $(this).data('action');
+            layer.confirm('是否进行该操作？', {
+                btn: ['是','否'] //按钮
+            },  function(index){
+                layer.close(index);
+                $.ajax({
+                    headers: {
+                        'X-CSRF-TOKEN': "{{ csrf_token() }}"
+                    },
+                    method:"GET",
+                    url:url,
+                    success:function (res) {
+                        if(res.status == 200) {
+                            window.location.reload();
+                        }
+                    },
+                    error:function (XMLHttpRequest, textStatus, errorThrown) {
+                        //返回提示信息
+                        try {
+                            if(XMLHttpRequest.status == 401) {
+                                var errors = JSON.parse(XMLHttpRequest.responseText)['errors']['info'];
+                                layer.msg(errors[0]);return;
+                            }
+                            var errors = XMLHttpRequest.responseJSON.errors;
+                            for (var value in errors) {
+                                layer.msg(errors[value][0]);return;
+                            }
+                        } catch (e) {
+                            var errors = JSON.parse(XMLHttpRequest.responseText)['errors']['info'];
+                            layer.msg(errors[0]);return;
+                        }
+                    }
+                });
+            });
+        });
+        // //删除操作
+        // function deleteTr(nowTr){
+        //     $(nowTr).parent().parent().remove();
+        //     $(this).closest('tr').remove();  //清空当前行
+        // }
         //监听商品分类
         $('.goods').on('change', '.goods_cate', function () {
             var that = $(this);
