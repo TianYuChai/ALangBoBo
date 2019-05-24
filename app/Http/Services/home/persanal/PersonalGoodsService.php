@@ -97,7 +97,6 @@ class PersonalGoodsService extends BaseService
         $item->stock = intval($stock);
         $item->save();
         $this->createAttribute($id, $data['attribute']);
-
         $this->updateImg($id, $data['images']);
     }
 

@@ -65,12 +65,17 @@ class PersonalShopController extends BaseController
         try {
             $name = trim($request->name);
             $address = trim($request->address);
+            $code = trim($request->code);
             if(!$name) {
                 throw new Exception('商品名称不可为空');
+            }
+            if($code && !FileUpload::exists('image', $code)) {
+                throw new Exception('二维码地址错误');
             }
             $item = $this->merchatModel::where('uid', $request->user()->id)->first();
             $item->shop_name = $name;
             $item->arrdess = $address;
+            $item->qr_code = $code;
             $item->save();
             return $this->ajaxReturn();
         } catch (Exception $e) {

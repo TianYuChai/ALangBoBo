@@ -9,6 +9,18 @@
     <link rel="stylesheet" href="{{ asset('home/css/shopManage_shopSign.css') }}"/>
     <link rel="stylesheet" href="{{ asset('home/css/product.css') }}"/>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/distpicker/2.0.3/distpicker.js"></script>
+    <style type="text/css">
+        input[type='file']{
+            width: 117px;
+            height: 102px;
+            position: absolute;
+            top: 0;
+            font-size:0;
+            cursor: pointer;
+            opacity: 0;
+            margin-left: 85px;
+        }
+    </style>
 @endsection
 @section('content')
     <!--搜索部分-->
@@ -45,10 +57,7 @@
                     <p>分享推广</p>
                     <ul>
                         <li>
-                            <a href="">生成链接</a>
-                        </li>
-                        <li>
-                            <a href="">推广统计</a>
+                            <a href="{{ route('personal.shop.generalize') }}">推广管理</a>
                         </li>
                     </ul>
                 </li>
@@ -74,6 +83,7 @@
                         <tr>
                             <th>店铺名称</th>
                             <th>商标</th>
+                            <th>二维码</th>
                             <th>地址</th>
                             {{--<th>操作</th>--}}
                         </tr>
@@ -83,7 +93,11 @@
                             <td>{{ Auth::guard('web')->user()->merchant['shop_name'] }}</td>
                             <td>
                                 <img src="{{ Auth::guard('web')->user()->merchant['trademark'] ?
-                                                FileUpload::url('image', Auth::guard('web')->user()->merchant['trademark']) : asset('home/images/img/logo.png') }}" alt="" class="shopSign"/>
+                                                FileUpload::url('image', Auth::guard('web')->user()->merchant['trademark']) : '未上传' }}" alt="" class="shopSign"/>
+                            </td>
+                            <td>
+                                <img src="{{ Auth::guard('web')->user()->merchant['qr_code'] ?
+                                                FileUpload::url('image', Auth::guard('web')->user()->merchant['qr_code']) : '未上传' }}" alt="" class="shopSign"/>
                             </td>
                             <td>{{ Auth::guard('web')->user()->merchant['address'] }}</td>
                             {{--<td>--}}
@@ -149,6 +163,15 @@
                                                         <button type="submit" class="shangchuanSave" onclick="return false;">保存</button>
                                                     </form>
                                                 </div>
+                                            </div>
+                                            <div class="relative">
+                                                <p class="inline-block mgr-20 mgl-15">二维码：</p>
+                                                <img src="{{ Auth::guard('web')->user()->merchant['qr_code'] ?
+                                                FileUpload::url('image', Auth::guard('web')->user()->merchant['qr_code'])
+                                                : asset('home/images/img/idImg.png') }}" class="jmImg"
+                                                     style="width: 117px; height: 101px"/>
+                                                <input type="file" name="code">
+                                                <input type="hidden" name="sub_code">
                                             </div>
                                         </fieldset>
                                     </form>
@@ -276,6 +299,7 @@
     $('.btn-primary').click(function () {
          var name = $('input[name=name]').val();
          var address = $('input[name=address]').val();
+         var code = $('input[name=sub_code]').val();
          if(!name) {
              layer.msg('商铺名称不可为空'); return false;
          }
@@ -285,13 +309,52 @@
             },
             method:"POST",
             url:"{!! route("personal.shop.update") !!}",
-            data:{name: name, address: address},
+            data:{name: name, address: address, code: code},
             success:function (res) {
                 if(res.status == 200) {
                     layer.msg(res.info);
                     setTimeout(function () {
                         window.location.reload();
                     }, 500);
+                }
+            },
+            error:function (XMLHttpRequest) {
+                //返回提示信息
+                try {
+                    var errors = XMLHttpRequest.responseJSON.errors;
+                    for (var value in errors) {
+                        layer.msg(errors[value][0]);return;
+                    }
+                } catch (e) {
+                    var errors = JSON.parse(XMLHttpRequest.responseText)['errors']['info'];
+                    layer.msg(errors[0]);return;
+                }
+            }
+        });
+    });
+
+    /*图片--上传*/
+    $("input[name='code']").on('change', function () {
+        var that = $(this);
+        var file = that[0].files[0];
+        var image = $('input[name=sub_code]');
+        var image_path = image.val();
+        that.prev().attr('src', URL.createObjectURL(file)).css({"width":"117px","height":"101px"});
+        var formData = new FormData();
+        formData.append('file', file);
+        formData.append('image_path', image_path);
+        $.ajax({
+            headers: {
+                'X-CSRF-TOKEN': "{{ csrf_token() }}"
+            },
+            method:"POST",
+            url:"{!! route("file.upload") !!}",
+            processData: false,
+            contentType: false,
+            data:formData,
+            success:function (res) {
+                if(res.status == 200) {
+                    image.val(res.url[0]);
                 }
             },
             error:function (XMLHttpRequest) {

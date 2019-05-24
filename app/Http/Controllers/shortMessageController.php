@@ -24,7 +24,7 @@ class shortMessageController extends BaseController
     {
         try {
             $mobile = trim($request->mobile);
-            $code = $this->code();
+            $code = code();
             Redis::setex($mobile, 3 * 60, $code);
             $result = shortMessage::entrance($mobile, $code);
             if($result->code == 0) {
@@ -39,26 +39,5 @@ class shortMessageController extends BaseController
                 'status' => 100
             ], 510);
         }
-    }
-
-    /**
-     * 生成验证码
-     *
-     * @param int $num
-     * @return string
-     */
-    protected function code(int $num = 6)
-    {
-        for($i=0; $i<$num; $i++){
-            $n[$i] = $i;
-        }
-        for($i=0; $i<$num; $i++){
-            $rand = mt_rand($i, $num-1);
-            if($n[$i] == $i){
-                $n[$i] = $n[$rand];
-                $n[$rand] = $i;
-            }
-        }
-        return implode('', $n);
     }
 }

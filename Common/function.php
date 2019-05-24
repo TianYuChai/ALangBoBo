@@ -204,8 +204,30 @@ function imgtobase64($img)
  *
  * @return string
  */
-function create_order_no() {
+function create_order_no()
+{
     $order_no = date('Ymd').substr(time(), -5) .
         substr(microtime(), 2, 5) . sprintf('%02d', rand(1000, 9999));
     return $order_no;
 }
+
+/**
+ * 生成验证码
+ *
+ * @param int $num
+ * @return string
+ */
+function code(int $num = 6)
+{
+        for($i=0; $i<$num; $i++){
+            $n[$i] = $i;
+        }
+        for($i=0; $i<$num; $i++){
+            $rand = mt_rand($i, $num-1);
+            if($n[$i] == $i){
+                $n[$i] = $n[$rand];
+                $n[$rand] = $i;
+            }
+        }
+        return implode('', $n);
+    }

@@ -46,10 +46,7 @@
                     <p>分享推广</p>
                     <ul>
                         <li>
-                            <a href="">生成链接</a>
-                        </li>
-                        <li>
-                            <a href="">推广统计</a>
+                            <a href="{{ route('personal.shop.generalize') }}">推广管理</a>
                         </li>
                     </ul>
                 </li>

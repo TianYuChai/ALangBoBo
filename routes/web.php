@@ -95,6 +95,10 @@ Route::group(['namespace' => 'home', 'middleware' => 'listenState'], function ()
                 Route::get('shop/goods/{id}/edit', ['as' =>'personal.goods.edit', 'uses' => 'PersonalGoodsController@edit']);
                 Route::post('shop/goods/{id}/update', ['as' => 'personal.goods.update', 'uses' => 'PersonalGoodsController@update']);
                 Route::get('shop/goods/{id}/delattribute', ['as' => 'personal.goods.delattribute', 'uses' => 'PersonalGoodsController@delAttribute']);
+
+                /*店铺推广*/
+                Route::get('shop/generalize', ['as' => 'personal.shop.generalize', 'uses' => 'PersonalGeneralizeController@index']);
+                Route::post('shop/generalize/store', ['as' => 'personal.generalize.store', 'uses' => 'PersonalGeneralizeController@store']);
             });
         });
     });
