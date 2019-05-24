@@ -12,6 +12,7 @@ use App\Http\Models\goods\goodsImgModel;
 use Illuminate\Http\Request;
 use FileUpload;
 use Exception;
+use Illuminate\Support\Facades\Auth;
 
 class FileController extends BaseController
 
@@ -30,6 +31,9 @@ class FileController extends BaseController
                 }
             }
             if(!empty($type) && $type == 'goods') {
+                if(!Auth::guard('web')->user()->merchant_due) {
+                    throw new Exception('无法操作, 入驻费未缴纳或已到期');
+                }
                 $this->delGoods($image_path);
             }
             $this->delFile($image_path);
@@ -64,6 +68,9 @@ class FileController extends BaseController
                 $this->delFile($request->img_path);
             }
             if(!empty($type)) {
+                if(!Auth::guard('web')->user()->merchant_due) {
+                    throw new Exception('无法操作, 入驻费未缴纳或已到期');
+                }
                 $this->delGoods($img_path);
             }
             return $this->ajaxReturn();

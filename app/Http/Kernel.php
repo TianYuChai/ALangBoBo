@@ -8,6 +8,7 @@ use App\Http\Middleware\home\judgeMerchantMiddleware;
 use App\Http\Middleware\home\judgeOrdinUserMiddleware;
 use App\Http\Middleware\home\listenStateMiddleware;
 use App\Http\Middleware\home\ShopMiddleware;
+use App\Http\Middleware\home\whetherDueToMiddleware;
 use App\Http\Middleware\home\whiterloginMiddleware;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
@@ -80,6 +81,7 @@ class Kernel extends HttpKernel
         'listenState' => listenStateMiddleware::class,
         'whiterlogin' => whiterloginMiddleware::class,
         'judgeordinuser' => judgeOrdinUserMiddleware::class,
-        'judgemerchant' => judgeMerchantMiddleware::class
+        'judgemerchant' => judgeMerchantMiddleware::class,
+        'whetherdueto' => whetherDueToMiddleware::class
     ];
 }

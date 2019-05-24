@@ -290,6 +290,7 @@
                         setTimeout(function () {
                             var index = parent.layer.getFrameIndex(window.name); //获取窗口索引
                             parent.layer.close(index);
+                            parent.location.reload();
                         }, 500);
                     }
                 },
@@ -306,6 +307,9 @@
                         }
                     } catch (e) {
                         var errors = JSON.parse(XMLHttpRequest.responseText)['errors'];
+                        if(!errors) {
+                            layer.msg(JSON.parse(XMLHttpRequest.responseText)['message']);return;
+                        }
                         for (var value in errors) {
                             layer.msg(errors[value][0]);return;
                         }
@@ -314,47 +318,6 @@
             });
         }
     });
-    $('.oper_status').click(function () {
-        let url = $(this).data('action');
-        layer.confirm('是否进行该操作？', {
-            btn: ['是','否'] //按钮
-        },  function(index){
-            layer.close(index);
-            $.ajax({
-                headers: {
-                    'X-CSRF-TOKEN': "{{ csrf_token() }}"
-                },
-                method:"GET",
-                url:url,
-                success:function (res) {
-                    if(res.status == 200) {
-                        window.location.reload();
-                    }
-                },
-                error:function (XMLHttpRequest, textStatus, errorThrown) {
-                    //返回提示信息
-                    try {
-                        if(XMLHttpRequest.status == 401) {
-                            var errors = JSON.parse(XMLHttpRequest.responseText)['errors']['info'];
-                            layer.msg(errors[0]);return;
-                        }
-                        var errors = XMLHttpRequest.responseJSON.errors;
-                        for (var value in errors) {
-                            layer.msg(errors[value][0]);return;
-                        }
-                    } catch (e) {
-                        var errors = JSON.parse(XMLHttpRequest.responseText)['errors']['info'];
-                        layer.msg(errors[0]);return;
-                    }
-                }
-            });
-        });
-    });
-    // //删除操作
-    // function deleteTr(nowTr){
-    //     $(nowTr).parent().parent().remove();
-    //     $(this).closest('tr').remove();  //清空当前行
-    // }
     //监听商品分类
     $('.goods').on('change', '.goods_cate', function () {
         var that = $(this);
@@ -408,6 +371,9 @@
                     }
                 } catch (e) {
                     var errors = JSON.parse(XMLHttpRequest.responseText)['errors'];
+                    if(!errors) {
+                        layer.msg(JSON.parse(XMLHttpRequest.responseText)['message']);return;
+                    }
                     for (var value in errors) {
                         layer.msg(errors[value][0]);return;
                     }
@@ -458,6 +424,9 @@
                     }
                 } catch (e) {
                     var errors = JSON.parse(XMLHttpRequest.responseText)['errors'];
+                    if(!errors) {
+                        layer.msg(JSON.parse(XMLHttpRequest.responseText)['message']);return;
+                    }
                     for (var value in errors) {
                         layer.msg(errors[value][0]);return;
                     }
@@ -499,8 +468,12 @@
                         layer.msg(errors[value][0]);return;
                     }
                 } catch (e) {
-                    var errors = JSON.parse(XMLHttpRequest.responseText)['errors']['info'];
-                    layer.msg(errors[0]);return;
+                    try {
+                        var errors = JSON.parse(XMLHttpRequest.responseText)['errors']['info'];
+                        layer.msg(errors[0]);return;
+                    } catch (e) {
+                        layer.msg(JSON.parse(XMLHttpRequest.responseText)['message']);return;
+                    }
                 }
             }
         });
@@ -580,8 +553,12 @@
                             layer.msg(errors[value][0]);return;
                         }
                     } catch (e) {
-                        var errors = JSON.parse(XMLHttpRequest.responseText)['errors']['info'];
-                        layer.msg(errors[0]);return;
+                        try {
+                            var errors = JSON.parse(XMLHttpRequest.responseText)['errors']['info'];
+                            layer.msg(errors[0]);return;
+                        } catch (e) {
+                            layer.msg(JSON.parse(XMLHttpRequest.responseText)['message']);return;
+                        }
                     }
                 }
             })
@@ -616,8 +593,12 @@
                             layer.msg(errors[value][0]);return;
                         }
                     } catch (e) {
-                        var errors = JSON.parse(XMLHttpRequest.responseText)['errors']['info'];
-                        layer.msg(errors[0]);return;
+                        try {
+                            var errors = JSON.parse(XMLHttpRequest.responseText)['errors']['info'];
+                            layer.msg(errors[0]);return;
+                        } catch (e) {
+                            layer.msg(JSON.parse(XMLHttpRequest.responseText)['message']);return;
+                        }
                     }
                 }
             })

@@ -172,4 +172,14 @@ class UserModel extends Authenticatable
     {
         return $this->category != 0 && (isset($this->merchant) ? $this->merchant->status == 1 : "") ? true : false;
     }
+
+    /**
+     * 商户是否可使用上传商品
+     *
+     * @return bool
+     */
+    public function getMerchantDueAttribute()
+    {
+        return $this->merchant->due_at < getTime() ? false : true;
+    }
 }

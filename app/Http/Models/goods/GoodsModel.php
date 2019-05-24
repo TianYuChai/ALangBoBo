@@ -19,6 +19,7 @@ class GoodsModel extends Model
         0 => '出售',
         1 => '下架'
     ];
+
     /*商品属性*/
     public function attribute()
     {

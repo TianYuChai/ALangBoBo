@@ -36,42 +36,46 @@
     </style>
 @endsection
 @section('content')
-<!--内容区-->
-<div class="container clearfix">
-<!--左边菜单栏-->
-<div class="fl mgt-30">
-<ul class="shLeftNav">
-    @include('home.personal.personal')
-    <li class="firstLevel">
-        <p>店铺管理</p>
-        <ul>
-            <li>
-                <a href="{{ route('personal.shop.index') }}">店招更换</a>
+    <!--搜索部分-->
+    @include('home.public.search')
+    <!--分类导航-->
+    @include('home.public.category')
+    <!--内容区-->
+    <div class="container clearfix">
+    <!--左边菜单栏-->
+    <div class="fl mgt-30">
+        <ul class="shLeftNav">
+            @include('home.personal.personal')
+            <li class="firstLevel">
+                <p>店铺管理</p>
+                <ul>
+                    <li>
+                        <a href="{{ route('personal.shop.index') }}">店招更换</a>
+                    </li>
+                    <li>
+                        <a href="{{ route('personal.shop.menu') }}">导航菜单栏</a>
+                    </li>
+                    <li>
+                        <a href="{{ route('personal.shop.banner') }}">店铺轮播</a>
+                    </li>
+                    <li>
+                        <a href="{{ route('personal.shop.goods') }}" class="leftNavActive">商品管理</a>
+                    </li>
+                    <li>
+                        <a href="../html/merchantCenter_buyThings.html">订单管理</a>
+                    </li>
+                </ul>
             </li>
-            <li>
-                <a href="{{ route('personal.shop.menu') }}">导航菜单栏</a>
-            </li>
-            <li>
-                <a href="{{ route('personal.shop.banner') }}">店铺轮播</a>
-            </li>
-            <li>
-                <a href="{{ route('personal.shop.goods') }}" class="leftNavActive">商品管理</a>
-            </li>
-            <li>
-                <a href="../html/merchantCenter_buyThings.html">订单管理</a>
+            <li class="firstLevel">
+                <p>分享推广</p>
+                <ul>
+                    <li>
+                        <a href="{{ route('personal.shop.generalize') }}">推广管理</a>
+                    </li>
+                </ul>
             </li>
         </ul>
-    </li>
-    <li class="firstLevel">
-        <p>分享推广</p>
-        <ul>
-            <li>
-                <a href="{{ route('personal.shop.generalize') }}">推广管理</a>
-            </li>
-        </ul>
-    </li>
-</ul>
-</div>
+    </div>
 <!--右边内容区-->
 <div class="fl mgt-30">
 <div class="shInfoDiv shopCarContent">
@@ -129,7 +133,11 @@
                                     <td>{{ $item->sold }}</td>
                                     <td>{{ $item->stocks }}</td>
                                     <td>
-                                        <p class="productStatus">{{ $item->status_name }}</p>
+                                        @if($item->status == 0)
+                                            <p class="productStatus">{{ $item->status_name }}</p>
+                                            @else
+                                            <p class="text-danger">{{ $item->status_name }}</p>
+                                        @endif
                                     </td>
                                     <td>{{ $item->created_at }}</td>
                                     <td class="productOperat">
@@ -386,6 +394,9 @@
                             }
                         } catch (e) {
                             var errors = JSON.parse(XMLHttpRequest.responseText)['errors'];
+                            if(!errors) {
+                                layer.msg(JSON.parse(XMLHttpRequest.responseText)['message']);return;
+                            }
                             for (var value in errors) {
                                 layer.msg(errors[value][0]);return;
                             }
@@ -434,8 +445,12 @@
                                 layer.msg(errors[value][0]);return;
                             }
                         } catch (e) {
-                            var errors = JSON.parse(XMLHttpRequest.responseText)['errors']['info'];
-                            layer.msg(errors[0]);return;
+                            try {
+                                var errors = JSON.parse(XMLHttpRequest.responseText)['errors']['info'];
+                                layer.msg(errors[0]);return;
+                            } catch (e) {
+                                layer.msg(JSON.parse(XMLHttpRequest.responseText)['message']);return;
+                            }
                         }
                     }
                 });
@@ -499,6 +514,9 @@
                         }
                     } catch (e) {
                         var errors = JSON.parse(XMLHttpRequest.responseText)['errors'];
+                        if(!errors) {
+                            layer.msg(JSON.parse(XMLHttpRequest.responseText)['message']);return;
+                        }
                         for (var value in errors) {
                             layer.msg(errors[value][0]);return;
                         }
@@ -549,6 +567,9 @@
                         }
                     } catch (e) {
                         var errors = JSON.parse(XMLHttpRequest.responseText)['errors'];
+                        if(!errors) {
+                            layer.msg(JSON.parse(XMLHttpRequest.responseText)['message']);return;
+                        }
                         for (var value in errors) {
                             layer.msg(errors[value][0]);return;
                         }

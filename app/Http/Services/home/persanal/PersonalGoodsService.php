@@ -85,17 +85,15 @@ class PersonalGoodsService extends BaseService
     public function update($id, $data)
     {
         $number = $data['goods']['stock'];
-        unset($data['goods']['stock']);
-        $this->goods::where([
+        $item = $this->goods::where([
             'id' => intval($id),
             'uid' => $this->userId
-        ])->update($data['goods']);
-        $item = $this->goods::find($id);
+        ])->first();
         $stock = bcsub($item->stock, $item->sold) > $number ?
                     bcsub($item->stock, bcsub(bcsub($item->stock, $item->sold), $number)) :
                     bcadd($item->stock, bcsub($number, bcsub($item->stock, $item->sold)));
-        $item->stock = intval($stock);
-        $item->save();
+        $data['goods']['stock'] = intval($stock);
+        $item->update($data['goods']);
         $this->createAttribute($id, $data['attribute']);
         $this->updateImg($id, $data['images']);
     }
