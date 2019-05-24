@@ -89,6 +89,7 @@ Route::group(['namespace' => 'home', 'middleware' => 'listenState'], function ()
                 /*店铺商品*/
                 Route::get('shop/goods', ['as' => 'personal.shop.goods', 'uses' => 'PersonalGoodsController@index']);
                 Route::get('shop/goods/{id}/edit', ['as' =>'personal.goods.edit', 'uses' => 'PersonalGoodsController@edit']);
+                /*入驻费是否缴纳或到期*/
                 Route::group(['middleware' => 'whetherdueto'], function () {
                     Route::post('shop/goods/select', ['as' => 'personal.goods.select', 'uses' => 'PersonalGoodsController@select']);
                     Route::post('shop/goods/attribute', ['as' => 'personal.goods.attribute', 'uses' => 'PersonalGoodsController@attribute']);
