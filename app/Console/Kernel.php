@@ -29,10 +29,8 @@ class Kernel extends ConsoleKernel
     {
         // $schedule->command('inspire')
         //          ->hourly();
-        $schedule->command('banner')
-                    ->everyMinute() //运行时间，一分钟
-                    ->timezone('Asia/Shanghai') //设置时区
-                    ->runInBackground(); //设置后台运作
+        $schedule->command('banner')->everyMinute()->timezone('Asia/Shanghai')->runInBackground(); //轮播图
+        $schedule->command('black')->everyMinute()->timezone('Asia/Shanghai')->runInBackground(); //黑名单
     }
 
     /**

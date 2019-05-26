@@ -6,10 +6,10 @@
                 <a class="typeIcon"></a>
             </li>
             <li class="navLi">
-                <a href="">首页</a>
+                <a href="{{ url('/') }}">首页</a>
             </li>
             <li class="navLi">
-                <a href="">黑名单公示</a>
+                <a href="{{ url('theBlacklist') }}">黑名单公示</a>
             </li>
             <li class="navLi">
                 <a href="">投诉结果公示</a>

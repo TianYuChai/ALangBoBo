@@ -192,6 +192,13 @@ class MemberController extends BaseController
         return view('admin.member.details', compact('item'));
     }
 
+    /**
+     * 更新店铺类别
+     *
+     * @param $id
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function updateDistinguish($id, Request $request)
     {
         try {

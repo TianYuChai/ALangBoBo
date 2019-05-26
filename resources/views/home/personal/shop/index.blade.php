@@ -170,7 +170,7 @@
                                                 FileUpload::url('image', Auth::guard('web')->user()->merchant['qr_code'])
                                                 : asset('home/images/img/idImg.png') }}" class="jmImg"
                                                      style="width: 117px; height: 101px"/>
-                                                <input type="file" name="code">
+                                                <input type="file" name="code" accept="image/*">
                                                 <input type="hidden" name="sub_code">
                                             </div>
                                         </fieldset>

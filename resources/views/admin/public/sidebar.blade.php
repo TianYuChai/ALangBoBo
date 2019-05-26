@@ -32,12 +32,27 @@
             <li>
                 <a href="javascript:;">
                     <i class="iconfont">&#xe705;</i>
+                    <cite>店铺管理</cite>
+                    <i class="iconfont nav_right">&#xe697;</i>
+                </a>
+                <ul class="sub-menu">
+                    <li>
+                        <a _href="{{ route('backstage.merchant.index') }}">
+                            <i class="iconfont">&#xe6a7;</i>
+                            <cite>店铺列表</cite>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <a href="javascript:;">
+                    <i class="iconfont">&#xe705;</i>
                     <cite>商品管理</cite>
                     <i class="iconfont nav_right">&#xe697;</i>
                 </a>
                 <ul class="sub-menu">
                     <li>
-                        <a _href="./pages/article/list.html">
+                        <a _href="{{ route('backstage.goods.index') }}">
                             <i class="iconfont">&#xe6a7;</i>
                             <cite>商品列表</cite>
                         </a>
@@ -73,39 +88,6 @@
             </li>
             <li>
                 <a href="javascript:;">
-                    <i class="iconfont">&#xe726;</i>
-                    <cite>管理员管理</cite>
-                    <i class="iconfont nav_right">&#xe697;</i>
-                </a>
-                <ul class="sub-menu">
-                    <li>
-                        <a _href="./pages/admin/list.html">
-                            <i class="iconfont">&#xe6a7;</i>
-                            <cite>管理员列表</cite>
-                        </a>
-                    </li>
-                    <li>
-                        <a _href="./pages/admin/role.html">
-                            <i class="iconfont">&#xe6a7;</i>
-                            <cite>角色管理</cite>
-                        </a>
-                    </li>
-                    <li>
-                        <a _href="./pages/admin/cate.html">
-                            <i class="iconfont">&#xe6a7;</i>
-                            <cite>权限分类</cite>
-                        </a>
-                    </li>
-                    <li>
-                        <a _href="./pages/admin/rule.html">
-                            <i class="iconfont">&#xe6a7;</i>
-                            <cite>权限管理</cite>
-                        </a>
-                    </li>
-                </ul>
-            </li>
-            <li>
-                <a href="javascript:;">
                     <i class="iconfont">&#xe6ce;</i>
                     <cite>系统设置</cite>
                     <i class="iconfont nav_right">&#xe697;</i>
@@ -118,9 +100,9 @@
                         </a>
                     </li>
                     <li>
-                        <a _href="./pages/echarts/echarts2.html">
+                        <a _href="{{ route('backstage.blackList.index') }}">
                             <i class="iconfont">&#xe6a7;</i>
-                            <cite>柱状图</cite>
+                            <cite>黑名单管理</cite>
                         </a>
                     </li>
                     <li>

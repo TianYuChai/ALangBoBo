@@ -9,6 +9,7 @@ namespace App\Http\Services\admin\Member;
 
 use App\Http\Models\admin\RegisterAuditingModel;
 use App\Http\Models\currency\UserModel;
+use App\Http\Models\goods\GoodsModel;
 use App\Http\Services\admin\BaseService;
 use Exception;
 
@@ -105,7 +106,7 @@ class MemberService extends BaseService
      */
     public function saelUpMemberGoods($data)
     {
-
+        GoodsModel::where('uid', intval($data->id))->update(['status' => 1]);
     }
 
     /**
@@ -115,7 +116,7 @@ class MemberService extends BaseService
      */
     public function stopMemberGoods($data)
     {
-
+        GoodsModel::where('uid', intval($data->id))->update(['status' => 0]);
     }
 
     /**

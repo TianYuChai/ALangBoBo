@@ -33,6 +33,7 @@ Route::group(['namespace' => 'home\personal'], function () {
 Route::group(['namespace' => 'home', 'middleware' => 'listenState'], function () {
     /*首页*/
     Route::get('/', 'IndexController@index');
+    Route::get('theBlacklist', 'theblackistController@index');
     /*首页-注册*/
     Route::group(['middleware' => 'whiterlogin'], function () {
         Route::get('register', ['as' => 'index.register', 'uses' => 'RegisterController@index']);
@@ -47,6 +48,10 @@ Route::group(['namespace' => 'home', 'middleware' => 'listenState'], function ()
 
     Route::group(['middleware' => 'auth:web'], function () {
         Route::get('login/loginout', ['as' =>'index.login.loginout', 'uses' => 'LoginController@loginout']);
+        Route::post('theBlacklist/selectShop', ['as' => 'index.theBlacklist.select', 'uses' => 'theblackistController@selectShop']);
+        Route::post('theBlacklist/merchantStore', ['as' => 'index.theBlacklist.merchantStore', 'uses' => 'theblackistController@merchantStore']);
+        Route::post('theBlacklist/selectUser', ['as' => 'index.theBlacklist.selectuser', 'uses' => 'theblackistController@selectUser']);
+        Route::post('theBlacklist/userStore', ['as' => 'index.theBlacklist.userStore', 'uses' => 'theblackistController@userStore']);
         Route::group(['namespace' => 'personal', 'prefix' => 'personal'], function () {
             /*用户中心*/
             Route::get('index', ['as' => 'personal.index', 'uses' => 'PersonalContentController@index']);

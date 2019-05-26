@@ -1,0 +1,117 @@
+.blacklistTop{
+    width:100%;
+    height:56px;
+    background-color: #f4f4f4;
+    margin-top:40px;
+}
+.blacklistTip{
+    display: inline-block;
+    color:#000000;
+    font-size:20px;
+    margin-top: 13px;
+    vertical-align: top;
+}
+.blacklistTop .borderLeft{
+    display: inline-block;
+    border-left:5px solid #e61717;
+    height:30px;
+    vertical-align: top;
+    margin-right:20px;
+    margin-top:13px;
+}
+.borderRight{
+    border-right:1px solid #000000;
+    height:24px;
+    margin-top:10px;
+}
+.shopCarList{
+    border-bottom: 2px solid #e8e8e8;
+    margin-top:30px;
+}
+.shopCarList li{
+    margin-right:10px;
+    margin-left:10px;
+}
+.shopCarList li.active>a{
+    text-decoration: none;
+    border:none!important;
+    color:#eba206!important;
+}
+.shopCarList li.active{
+    border-bottom: 2px solid #eba206;
+}
+.shopCarList li a{
+    display: block;
+    font-size:16px;
+    color:#000000;
+}
+.blackListUl-sj>li:nth-child(3n),.blackListUl-mj>li:nth-child(3n){
+    margin-right:0px!important;
+}
+.blackListUl-sj>li,.blackListUl-mj>li{
+    float:left;
+    border:1px solid #e8e8e8;
+    padding:20px;
+    width:330px;
+    height:170px;
+    /*margin-top:20px;*/
+    /*margin-right:90px;*/
+    margin:20px 30px 0px;
+}
+.blackListUl-sj>li p,.blackListUl-mj>li p{
+    font-size:16px;
+    color:#3d3d3d;
+}
+.blackListUl-sj>li span,.blackListUl-mj>li span{
+    display: inline-block;
+    color:#eba206!important;
+}
+.publishList-sj,.publishList-mj{
+    text-decoration: none;
+    cursor: pointer;
+    position: absolute;
+    top:-40px;
+    right:50px;
+    display: block;
+    font-size:14px;
+    color:#fff;
+    line-height: 30px;
+    padding:0 10px;
+    background-color: #eba206;
+}
+.publishList-sj:hover,.publishList-mj:hover{
+    color:#fff;
+}
+.publishList-sj:focus,.publishList-mj:focus{
+    color:#fff;
+}
+.blackList-qy .publicTip,.blackList-mj .publicTip{
+    font-size:16px;
+    color:#eba206;
+}
+.blackList-qy div,.blackList-mj div{
+    font-size:16px;
+    color:#000;
+    margin-top:10px;
+}
+.blackList-qy div input,.blackList-mj div input{
+    width:400px;
+    height:36px;
+    border:1px solid #e8e8e8;
+}
+.modalWidth{
+    width:800px;
+}
+.year-qy,.month-qy,.day-qy,.year-gr,.month-gr,.day-gr{
+    width:101px!important;
+}
+.mgr-50{
+    margin-right:50px;
+}
+.mjReasonDiv textarea,.reasonDiv textarea{
+    width:400px;
+    max-width: 400px;
+    height:36px;
+    vertical-align: top;
+    border:1px solid #e8e8e8;
+}

@@ -24,6 +24,10 @@ Route::group(['prefix' => 'backstage', 'namespace' => 'admin'], function () {
         Route::get('index', ['as' => 'backstage.index.index', 'uses' => 'IndexController@index']);
         Route::get('welcome', ['as' => 'backstage.index.welcome', 'uses' => 'IndexController@welcome']);
         Route::get('logout', ['as' => 'backstage.login.out', 'uses' => 'basic\LoginController@logout']);
+        /*黑名单*/
+        Route::get('blackList/index', ['as' => 'backstage.blackList.index', 'uses' => 'other\blackListController@index']);
+        Route::post('blackList/{id}/store', ['as' => 'backstage.blackList.store', 'uses' => 'other\blackListController@store']);
+        Route::get('blackList/{id}/del', ['as' => 'backstage.blackList.del', 'uses' => 'other\blackListController@del']);
         /**
          * 会员管理
          */
@@ -49,6 +53,13 @@ Route::group(['prefix' => 'backstage', 'namespace' => 'admin'], function () {
          * 商品管理
          */
         Route::group(['namespace' => 'goods'], function () {
+            /*商铺-商品*/
+            Route::get('goods/index', ['as' => 'backstage.goods.index', 'uses' => 'GoodsAdminController@index']);
+            Route::get('goods/{id}/operstatus', ['as' => 'backstage.goods.operstatus', 'uses' => 'GoodsAdminController@operstatus']);
+            Route::get('goods/{id}/show', ['as' => 'backstage.goods.show', 'uses' => 'GoodsAdminController@show']);
+            /*商铺*/
+            Route::get('goods/merchant/index', ['as' => 'backstage.merchant.index', 'uses' => 'GoodsMerchantController@index']);
+            Route::get('goods/{id}/show', ['as' => 'backstage.merchant.show', 'uses' => 'GoodsMerchantController@show']);
             /*商品-分类*/
             Route::get('goods/category/index', ['as' => 'backstage.category.index', 'uses' => 'GoodsCategoryController@index']);
             Route::get('goods/category/create', ['as' => 'backstage.category.create', 'uses' => 'GoodsCategoryController@create']);
@@ -67,7 +78,6 @@ Route::group(['prefix' => 'backstage', 'namespace' => 'admin'], function () {
                 Route::get('goods/banner/{id}/del', ['as' => 'backstage.banner.del', 'uses' => 'GoodsBannerController@del']);
             });
         });
-
         /**
          * 系统设置
          */
