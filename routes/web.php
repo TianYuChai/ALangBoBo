@@ -34,6 +34,7 @@ Route::group(['namespace' => 'home', 'middleware' => 'listenState'], function ()
     /*首页*/
     Route::get('/', 'IndexController@index');
     Route::get('theBlacklist', 'theblackistController@index');
+    Route::get('product/{type}', 'ProductController@index');
     /*首页-注册*/
     Route::group(['middleware' => 'whiterlogin'], function () {
         Route::get('register', ['as' => 'index.register', 'uses' => 'RegisterController@index']);

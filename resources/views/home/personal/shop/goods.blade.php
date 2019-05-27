@@ -272,6 +272,20 @@
                                                 </div>
                                             </div>
                                             <div class="form-group">
+                                                <label class="col-sm-2 control-label">预售时间</label>
+                                                <div class="col-sm-10">
+                                                    <div class="has-warning">
+                                                        <div class="checkbox">
+                                                            <label>
+                                                                <input type="text" class="form-control"
+                                                                       autocomplete="off" id="test1" name="presell_time">
+                                                                <span>选择预售时间后，该产品则为预售产品</span>
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
                                                 <label class="col-sm-2 control-label">类别</label>
                                                 <div class="col-sm-10">
                                                     <div class="has-warning">
@@ -341,12 +355,16 @@
     <!-- 编辑器源码文件 -->
     <script type="text/javascript" src="{{ asset('home/ueditor/ueditor.all.js') }}"></script>
     <script src="https://cdn.bootcss.com/jquery.form/4.2.2/jquery.form.min.js"></script>
+    <script src="{{ asset('home/layer/laydate/laydate.js') }}"></script>
 @endsection
 @section('section')
     <script type="text/javascript">
         var ue = UE.getEditor('ue-container');
         ue.ready(function(){
             ue.execCommand('serverparam', '_token', '{{ csrf_token() }}');
+        });
+        laydate.render({
+            elem: '#test1' //指定元素
         });
         $('.add').click(function () {
             var data = $('#add_goods').serializeArray();
@@ -357,8 +375,8 @@
                 if(val['name'] == 'title' && !val['value']) {
                     layer.msg('请填写'+ message[val['name']]); return false;
                 }
-                if(!$('.second').has('option').length) {
-                    layer.msg('请选择分类, 不可选一级分类作为商品分类'); return false;
+                if(!$('.three').has('option').length) {
+                    layer.msg('请选择分类, 只可选三级分类作为商品分类'); return false;
                 }
                 if((val['name'] == 'total_price' || val['name'] == 'cost_price'
                     || val['name'] == 'satis_price'||val['name'] == 'stock') && !val['value']) {

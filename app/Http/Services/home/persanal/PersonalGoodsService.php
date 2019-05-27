@@ -19,7 +19,8 @@ use function PHPSTORM_META\type;
 class PersonalGoodsService extends BaseService
 {
     const Tips = [
-        'attribute' => '商品属性错误, 请重新选择'
+        'attribute' => '商品属性错误, 请重新选择',
+        'presell_time' => '预售时间不能小于当前时间'
     ];
     public function __construct(goodsCategoryAttributeModel $attributeModel,
                                 AddressModel $addressModel, GoodsModel $goodsModel,
@@ -40,6 +41,9 @@ class PersonalGoodsService extends BaseService
         }
         $images = $this->filteringImg([$data['cover_img'], $data['rotation_chart']]);
         $address_id = $this->fileteringAddress($data['address']);
+        if(!empty($data['presell_time']) && $data['presell_time'] < getTime('ymd')) {
+            throw new Exception(self::Tips['presell_time']);
+        }
         return [
             'goods' => [
                 'title' => trim($data['title']),
@@ -57,6 +61,7 @@ class PersonalGoodsService extends BaseService
                 'stock' => intval($data['stock']),
                 'new_goods' => isset($data['new_products']) ? intval($data['new_products']) : 0,
                 'content' => isset($data['content']) ? $data['content'] : '',
+                'presell_time' => isset($data['presell_time']) ? $data['presell_time'] : ''
             ],
             'attribute' => isset($attributes) ? $attributes : '',
             'images' => $images

@@ -12,10 +12,7 @@
                 <a href="{{ url('theBlacklist') }}">黑名单公示</a>
             </li>
             <li class="navLi">
-                <a href="">投诉结果公示</a>
-            </li>
-            <li class="navLi">
-                <a href="">预售产品</a>
+                <a href="{{ url('product', ['type' => 'persell']) }}">预售产品</a>
             </li>
             <li class="navLi">
                 <a href="">兼职工</a>

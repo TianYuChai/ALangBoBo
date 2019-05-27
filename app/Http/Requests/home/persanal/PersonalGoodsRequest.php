@@ -36,7 +36,7 @@ class PersonalGoodsRequest extends FormRequest
         return [
             'title' => 'required',
             'category' => ['required', function($attribute, $value, $fail) {
-                if(count($value) < 2 || !goodsCategoryModel::whereIn('id', $value)->exists()) {
+                if(count($value) < 3 || !goodsCategoryModel::whereIn('id', $value)->exists()) {
                     return $fail('商品分类错误, 请重新选择');
                 };
             }],
