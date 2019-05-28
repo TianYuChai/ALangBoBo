@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Auth;
 
 class BaseService {
     protected $userId = null;
-
+    protected static $page_limit = 30;
     public function __construct()
     {
         if(Auth::guard('web')->check()) {

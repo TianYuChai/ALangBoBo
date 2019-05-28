@@ -199,4 +199,20 @@ class GoodsModel extends Model
             return $query->where('status', $search);
         }
     }
+
+    /**
+     * 价格区间查询
+     *
+     * @param $query
+     * @param $search
+     * @return mixed
+     */
+    public function scopeSearchPrice($query, $search)
+    {
+        if($search['min_price'] != null && $search['max_price'] != null) {
+            $min_price = bcmul($search['min_price'], 100);
+            $max_price = bcmul($search['max_price'], 100);
+            return $query->whereBetween('total_fee', [$min_price, $max_price]);
+        }
+    }
 }

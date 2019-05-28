@@ -29,4 +29,20 @@ class goodsCategoryModel extends Model
     {
         return $this->hasMany(goodsCategoryAttributeModel::class, 'cate_id', 'id')->where('status', 0);
     }
+
+    /**
+     * 获取名称
+     *
+     * @return mixed|string
+     */
+    public function getParentMessageAttribute()
+    {
+        if($this->level == 1) {
+            return $this->cate_name;
+        } else {
+            $parent = $this->where('id', $this->p_id)->first();
+            $parents = $this->where('id', $parent->p_id)->first();
+            return $parents->cate_name .'/'. $parent->cate_name;
+        }
+    }
 }

@@ -14,10 +14,12 @@ class ProductController extends BaseController
 {
     public function index($type, Request $request, ProductService $service)
     {
-        $category_id = $request->category;
-
-        $categorys = $service->entrance($type, $category_id);
-
-        return view('home.product');
+        $min_price = $request->min_price;
+        $max_price = $request->max_price;
+        $category_goodss = $service->entrance($type, [
+            'min_price' => $min_price,
+            'max_price' => $max_price
+        ]);
+        return view('home.product', compact('category_goodss'));
     }
 }

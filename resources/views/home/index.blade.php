@@ -31,13 +31,13 @@
                 <ul class="navMenuList">
                     @foreach($data['categorys'] as $key => $category)
                         <li>
-                            <a href="" class="canyinLevel1">{{ $category['name'] }} <span class="mgl-50">></span></a>
+                            <a href="{{ url('product', ['type' =>'opther-' . $category['id']]) }}" class="canyinLevel1">{{ $category['name'] }} <span class="mgl-50">></span></a>
                             <ul class="canyinLevel2">
                                 @foreach($category['children'] as $k => $children)
                                     <li>
                                         <p>{{ $children['name'] }}</p>
                                         @foreach($children['children'] as $s => $val)
-                                            <a href="">{{ $val['name'] }}</a>
+                                            <a href="{{ url('product', ['type' =>'opther-' . $category['id']]) }}">{{ $val['name'] }}</a>
                                         @endforeach
                                     </li>
                                 @endforeach

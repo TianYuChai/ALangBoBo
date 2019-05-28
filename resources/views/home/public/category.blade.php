@@ -12,7 +12,7 @@
                 <a href="{{ url('theBlacklist') }}">黑名单公示</a>
             </li>
             <li class="navLi">
-                <a href="{{ url('product', ['type' => 'persell']) }}">预售产品</a>
+                <a href="{{ url('product', ['type' => 'presell-all']) }}">预售产品</a>
             </li>
             <li class="navLi">
                 <a href="">兼职工</a>
@@ -21,7 +21,7 @@
                 <a href="">直营店和加盟</a>
             </li>
             <li class="navLi">
-                <a href="">白露倩影系列</a>
+                <a href="">百录倩影系列</a>
             </li>
             <li class="navLi">
                 <a href="">美容类</a>
