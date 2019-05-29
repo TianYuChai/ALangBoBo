@@ -20,7 +20,7 @@
                     <li>
                         <?php $type = $category_goodss['nav'] == '预售产品' ? 'presell' : 'opther'?>
                         <a href="{{ url('product', ['type' => $type . '-' . $categorys->id]) }}"
-                           class="{{ Input::get('category') == $categorys->id ? 'typeActive' : '' }}">
+                           class="{{ $category_goodss['selected'] == $categorys->id ? 'typeActive' : '' }}">
                             {{ $categorys->cate_name }}</a>
                     </li>
                 @endforeach
@@ -55,7 +55,7 @@
             <ul class="productList clearfix">
                 @foreach($category_goodss['goods'] as $goodss)
                     <li>
-                        <a class="productA">
+                        <a class="productA" href="{{ url('details', ['id' => $goodss->id]) }}">
                             <img src="{{ FileUpload::url('image', $goodss->cost_img) }}" alt="" class="productImg"/>
                             <p class="productText">{!! $goodss->title !!}</p>
                             <p class="productPrice">￥{!! $goodss->total_price !!}</p>

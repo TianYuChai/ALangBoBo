@@ -1,0 +1,27 @@
+.advanceSaleTip img{
+    width:23px;
+    height:22px;
+    margin-right:5px;
+    margin-top:-3px;
+}
+.advanceSaleTip{
+    width:690px;
+    line-height: 36px;
+    background-color: #e4393c;
+    color:#ffff00;
+    font-size: 16px;
+    margin:0!important;
+ }
+.advanceDate{
+    display: inline-block;
+}
+.advanceDateText{
+    vertical-align: top;
+}
+.advanceInput{
+    width:100px;
+    height:30px;
+}
+.datetimeStart,.datetimeEnd{
+    height:30px;
+}

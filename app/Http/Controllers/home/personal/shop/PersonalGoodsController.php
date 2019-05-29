@@ -287,4 +287,31 @@ class PersonalGoodsController extends BaseController
             ], 510);
         }
     }
+
+    /**
+     * 店长推荐
+     *
+     * @param $id
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function recom($id)
+    {
+        try {
+            $item = $this->goodsModel::where([
+                'id' => intval($id),
+                'uid' => $this->user->id
+            ])->first();
+            if(!$item) {
+                throw new Exception('数据不存在, 请刷新重试');
+            }
+            $item->recom = $item->recom == 0 ? 1 : 0;
+            $item->save();
+            return $this->ajaxReturn();
+        } catch (Exception $e) {
+            return $this->ajaxReturn([
+                'status' => 510,
+                'info' => $e->getMessage()
+            ], 510);
+        }
+    }
 }

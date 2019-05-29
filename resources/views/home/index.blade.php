@@ -37,7 +37,7 @@
                                     <li>
                                         <p>{{ $children['name'] }}</p>
                                         @foreach($children['children'] as $s => $val)
-                                            <a href="{{ url('product', ['type' =>'opther-' . $category['id']]) }}">{{ $val['name'] }}</a>
+                                            <a href="{{ url('product', ['type' =>'opther-' . $val['id']]) }}">{{ $val['name'] }}</a>
                                         @endforeach
                                     </li>
                                 @endforeach

@@ -61,7 +61,8 @@ class ProductService extends BaseService
         return [
             'categorys' => $categorys,
             'goods' => $goods_data,
-            'nav' => '预售产品'
+            'nav' => '预售产品',
+            'selected' => !empty($where['category_id']) ? intval($where['category_id']) : ''
         ];
     }
 
@@ -87,9 +88,10 @@ class ProductService extends BaseService
         }
         $goods_data = $this->goodsModel::where('status', 0)
                                         ->where($where_key, intval($where['category_id']))
-                                        ->where('presell_time', '')
+                                        ->where('presell_time', null)
                                         ->SearchPrice($where['price'])
                                         ->orderBy('id', 'desc')->paginate(self::$page_limit);
+
         $categorys = $this->goodsCategoryModel::where('status', 0)->when($where_key == 'three_category',
             function ($query) use($nav) {
             $query->where('p_id', $nav->p_id);
@@ -103,7 +105,8 @@ class ProductService extends BaseService
         return [
             'categorys' => $categorys,
             'goods' => $goods_data,
-            'nav' => $nav->parent_message
+            'nav' => $nav->parent_message,
+            'selected' => $nav->id
         ];
     }
 }

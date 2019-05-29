@@ -28,7 +28,7 @@ class goodsCategoryService extends BaseService
         $this->ifCategory($cate_name, $id);
 
         $res = [
-            'pid' => isset($data['level']) ? intval($data['level']) : "",
+            'p_id' => isset($data['level']) ? intval($data['level']) : "",
             'cate_name' => $cate_name,
             'sort' => intval($data['sort']),
         ];
@@ -47,14 +47,13 @@ class goodsCategoryService extends BaseService
      */
     public function setMessage($data)
     {
-        $pcategory = goodsCategoryModel::where('id', $data['cate_data']['pid'])->first();
-        if(!$pcategory) {
-            throw new NoCallsException('信息错误');
+        $pcategory = goodsCategoryModel::where('id', $data['cate_data']['p_id'])->first();
+        if(!$pcategory && $data['cate_data']['p_id'] != '0') {
+            throw new Exception('信息错误');
         }
-        $data['cate_data']['pid'] = empty($pcategory) ? $data['cate_data']['pid'] : intval($pcategory->id);
+        $data['cate_data']['p_id'] = empty($pcategory) ? $data['cate_data']['p_id'] : intval($pcategory->id);
         $data['cate_data']['level'] = empty($pcategory) ? 1 : intval($pcategory->level) + 1;
         $category = goodsCategoryModel::create($data['cate_data']);
-
         if($category->level == 2) {
             $this->createAttribute($category->id, $data['cate_attribute_data']);
         }
@@ -68,7 +67,7 @@ class goodsCategoryService extends BaseService
      */
     public function updateMessage($id, $data)
     {
-        unset($data['cate_data']['pid']);
+        unset($data['cate_data']['p_id']);
         $category = goodsCategoryModel::where('id', intval($id))->first();
         $category->cate_name = $data['cate_data']['cate_name'];
         $category->sort = $data['cate_data']['sort'];
@@ -154,11 +153,9 @@ class goodsCategoryService extends BaseService
      * @param int $id
      * @throws Exception
      */
-    public function ifCategory($cate_name, int $id)
+    public function ifCategory($cate_name, $id = '')
     {
-        $category = goodsCategoryModel::where('cate_name', $cate_name)
-                                        ->where('id', '!=', $id)->first();
-        if($category) {
+        if(goodsCategoryModel::where('cate_name', $cate_name)->where('id', '!=', $id)->exists()) {
             throw new exception('分类名称已存在');
         }
     }

@@ -7,6 +7,7 @@
  */
 namespace App\Http\Controllers\home;
 
+use App\Http\Models\goods\GoodsModel;
 use App\Http\Services\home\ProductService;
 use Illuminate\Http\Request;
 
@@ -21,5 +22,25 @@ class ProductController extends BaseController
             'max_price' => $max_price
         ]);
         return view('home.product', compact('category_goodss'));
+    }
+
+    /**
+     * 数据展示
+     *
+     * @param $id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function show($id)
+    {
+        $item = GoodsModel::where([
+            'id' => intval($id),
+            'status' => 0,
+        ])->first();
+        $recom_goods = GoodsModel::where('id', '<>', intval($id))->where([
+            'status' => 0,
+            'recom' => 1,
+            'uid' => $item->uid
+        ])->get();
+        return view('home.show', compact('item', 'recom_goods'));
     }
 }

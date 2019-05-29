@@ -35,6 +35,7 @@ Route::group(['namespace' => 'home', 'middleware' => 'listenState'], function ()
     Route::get('/', 'IndexController@index');
     Route::get('theBlacklist', 'theblackistController@index');
     Route::get('product/{type}', 'ProductController@index');
+    Route::get('details/{id}', 'ProductController@show');
     /*首页-注册*/
     Route::group(['middleware' => 'whiterlogin'], function () {
         Route::get('register', ['as' => 'index.register', 'uses' => 'RegisterController@index']);
@@ -53,6 +54,9 @@ Route::group(['namespace' => 'home', 'middleware' => 'listenState'], function ()
         Route::post('theBlacklist/merchantStore', ['as' => 'index.theBlacklist.merchantStore', 'uses' => 'theblackistController@merchantStore']);
         Route::post('theBlacklist/selectUser', ['as' => 'index.theBlacklist.selectuser', 'uses' => 'theblackistController@selectUser']);
         Route::post('theBlacklist/userStore', ['as' => 'index.theBlacklist.userStore', 'uses' => 'theblackistController@userStore']);
+        Route::group(['prfix' => 'shopp'], function () {
+            Route::post('shopp/{id}/buyNow', ['as' => 'shopp.shopp.buynow', 'uses' => 'shoppingController@buyNow']);
+        });
         Route::group(['namespace' => 'personal', 'prefix' => 'personal'], function () {
             /*用户中心*/
             Route::get('index', ['as' => 'personal.index', 'uses' => 'PersonalContentController@index']);
@@ -95,6 +99,7 @@ Route::group(['namespace' => 'home', 'middleware' => 'listenState'], function ()
                 /*店铺商品*/
                 Route::get('shop/goods', ['as' => 'personal.shop.goods', 'uses' => 'PersonalGoodsController@index']);
                 Route::get('shop/goods/{id}/edit', ['as' =>'personal.goods.edit', 'uses' => 'PersonalGoodsController@edit']);
+                Route::get('shop/goods/{id}/recom', ['as' => 'personal.goods.recom', 'uses' => 'PersonalGoodsController@recom']);
                 /*入驻费是否缴纳或到期*/
                 Route::group(['middleware' => 'whetherdueto'], function () {
                     Route::post('shop/goods/select', ['as' => 'personal.goods.select', 'uses' => 'PersonalGoodsController@select']);
