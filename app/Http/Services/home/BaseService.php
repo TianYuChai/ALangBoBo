@@ -15,6 +15,7 @@ class BaseService {
     public function __construct()
     {
         if(Auth::guard('web')->check()) {
+            $this->user = Auth::guard('web')->user();
             $this->userId = Auth::guard('web')->id();
         }
     }

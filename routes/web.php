@@ -56,6 +56,7 @@ Route::group(['namespace' => 'home', 'middleware' => 'listenState'], function ()
         Route::post('theBlacklist/userStore', ['as' => 'index.theBlacklist.userStore', 'uses' => 'theblackistController@userStore']);
         Route::group(['prfix' => 'shopp'], function () {
             Route::post('shopp/{id}/buyNow', ['as' => 'shopp.shopp.buynow', 'uses' => 'shoppingController@buyNow']);
+            Route::get('shopp/{order_id}/confirmOrder', ['as' => 'shopp.shopp.confirmorder', 'uses' =>'shoppingController@confirmOrder']);
         });
         Route::group(['namespace' => 'personal', 'prefix' => 'personal'], function () {
             /*用户中心*/

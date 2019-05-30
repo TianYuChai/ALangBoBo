@@ -90,13 +90,12 @@
                         </li>
                     </ul>
                 @endforeach
-
                 <ul class="clearfix mgt-20 detailNum pdl-10">
                     <li class="fl fontStyle mgr-20 productAttrFont">数量</li>
                     <li class="mgr-10 fl">
-                        <input id="min" name="" type="button" value="-" class="mgl-10 detailNumInput"/>
-                        <input id="text_box" name="" type="text" value="1" style="width:30px;text-align: center" readonly/>
-                        <input id="add" name="" type="button" value="+" class="detailNumInput"/>
+                        <input id="min" type="button" value="-" class="mgl-10 detailNumInput"/>
+                        <input id="text_box" type="text" value="1" style="width:30px;text-align: center" readonly/>
+                        <input id="add" type="button" value="+" class="detailNumInput"/>
                     </li>
                     <li class="fl">
                         <p class="kucun">当前库存 <span>{{ $item->stocks }}</span></p>
@@ -227,9 +226,9 @@
                 data:obj,
                 dataType: "json",
                 success:function (res) {
-                    // if(res.status == 200) {
-                    //     window.location.href = res.url;
-                    // }
+                    if(res.status == 200) {
+                        window.location.href = res.url;
+                    }
                 },
                 error:function (XMLHttpRequest, textStatus, errorThrown) {
                     //返回提示信息
