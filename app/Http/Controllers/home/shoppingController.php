@@ -8,8 +8,10 @@
 namespace App\Http\Controllers\home;
 
 use App\Http\Models\goods\GoodsModel;
+use App\Http\Services\home\shoppingService;
 use Illuminate\Http\Request;
 use Exception;
+use Illuminate\Support\Facades\Auth;
 
 class shoppingController extends BaseController
 {
@@ -19,16 +21,10 @@ class shoppingController extends BaseController
         $this->goods = $goodsModel;
     }
 
-    public function buyNow($id, Request $request)
+    public function buyNow($id, Request $request, shoppingService $service)
     {
         try {
-            $item = $this->goods::where([
-                'status' => 0,
-                'id' => intval($id)
-            ])->first();
-            if(!$item) {
-                throw new Exception('商品信息错误, 请刷新重试');
-            }
+            $service->buyNow($id, $request);
         } catch (Exception $e) {
             return $this->ajaxReturn([
                 'status' => 510,

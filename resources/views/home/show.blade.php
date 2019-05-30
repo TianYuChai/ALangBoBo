@@ -110,6 +110,8 @@
                 <div class="mgt-30 buyBtn">
                     @if(!$item->presell_time)
                         <a href="javascript:void(0)" class="buyNow">立即购买</a>
+                    @elseif($item->presell_time < getTime())
+                        <a href="javascript:void(0)" class="buyNow">立即购买</a>
                     @endif
                     <a href="javascript:void(0)" class="addCar relative"><i></i>加入购物车</a>
                 </div>
