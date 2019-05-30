@@ -29,7 +29,6 @@ class shoppingController extends BaseController
             if(!$item) {
                 throw new Exception('商品信息错误, 请刷新重试');
             }
-            
         } catch (Exception $e) {
             return $this->ajaxReturn([
                 'status' => 510,
