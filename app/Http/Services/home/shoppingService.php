@@ -15,6 +15,7 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Exception;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Redis;
 use Log;
 
 class shoppingService extends BaseService
@@ -66,7 +67,7 @@ class shoppingService extends BaseService
                 $this->authBuyWay($value['pay_method'], $money);
                 $this->calculatePrice($value['pay_method'], $money);
                 //获取推荐人编码
-                $referees_id = \Redis::get('referess-'. $this->userId. '-'. $item->uid);
+                $referees_id = Redis::get('referess-'. $this->userId. '-'. $item->uid);
                 $this->createOrder([
                     'uid' => $this->userId,
                     'gid' => $item->uid,
