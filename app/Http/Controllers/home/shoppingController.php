@@ -38,12 +38,12 @@ class shoppingController extends BaseController
     public function buyNow($id, Request $request, shoppingService $service)
     {
         try {
-//            $data = [$request->all()];
-//            $data[0]['id'] = intval($id);
-//            $order_id = $service->buyNow($data);
+            $data = [$request->all()];
+            $data[0]['id'] = intval($id);
+            $order_id = $service->buyNow($data);
             return $this->ajaxReturn([
                 'status' => 200,
-                'url' => route('shopp.shopp.confirmorder', ['order_id' => '2019053005498967461650'])
+                'url' => route('shopp.shopp.confirmorder', ['order_id' => $order_id])
             ], 200);
         } catch (Exception $e) {
             return $this->ajaxReturn([
@@ -66,9 +66,10 @@ class shoppingController extends BaseController
             $address = AddressModel::where([
                 'uid' => $this->user->id,
                 'category' => 800
-            ])->get();
+            ])->orderBy('status', 'desc')->get();
             $data = [
-              'address' => $address
+                'orders' => $item,
+                'address' => $address
             ];
             return view('home.confirm_order', compact('data'));
         } catch (Exception $e) {

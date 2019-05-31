@@ -7,6 +7,7 @@
  */
 namespace App\Http\Models\home;
 
+use App\Http\Models\currency\MerchantModel;
 use Illuminate\Database\Eloquent\Model;
 
 class shoppOrderModel extends Model
@@ -28,7 +29,11 @@ class shoppOrderModel extends Model
     {
         return $this->hasOne(orderModel::class, 'order_id', 'order_id');
     }
-
+    /*商家*/
+    public function merchant()
+    {
+        return $this->hasOne(MerchantModel::class, 'uid', 'gid');
+    }
     /*总价*/
     public function setMoneyAttribute($value)
     {
@@ -45,5 +50,40 @@ class shoppOrderModel extends Model
         if($value) {
             $this->attributes['delivery_fee'] = bcmul($value, 100);
         }
+    }
+    /*单价*/
+    public function setFeeAttribute($value)
+    {
+        $this->attributes['fee'] = bcmul($value, 100);
+    }
+
+    /*换算总价*/
+    public function getMoneysAttribute()
+    {
+       return bcdiv($this->money, 100,2);
+    }
+    /*满意度*/
+    public function getSatisfiedFeesAttribute()
+    {
+        return bcdiv($this->satisfied_fee, 100, 2);
+    }
+    /*运费*/
+    public function getDeliveryFeesAttribute()
+    {
+        return bcdiv($this->delivery_fee, 100, 2);
+    }
+    /*单价*/
+    public function getFeesAttribute()
+    {
+        return bcdiv($this->fee, 100, 2);
+    }
+    /**
+     * 格式化商品属性
+     *
+     * @return mixed
+     */
+    public function getGoodssAttribute()
+    {
+        return json_decode($this->goods);
     }
 }

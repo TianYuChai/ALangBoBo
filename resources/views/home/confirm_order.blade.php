@@ -18,7 +18,7 @@
                 <p class="fl sendTo">寄送至</p>
                 <ul class="fl addressList">
                     @foreach($data['address'] as $address)
-                        <li class="addressActive">
+                        <li class="{{ $address->status == 702 ? 'addressActive' : '' }}">
                             <input type="radio" name="address" @if($address->status == 702) checked @endif/>
                             <p class="mgl-10">{{ $address->address .' '.$address->detailed }}
                                 <span>{{ $address->contacts.'('.$address->number .')' }}</span>
@@ -121,73 +121,62 @@
                         <th class="col-gray" width="200"> 商品属性</th>
                         <th class="col-gray" width="150">单价</th>
                         <th class="col-gray" width="150">数量</th>
-                        <th class="col-gray" width="100"> 优惠方式</th>
                         <th class="col-gray">小计</th>
                     </tr>
                     </thead>
                     <tbody>
-                    <tr>
-                        <td colspan="6" class="shopName pdb-10 pdt-10"><input type="checkbox" class="mgt-10">店铺：<span class="mgt-10">d[265324578]</span></td>
-                    </tr>
-                    <tr>
-                        <td colspan="6">
-                            <table class="borderTable">
-                                <tbody>
-                                <tr>
-                                    <td class="shopBabyTd" width="400">
-                                        <div class="clearfix shopBaby">
-                                            <input type="checkbox" class="fl"/>
-                                            <img src="../images/img/carProduct.png" alt="" class="fl mgl-10"/>
-                                            <p class="fl">慵懒风毛衣开衫粗线中长款宽松韩版加厚chic麻花复古温柔风外套女
-                                            </p>
-                                        </div>
-                                    </td>
-                                    <td class="shopAttr" width="200">
-                                        <p>颜色分类： 驼色</p>
-                                        <p>尺码： 均码</p>
-                                    </td>
-                                    <td class="price" width="150">￥100.40</td>
-                                    <td class="number" width="150">2</td>
-                                    <td class="discount" width="100">无优惠</td>
-                                    <td class="totalSum">￥200.80</td>
-                                </tr>
-                                <tr>
-                                    <td class="shopBabyTd" width="400">
-                                        <div class="clearfix shopBaby">
-                                            <input type="checkbox" class="fl"/>
-                                            <img src="../images/img/carProduct.png" alt="" class="fl mgl-10"/>
-                                            <p class="fl">慵懒风毛衣开衫粗线中长款宽松韩版加厚chic麻花复古温柔风外套女
-                                            </p>
-                                        </div>
-                                    </td>
-                                    <td class="shopAttr" width="200">
-                                        <p>颜色分类： 驼色</p>
-                                        <p>尺码： 均码</p>
-                                    </td>
-                                    <td class="price" width="150">￥100.40</td>
-                                    <td class="number" width="150">2</td>
-                                    <td class="discount" width="100">无优惠</td>
-                                    <td class="totalSum">￥200.80</td>
-                                </tr>
-                                </tbody>
-                            </table>
-                        </td>
-                    </tr>
+                    @foreach($data['orders']->orders as $order)
+                        <tr>
+                            <td colspan="6" class="shopName pdb-10 pdt-10">
+                                店铺：<span class="mgt-10">{{ $order['name'] }}[{{ $order['code'] }}]</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="6">
+                                <table class="borderTable">
+                                    <tbody>
+                                        @foreach($order['data'] as $datum)
+                                            <tr>
+                                                <td class="shopBabyTd" width="400">
+                                                    <div class="clearfix shopBaby">
+                                                        <img src="{{ FileUpload::url('image', $datum->goodss->img) }}" alt="" class="fl mgl-10"/>
+                                                        <p class="fl">
+                                                            {{ $datum->goodss->title }}
+                                                        </p>
+                                                    </div>
+                                                </td>
+                                                <td class="shopAttr" width="200">
+                                                    @foreach($datum->goodss->attribute as $value)
+                                                        <p>{{ $value->name }}：{{ $value->value }}</p>
+                                                    @endforeach
+                                                </td>
+                                                <td class="price" width="150">￥{{ $datum->fees }}</td>
+                                                <td class="number" width="150">{{ $datum->num }}</td>
+                                                <td class="totalSum">￥{{ $datum->moneys }}</td>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </td>
+                        </tr>
+                        <tr>
+                            2111
+                        </tr>
+                    @endforeach
                     </tbody>
                 </table>
                 <div class="clearfix">
-                    <div class="message fl">
-                        <span>给卖家留言：</span>
-                        <input type="text"/>
-                    </div>
-                    <p class="sendWay">运送方式 ：普通配送  快递 <span class="mgl-20">￥15.00</span></p>
+                    <div class="message fl"></div>
+                    {{--<p class="sendWay">运送方式 ：普通配送  快递 <span class="mgl-20">￥11</span></p>--}}
                 </div>
                 <div class="fr tr pdr-10">
-                    <p class="sendPrice">￥15.00</p>
-                    <p class="allSum">店铺合计（含运费） <span class="mgl-20">￥305.40</span></p>
-                    <p class="realPrice">实付款：<span class="mgl-20">￥415.80</span></p>
+                    <p class="sendPrice">运费 <span class="mgl-20">￥{{ $data['orders']->delivery_fee }}</span></p>
+                    <p class="allSum">店铺合计（含运费） <span class="mgl-20">￥{{ $data['orders']->total_prices }}</span></p>
+                    <p class="realPrice">实付款：<span class="mgl-20">￥{{ $data['orders']->total_prices }}</span></p>
                     <div class="fr mgt-10">
-                        <a href="" class="inline-block"><img src="../images/img/backShopCar.png" alt="" class="backBtn"/></a>
+                        <a href="" class="inline-block">
+                            <img src="{{ asset('home/images/img/backShopCar.png') }}" class="backBtn"/>
+                        </a>
                         <a href="" class="submitOrder">提交定单</a>
                     </div>
                 </div>

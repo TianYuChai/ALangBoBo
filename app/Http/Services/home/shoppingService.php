@@ -11,6 +11,7 @@ use App\Http\Models\goods\goodsAttributeModel;
 use App\Http\Models\goods\GoodsModel;
 use App\Http\Models\home\orderModel;
 use App\Http\Models\home\shoppOrderModel;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Exception;
 use Illuminate\Support\Facades\DB;
@@ -49,7 +50,7 @@ class shoppingService extends BaseService
                 if(!$item) {
                     throw new Exception('商品信息错误, 请刷新重试');
                 }
-                if($item->presell_time && $item->presell_time < getTime()) {
+                if($item->presell_time && $item->presell_time < getTime('ymd')) {
                     throw new Exception($item->title. ', 该商品为预售商品, 并未到达售卖时间');
                 }
                 if(!empty($value['attribute'])) {
@@ -74,6 +75,7 @@ class shoppingService extends BaseService
                     'referees' => $referees_id,
                     'money' => $money,
                     'num' => $num,
+                    'fee' => $item->total_price,
                     'pay_method' => $value['pay_method'],
                     'goods' => json_encode($goods),
                     'delivery_fee' => $item->delivery_price,
@@ -257,6 +259,7 @@ class shoppingService extends BaseService
                 'total_price' => $this->all_data['order_message']['total_price'],
                 'subscribed_price' => $this->all_data['order_message']['subscribed_price'],
                 'paidin_price' => $this->all_data['order_message']['paidin_price'],
+                'timeout'=> Carbon::now()->modify('+1 days')->toDateTimeString(),
                 'status' => 2001
             ]);
             DB::commit();
