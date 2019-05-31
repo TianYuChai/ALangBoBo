@@ -57,6 +57,7 @@ Route::group(['namespace' => 'home', 'middleware' => 'listenState'], function ()
         Route::group(['prfix' => 'shopp'], function () {
             Route::post('shopp/{id}/buyNow', ['as' => 'shopp.shopp.buynow', 'uses' => 'shoppingController@buyNow']);
             Route::get('shopp/{order_id}/confirmOrder', ['as' => 'shopp.shopp.confirmorder', 'uses' =>'shoppingController@confirmOrder']);
+            Route::post('shopp/{order_id}/store', ['as' => 'shopp.shopp.store', 'uses' => 'shoppingController@store']);
         });
         Route::group(['namespace' => 'personal', 'prefix' => 'personal'], function () {
             /*用户中心*/

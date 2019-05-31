@@ -290,7 +290,6 @@ class PersonalContentController extends BaseController
             }
             $loginService->vefiShort(Auth::guard('web')->user()->number, $code);
             if($method == 'Alipay') {
-                $cash_with_money = 0.5;
                 $alipayService->cashWith($cash_with_money, $procedures_fee, $account);
             } else if($method == 'WeChat') {
 
