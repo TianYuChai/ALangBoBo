@@ -160,7 +160,12 @@
                             </td>
                         </tr>
                         <tr>
-                            2111
+                            <td>
+                                <div class="message fl">
+                                    <span>备注:</span>
+                                    <input type="text">
+                                </div>
+                            </td>
                         </tr>
                     @endforeach
                     </tbody>
