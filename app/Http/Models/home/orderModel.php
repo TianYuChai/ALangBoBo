@@ -7,6 +7,7 @@
  */
 namespace App\Http\Models\home;
 
+use App\Http\Models\currency\CapitalModel;
 use function foo\func;
 use Illuminate\Database\Eloquent\Model;
 use Exception;
@@ -86,6 +87,28 @@ class orderModel extends Model
                     ]);
                 }
             }
+        });
+        /*更新订单对应数据，子订单状态以及分享订单状态*/
+        static::updated(function ($query) {
+           if($query->status == 2101) {
+               try {
+                    shoppOrderModel::where([
+                        'order_id' => $query->order_id,
+                        'pay_method' => 'paidin',
+                        'status' => 200
+                    ])->update(['status' => 300]);
+                    shareStatisticsModel::where([
+                        'order_id' => $query->order_id,
+                        'status' => 200,
+                    ])->update(['status' => 300]);
+               } catch (Exception $e) {
+                   Log::info('支付完成后，更新对应数据: ', [
+                       'order_id' => $query->order_id,
+                       'time' => getTime(),
+                       'info' => $e->getMessage()
+                   ]);
+               }
+           }
         });
     }
 

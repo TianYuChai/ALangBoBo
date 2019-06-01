@@ -26,6 +26,7 @@ Route::post('faceRecognition', ['as' => 'index.face', 'uses' => 'faceRecognition
 Route::group(['namespace' => 'home\personal'], function () {
     Route::post('notify', ['as' => 'index.alipay.notify', 'uses' => 'PersonalCreditMarginController@notify']);
     Route::post('busin/notify', ['as' => 'index.busin.notify', 'uses' => 'PesonalBusinResidFeeController@notify']);
+    Route::post('order/notify', ['as' => 'index.order.notify', 'uses' => 'shoppingController@notify']);
 });
 /**
  * 前台管理路由设置

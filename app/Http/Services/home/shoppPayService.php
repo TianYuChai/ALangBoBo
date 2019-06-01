@@ -162,7 +162,7 @@ class shoppPayService extends BaseService
                 'subject' => '阿郎博波商务中心',
                 'body' => '商品购买',
             ];
-            $this->config['notify_url'] = route('index.alipay.notify');
+            $this->config['notify_url'] = route('index.order.notify');
             $this->config['return_url'] = route('personal.creditmargin');
             $alipay = Pay::alipay($this->config)->web($order);
             return $alipay;
@@ -173,6 +173,37 @@ class shoppPayService extends BaseService
                 'info' => $e->getMessage()
             ]);
             throw new Exception('请联系管理员', 510);
+        }
+    }
+
+    /**
+     * 订单支付回调
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @throws \Yansongda\Pay\Exceptions\InvalidConfigException
+     * @throws \Yansongda\Pay\Exceptions\InvalidSignException
+     */
+    public function notify()
+    {
+        try {
+            $vailet = Pay::alipay($this->config)->verify();
+            $data = $vailet->all();
+            if($data['trade_status'] == 'TRADE_SUCCESS' || $data['trade_status'] == 'TRADE_FINISHED'
+                && $data['app_id'] == $this->config['app_id']) {
+                    $this->orderModel::where([
+                        'order_id' => strval($data['out_trade_no']),
+                        'status' => 2001
+                    ])->update(['status' => 2101]);
+                Log::info('订单支付宝异步回调处理结束', [
+                    'order_id' => $data['out_trade_no']
+                ]);
+            }
+            return Pay::alipay($this->config)->success();
+        } catch (Exception $e) {
+            Log::info('支付宝支付回调:', [
+                'time' => getTime(),
+                'info' => $e->getMessage()
+            ]);
         }
     }
 }

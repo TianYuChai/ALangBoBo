@@ -107,4 +107,20 @@ class shoppingController extends BaseController
             ], $e->getCode());
         }
     }
+
+    /**
+     * 异步回调
+     *
+     * @param shoppingService $shoppingService
+     * @return mixed
+     */
+    public function notify(shoppingService $shoppingService)
+    {
+        try {
+            $result = $shoppingService->notify();
+        } catch (Exception $e) {
+            Log::info('支付宝异步回调错误:' . $e->getMessage());
+        }
+        return $result;
+    }
 }
