@@ -112,7 +112,7 @@ class shoppPayService extends BaseService
                     'order_id' => $item->order_id,
                     'money' => $item->moneys,
                     'trade_mode' => $data['method'],
-                    'memo' => '用户备注:' . empty($item->memo) ? '无' : $item->memo. ','. '平台备注: 用户下单支付订单',
+                    'memo' => '用户备注:' . empty($item->memo) ? '无, 平台备注: 用户下单支付订单' : $item->memo. ','. '平台备注: 用户下单支付订单',
                     'category' => 500,
                     'status' => 1003,
                     'trans_at' => getTime(),
@@ -190,10 +190,12 @@ class shoppPayService extends BaseService
             $data = $vailet->all();
             if($data['trade_status'] == 'TRADE_SUCCESS' || $data['trade_status'] == 'TRADE_FINISHED'
                 && $data['app_id'] == $this->config['app_id']) {
-                    $this->orderModel::where([
+                    $item = $this->orderModel::where([
                         'order_id' => strval($data['out_trade_no']),
                         'status' => 2001
-                    ])->update(['status' => 2101]);
+                    ])->first();
+                    $item->status = 2101;
+                    $item->save();
                 Log::info('订单支付宝异步回调处理结束', [
                     'order_id' => $data['out_trade_no']
                 ]);

@@ -59,6 +59,7 @@ class orderModel extends Model
     {
         return bcdiv($this->paidin_price, 100, 2);
     }
+
     /**
      * 事件处理
      * created: 在创建总订单时创建分享数据
