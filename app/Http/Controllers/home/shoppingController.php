@@ -114,10 +114,10 @@ class shoppingController extends BaseController
      * @param shoppingService $shoppingService
      * @return mixed
      */
-    public function notify(shoppingService $shoppingService)
+    public function notify(shoppPayService $shoppPayService)
     {
         try {
-            $result = $shoppingService->notify();
+            $result = $shoppPayService->notify();
         } catch (Exception $e) {
             Log::info('支付宝异步回调错误:' . $e->getMessage());
         }
