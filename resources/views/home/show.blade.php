@@ -107,12 +107,10 @@
                     <input type="radio" name="buyWay" class="shijiao" value="paidin"/>实缴
                 </div>
                 <div class="mgt-30 buyBtn">
-                    @if(!$item->presell_time)
-                        <a href="javascript:void(0)" class="buyNow">立即购买</a>
-                    @elseif($item->presell_time < getTime())
+                    @if(!$item->presell_time || $item->presell_time < getTime())
                         <a href="javascript:void(0)" class="buyNow">立即购买</a>
                     @endif
-                    <a href="javascript:void(0)" class="addCar relative"><i></i>加入购物车</a>
+                    <a href="javascript:void(0)" class="addCar relative addshop"><i></i>加入购物车</a>
                 </div>
             </div>
         </div>
@@ -254,6 +252,24 @@
                     }
                 }
             });
-        })
+        });
+        $('.addshop').click(function () {
+            var obj = {};
+            var attribute = [];
+            $('.sizeActive').each(function () {
+                attribute.push($(this).data('id'));
+            });
+            obj['attribute'] = attribute;
+            obj['num'] = $('#text_box').val();
+            $('input[name="buyWay"]').each(function () {
+                if($(this).is(':checked')) {
+                    obj['pay_method'] = $(this).val();
+                }
+            });
+            if(!obj['pay_method']) {
+                layer.msg('请选择付款方式'); return false;
+            }
+            console.log(obj);
+        });
     </script>
 @endsection

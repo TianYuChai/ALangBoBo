@@ -12,6 +12,7 @@ use App\Http\Models\goods\GoodsModel;
 use App\Http\Models\home\orderModel;
 use App\Http\Models\home\shareStatisticsModel;
 use App\Http\Models\home\shoppOrderModel;
+use Carbon\Carbon;
 use Exception;
 use Illuminate\Support\Facades\DB;
 use Log;
@@ -43,8 +44,11 @@ class shoppPayService extends BaseService
             'status' => 2001
         ])->first();
         if($item->paidin_price == '0') {
-
+            return $this->subscribedWith($order_id);
         } else {
+            if($item->subscribed_price != '0'){
+                $this->subscribedWith($order_id);
+            };
             if($data['method'] == 'Alipay') {
                 return $this->alipay($item);
             } else if($data['method'] == 'WeChat'){
@@ -146,6 +150,34 @@ class shoppPayService extends BaseService
         }
     }
 
+    /**
+     * 订单认缴模式
+     *
+     * 将订单下认缴订单进行处理
+     *
+     * @param $data
+     */
+    protected function subscribedWith($data)
+    {
+        try {
+            $this->shopp_orderModel::where([
+                'order_id' => $data,
+                'pay_method' => 'subscribed',
+                'status' => 200
+            ])->update([
+                'status' => 300,
+                'timeout' => Carbon::now()->modify('+30 days')->toDateTimeString()
+            ]);
+            return ['info' => '支付完成', 'url' => ''];
+        } catch (Exception $e) {
+            Log::info('认缴订单处理流程：', [
+               'time' => getTime(),
+               'order_id' => $data,
+               'info' => $e->getMessage()
+            ]);
+            throw new Exception('请联系管理员', 510);
+        }
+    }
     /**
      * 支付宝支付
      *

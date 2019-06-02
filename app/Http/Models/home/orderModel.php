@@ -8,7 +8,6 @@
 namespace App\Http\Models\home;
 
 use App\Http\Models\currency\CapitalModel;
-use function foo\func;
 use Illuminate\Database\Eloquent\Model;
 use Exception;
 use Log;
@@ -144,8 +143,8 @@ class orderModel extends Model
     public function getDeliveryFeeAttribute()
     {
         $result = 0;
-        foreach ($this->child() as $item) {
-            $result += $item->deliver_price;
+        foreach ($this->child as $item) {
+            $result += $item->delivery_fee;
         }
         $delivery_price = bcdiv($result, 100, 2);
         return $delivery_price == '' ? 0 : $delivery_price;
