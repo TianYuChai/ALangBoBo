@@ -131,7 +131,7 @@
                         <th class="col-gray" width="150">单价</th>
                         <th class="col-gray" width="150">数量</th>
                         <th class="col-gray" width="150">备注</th>
-                        <th class="col-gray">小计</th>
+                        <th class="col-gray">小计(邮费)</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -165,19 +165,13 @@
                                                 <td>
                                                     <textarea type="text" class="memo" data-id="{{ $datum->id }}"></textarea>
                                                 </td>
-                                                <td class="totalSum">￥{{ $datum->moneys }}</td>
+                                                <td class="totalSum">￥{{ $datum->moneys }} ({{ $datum->freep_rice }})</td>
                                             </tr>
                                         @endforeach
                                     </tbody>
                                 </table>
                             </td>
                         </tr>
-                        {{--<tr>--}}
-                            {{--<td style="text-align: left; line-height:30px">--}}
-                                {{--<span>备注:</span>--}}
-                                {{--<input type="text" style="width: 60%;" name="menu[{{ $order['id'] }}]">--}}
-                            {{--</td>--}}
-                        {{--</tr>--}}
                     @endforeach
                     </tbody>
                 </table>
@@ -192,7 +186,7 @@
                     <p class="allSum">店铺合计（含运费） <span class="mgl-20">￥{{ $data['orders']->total_prices }}</span></p>
                     <p class="realPrice">实付款：<span class="mgl-20">￥{{ $data['orders']->real_pay }}</span></p>
                     <div class="fr mgt-10">
-                        <a href="" class="inline-block">
+                        <a href="{{ route('shopp.shopp.car') }}" class="inline-block">
                             <img src="{{ asset('home/images/img/backShopCar.png') }}" class="backBtn"/>
                         </a>
                         <a href="javascript:void(0)" class="submitOrder">提交定单</a>

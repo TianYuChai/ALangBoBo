@@ -269,7 +269,43 @@
             if(!obj['pay_method']) {
                 layer.msg('请选择付款方式'); return false;
             }
-            console.log(obj);
+            $.ajax({
+                headers: {
+                    'X-CSRF-TOKEN': "{{ csrf_token() }}"
+                },
+                method:"POST",
+                url:"{!! route('shopp.shopp.cart', ['id' => $item->id]) !!}",
+                data:obj,
+                dataType: "json",
+                success:function (res) {
+                    if(res.status == 200) {
+                        layer.msg(res.info);
+                    }
+                },
+                error:function (XMLHttpRequest, textStatus, errorThrown) {
+                    //返回提示信息
+                    try {
+                        if(XMLHttpRequest.status == 429) {
+                            layer.msg('请求过快, 请稍后再试');return;
+                        }
+                        if(XMLHttpRequest.status == 401) {
+                            var errors = JSON.parse(XMLHttpRequest.responseText)['errors']['info'];
+                            layer.msg(errors[0]);return;
+                        }
+                        var errors = XMLHttpRequest.responseJSON.errors;
+                        for (var value in errors) {
+                            layer.msg(errors[value][0]);return;
+                        }
+                    } catch (e) {
+                        if(XMLHttpRequest.statusText == 'Unauthorized') {
+                            window.location.href = "{{ route('index.login') }}";
+                        } else {
+                            var errors = JSON.parse(XMLHttpRequest.responseText)['errors']['info'];
+                            layer.msg(errors[0]);return;
+                        }
+                    }
+                }
+            });
         });
     </script>
 @endsection

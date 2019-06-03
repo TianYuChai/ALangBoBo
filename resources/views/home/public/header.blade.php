@@ -66,10 +66,10 @@
                     <a href="">客服</a>
                 </li>
                 <li class="fl shopCar">
-                    <a href="" class="relative">
+                    <a href="{{ route('shopp.shopp.car') }}" class="relative">
                         <img src="{{ asset('home/images/icon/car.png') }}" alt=""/>
                         <span>我的购物车</span>
-                        <i>0</i>
+                        <i>{{ Auth::guard('web')->check() ? Auth::guard('web')->user()->shopp_car_num : 0 }}</i>
                     </a>
                 </li>
             </ul>

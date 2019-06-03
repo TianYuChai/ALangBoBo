@@ -8,7 +8,10 @@
 namespace App\Console\Commands;
 
 use App\Http\Models\currency\CapitalModel;
+use App\Http\Models\home\shoppOrderModel;
 use Illuminate\Console\Command;
+use Exception;
+use Log;
 
 class credit extends Command
 {
@@ -30,6 +33,7 @@ class credit extends Command
     {
         parent::__construct();
         $this->model = CapitalModel::class;
+        $this->shoppOrderModel = shoppOrderModel::class;
     }
 
     /**
@@ -43,6 +47,26 @@ class credit extends Command
      */
     public function handle()
     {
-
+        try {
+            $items = $this->model::where([
+                'category' => 300,
+                'status' => 1003,
+            ])->where('due_at', '<', getTime())->get();
+            $orders = $this->shoppOrderModel::whereIn('uid', $items->pluck('uid'))
+                ->where('pay_method', 'subscribed')
+                ->where('timeout', '<>', '0000-00-00 00:00:00')
+                ->groupBy('uid')->get()->toArray();
+            foreach ($items as $item) {
+                if(!isset($orders[$item->uid])) {
+                    $item->status = 1001;
+                    $item->save();
+                }
+            }
+        } catch (Exception $e) {
+            Log::info('解冻保证金:', [
+                'time' => getTime(),
+                'info' => $e->getMessage(),
+            ]);
+        }
     }
 }

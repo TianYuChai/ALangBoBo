@@ -35,10 +35,10 @@
                             <a href="{{ route('personal.address') }}">地址管理</a>
                         </li>
                         <li>
-                            <a href="../html/shopCarList-sum.html">我的购物车</a>
+                            <a href="{{ route('shopp.shopp.car') }}">我的购物车</a>
                         </li>
                         <li>
-                            <a href="../html/merchantCenter_buyThings.html">已买到的宝贝</a>
+                            <a href="{{ route('personal.havegoods', ['type' => 'allOrder']) }}">已买到的宝贝</a>
                         </li>
                         <li>
                             <a href="{{ route('personal.creditmargin') }}">信用保证金</a>
@@ -61,7 +61,7 @@
                 <div class="jine clearfix">
                     <div class="fl mgr-80">
                         <p>冻结信用保证金：<span>{{ Auth::guard('web')->user()->frozen_capital }}</span> 元    </p>
-                        <a href="">解冻</a>
+                        {{--<a href="">解冻</a>--}}
                     </div>
                     <div class="fl">
                         <p>帐户可用余额：<span>{{ Auth::guard('web')->user()->available_money }}</span> 元</p>

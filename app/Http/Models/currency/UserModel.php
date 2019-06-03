@@ -3,6 +3,7 @@
 namespace App\Http\Models\currency;
 
 use App\Http\Models\admin\RegisterAuditingModel;
+use App\Http\Models\home\shoppCarModel;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class UserModel extends Authenticatable
@@ -50,14 +51,22 @@ class UserModel extends Authenticatable
         return $this->hasOne(MerchantModel::class, 'uid', 'id');
     }
 
+    /*会员审核驳回记录表*/
     public function registerauditing()
     {
         return $this->hasOne(RegisterAuditingModel::class, 'uid', 'id');
     }
 
+    /*资金表*/
     public function capital()
     {
         return $this->hasMany(CapitalModel::class, 'uid', 'id');
+    }
+
+    /*购物车*/
+    public function shoppCar()
+    {
+        return $this->hasMany(shoppCarModel::class, 'uid', 'id');
     }
     /**
      * 账户类别展示
@@ -181,5 +190,10 @@ class UserModel extends Authenticatable
     public function getMerchantDueAttribute()
     {
         return $this->merchant->due_at < getTime() ? false : true;
+    }
+
+    public function getShoppCarNumAttribute()
+    {
+        return $this->shoppCar()->count();
     }
 }

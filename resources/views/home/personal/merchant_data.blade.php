@@ -33,10 +33,10 @@
                             <a href="{{ route('personal.address') }}">地址管理</a>
                         </li>
                         <li>
-                            <a href="../html/shopCarList-sum.html">我的购物车</a>
+                            <a href="{{ route('shopp.shopp.car') }}">我的购物车</a>
                         </li>
                         <li>
-                            <a href="../html/merchantCenter_buyThings.html">已买到的宝贝</a>
+                            <a href="{{ route('personal.havegoods', ['type' => 'allOrder']) }}">已买到的宝贝</a>
                         </li>
                         <li>
                             <a href="{{ route('personal.creditmargin') }}">信用保证金</a>

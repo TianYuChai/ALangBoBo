@@ -141,6 +141,7 @@ class GoodsModel extends Model
             return MerchantCategoryModel::find($this->nav_category)->name;
         }
     }
+
     /*商品分类*/
     public function getGoodsCategoryAttribute()
     {
@@ -155,7 +156,7 @@ class GoodsModel extends Model
     /*当前库存*/
     public function getStocksAttribute()
     {
-        return bcsub($this->stock, $this->sold);
+        return intval(bcsub($this->stock, $this->sold));
     }
     /**
      * 搜索商品标题

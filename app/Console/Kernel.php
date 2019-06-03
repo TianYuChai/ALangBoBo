@@ -31,6 +31,7 @@ class Kernel extends ConsoleKernel
         //          ->hourly();
         $schedule->command('banner')->everyMinute()->timezone('Asia/Shanghai')->runInBackground(); //轮播图
         $schedule->command('black')->everyMinute()->timezone('Asia/Shanghai')->runInBackground(); //黑名单
+        $schedule->command('credit')->everyMinute()->timezone('Asia/Shanghai')->runInBackground(); //解冻保证金
     }
 
     /**

@@ -59,6 +59,10 @@ Route::group(['namespace' => 'home', 'middleware' => 'listenState'], function ()
             Route::post('shopp/{id}/buyNow', ['as' => 'shopp.shopp.buynow', 'uses' => 'shoppingController@buyNow']);
             Route::get('shopp/{order_id}/confirmOrder', ['as' => 'shopp.shopp.confirmorder', 'uses' =>'shoppingController@confirmOrder']);
             Route::post('shopp/{order_id}/store', ['as' => 'shopp.shopp.store', 'uses' => 'shoppingController@store']);
+            Route::post('shopp/{id}/shoppcart', ['as' => 'shopp.shopp.cart', 'uses' => 'shoppingController@shoppCart']);
+            Route::get('shopp/shoppcar', ['as' => 'shopp.shopp.car', 'uses' => 'shoppingController@shoppCar']);
+            Route::post('shopp/delgoods', ['as' => 'shopp.shopp.delgoods', 'uses' => 'shoppingController@delGoods']);
+            Route::post('shopp/shoppsettlement', ['as' => 'shopp.shopp.shoppsettlement', 'uses' => 'shoppingController@shoppSettlement']);
         });
         Route::group(['namespace' => 'personal', 'prefix' => 'personal'], function () {
             /*用户中心*/
@@ -80,6 +84,7 @@ Route::group(['namespace' => 'home', 'middleware' => 'listenState'], function ()
             Route::post('businresidfee/pay', ['as' => 'personal.businresidfee.pay', 'uses' => 'PesonalBusinResidFeeController@pay'])->middleware('judgemerchant');
             Route::get('merchant', ['as' => 'personal.merchant', 'uses' => 'PersonalMerchantController@index'])->middleware("judgeordinuser");
             Route::post('store', ['as' => 'personal.store', 'uses' => 'PersonalMerchantController@store'])->middleware("judgeordinuser");
+            Route::get('{type}/havegoods', ['as' => 'personal.havegoods', 'uses' => 'PersonalHaveGoodsController@index']);
             /*用户中心--商户*/
             Route::group(['namespace' => 'shop', 'middleware' => 'shop'], function () {
                 /*店铺店招*/

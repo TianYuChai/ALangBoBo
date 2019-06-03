@@ -52,6 +52,13 @@ class shoppOrderModel extends Model
             $this->attributes['delivery_fee'] = bcmul($value, 100);
         }
     }
+    /*包邮*/
+    public function setPackMailAttribute($value)
+    {
+        if($value) {
+            $this->attributes['pack_mail'] = bcmul($value, 100);
+        }
+    }
     /*单价*/
     public function setFeeAttribute($value)
     {
@@ -72,6 +79,11 @@ class shoppOrderModel extends Model
     public function getDeliveryFeesAttribute()
     {
         return bcdiv($this->delivery_fee, 100, 2);
+    }
+    /*包邮*/
+    public function getFreePriceAttribute()
+    {
+        return bcdiv($this->pack_mail, 100, 2);
     }
     /*单价*/
     public function getFeesAttribute()

@@ -51,8 +51,14 @@ class shoppingService extends BaseService
                 if(!$item) {
                     throw new Exception('商品信息错误, 请刷新重试');
                 }
+                if($item->uid == $this->user->id) {
+                    throw new Exception('商家不可购买自己店铺的商品');
+                }
                 if($item->presell_time && $item->presell_time < getTime('ymd')) {
                     throw new Exception($item->title. ', 该商品为预售商品, 并未到达售卖时间');
+                }
+                if($num > $item->stocks) {
+                    throw new Exception($item->title.', 商品超出可售范围');
                 }
                 if(!empty($value['attribute'])) {
                     $attribute = $this->buyNowAttribute($value['id'], $value['attribute']);
@@ -68,7 +74,7 @@ class shoppingService extends BaseService
                 $this->calculatePrice($value['pay_method'], $money);
                 //获取推荐人编码
                 $referees_id = Redis::get('referess-'. $this->userId. '-'. $item->uid);
-                $this->createOrder([
+                $goods_orders[] = [
                     'uid' => $this->userId,
                     'gid' => $item->uid,
                     'sid' => $item->id,
@@ -80,14 +86,17 @@ class shoppingService extends BaseService
                     'pay_method' => $value['pay_method'],
                     'goods' => json_encode($goods),
                     'delivery_fee' => $item->delivery_price,
+                    'pack_mail' => $item->free_price,
                     'satisfied_fee' => $item->satic_price,
                     'status' => 200
-                ]);
+                ];
             }
+            $this->createOrder($goods_orders);
             $order_id = $this->createTotalOrder($order_id);
             return $order_id;
         }
     }
+
     /**
      * 确认商品属性
      *
@@ -227,11 +236,13 @@ class shoppingService extends BaseService
     {
         DB::beginTransaction();
         try {
-            $item = $this->goods::where('id', $data['sid'])->sharedLock()->first();
-            $item->sold = bcadd($data['num'], $item->sold);
-            $item->save();
-            $this->shopp_orderModel::create($data);
-            DB::commit();
+            foreach ($data as $datum) {
+                $item = $this->goods::where('id', $datum['sid'])->sharedLock()->first();
+                $item->sold = bcadd($datum['num'], $item->sold);
+                $item->save();
+                $this->shopp_orderModel::create($datum);
+                DB::commit();
+            }
         } catch (Exception $e) {
             DB::rollBack();
             Log::info('下单流程->创建订单->创建订单:', [

@@ -10,6 +10,7 @@ namespace App\Http\Controllers\home;
 use App\Http\Models\goods\GoodsModel;
 use App\Http\Services\home\ProductService;
 use Illuminate\Http\Request;
+use Exception;
 
 class ProductController extends BaseController
 {
