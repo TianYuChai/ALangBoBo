@@ -25,6 +25,10 @@ class shoppOrderModel extends Model
         700 => '订单取消'
     ];
 
+    public static $_METHOD = [
+        'subscribed' => '认缴',
+        'paidin' => '实缴'
+    ];
     /*总订单*/
     public function order()
     {
@@ -98,5 +102,29 @@ class shoppOrderModel extends Model
     public function getGoodssAttribute()
     {
         return json_decode($this->goods);
+    }
+
+    /**
+     * 支付方式
+     *
+     * @return mixed
+     */
+    public function getPayMethodsAttribute()
+    {
+        return array_get(self::$_METHOD, $this->pay_method, '未知');
+    }
+
+    /**
+     * 搜索订单
+     *
+     * @param $query
+     * @param $search
+     * @return mixed
+     */
+    public function scopeSearchOrderId($query, $search)
+    {
+        if(!empty($search)) {
+            return $query->where('order_id', 'like', "%$search%");
+        }
     }
 }

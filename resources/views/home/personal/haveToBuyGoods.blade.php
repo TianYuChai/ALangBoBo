@@ -37,7 +37,7 @@
                             <a href="{{ route('shopp.shopp.car') }}">我的购物车</a>
                         </li>
                         <li>
-                            <a href="{{ route('personal.havegoods') }}"  class="leftNavActive">已买到的宝贝</a>
+                            <a href="{{ route('personal.havegoods', ['type' => 'allOrder']) }}"  class="leftNavActive">已买到的宝贝</a>
                         </li>
                         <li>
                             <a href="{{ route('personal.creditmargin') }}">信用保证金</a>
@@ -57,34 +57,36 @@
                 <!--列表部分-->
                 <div class="receiveSend">
                     <ul id="myTab" class="nav nav-tabs shopCarList">
-                        <li class="active">
-                            <a href="#allOrder" data-toggle="tab">
+                        <li class="{{ $data['type'] == 'allOrder' ? 'active' :''}}">
+                            <a href="{{ route('personal.havegoods', ['type' => 'allOrder']) }}">
                                 所有订单
                             </a>
                         </li>
                         <li class="borderRight"></li>
-                        <li>
-                            <a href="{{ route('personal.havegoods', ['type' => 'waitPay']) }}" data-toggle="tab">待付款</a>
+                        <li class="{{ $data['type'] == 'waitPay' ? 'active' :''}}">
+                            <a href="{{ route('personal.havegoods', ['type' => 'waitPay']) }}">待付款</a>
                         </li>
                         <li class="borderRight"></li>
-                        <li>
-                            <a href="#waitSend" data-toggle="tab">待发货</a>
+                        <li class="{{ $data['type'] == 'waitSend' ? 'active' :''}}">
+                            <a href="{{ route('personal.havegoods', ['type' => 'waitSend']) }}">待发货</a>
                         </li>
                         <li class="borderRight"></li>
-                        <li>
-                            <a href="#waitReceive" data-toggle="tab">待收货</a>
+                        <li class="{{ $data['type'] == 'waitReceive' ? 'active' :''}}">
+                            <a href="{{ route('personal.havegoods', ['type' => 'waitReceive']) }}">待收货</a>
                         </li>
                         <li class="borderRight"></li>
-                        <li>
-                            <a href="#waitEvaluate" data-toggle="tab">待评价</a>
+                        <li class="{{ $data['type'] == 'waitEvaluate' ? 'active' :''}}">
+                            <a href="{{ route('personal.havegoods', ['type' => 'waitEvaluate']) }}">待评价</a>
                         </li>
                     </ul>
                     <div id="myTabContent" class="tab-content">
                         <!--tab1 所有订单-->
                         <div class="tab-pane fade in active" id="allOrder">
                             <div class="orderSearch clearfix">
-                                <input type="text" placeholder="输入商品标题或订单号进行搜索"/>
-                                <a>订单搜索</a>
+                                <form action="" method="get" id="subForm">
+                                    <input type="text" placeholder="输入订单号进行搜索" value="" name="order_id"/>
+                                    <a onclick="document:subForm.submit()">订单搜索</a>
+                                </form>
                             </div>
                             <div class="orderList">
                                 <table align="center" class="table tl" frame="box">
@@ -102,861 +104,115 @@
                                     <tbody>
                                     <tr>
                                         <td colspan="6" class="tl checkboxTd">
-                                            <input type="checkbox" class="checkAll"/>全选
+                                            {{--<input type="checkbox" class="checkAll"/>全选--}}
                                         </td>
-                                        <td colspan="1" class="tc choosePage">
-                                            <a href="">上一页</a>
-                                            <a href="">下一页</a>
-                                        </td>
+                                        {{--<td colspan="1" class="tc choosePage">--}}
+                                            {{--<a href="">上一页</a>--}}
+                                            {{--<a href="">下一页</a>--}}
+                                        {{--</td>--}}
                                     </tr>
                                     <!--全部订单列表-->
-                                    <!--立即付款按钮样式类名：payMoneyBtn,确认收货按钮样式类名：sureBtn，剩余时间样式类名：timeBtn，取消订单样式类名：deleteBtn-->
-
-                                    <tr>
-                                        <td colspan="7" class="pd-0">
-                                            <table class="mgt-20">
-                                                <!--此部分thead用于占位对齐，不具备实际意义-->
-                                                <thead>
-                                                <tr>
-                                                    <th class="tc" width="440"></th>
-                                                    <th width="70"></th>
-                                                    <th width="70"></th>
-                                                    <th width="110"></th>
-                                                    <th width="110"></th>
-                                                    <th width="100"></th>
-                                                    <th class="tc"></th>
-                                                </tr>
-                                                </thead>
-                                                <tbody>
-                                                <tr>
-                                                    <td colspan="7" class="tl pd-0">
-                                                        <div class="shopProductTop">
-                                                            <input type="checkbox" name="checkbox"/><span class="mgr-20">2019-03-15</span>
-                                                            <span class="mgr-20">订单号：<span>123456789456123</span></span>
-                                                            <span class="mgr-20">包大圣</span>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="clearfix shopcarListTd1 pd-20 pdl-10" width="430">
-                                                        <img src="../images/img/shopcarListImg.png" class="fl"/>
-                                                        <div class="fl">
-                                                            <p>原创复古医生包 头层牛皮单肩斜挎包 真皮女包口金包手
-                                                                提包小挎包</p>
-                                                            <p>颜色分类：<span>深酒红色</span></p>
-                                                        </div>
-                                                    </td>
-                                                    <td class="pd-20">￥23.90</td>
-                                                    <td class="pd-20">1</td>
-                                                    <td class="pd-20">
-                                                        <p>￥23.90 </p>
-                                                        <p>（含运费：￥0.00）</p>
-                                                    </td>
-                                                    <td class="pd-20">认缴</td>
-                                                    <td class="pd-20 tradeStatus">
-                                                        <a>等待买家付款</a>
-                                                        <a>订单详情</a>
-                                                        <a>信用保证金</a>
-                                                    </td>
-                                                    <td class="pd-20">
-                                                        <a href="" class="payMoneyBtn">立即付款</a>
-                                                        <a href="" class="deleteBtn">取消订单</a>
-                                                    </td>
-                                                </tr>
-                                                </tbody>
-                                            </table>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td colspan="7" class="pd-0">
-                                            <table class="mgt-20">
-                                                <!--此部分thead用于占位对齐，不具备实际意义-->
-                                                <thead>
-                                                <tr>
-                                                    <th class="tc" width="440"></th>
-                                                    <th width="70"></th>
-                                                    <th width="70"></th>
-                                                    <th width="110"></th>
-                                                    <th width="110"></th>
-                                                    <th width="100"></th>
-                                                    <th class="tc"></th>
-                                                </tr>
-                                                </thead>
-                                                <tbody>
-                                                <tr>
-                                                    <td colspan="7" class="tl pd-0">
-                                                        <div class="shopProductTop">
-                                                            <input type="checkbox" name="checkbox"/><span class="mgr-20">2019-03-15</span>
-                                                            <span class="mgr-20">订单号：<span>123456789456123</span></span>
-                                                            <span class="mgr-20">包大圣</span>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="clearfix shopcarListTd1 pd-20 pdl-10" width="430">
-                                                        <img src="../images/img/shopcarListImg.png" class="fl"/>
-                                                        <div class="fl">
-                                                            <p>原创复古医生包 头层牛皮单肩斜挎包 真皮女包口金包手
-                                                                提包小挎包</p>
-                                                            <p>颜色分类：<span>深酒红色</span></p>
-                                                        </div>
-                                                    </td>
-                                                    <td class="pd-20">￥23.90</td>
-                                                    <td class="pd-20">1</td>
-                                                    <td class="pd-20">
-                                                        <p>￥23.90 </p>
-                                                        <p>（含运费：￥0.00）</p>
-                                                    </td>
-                                                    <td class="pd-20">认缴</td>
-                                                    <td class="pdt-20 tradeStatus">
-                                                        <a>等待卖家发货</a>
-                                                        <a>订单详情</a>
-                                                    </td>
-                                                    <td class="pd-20">
-                                                        <a href="" class="deleteBtn">取消订单</a>
-                                                    </td>
-                                                </tr>
-                                                </tbody>
-                                            </table>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td colspan="7" class="pd-0">
-                                            <table class="mgt-20">
-                                                <!--此部分thead用于占位对齐，不具备实际意义-->
-                                                <thead>
-                                                <tr>
-                                                    <th class="tc" width="440"></th>
-                                                    <th width="70"></th>
-                                                    <th width="70"></th>
-                                                    <th width="110"></th>
-                                                    <th width="110"></th>
-                                                    <th width="100"></th>
-                                                    <th class="tc"></th>
-                                                </tr>
-                                                </thead>
-                                                <tbody>
-                                                <tr>
-                                                    <td colspan="7" class="tl pd-0">
-                                                        <div class="shopProductTop">
-                                                            <input type="checkbox" name="checkbox"/><span class="mgr-20">2019-03-15</span>
-                                                            <span class="mgr-20">订单号：<span>123456789456123</span></span>
-                                                            <span class="mgr-20">包大圣</span>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="clearfix shopcarListTd1 pd-20 pdl-10" width="430">
-                                                        <img src="../images/img/shopcarListImg.png" class="fl"/>
-                                                        <div class="fl">
-                                                            <p>原创复古医生包 头层牛皮单肩斜挎包 真皮女包口金包手
-                                                                提包小挎包</p>
-                                                            <p>颜色分类：<span>深酒红色</span></p>
-                                                        </div>
-                                                    </td>
-                                                    <td class="pd-20">￥23.90</td>
-                                                    <td class="pd-20">1</td>
-                                                    <td class="pd-20">
-                                                        <p>￥23.90 </p>
-                                                        <p>（含运费：￥0.00）</p>
-                                                    </td>
-                                                    <td class="pd-20">认缴</td>
-                                                    <td class="pd-20 tradeStatus">
-                                                        <a>卖家已发货</a>
-                                                        <a>订单详情</a>
-                                                        <a>信用保证金</a>
-                                                    </td>
-                                                    <td class="pd-20">
-                                                        <p href="" class="timeBtn">还剩6天5小时</p>
-                                                        <a href="" class="sureBtn">确认收货</a>
-                                                    </td>
-                                                </tr>
-                                                </tbody>
-                                            </table>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td colspan="7" class="pd-0">
-                                            <table class="mgt-20 gray">
-                                                <!--此部分thead用于占位对齐，不具备实际意义-->
-                                                <thead>
-                                                <tr>
-                                                    <th class="tc" width="440"></th>
-                                                    <th width="70"></th>
-                                                    <th width="70"></th>
-                                                    <th width="110"></th>
-                                                    <th width="110"></th>
-                                                    <th width="100"></th>
-                                                    <th class="tc"></th>
-                                                </tr>
-                                                </thead>
-                                                <tbody>
-                                                <tr>
-                                                    <td colspan="7" class="tl pd-0">
-                                                        <div class="shopProductTop shopProductTopGray">
-                                                            <input type="checkbox" name="checkbox"/><span class="mgr-20">2019-03-15</span>
-                                                            <span class="mgr-20">订单号：<span>123456789456123</span></span>
-                                                            <span class="mgr-20">苏泊尔啦</span>
-                                                            <a href="javascript:void(0);" class="deleteOrderBtn" onclick='deleteOrder(this);'>
-                                                                <img src="../images/icon/orderDeleteIcon.png" alt=""/>
-                                                            </a>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="clearfix shopcarListTd1 pd-20 pdl-10" width="430">
-                                                        <img src="../images/img/shopcarListImg.png" class="fl"/>
-                                                        <div class="fl">
-                                                            <p>原创复古医生包 头层牛皮单肩斜挎包 真皮女包口金包手
-                                                                提包小挎包</p>
-                                                            <p>颜色分类：<span>深酒红色</span></p>
-                                                        </div>
-                                                    </td>
-                                                    <td class="pd-20">￥23.90</td>
-                                                    <td class="pd-20">1</td>
-                                                    <td class="pd-20">
-                                                        <p>￥23.90 </p>
-                                                        <p>（含运费：￥0.00）</p>
-                                                    </td>
-                                                    <td class="pd-20">认缴</td>
-                                                    <td class="pd-20 tradeStatus">
-                                                        <a>交易关闭</a>
-                                                        <a>订单详情</a>
-                                                        <a>信用保证金</a>
-                                                    </td>
-                                                    <td class="pd-20">
-                                                    </td>
-                                                </tr>
-                                                </tbody>
-                                            </table>
-                                        </td>
-                                    </tr>
+                                    @foreach($data['items'] as $item)
+                                        <tr>
+                                            <td colspan="7" class="pd-0">
+                                                <table class="mgt-20">
+                                                    <!--此部分thead用于占位对齐，不具备实际意义-->
+                                                    <thead>
+                                                    <tr>
+                                                        <th class="tc" width="440"></th>
+                                                        <th width="70"></th>
+                                                        <th width="70"></th>
+                                                        <th width="110"></th>
+                                                        <th width="110"></th>
+                                                        <th width="100"></th>
+                                                        <th class="tc"></th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    <tr>
+                                                        <td colspan="7" class="tl pd-0">
+                                                            <div class="shopProductTop">
+                                                                {{--<input type="checkbox" name="checkbox"/>--}}
+                                                                <span class="mgr-20">{{ $item->created_at }}</span>
+                                                                <span class="mgr-20">订单号：<span>{{ $item->order_id }}</span></span>
+                                                                {{--<span class="mgr-20">包大圣</span>--}}
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="clearfix shopcarListTd1 pd-20 pdl-10" width="430">
+                                                            <img src="{{ FileUpload::url('image', $item->goodss->img) }}" class="fl"/>
+                                                            <div class="fl">
+                                                                <p>{{ $item->goodss->title }}</p>
+                                                                @foreach($item->goodss->attribute as $attribute)
+                                                                    <p>{{ $attribute->name }}：<span>{{ $attribute->value }}</span></p>
+                                                                @endforeach
+                                                            </div>
+                                                        </td>
+                                                        <td class="pd-20">￥{{ $item->fees }}</td>
+                                                        <td class="pd-20">{{ $item->num }}</td>
+                                                        <td class="pd-20">
+                                                            <p>￥{{ $item->moneys }} </p>
+                                                            @if($item->moneys > $item->free_price)
+                                                                <p>包邮</p>
+                                                            @else
+                                                                <p>（含运费：￥{{ $item->delivery_fees }}）</p>
+                                                            @endif
+                                                        </td>
+                                                        <td class="pd-20">{{$item->pay_methods}}</td>
+                                                        <td class="pd-20 tradeStatus">
+                                                            @switch($item->status)
+                                                                @case(100)
+                                                                    <a>交易关闭</a>
+                                                                @break
+                                                                @case(300)
+                                                                    <a>等待商家发货</a>
+                                                                @break
+                                                                @case(400)
+                                                                    <a>商家已发货, 请注意查收</a>
+                                                                @break
+                                                                @case(500)
+                                                                    <a>交易成功</a>
+                                                                @break
+                                                            @endswitch
+                                                            <a>订单详情</a>
+                                                        </td>
+                                                        <td class="pd-20">
+                                                            @if($item->pay_method != 200 && $item->pay_method == 'subscribed'
+                                                            && $item->timeout != '0000-00-00 00:00:00')
+                                                                <a href="" class="payMoneyBtn">立即付款</a>
+                                                            @endif
+                                                            @if(in_array($item->status, [200]))
+                                                                <a href="" class="payMoneyBtn">立即付款</a>
+                                                                <a href="" class="deleteBtn">取消订单</a>
+                                                            @elseif(in_array($item->status, [300, 400, 500]))
+                                                                @switch($item->status)
+                                                                    @case(400)
+                                                                        <a href="" class="timeBtn">2019-05-23</a>
+                                                                        <a href="" class="sureBtn">确认收货</a>
+                                                                    @break
+                                                                    @case(500)
+                                                                        <a class="deleteBtn" href="" data-toggle="modal" data-target="#editEvaluate">评价</a>
+                                                                        <a class="deleteBtn" href="">再次购买</a>
+                                                                    @break
+                                                                @endswitch
+                                                                    @if($item->pay_method == 'paidin' || $item->pay_method == 'subscribed' && $item->timeout == '0000-00-00 00:00:00')
+                                                                        <a href="" class="deleteBtn">申请退款</a>
+                                                                    @endif
+                                                            @endif
+                                                        </td>
+                                                    </tr>
+                                                    </tbody>
+                                                </table>
+                                            </td>
+                                        </tr>
+                                    @endforeach
                                     </tbody>
                                 </table>
                                 <div class="clearfix">
-                                    <p class="fl"><input type="checkbox" class="checkAll"/>全选</p>
+                                    {{--<p class="fl"><input type="checkbox" class="checkAll"/>全选</p>--}}
                                     <div class="paginationDiv fr">
-                                        <ul class="pagination relative">
-                                            <li><a href="#"> < 上一页</a></li>
-                                            <li><a href="#">1</a></li>
-                                            <li><a class="active" href="#">2</a></li>
-                                            <li><a href="#">3</a></li>
-                                            <li><a href="#">4</a></li>
-                                            <li><a href="#">5</a></li>
-                                            <li><a href="#">6</a></li>
-                                            <li><a href="#">7</a></li>
-                                            <li><a href="#"> > 下一页</a></li>
-                                            <li>
-                                                <a href="" class="pageAll">
-                                                    <p>共 <span>100</span> 页</p>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="javascript:void(0);" class="toPage">
-                                                    <!--<p>到第 <input type="text" class="pageInput"/> 页</p>-->
-                                                    到第 <input type="text" class="pageInput"/> 页
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <div class="inline-block mgt-2">
-                                                    <a href="" class="pageBtn">确定</a>
-                                                </div>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!--tab1 代付款-->
-                        <div class="tab-pane fade in active" id="waitPay">
-                            <div class="orderSearch clearfix">
-                                <input type="text" placeholder="输入商品标题或订单号进行搜索"/>
-                                <a>订单搜索</a>
-                            </div>
-                            <div class="orderList">
-                                <table align="center" class="table tl" frame="box">
-                                    <thead class="thead" style="border:1px solid #e8e8e8;background-color: #f5f5f5;">
-                                    <tr>
-                                        <th class="tc" width="440">商品</th>
-                                        <th class="tc" width="70">单价</th>
-                                        <th class="tc" width="70">数量</th>
-                                        <th class="tc" width="110">实付款</th>
-                                        <th class="tc" width="110">付款方式</th>
-                                        <th class="tc" width="100">交易状态</th>
-                                        <th class="tc" class="tc">交易操作</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    <tr>
-                                        <td colspan="6" class="tl checkboxTd">
-                                            <input type="checkbox" class="checkAll"/>全选
-                                        </td>
-                                        <td colspan="1" class="tc choosePage">
-                                            <a href="">上一页</a>
-                                            <a href="">下一页</a>
-                                        </td>
-                                    </tr>
-                                    <!--全部订单列表-->
-                                    <!--立即付款按钮样式类名：payMoneyBtn,确认收货按钮样式类名：sureBtn，剩余时间样式类名：timeBtn，取消订单样式类名：deleteBtn-->
-                                    <tr>
-                                        <td colspan="7" class="pd-0">
-                                            <table class="mgt-20">
-                                                <!--此部分thead用于占位对齐，不具备实际意义-->
-                                                <thead>
-                                                <tr>
-                                                    <th class="tc" width="440"></th>
-                                                    <th width="70"></th>
-                                                    <th width="70"></th>
-                                                    <th width="110"></th>
-                                                    <th width="110"></th>
-                                                    <th width="100"></th>
-                                                    <th class="tc"></th>
-                                                </tr>
-                                                </thead>
-                                                <tbody>
-                                                <tr>
-                                                    <td colspan="7" class="tl pd-0">
-                                                        <div class="shopProductTop">
-                                                            <input type="checkbox" name="checkbox"/><span class="mgr-20">2019-03-15</span>
-                                                            <span class="mgr-20">订单号：<span>123456789456123</span></span>
-                                                            <span class="mgr-20">包大圣</span>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="clearfix shopcarListTd1 pd-20 pdl-10" width="430">
-                                                        <img src="../images/img/shopcarListImg.png" class="fl"/>
-                                                        <div class="fl">
-                                                            <p>原创复古医生包 头层牛皮单肩斜挎包 真皮女包口金包手
-                                                                提包小挎包</p>
-                                                            <p>颜色分类：<span>深酒红色</span></p>
-                                                        </div>
-                                                    </td>
-                                                    <td class="pd-20">￥23.90</td>
-                                                    <td class="pd-20">1</td>
-                                                    <td class="pd-20">
-                                                        <p>￥23.90 </p>
-                                                        <p>（含运费：￥0.00）</p>
-                                                    </td>
-                                                    <td class="pd-20">认缴</td>
-                                                    <td class="pd-20 tradeStatus">
-                                                        <a>等待买家付款</a>
-                                                        <a>订单详情</a>
-                                                        <a>信用保证金</a>
-                                                    </td>
-                                                    <td class="pd-20">
-                                                        <a href="" class="payMoneyBtn">立即付款</a>
-                                                        <a href="" class="deleteBtn">取消订单</a>
-                                                    </td>
-                                                </tr>
-                                                </tbody>
-                                            </table>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td colspan="7" class="pd-0">
-                                            <table class="mgt-20">
-                                                <!--此部分thead用于占位对齐，不具备实际意义-->
-                                                <thead>
-                                                <tr>
-                                                    <th class="tc" width="440"></th>
-                                                    <th width="70"></th>
-                                                    <th width="70"></th>
-                                                    <th width="110"></th>
-                                                    <th width="110"></th>
-                                                    <th width="100"></th>
-                                                    <th class="tc"></th>
-                                                </tr>
-                                                </thead>
-                                                <tbody>
-                                                <tr>
-                                                    <td colspan="7" class="tl pd-0">
-                                                        <div class="shopProductTop">
-                                                            <input type="checkbox" name="checkbox"/><span class="mgr-20">2019-03-15</span>
-                                                            <span class="mgr-20">订单号：<span>123456789456123</span></span>
-                                                            <span class="mgr-20">包大圣</span>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="clearfix shopcarListTd1 pd-20 pdl-10" width="430">
-                                                        <img src="../images/img/shopcarListImg.png" class="fl"/>
-                                                        <div class="fl">
-                                                            <p>原创复古医生包 头层牛皮单肩斜挎包 真皮女包口金包手
-                                                                提包小挎包</p>
-                                                            <p>颜色分类：<span>深酒红色</span></p>
-                                                        </div>
-                                                    </td>
-                                                    <td class="pd-20">￥23.90</td>
-                                                    <td class="pd-20">1</td>
-                                                    <td class="pd-20">
-                                                        <p>￥23.90 </p>
-                                                        <p>（含运费：￥0.00）</p>
-                                                    </td>
-                                                    <td class="pd-20">认缴</td>
-                                                    <td class="pd-20 tradeStatus">
-                                                        <a>等待买家付款</a>
-                                                        <a>订单详情</a>
-                                                        <a>信用保证金</a>
-                                                    </td>
-                                                    <td class="pd-20">
-                                                        <a href="" class="payMoneyBtn">立即付款</a>
-                                                        <a href="" class="deleteBtn">取消订单</a>
-                                                    </td>
-                                                </tr>
-                                                </tbody>
-                                            </table>
-                                        </td>
-                                    </tr>
-                                    </tbody>
-                                </table>
-                                <div class="clearfix">
-                                    <p class="fl"><input type="checkbox" class="checkAll"/>全选</p>
-                                    <div class="paginationDiv fr">
-                                        <ul class="pagination relative">
-                                            <li><a href="#"> < 上一页</a></li>
-                                            <li><a href="#">1</a></li>
-                                            <li><a class="active" href="#">2</a></li>
-                                            <li><a href="#">3</a></li>
-                                            <li><a href="#">4</a></li>
-                                            <li><a href="#">5</a></li>
-                                            <li><a href="#">6</a></li>
-                                            <li><a href="#">7</a></li>
-                                            <li><a href="#"> > 下一页</a></li>
-                                            <li>
-                                                <a href="" class="pageAll">
-                                                    <p>共 <span>100</span> 页</p>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="javascript:void(0);" class="toPage">
-                                                    <!--<p>到第 <input type="text" class="pageInput"/> 页</p>-->
-                                                    到第 <input type="text" class="pageInput"/> 页
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <div class="inline-block mgt-2">
-                                                    <a href="" class="pageBtn">确定</a>
-                                                </div>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!--tab1 待发货-->
-                        <div class="tab-pane fade in active" id="waitSend">
-                            <div class="orderSearch clearfix">
-                                <input type="text" placeholder="输入商品标题或订单号进行搜索"/>
-                                <a>订单搜索</a>
-                            </div>
-                            <div class="orderList">
-                                <table align="center" class="table tl" frame="box">
-                                    <thead class="thead" style="border:1px solid #e8e8e8;background-color: #f5f5f5;">
-                                    <tr>
-                                        <th class="tc" width="440">商品</th>
-                                        <th class="tc" width="70">单价</th>
-                                        <th class="tc" width="70">数量</th>
-                                        <th class="tc" width="110">实付款</th>
-                                        <th class="tc" width="110">付款方式</th>
-                                        <th class="tc" width="100">交易状态</th>
-                                        <th class="tc" class="tc">交易操作</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    <tr>
-                                        <td colspan="6" class="tl checkboxTd">
-                                            <input type="checkbox" class="checkAll"/>全选
-                                        </td>
-                                        <td colspan="1" class="tc choosePage">
-                                            <a href="">上一页</a>
-                                            <a href="">下一页</a>
-                                        </td>
-                                    </tr>
-                                    <!--全部订单列表-->
-                                    <!--立即付款按钮样式类名：payMoneyBtn,确认收货按钮样式类名：sureBtn，剩余时间样式类名：timeBtn，取消订单样式类名：deleteBtn-->
-
-                                    <tr>
-                                        <td colspan="7" class="pd-0">
-                                            <table class="mgt-20">
-                                                <!--此部分thead用于占位对齐，不具备实际意义-->
-                                                <thead>
-                                                <tr>
-                                                    <th class="tc" width="440"></th>
-                                                    <th width="70"></th>
-                                                    <th width="70"></th>
-                                                    <th width="110"></th>
-                                                    <th width="110"></th>
-                                                    <th width="100"></th>
-                                                    <th class="tc"></th>
-                                                </tr>
-                                                </thead>
-                                                <tbody>
-                                                <tr>
-                                                    <td colspan="7" class="tl pd-0">
-                                                        <div class="shopProductTop">
-                                                            <input type="checkbox" name="checkbox"/><span class="mgr-20">2019-03-15</span>
-                                                            <span class="mgr-20">订单号：<span>123456789456123</span></span>
-                                                            <span class="mgr-20">包大圣</span>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="clearfix shopcarListTd1 pd-20 pdl-10" width="430">
-                                                        <img src="../images/img/shopcarListImg.png" class="fl"/>
-                                                        <div class="fl">
-                                                            <p>原创复古医生包 头层牛皮单肩斜挎包 真皮女包口金包手
-                                                                提包小挎包</p>
-                                                            <p>颜色分类：<span>深酒红色</span></p>
-                                                        </div>
-                                                    </td>
-                                                    <td class="pd-20">￥23.90</td>
-                                                    <td class="pd-20">1</td>
-                                                    <td class="pd-20">
-                                                        <p>￥23.90 </p>
-                                                        <p>（含运费：￥0.00）</p>
-                                                    </td>
-                                                    <td class="pd-20">认缴</td>
-                                                    <td class="pdt-20 tradeStatus">
-                                                        <a>等待卖家发货</a>
-                                                        <a>订单详情</a>
-                                                    </td>
-                                                    <td class="pd-20">
-                                                        <a href="" class="deleteBtn">取消订单</a>
-                                                    </td>
-                                                </tr>
-                                                </tbody>
-                                            </table>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td colspan="7" class="pd-0">
-                                            <table class="mgt-20">
-                                                <!--此部分thead用于占位对齐，不具备实际意义-->
-                                                <thead>
-                                                <tr>
-                                                    <th class="tc" width="440"></th>
-                                                    <th width="70"></th>
-                                                    <th width="70"></th>
-                                                    <th width="110"></th>
-                                                    <th width="110"></th>
-                                                    <th width="100"></th>
-                                                    <th class="tc"></th>
-                                                </tr>
-                                                </thead>
-                                                <tbody>
-                                                <tr>
-                                                    <td colspan="7" class="tl pd-0">
-                                                        <div class="shopProductTop">
-                                                            <input type="checkbox" name="checkbox"/><span class="mgr-20">2019-03-15</span>
-                                                            <span class="mgr-20">订单号：<span>123456789456123</span></span>
-                                                            <span class="mgr-20">包大圣</span>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="clearfix shopcarListTd1 pd-20 pdl-10" width="430">
-                                                        <img src="../images/img/shopcarListImg.png" class="fl"/>
-                                                        <div class="fl">
-                                                            <p>原创复古医生包 头层牛皮单肩斜挎包 真皮女包口金包手
-                                                                提包小挎包</p>
-                                                            <p>颜色分类：<span>深酒红色</span></p>
-                                                        </div>
-                                                    </td>
-                                                    <td class="pd-20">￥23.90</td>
-                                                    <td class="pd-20">1</td>
-                                                    <td class="pd-20">
-                                                        <p>￥23.90 </p>
-                                                        <p>（含运费：￥0.00）</p>
-                                                    </td>
-                                                    <td class="pd-20">认缴</td>
-                                                    <td class="pdt-20 tradeStatus">
-                                                        <a>等待卖家发货</a>
-                                                        <a>订单详情</a>
-                                                    </td>
-                                                    <td class="pd-20">
-                                                        <a href="" class="deleteBtn">取消订单</a>
-                                                    </td>
-                                                </tr>
-                                                </tbody>
-                                            </table>
-                                        </td>
-                                    </tr>
-                                    </tbody>
-                                </table>
-                                <div class="clearfix">
-                                    <p class="fl"><input type="checkbox" class="checkAll"/>全选</p>
-                                    <div class="paginationDiv fr">
-                                        <ul class="pagination relative">
-                                            <li><a href="#"> < 上一页</a></li>
-                                            <li><a href="#">1</a></li>
-                                            <li><a class="active" href="#">2</a></li>
-                                            <li><a href="#">3</a></li>
-                                            <li><a href="#">4</a></li>
-                                            <li><a href="#">5</a></li>
-                                            <li><a href="#">6</a></li>
-                                            <li><a href="#">7</a></li>
-                                            <li><a href="#"> > 下一页</a></li>
-                                            <li>
-                                                <a href="" class="pageAll">
-                                                    <p>共 <span>100</span> 页</p>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="javascript:void(0);" class="toPage">
-                                                    <!--<p>到第 <input type="text" class="pageInput"/> 页</p>-->
-                                                    到第 <input type="text" class="pageInput"/> 页
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <div class="inline-block mgt-2">
-                                                    <a href="" class="pageBtn">确定</a>
-                                                </div>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!--tab1 待收货-->
-                        <div class="tab-pane fade in active" id="waitReceive">
-                            <div class="orderSearch clearfix">
-                                <input type="text" placeholder="输入商品标题或订单号进行搜索"/>
-                                <a>订单搜索</a>
-                            </div>
-                            <div class="orderList">
-                                <table align="center" class="table tl" frame="box">
-                                    <thead class="thead" style="border:1px solid #e8e8e8;background-color: #f5f5f5;">
-                                    <tr>
-                                        <th class="tc" width="440">商品</th>
-                                        <th class="tc" width="70">单价</th>
-                                        <th class="tc" width="70">数量</th>
-                                        <th class="tc" width="110">实付款</th>
-                                        <th class="tc" width="110">付款方式</th>
-                                        <th class="tc" width="100">交易状态</th>
-                                        <th class="tc" class="tc">交易操作</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    <tr>
-                                        <td colspan="6" class="tl checkboxTd">
-                                            <input type="checkbox" class="checkAll"/>全选
-                                        </td>
-                                        <td colspan="1" class="tc choosePage">
-                                            <a href="">上一页</a>
-                                            <a href="">下一页</a>
-                                        </td>
-                                    </tr>
-                                    <!--全部订单列表-->
-                                    <!--立即付款按钮样式类名：payMoneyBtn,确认收货按钮样式类名：sureBtn，剩余时间样式类名：timeBtn，取消订单样式类名：deleteBtn-->
-                                    <tr>
-                                        <td colspan="7" class="pd-0">
-                                            <table class="mgt-20">
-                                                <!--此部分thead用于占位对齐，不具备实际意义-->
-                                                <thead>
-                                                <tr>
-                                                    <th class="tc" width="440"></th>
-                                                    <th width="70"></th>
-                                                    <th width="70"></th>
-                                                    <th width="110"></th>
-                                                    <th width="110"></th>
-                                                    <th width="100"></th>
-                                                    <th class="tc"></th>
-                                                </tr>
-                                                </thead>
-                                                <tbody>
-                                                <tr>
-                                                    <td colspan="7" class="tl pd-0">
-                                                        <div class="shopProductTop">
-                                                            <input type="checkbox" name="checkbox"/><span class="mgr-20">2019-03-15</span>
-                                                            <span class="mgr-20">订单号：<span>123456789456123</span></span>
-                                                            <span class="mgr-20">包大圣</span>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="clearfix shopcarListTd1 pd-20 pdl-10" width="430">
-                                                        <img src="../images/img/shopcarListImg.png" class="fl"/>
-                                                        <div class="fl">
-                                                            <p>原创复古医生包 头层牛皮单肩斜挎包 真皮女包口金包手
-                                                                提包小挎包</p>
-                                                            <p>颜色分类：<span>深酒红色</span></p>
-                                                        </div>
-                                                    </td>
-                                                    <td class="pd-20">￥23.90</td>
-                                                    <td class="pd-20">1</td>
-                                                    <td class="pd-20">
-                                                        <p>￥23.90 </p>
-                                                        <p>（含运费：￥0.00）</p>
-                                                    </td>
-                                                    <td class="pd-20">认缴</td>
-                                                    <td class="pd-20 tradeStatus">
-                                                        <a>卖家已发货</a>
-                                                        <a>订单详情</a>
-                                                        <a>信用保证金</a>
-                                                    </td>
-                                                    <td class="pd-20">
-                                                        <p href="" class="timeBtn">还剩6天5小时</p>
-                                                        <a href="" class="sureBtn">确认收货</a>
-                                                    </td>
-                                                </tr>
-                                                </tbody>
-                                            </table>
-                                        </td>
-                                    </tr>
-                                    </tbody>
-                                </table>
-                                <div class="clearfix">
-                                    <p class="fl"><input type="checkbox" class="checkAll"/>全选</p>
-                                    <div class="paginationDiv fr">
-                                        <ul class="pagination relative">
-                                            <li><a href="#"> < 上一页</a></li>
-                                            <li><a href="#">1</a></li>
-                                            <li><a class="active" href="#">2</a></li>
-                                            <li><a href="#">3</a></li>
-                                            <li><a href="#">4</a></li>
-                                            <li><a href="#">5</a></li>
-                                            <li><a href="#">6</a></li>
-                                            <li><a href="#">7</a></li>
-                                            <li><a href="#"> > 下一页</a></li>
-                                            <li>
-                                                <a href="" class="pageAll">
-                                                    <p>共 <span>100</span> 页</p>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="javascript:void(0);" class="toPage">
-                                                    <!--<p>到第 <input type="text" class="pageInput"/> 页</p>-->
-                                                    到第 <input type="text" class="pageInput"/> 页
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <div class="inline-block mgt-2">
-                                                    <a href="" class="pageBtn">确定</a>
-                                                </div>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!--tab1 待评价-->
-                        <div class="tab-pane fade in active" id="waitEvaluate">
-                            <div class="orderSearch clearfix">
-                                <input type="text" placeholder="输入商品标题或订单号进行搜索"/>
-                                <a>订单搜索</a>
-                            </div>
-                            <div class="orderList">
-                                <table align="center" class="table tl" frame="box">
-                                    <thead class="thead" style="border:1px solid #e8e8e8;background-color: #f5f5f5;">
-                                    <tr>
-                                        <th class="tc" width="440">商品</th>
-                                        <th class="tc" width="70">单价</th>
-                                        <th class="tc" width="70">数量</th>
-                                        <th class="tc" width="110">实付款</th>
-                                        <th class="tc" width="110">付款方式</th>
-                                        <th class="tc" width="100">交易状态</th>
-                                        <th class="tc" class="tc">交易操作</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    <tr>
-                                        <td colspan="6" class="tl checkboxTd">
-                                            <input type="checkbox" class="checkAll"/>全选
-                                        </td>
-                                        <td colspan="1" class="tc choosePage">
-                                            <a href="">上一页</a>
-                                            <a href="">下一页</a>
-                                        </td>
-                                    </tr>
-                                    <!--全部订单列表-->
-                                    <!--立即付款按钮样式类名：payMoneyBtn,确认收货按钮样式类名：sureBtn，剩余时间样式类名：timeBtn，取消订单样式类名：deleteBtn-->
-                                    <tr>
-                                        <td colspan="7" class="pd-0">
-                                            <table class="mgt-20">
-                                                <!--此部分thead用于占位对齐，不具备实际意义-->
-                                                <thead>
-                                                <tr>
-                                                    <th class="tc" width="440"></th>
-                                                    <th width="70"></th>
-                                                    <th width="70"></th>
-                                                    <th width="110"></th>
-                                                    <th width="110"></th>
-                                                    <th width="100"></th>
-                                                    <th class="tc"></th>
-                                                </tr>
-                                                </thead>
-                                                <tbody>
-                                                <tr>
-                                                    <td colspan="7" class="tl pd-0">
-                                                        <div class="shopProductTop">
-                                                            <input type="checkbox" name="checkbox"/><span class="mgr-20">2019-03-15</span>
-                                                            <span class="mgr-20">订单号：<span>123456789456123</span></span>
-                                                            <span class="mgr-20">包大圣</span>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="clearfix shopcarListTd1 pd-20 pdl-10" width="430">
-                                                        <img src="../images/img/shopcarListImg.png" class="fl"/>
-                                                        <div class="fl">
-                                                            <p>原创复古医生包 头层牛皮单肩斜挎包 真皮女包口金包手
-                                                                提包小挎包</p>
-                                                            <p>颜色分类：<span>深酒红色</span></p>
-                                                        </div>
-                                                    </td>
-                                                    <td class="pd-20">￥23.90</td>
-                                                    <td class="pd-20">1</td>
-                                                    <td class="pd-20">
-                                                        <p>￥23.90 </p>
-                                                        <p>（含运费：￥0.00）</p>
-                                                    </td>
-                                                    <td class="pd-20">认缴</td>
-                                                    <td class="pd-20 tradeStatus">
-                                                        <a>交易成功</a>
-                                                        <a>交易关闭</a>
-                                                    </td>
-                                                    <td class="pd-20">
-                                                        <a href="" class="deleteBtn" data-toggle="modal" data-target="#editEvaluate">评价</a>
-                                                        <a href="" class="deleteBtn">再次购买</a>
-                                                    </td>
-                                                </tr>
-                                                </tbody>
-                                            </table>
-                                        </td>
-                                    </tr>
-                                    </tbody>
-                                </table>
-                                <div class="clearfix">
-                                    <p class="fl"><input type="checkbox" class="checkAll"/>全选</p>
-                                    <div class="paginationDiv fr">
-                                        <ul class="pagination relative">
-                                            <li><a href="#"> < 上一页</a></li>
-                                            <li><a href="#">1</a></li>
-                                            <li><a class="active" href="#">2</a></li>
-                                            <li><a href="#">3</a></li>
-                                            <li><a href="#">4</a></li>
-                                            <li><a href="#">5</a></li>
-                                            <li><a href="#">6</a></li>
-                                            <li><a href="#">7</a></li>
-                                            <li><a href="#"> > 下一页</a></li>
-                                            <li>
-                                                <a href="" class="pageAll">
-                                                    <p>共 <span>100</span> 页</p>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="javascript:void(0);" class="toPage">
-                                                    <!--<p>到第 <input type="text" class="pageInput"/> 页</p>-->
-                                                    到第 <input type="text" class="pageInput"/> 页
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <div class="inline-block mgt-2">
-                                                    <a href="" class="pageBtn">确定</a>
-                                                </div>
-                                            </li>
-                                        </ul>
+                                        {{ $data['items']->links() }}
                                     </div>
                                 </div>
                             </div>
