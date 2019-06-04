@@ -66,28 +66,6 @@ class orderModel extends Model
     protected static function boot()
     {
         parent::boot();
-        /*创建分享数据*/
-        static::created(function ($query) {
-            foreach ($query->child as $item) {
-                try {
-                    if($item->referees) {
-                        shareStatisticsModel::create([
-                            'gid' => $item->gid,
-                            'share_id' => $item->referees,
-                            'order_id' => $item->order_id,
-                            'status' => $item->status
-                        ]);
-                    }
-                } catch (Exception $e) {
-                    Log::info('创建推荐人分享数据: ', [
-                        'order_id' => $item->order_id,
-                        'time' => getTime(),
-                        'id' => $item->id,
-                        'info' => $e->getMessage()
-                    ]);
-                }
-            }
-        });
         /*更新订单对应数据，子订单状态以及分享订单状态*/
         static::updated(function ($query) {
            if($query->status == 2101) {
@@ -100,6 +78,7 @@ class orderModel extends Model
                     shareStatisticsModel::where([
                         'order_id' => $query->order_id,
                         'status' => 200,
+                        'pay_method' => 'paidin',
                     ])->update(['status' => 300]);
                } catch (Exception $e) {
                    Log::info('支付完成后，更新对应数据: ', [

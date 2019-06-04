@@ -34,7 +34,7 @@
             </div>
             <div class="fl contentTopRight relative">
                 <p class="clothesName pdl-10">{{ $item->title }}</p>
-                @if($item->presell_time)
+                @if($item->presell_time && $item->presell_time > getTime('ymd'))
                     <p class="advanceSaleTip">
                         <img src="{{ asset('home/images/icon/advanceSaleIcon.png') }}" alt=""/>
                         预售商品, 出售日期：{{ $item->presell_time }}

@@ -79,7 +79,7 @@ class LoginController extends BaseController
     public function loginout()
     {
         Auth::guard('web')->logout();
-        return redirect(route('index.login'));
+        return redirect('/');
     }
 
     /**

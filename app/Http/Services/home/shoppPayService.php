@@ -10,6 +10,7 @@ namespace App\Http\Services\home;
 use App\Http\Models\currency\CapitalModel;
 use App\Http\Models\goods\GoodsModel;
 use App\Http\Models\home\orderModel;
+use App\Http\Models\home\personal\AddressModel;
 use App\Http\Models\home\shareStatisticsModel;
 use App\Http\Models\home\shoppOrderModel;
 use Carbon\Carbon;
@@ -24,7 +25,8 @@ class shoppPayService extends BaseService
                                 orderModel $orderModel,
                                 shoppOrderModel $shoppOrderModel,
                                 CapitalModel $capitalModel,
-                                shareStatisticsModel $shareStatisticsModel)
+                                shareStatisticsModel $shareStatisticsModel,
+                                AddressModel $addressModel)
     {
         parent::__construct();
         $this->goods = $goodsModel;
@@ -32,6 +34,7 @@ class shoppPayService extends BaseService
         $this->shopp_orderModel = $shoppOrderModel;
         $this->capitalModel = $capitalModel;
         $this->shareStatisticsModel = $shareStatisticsModel;
+        $this->addressModel = $addressModel;
         $this->config = config('alipay.pay');
     }
 
@@ -71,9 +74,12 @@ class shoppPayService extends BaseService
         try {
             if(!empty($data['memo'])) {
                 $items = $this->shopp_orderModel::where('order_id', $order_id)->get();
+                $address = $this->addressModel::where('id', $data['address'])->get([
+                    'address', 'detailed', 'code', 'number', 'contacts',
+                ]);
                 foreach ($data['memo'] as $datum) {
                     $item = $items->where('id', intval($datum['id']))->first();
-                    $item->address = intval($data['address']);
+                    $item->address = json_encode($address);
                     $item->memo = $datum['val'];
                     $item->save();
                 }
@@ -114,6 +120,7 @@ class shoppPayService extends BaseService
                 $capitai[] = [
                     'uid' => $item->gid,
                     'order_id' => $item->order_id,
+                    'g_order_id' => $item->id,
                     'money' => $item->moneys,
                     'trade_mode' => $data['method'],
                     'memo' => '用户备注:' . empty($item->memo) ? '无, 平台备注: 用户下单支付订单' : $item->memo. ','. '平台备注: 用户下单支付订单',
@@ -128,6 +135,7 @@ class shoppPayService extends BaseService
                         'gid' => $item->gid,
                         'share_id' => $item->referees,
                         'order_id' => $item->order_id,
+                        'g_order_id' => $item->id,
                         'status' => 200,
                         'created_at' => getTime(),
                         'updated_at' => getTime()

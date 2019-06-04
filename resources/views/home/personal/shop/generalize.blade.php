@@ -39,7 +39,7 @@
                             <a href="{{ route('personal.shop.goods') }}">商品管理</a>
                         </li>
                         <li>
-                            <a href="../html/merchantCenter_buyThings.html">订单管理</a>
+                            <a href="{{ route('personal.shop.order', ['type' => 'allOrder']) }}">订单管理</a>
                         </li>
                     </ul>
                 </li>

@@ -7,8 +7,13 @@
  */
 namespace App\Http\Models\home;
 
+use App\Http\Models\currency\CapitalModel;
 use App\Http\Models\currency\MerchantModel;
+use App\Http\Models\currency\UserModel;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Exception;
+use Log;
 
 class shoppOrderModel extends Model
 {
@@ -22,9 +27,44 @@ class shoppOrderModel extends Model
         400 => '商家发货',
         500 => '用户签收',
         600 => '订单完成',
-        700 => '订单取消'
+        700 => '申请退款',
+        800 => '退款完成',
     ];
 
+    /**
+     * 事件处理
+     * created: 在创建总订单时创建分享数据
+     */
+    protected static function boot()
+    {
+        parent::boot();
+        /*更新订单对应数据，子订单状态以及分享订单状态*/
+        static::updated(function ($query) {
+            try {
+                if(isset($query->getDirty()['status'])) {
+                    shareStatisticsModel::where([
+                        'order_id' => $query->order_id,
+                        'g_order_id' => $query->id,
+                    ])->update(['status' => $query->getDirty()['status']]);
+                    if($query->getDirty()['status'] == 100) {
+                        CapitalModel::where([
+                            'order_id' => $query->order_id,
+                            'g_order_id' => $query->id,
+                            'category' => 500,
+                            'status' => 1003
+                        ])->update(['status' => 1002]);
+                    }
+                }
+            } catch (Exception $e) {
+                Log::info('支付完成后，更新对应数据: ', [
+                    'order_id' => $query->order_id,
+                    'id' => $query->id,
+                    'time' => getTime(),
+                    'info' => $e->getMessage()
+                ]);
+            }
+        });
+    }
     public static $_METHOD = [
         'subscribed' => '认缴',
         'paidin' => '实缴'
@@ -33,6 +73,11 @@ class shoppOrderModel extends Model
     public function order()
     {
         return $this->hasOne(orderModel::class, 'order_id', 'order_id');
+    }
+    /*用户*/
+    public function user()
+    {
+        return $this->hasOne(UserModel::class, 'id', 'uid');
     }
     /*商家*/
     public function merchant()
@@ -94,6 +139,7 @@ class shoppOrderModel extends Model
     {
         return bcdiv($this->fee, 100, 2);
     }
+
     /**
      * 格式化商品属性
      *
@@ -105,6 +151,15 @@ class shoppOrderModel extends Model
     }
 
     /**
+     * 格式化收货地址
+     *
+     * @return mixed
+     */
+    public function getAddresssAttribute()
+    {
+        return json_decode($this->address);
+    }
+    /**
      * 支付方式
      *
      * @return mixed
@@ -112,6 +167,16 @@ class shoppOrderModel extends Model
     public function getPayMethodsAttribute()
     {
         return array_get(self::$_METHOD, $this->pay_method, '未知');
+    }
+
+    /**
+     * 状态
+     *
+     * @return mixed
+     */
+    public function getStatusNameAttribute()
+    {
+        return array_get(self::$_STATUS, $this->status, '未知');
     }
 
     /**
@@ -125,6 +190,40 @@ class shoppOrderModel extends Model
     {
         if(!empty($search)) {
             return $query->where('order_id', 'like', "%$search%");
+        }
+    }
+
+    /**
+     * 自动签收倒计时
+     *
+     * @return string
+     */
+    public function getSignCountdowAttribute()
+    {
+        Carbon::setLocale('zh');
+        $now = Carbon::now();
+        $time = Carbon::parse($this->signtime);
+        $difference = ($time->diff($now)->days < 1)
+            ? 'today'
+            : $time->diffForHumans($now);
+        return $difference;
+    }
+
+    /**
+     * 认缴签收倒计时
+     *
+     * @return string
+     */
+    public function getSettleSubscribedAttribute()
+    {
+        if($this->pay_method == 'subscribed') {
+            Carbon::setLocale('zh');
+            $now = Carbon::now();
+            $time = Carbon::parse($this->timeout);
+            $difference = ($time->diff($now)->days < 1)
+                ? 'today'
+                : $time->diffForHumans($now);
+            return $difference;
         }
     }
 }

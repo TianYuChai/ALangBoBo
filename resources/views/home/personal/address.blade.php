@@ -100,7 +100,7 @@
                                                   placeholder="请输入详细地址信息，如道路、门牌号、小区、楼栋号、单元等信息"></textarea>
                                     </div>
                                     <div class="postNumDiv mgt-20">
-                                        邮政编码：
+                                        <span class="receiveStar">*</span>邮政编码：
                                         <input type="text" class="postNum" id="postNum" name="code" autocomplete="off">
                                     </div>
                                     <div class="receiveNameDiv mgt-20">

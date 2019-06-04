@@ -3,7 +3,6 @@
 @section('css')
     @parent
     <link rel="stylesheet" type="text/css" href="{{ asset('home/common/bootstrap.min.css') }}"><!--可无视-->
-    <script src="http://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="{{ asset('home/common/citySelect.css') }}">
     <link href="{{ asset('home/css/index.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('home/css/merchantCenter_shInfo.css') }}"/>
@@ -135,7 +134,6 @@
                                                                 {{--<input type="checkbox" name="checkbox"/>--}}
                                                                 <span class="mgr-20">{{ $item->created_at }}</span>
                                                                 <span class="mgr-20">订单号：<span>{{ $item->order_id }}</span></span>
-                                                                {{--<span class="mgr-20">包大圣</span>--}}
                                                             </div>
                                                         </td>
                                                     </tr>
@@ -169,13 +167,15 @@
                                                                     <a>等待商家发货</a>
                                                                 @break
                                                                 @case(400)
-                                                                    <a>商家已发货, 请注意查收</a>
+                                                                    <a>已发货, 请查收 <br>
+                                                                        {{ $item->signcountdow }}完成签收
+                                                                    </a>
                                                                 @break
                                                                 @case(500)
                                                                     <a>交易成功</a>
                                                                 @break
                                                             @endswitch
-                                                            <a>订单详情</a>
+                                                                <a href="javascript:void(0)" class="order_show" data-action="{{ route('personal.havegoods.show', ['id' => $item->id]) }}">订单详情</a>
                                                         </td>
                                                         <td class="pd-20">
                                                             @if($item->pay_method != 200 && $item->pay_method == 'subscribed'
@@ -184,21 +184,21 @@
                                                             @endif
                                                             @if(in_array($item->status, [200]))
                                                                 <a href="" class="payMoneyBtn">立即付款</a>
-                                                                <a href="" class="deleteBtn">取消订单</a>
+                                                                <a href="javascript:void(0)" class="deleteBtn del_order" data-action="{{ route('personal.havegoods.delorder', ['id' => $item->id]) }}">取消订单</a>
                                                             @elseif(in_array($item->status, [300, 400, 500]))
                                                                 @switch($item->status)
                                                                     @case(400)
-                                                                        <a href="" class="timeBtn">2019-05-23</a>
-                                                                        <a href="" class="sureBtn">确认收货</a>
+                                                                        <a href="javascript:void(0)"
+                                                                           class="sureBtn" data-action="{{ route('personal.havegoods.sign', ['id' => $item->id]) }}">确认收货</a>
                                                                     @break
                                                                     @case(500)
                                                                         <a class="deleteBtn" href="" data-toggle="modal" data-target="#editEvaluate">评价</a>
-                                                                        <a class="deleteBtn" href="">再次购买</a>
+                                                                        <a class="deleteBtn" href="{{ url('details', ['id' => $item->sid]) }}">再次购买</a>
                                                                     @break
                                                                 @endswitch
-                                                                    @if($item->pay_method == 'paidin' || $item->pay_method == 'subscribed' && $item->timeout == '0000-00-00 00:00:00')
-                                                                        <a href="" class="deleteBtn">申请退款</a>
-                                                                    @endif
+                                                                @if($item->pay_method == 'paidin' || $item->pay_method == 'subscribed' && $item->timeout == '0000-00-00 00:00:00')
+                                                                    <a href="javascript:void(0)" class="deleteBtn refund" data-action="">申请退款</a>
+                                                                @endif
                                                             @endif
                                                         </td>
                                                     </tr>
@@ -225,61 +225,21 @@
                                             &times;
                                         </button>
                                         <h4 class="modal-title" id="myModalLabel-jm">
-                                            <p class="changeContentTip"><img src="../images/icon/changeContentIcon.png" alt=""/>发表评价</p>
+                                            <p class="changeContentTip"><img src="{{ asset('home/images/icon/changeContentIcon.png') }}" alt=""/>发表评价</p>
                                         </h4>
                                     </div>
                                     <div class="modal-body">
                                         <div class="changeContent">
                                             <form class="changeSignForm" id="changeSignForm" method="get" action="">
                                                 <fieldset class="fieldset clearfix">
-                                                    <div class="productDetailInfo clearfix">
-                                                        <img src="../images/img/shopcarListImg.png" class="fl"/>
-                                                        <div class="fl">
-                                                            <p class="mgl-10">原创复古医生包 头层牛皮单肩斜挎包 真皮女包口金包手
-                                                                提包小挎包</p>
-                                                            <p class="mgl-10">颜色分类：<span>深酒红色</span></p>
-                                                        </div>
-                                                    </div>
                                                     <div class="manyidu mgt-20">
                                                         商品满意度评价：
-                                                        <span class="relative">
-                                                            10%
-                                                            <img src="../images/img/activeStar.png" alt="" class="activeStar"/>
+                                                        @for($i = 0; $i <= 10; $i++)
+                                                            <span class="relative">
+                                                            {{ $i == 0 ? '' : $i }}0%
+                                                            <img src="{{ asset('home/images/img/activeStar.png') }}" alt="" class="activeStar"/>
                                                         </span>
-                                                        <span class="relative">
-                                                            20%
-                                                            <img src="../images/img/whiteStar.png" alt="" class="activeStar"/>
-                                                        </span>
-                                                        <span class="relative">
-                                                            30%
-                                                            <img src="../images/img/whiteStar.png" alt="" class="activeStar"/>
-                                                        </span>
-                                                        <span class="relative">
-                                                            40%
-                                                            <img src="../images/img/whiteStar.png" alt="" class="activeStar"/>
-                                                        </span>
-                                                        <span class="relative">
-                                                            50%
-                                                            <img src="../images/img/whiteStar.png" alt="" class="activeStar"/>
-                                                        </span>
-                                                        <span class="relative">
-                                                            60%
-                                                            <img src="../images/img/whiteStar.png" alt="" class="activeStar"/>
-                                                        </span><span class="relative">
-                                                            70%
-                                                            <img src="../images/img/whiteStar.png" alt="" class="activeStar"/>
-                                                        </span>
-                                                        <span class="relative">
-                                                            80%
-                                                            <img src="../images/img/whiteStar.png" alt="" class="activeStar"/>
-                                                        </span><span class="relative">
-                                                            90%
-                                                            <img src="../images/img/whiteStar.png" alt="" class="activeStar"/>
-                                                        </span>
-                                                        <span class="relative">
-                                                            100%
-                                                            <img src="../images/img/whiteStar.png" alt="" class="activeStar"/>
-                                                        </span>
+                                                        @endfor
                                                     </div>
                                                     <div class="productPingjia mgt-20">
                                                         商品评价：
@@ -293,70 +253,14 @@
                                                         <p class="inline-block mgr-20 mgl-15 fl">晒图片：</p>
                                                         <!--晒图片-1-->
                                                         <div class="fl mgr-10">
-                                                            <img src="../images/img/idImg.png" alt="" class="jmImg"/>
+                                                            <img src="{{ asset('home/images/img/idImg.png') }}" alt="" class="jmImg"/>
                                                             <!--浏览按钮-->
                                                             <!--点击浏览按钮，显示上传预览弹框-->
-                                                            <img src="../images/img/changeSignUpload.png" alt="" class="uploadImg"/>
+                                                            <img src="{{ asset('home/images/img/changeSignUpload.png') }}" alt="" class="uploadImg"/>
                                                             <div class="shangchuan" style="display: none;">
                                                                 <form name="form1" id="form1">
                                                                     <input type="file" name="file1" id="file1" multiple="multiple" />
                                                                     <img src="" id="img1" style="width: 300px;height: 220px; margin-top:15px;">
-                                                                    <button type="submit" class="shangchuanSave">保存</button>
-                                                                </form>
-                                                            </div>
-                                                        </div>
-                                                        <!--晒图片-2-->
-                                                        <div class="fl mgr-10">
-                                                            <img src="../images/img/idImg.png" alt="" class="jmImg"/>
-                                                            <!--浏览按钮-->
-                                                            <!--点击浏览按钮，显示上传预览弹框-->
-                                                            <img src="../images/img/changeSignUpload.png" alt="" class="uploadImg"/>
-                                                            <div class="shangchuan" style="display: none;">
-                                                                <form name="form2" id="form2">
-                                                                    <input type="file" name="file2" id="file2" multiple="multiple" />
-                                                                    <img src="" id="img2" style="width: 300px;height: 220px; margin-top:15px;">
-                                                                    <button type="submit" class="shangchuanSave">保存</button>
-                                                                </form>
-                                                            </div>
-                                                        </div>
-                                                        <!--晒图片-3-->
-                                                        <div class="fl mgr-10 mgl-75 mgt-20">
-                                                            <img src="../images/img/idImg.png" alt="" class="jmImg"/>
-                                                            <!--浏览按钮-->
-                                                            <!--点击浏览按钮，显示上传预览弹框-->
-                                                            <img src="../images/img/changeSignUpload.png" alt="" class="uploadImg"/>
-                                                            <div class="shangchuan" style="display: none;">
-                                                                <form name="form3" id="form3">
-                                                                    <input type="file" name="file3" id="file3" multiple="multiple" />
-                                                                    <img src="" id="img3" style="width: 300px;height: 220px; margin-top:15px;">
-                                                                    <button type="submit" class="shangchuanSave">保存</button>
-                                                                </form>
-                                                            </div>
-                                                        </div>
-                                                        <!--晒图片-4-->
-                                                        <div class="fl mgr-10 mgt-20">
-                                                            <img src="../images/img/idImg.png" alt="" class="jmImg"/>
-                                                            <!--浏览按钮-->
-                                                            <!--点击浏览按钮，显示上传预览弹框-->
-                                                            <img src="../images/img/changeSignUpload.png" alt="" class="uploadImg"/>
-                                                            <div class="shangchuan" style="display: none;">
-                                                                <form name="form4" id="form4">
-                                                                    <input type="file" name="file4" id="file4" multiple="multiple" />
-                                                                    <img src="" id="img4" style="width: 300px;height: 220px; margin-top:15px;">
-                                                                    <button type="submit" class="shangchuanSave">保存</button>
-                                                                </form>
-                                                            </div>
-                                                        </div>
-                                                        <!--晒图片-5-->
-                                                        <div class="fl mgr-10 mgl-75 mgt-20">
-                                                            <img src="../images/img/idImg.png" alt="" class="jmImg"/>
-                                                            <!--浏览按钮-->
-                                                            <!--点击浏览按钮，显示上传预览弹框-->
-                                                            <img src="../images/img/changeSignUpload.png" alt="" class="uploadImg"/>
-                                                            <div class="shangchuan" style="display: none;">
-                                                                <form name="form5" id="form5">
-                                                                    <input type="file" name="file5" id="file5" multiple="multiple" />
-                                                                    <img src="" id="img05" style="width: 300px;height: 220px; margin-top:15px;">
                                                                     <button type="submit" class="shangchuanSave">保存</button>
                                                                 </form>
                                                             </div>
@@ -391,8 +295,8 @@
         $(".manyidu span").on('click',function(){
             $(this).siblings().removeClass('manyiduActive');
             $(this).addClass('manyiduActive');
-            $(this).siblings().children('img').attr('src','../images/img/whiteStar.png');
-            $(this).children('img').attr('src','../images/img/activeStar.png');
+            $(this).siblings().children('img').attr('src','{{ asset('home/images/img/whiteStar.png') }}');
+            $(this).children('img').attr('src','{{ asset('home/images/img/activeStar.png') }}');
         });
         //全选点击事件
         $('.checkAll').on('click', function () {
@@ -410,5 +314,110 @@
             $(nowTr).parent().parent().parent().parent().parent().parent().parent().remove();
             //$(this).closest('tr').remove();  //清空当前行
         }
+        /*订单详情*/
+        $('.order_show').click(function () {
+            let url = $(this).data('action');
+            layer.open({
+                type: 2,
+                title: '订单详情',
+                shadeClose: true,
+                shade: 0.8,
+                area: ['990px', '90%'],
+                content: url
+            });
+        });
+        /*签收*/
+        $('.sureBtn').click(function () {
+            let url = $(this).data('action');
+            layer.confirm('是否已确认收到货品？', {
+                btn: ['是','否'] //按钮
+            }, function(index) {
+                layer.close(index);
+                $.ajax({
+                    headers: {
+                        'X-CSRF-TOKEN': "{{ csrf_token() }}"
+                    },
+                    method:"GET",
+                    url:url,
+                    data:'',
+                    success:function (res) {
+                        if(res.status == 200) {
+                            layer.msg(res.info);
+                            setTimeout(function () {
+                                window.location.reload();
+                            }, 300)
+                        }
+                    },
+                    error:function (XMLHttpRequest, textStatus, errorThrown) {
+                        //返回提示信息
+                        try {
+                            if(XMLHttpRequest.status == 401) {
+                                var errors = JSON.parse(XMLHttpRequest.responseText)['errors']['info'];
+                                layer.msg(errors[0]);return;
+                            }
+                            var errors = XMLHttpRequest.responseJSON.errors;
+                            for (var value in errors) {
+                                layer.msg(errors[value][0]);return;
+                            }
+                        } catch (e) {
+                            var errors = JSON.parse(XMLHttpRequest.responseText)['errors'];
+                            for (var value in errors) {
+                                layer.msg(errors[value][0]);return;
+                            }
+                        }
+                    }
+                });
+            });
+        });
+        /*取消订单*/
+        $('.del_order').click(function () {
+            let url = $(this).data('action');
+            layer.confirm('是否取消订单？', {
+                btn: ['是','否'] //按钮
+            }, function(index) {
+                layer.close(index);
+                $.ajax({
+                    headers: {
+                        'X-CSRF-TOKEN': "{{ csrf_token() }}"
+                    },
+                    method:"GET",
+                    url:url,
+                    data:'',
+                    success:function (res) {
+                        if(res.status == 200) {
+                            layer.msg(res.info);
+                            setTimeout(function () {
+                                window.location.reload();
+                            }, 300)
+                        }
+                    },
+                    error:function (XMLHttpRequest, textStatus, errorThrown) {
+                        //返回提示信息
+                        try {
+                            if(XMLHttpRequest.status == 401) {
+                                var errors = JSON.parse(XMLHttpRequest.responseText)['errors']['info'];
+                                layer.msg(errors[0]);return;
+                            }
+                            var errors = XMLHttpRequest.responseJSON.errors;
+                            for (var value in errors) {
+                                layer.msg(errors[value][0]);return;
+                            }
+                        } catch (e) {
+                            var errors = JSON.parse(XMLHttpRequest.responseText)['errors'];
+                            for (var value in errors) {
+                                layer.msg(errors[value][0]);return;
+                            }
+                        }
+                    }
+                });
+            });
+        });
+        /*申请退款*/
+        $('.refund').click(function () {
+            let url = $(this).data('action');
+            layer.prompt({title: '填写退款理由', formType: 2}, function(text, index){
+
+            });
+        });
     </script>
 @endsection

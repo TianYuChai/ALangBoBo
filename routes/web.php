@@ -85,6 +85,9 @@ Route::group(['namespace' => 'home', 'middleware' => 'listenState'], function ()
             Route::get('merchant', ['as' => 'personal.merchant', 'uses' => 'PersonalMerchantController@index'])->middleware("judgeordinuser");
             Route::post('store', ['as' => 'personal.store', 'uses' => 'PersonalMerchantController@store'])->middleware("judgeordinuser");
             Route::get('{type}/havegoods', ['as' => 'personal.havegoods', 'uses' => 'PersonalHaveGoodsController@index']);
+            Route::get('havegoods/{id}/show', ['as' => 'personal.havegoods.show', 'uses' => 'PersonalHaveGoodsController@show']);
+            Route::get('havegoods/{id}/sign', ['as' => 'personal.havegoods.sign', 'uses' => 'PersonalHaveGoodsController@sign']);
+            Route::get('havegoods/{id}/delorder', ['as' => 'personal.havegoods.delorder', 'uses' => 'PersonalHaveGoodsController@delOrder']);
             /*用户中心--商户*/
             Route::group(['namespace' => 'shop', 'middleware' => 'shop'], function () {
                 /*店铺店招*/
@@ -103,7 +106,10 @@ Route::group(['namespace' => 'home', 'middleware' => 'listenState'], function ()
                 Route::get('shop/banner/{id}/edit', ['as' => 'personal.banner.edit', 'uses' => 'PersonalBannerController@edit']);
                 Route::post('shop/banner/{id}/update', ['as' => 'personal.banner.update', 'uses' => 'PersonalBannerController@update']);
                 Route::get('shop/banner/{id}/del', ['as' => 'personal.banner.del', 'uses' => 'PersonalBannerController@del']);
-
+                /*店铺订单*/
+                Route::get('shop/{type}/order', ['as' => 'personal.shop.order', 'uses' => 'PersonalOrderController@index']);
+                Route::post('shop/{id}/deliveryOrder', ['as' => 'personal.order.deliveryorder', 'uses' => 'PersonalOrderController@deliveryOrder']);
+                Route::post('shop/{id}/editDeliveryOrder', ['as' => 'personal.order.editdeliveryorder', 'uses' => 'PersonalOrderController@editDeliveryOrder']);
                 /*店铺商品*/
                 Route::get('shop/goods', ['as' => 'personal.shop.goods', 'uses' => 'PersonalGoodsController@index']);
                 Route::get('shop/goods/{id}/edit', ['as' =>'personal.goods.edit', 'uses' => 'PersonalGoodsController@edit']);

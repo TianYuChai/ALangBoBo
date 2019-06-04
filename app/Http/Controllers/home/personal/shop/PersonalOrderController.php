@@ -2,22 +2,24 @@
 /**
  * Created by PhpStorm.
  * User: chai
- * Date: 2019/6/3
- * Time: 17:36
+ * Date: 2019/6/4
+ * Time: 14:05
  */
-namespace App\Http\Controllers\home\personal;
+namespace App\Http\Controllers\home\personal\shop;
 
 use App\Http\Controllers\home\BaseController;
 use App\Http\Models\home\orderModel;
 use App\Http\Models\home\shoppOrderModel;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Input;
 use Exception;
 
-class PersonalHaveGoodsController extends BaseController
+class PersonalOrderController extends BaseController
 {
-    const ROUTE = HOME_PERSONAL; //视图路径
+    const ROUTE = HOME_PERSONAL_SHOP;
+
     protected static $types = [
         'allOrder' => '',
         'waitPay' => 200,
@@ -25,15 +27,10 @@ class PersonalHaveGoodsController extends BaseController
         'waitReceive' => 400,
         'waitEvaluate' => 500
     ];
-    /**
-     * php 魔术方法获取用户id
-     *
-     * PersonalContentController constructor.
-     */
     public function __construct(shoppOrderModel $model, orderModel $orderModel)
     {
         $this->middleware(function ($request, $next) use ($model, $orderModel){
-            $this->userId = Auth::guard('web')->user()->id;
+            $this->user = Auth::guard('web')->user();
             $this->model = $model;
             $this->addressModel = $orderModel;
             return $next($request);
@@ -45,7 +42,7 @@ class PersonalHaveGoodsController extends BaseController
         $status = self::$types[$type];
         $order_id = trim(Input::get('order_id', ''));
         $items = $this->model::where(function ($query) use ($status) {
-            $query->where('uid', $this->userId);
+            $query->where('gid', $this->user->id);
             if(!empty($status)) {
                 $query->where('status', $status);
             }
@@ -54,39 +51,33 @@ class PersonalHaveGoodsController extends BaseController
             'type' => $type,
             'items' => $items
         ];
-        return view(self::ROUTE. 'haveToBuyGoods', compact('data'));
+        return view(self::ROUTE. 'order', compact('data'));
     }
 
     /**
-     * 订单展示
+     * 订单发货
      *
      * @param $id
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    public function show($id)
-    {
-        $item = $this->model::find($id);
-        return view(self::ROUTE . 'order_show', compact('item'));
-    }
-
-    /**
-     * 订单签收
-     *
-     * @param $id
+     * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function sign($id)
+    public function deliveryOrder($id, Request $request)
     {
         try {
             $this->model::where([
-                'uid' => $this->userId,
+                'gid' => $this->user->id,
                 'id' => intval($id),
+                'status' => 300
+            ])->first()->update([
+                'courier_firm' => $request->name,
+                'courier_code' => $request->code,
+                'signtime' => Carbon::now()->modify('+10 days')->toDateTimeString(),
                 'status' => 400
-            ])->first()->update([
-                'status' => 500,
-                'signtime' => ''
             ]);
-            return $this->ajaxReturn();
+            return $this->ajaxReturn([
+                'status' => 200,
+                'info' => '发货成功'
+            ], 200);
         } catch (Exception $e) {
             return $this->ajaxReturn([
                 'status' => 510,
@@ -96,35 +87,23 @@ class PersonalHaveGoodsController extends BaseController
     }
 
     /**
-     * 取消订单
+     * 修改发货信息
      *
      * @param $id
+     * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function delOrder($id)
-    {
-        try{
-            $this->model::where([
-                'id' => intval($id),
-                'uid' => $this->userId,
-                'status' => 200
-            ])->first()->update([
-                'status' => 100
-            ]);
-            return $this->ajaxReturn();
-        } catch (Exception $e) {
-            return $this->ajaxReturn([
-                'status' => 510,
-                'info' => $e->getMessage()
-            ], 510);
-        }
-    }
-
-    public function refundOrder($id, Request $request)
+    public function editDeliveryOrder($id, Request $request)
     {
         try {
-            $message = trim($request->text);
-
+            $this->model::where([
+                'id'=> intval($id),
+                'gid' => $this->user->id,
+            ])->update([
+                'courier_firm' => $request->name,
+                'courier_code' => $request->code
+            ]);
+            return $this->ajaxReturn();
         } catch (Exception $e) {
             return $this->ajaxReturn([
                 'status' => 510,

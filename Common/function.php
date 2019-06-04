@@ -219,15 +219,5 @@ function create_order_no()
  */
 function code(int $num = 6)
 {
-        for($i=0; $i<$num; $i++){
-            $n[$i] = $i;
-        }
-        for($i=0; $i<$num; $i++){
-            $rand = mt_rand($i, $num-1);
-            if($n[$i] == $i){
-                $n[$i] = $n[$rand];
-                $n[$rand] = $i;
-            }
-        }
-        return implode('', $n);
-    }
+    return str_pad(mt_rand(0, pow(10, $num) - 1), $num, '0', STR_PAD_LEFT);
+}
