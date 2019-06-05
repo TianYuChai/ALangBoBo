@@ -88,6 +88,7 @@ Route::group(['namespace' => 'home', 'middleware' => 'listenState'], function ()
             Route::get('havegoods/{id}/show', ['as' => 'personal.havegoods.show', 'uses' => 'PersonalHaveGoodsController@show']);
             Route::get('havegoods/{id}/sign', ['as' => 'personal.havegoods.sign', 'uses' => 'PersonalHaveGoodsController@sign']);
             Route::get('havegoods/{id}/delorder', ['as' => 'personal.havegoods.delorder', 'uses' => 'PersonalHaveGoodsController@delOrder']);
+            Route::post('havegoods/{id}/refundOrder', ['as' => 'personal.havegoods.refundorder', 'uses' => 'PersonalHaveGoodsController@refundOrder']);
             /*用户中心--商户*/
             Route::group(['namespace' => 'shop', 'middleware' => 'shop'], function () {
                 /*店铺店招*/
@@ -110,6 +111,7 @@ Route::group(['namespace' => 'home', 'middleware' => 'listenState'], function ()
                 Route::get('shop/{type}/order', ['as' => 'personal.shop.order', 'uses' => 'PersonalOrderController@index']);
                 Route::post('shop/{id}/deliveryOrder', ['as' => 'personal.order.deliveryorder', 'uses' => 'PersonalOrderController@deliveryOrder']);
                 Route::post('shop/{id}/editDeliveryOrder', ['as' => 'personal.order.editdeliveryorder', 'uses' => 'PersonalOrderController@editDeliveryOrder']);
+                Route::get('shop/{id}/reimburse', ['as' => 'personal.order.reimburse', 'uses' => 'PersonalOrderController@reimburse']);
                 /*店铺商品*/
                 Route::get('shop/goods', ['as' => 'personal.shop.goods', 'uses' => 'PersonalGoodsController@index']);
                 Route::get('shop/goods/{id}/edit', ['as' =>'personal.goods.edit', 'uses' => 'PersonalGoodsController@edit']);

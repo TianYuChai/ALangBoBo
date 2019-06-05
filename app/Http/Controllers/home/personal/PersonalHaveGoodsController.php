@@ -23,7 +23,8 @@ class PersonalHaveGoodsController extends BaseController
         'waitPay' => 200,
         'waitSend' => 300,
         'waitReceive' => 400,
-        'waitEvaluate' => 500
+        'waitEvaluate' => 500,
+        'refund' => [700, 800, 900]
     ];
     /**
      * php 魔术方法获取用户id
@@ -47,7 +48,11 @@ class PersonalHaveGoodsController extends BaseController
         $items = $this->model::where(function ($query) use ($status) {
             $query->where('uid', $this->userId);
             if(!empty($status)) {
-                $query->where('status', $status);
+                if(!is_array($status)) {
+                    $query->where('status', $status);
+                } else {
+                    $query->whereIn('status', $status);
+                }
             }
         })->SearchOrderId($order_id)->orderBy('status', 'asc')->paginate(parent::$page_limit);
         $data = [
@@ -120,11 +125,25 @@ class PersonalHaveGoodsController extends BaseController
         }
     }
 
+    /**
+     * 申请退款
+     *
+     * @param $id
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function refundOrder($id, Request $request)
     {
         try {
-            $message = trim($request->text);
-
+            $message = trim($request->message);
+            $this->model::where([
+                'id' => intval($id),
+                'uid' => $this->userId,
+            ])->whereIn('status', [300, 400])->update([
+               'status' => 700,
+               'refund' => $message
+            ]);
+            return $this->ajaxReturn();
         } catch (Exception $e) {
             return $this->ajaxReturn([
                 'status' => 510,

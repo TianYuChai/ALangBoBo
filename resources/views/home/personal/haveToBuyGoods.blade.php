@@ -74,6 +74,10 @@
                             <a href="{{ route('personal.havegoods', ['type' => 'waitReceive']) }}">待收货</a>
                         </li>
                         <li class="borderRight"></li>
+                        <li class="{{ $data['type'] == 'refund' ? 'active' :''}}">
+                            <a href="{{ route('personal.havegoods', ['type' => 'refund']) }}">退款</a>
+                        </li>
+                        <li class="borderRight"></li>
                         <li class="{{ $data['type'] == 'waitEvaluate' ? 'active' :''}}">
                             <a href="{{ route('personal.havegoods', ['type' => 'waitEvaluate']) }}">待评价</a>
                         </li>
@@ -171,8 +175,10 @@
                                                                         {{ $item->signcountdow }}完成签收
                                                                     </a>
                                                                 @break
-                                                                @case(500)
-                                                                    <a>交易成功</a>
+                                                                @default
+                                                                    @if(in_array($item->status, [500, 600]))
+                                                                        <a>交易成功</a>
+                                                                    @endif
                                                                 @break
                                                             @endswitch
                                                                 <a href="javascript:void(0)" class="order_show" data-action="{{ route('personal.havegoods.show', ['id' => $item->id]) }}">订单详情</a>
@@ -185,7 +191,7 @@
                                                             @if(in_array($item->status, [200]))
                                                                 <a href="" class="payMoneyBtn">立即付款</a>
                                                                 <a href="javascript:void(0)" class="deleteBtn del_order" data-action="{{ route('personal.havegoods.delorder', ['id' => $item->id]) }}">取消订单</a>
-                                                            @elseif(in_array($item->status, [300, 400, 500]))
+                                                            @elseif(in_array($item->status, [300, 400, 500, 600]))
                                                                 @switch($item->status)
                                                                     @case(400)
                                                                         <a href="javascript:void(0)"
@@ -197,8 +203,12 @@
                                                                     @break
                                                                 @endswitch
                                                                 @if($item->pay_method == 'paidin' || $item->pay_method == 'subscribed' && $item->timeout == '0000-00-00 00:00:00')
-                                                                    <a href="javascript:void(0)" class="deleteBtn refund" data-action="">申请退款</a>
+                                                                    @if(in_array($item->status, [300, 400]))
+                                                                            <a href="javascript:void(0)" class="deleteBtn refund" data-action="{{ route('personal.havegoods.refundorder', ['id' => $item->id]) }}">申请退款</a>
+                                                                    @endif
                                                                 @endif
+                                                            @elseif(in_array($item->status, [700, 800, 900]))
+                                                                    <a style="color: red">{{ $item->status_name }}</a>
                                                             @endif
                                                         </td>
                                                     </tr>
@@ -416,7 +426,41 @@
         $('.refund').click(function () {
             let url = $(this).data('action');
             layer.prompt({title: '填写退款理由', formType: 2}, function(text, index){
-
+                layer.close(index);
+                $.ajax({
+                    headers: {
+                        'X-CSRF-TOKEN': "{{ csrf_token() }}"
+                    },
+                    method:"POST",
+                    url:url,
+                    data:{message: text},
+                    success:function (res) {
+                        if(res.status == 200) {
+                            layer.msg(res.info);
+                            setTimeout(function () {
+                                window.location.reload();
+                            }, 300)
+                        }
+                    },
+                    error:function (XMLHttpRequest, textStatus, errorThrown) {
+                        //返回提示信息
+                        try {
+                            if(XMLHttpRequest.status == 401) {
+                                var errors = JSON.parse(XMLHttpRequest.responseText)['errors']['info'];
+                                layer.msg(errors[0]);return;
+                            }
+                            var errors = XMLHttpRequest.responseJSON.errors;
+                            for (var value in errors) {
+                                layer.msg(errors[value][0]);return;
+                            }
+                        } catch (e) {
+                            var errors = JSON.parse(XMLHttpRequest.responseText)['errors'];
+                            for (var value in errors) {
+                                layer.msg(errors[value][0]);return;
+                            }
+                        }
+                    }
+                });
             });
         });
     </script>

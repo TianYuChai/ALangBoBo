@@ -100,7 +100,7 @@
                 <td>订单备注</td>
                 <td>{{ $item->memo }}</td>
             </tr>
-            @if($item->status > 300)
+            @if($item->status > 300 && $item->status < 700)
                 <tr>
                     <td>订单快递</td>
                     <td>
@@ -108,11 +108,12 @@
                         快递单号：{{ $item->courier_code }}
                     </td>
                 </tr>
+            @endif
+            @if(in_array($item->status, [700, 800, 900]))
                 <tr>
-                    <td>订单快递</td>
+                    <td>退款</td>
                     <td>
-                        快递：{{ $item->courier_firm }} <br>
-                        快递单号：{{ $item->courier_code }}
+                        订单进入<span style="color:red ">{{ $item->status_name }}</span>, 退款理由：{{ $item->refund }}
                     </td>
                 </tr>
             @endif

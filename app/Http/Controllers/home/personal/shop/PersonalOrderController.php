@@ -10,6 +10,7 @@ namespace App\Http\Controllers\home\personal\shop;
 use App\Http\Controllers\home\BaseController;
 use App\Http\Models\home\orderModel;
 use App\Http\Models\home\shoppOrderModel;
+use App\Http\Services\home\persanal\PersonalOrderService;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -25,14 +26,17 @@ class PersonalOrderController extends BaseController
         'waitPay' => 200,
         'waitSend' => 300,
         'waitReceive' => 400,
-        'waitEvaluate' => 500
+        'waitEvaluate' => 500,
+        'refund' => [
+            700, 800, 900
+        ]
     ];
     public function __construct(shoppOrderModel $model, orderModel $orderModel)
     {
         $this->middleware(function ($request, $next) use ($model, $orderModel){
             $this->user = Auth::guard('web')->user();
             $this->model = $model;
-            $this->addressModel = $orderModel;
+            $this->orderModel = $orderModel;
             return $next($request);
         });
     }
@@ -44,7 +48,13 @@ class PersonalOrderController extends BaseController
         $items = $this->model::where(function ($query) use ($status) {
             $query->where('gid', $this->user->id);
             if(!empty($status)) {
-                $query->where('status', $status);
+                if(!is_array($status)) {
+                    $query->where('status', $status);
+                } else {
+                    $query->whereIn('status', $status);
+                }
+            } else {
+                $query->whereIn('status', [300, 400]);
             }
         })->SearchOrderId($order_id)->orderBy('status', 'asc')->paginate(parent::$page_limit);
         $data = [
@@ -103,6 +113,19 @@ class PersonalOrderController extends BaseController
                 'courier_firm' => $request->name,
                 'courier_code' => $request->code
             ]);
+            return $this->ajaxReturn();
+        } catch (Exception $e) {
+            return $this->ajaxReturn([
+                'status' => 510,
+                'info' => $e->getMessage()
+            ], 510);
+        }
+    }
+
+    public function reimburse($id, PersonalOrderService $service)
+    {
+        try{
+            $service->refund($id);
             return $this->ajaxReturn();
         } catch (Exception $e) {
             return $this->ajaxReturn([

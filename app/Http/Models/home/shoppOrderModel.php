@@ -10,10 +10,12 @@ namespace App\Http\Models\home;
 use App\Http\Models\currency\CapitalModel;
 use App\Http\Models\currency\MerchantModel;
 use App\Http\Models\currency\UserModel;
+use App\Http\Models\goods\GoodsModel;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Exception;
 use Log;
+use Illuminate\Support\Facades\DB;
 
 class shoppOrderModel extends Model
 {
@@ -27,8 +29,9 @@ class shoppOrderModel extends Model
         400 => '商家发货',
         500 => '用户签收',
         600 => '订单完成',
-        700 => '申请退款',
-        800 => '退款完成',
+        700 => '已申请退款',
+        800 => '退款中',
+        900 => '完成退款'
     ];
 
     /**
@@ -47,12 +50,22 @@ class shoppOrderModel extends Model
                         'g_order_id' => $query->id,
                     ])->update(['status' => $query->getDirty()['status']]);
                     if($query->getDirty()['status'] == 100) {
-                        CapitalModel::where([
-                            'order_id' => $query->order_id,
-                            'g_order_id' => $query->id,
-                            'category' => 500,
-                            'status' => 1003
-                        ])->update(['status' => 1002]);
+                        /*取消订单同时, 撤回对应流水以及商品库存*/
+                        DB::beginTransaction();
+                        try {
+                            CapitalModel::where([
+                                'order_id' => $query->order_id,
+                                'g_order_id' => $query->id,
+                                'category' => 500,
+                                'status' => 1003
+                            ])->update(['status' => 1002]);
+                            $item = GoodsModel::where('id', $query->sid)->sharedLock()->first();
+                            $item->sold = busub($item->sold, $query->num);
+                            $item->save();
+                            DB::commit();
+                        } catch (Exception $e) {
+                            DB::rollBack();
+                        }
                     }
                 }
             } catch (Exception $e) {

@@ -46,6 +46,8 @@ class shoppPayService extends BaseService
             'order_id' => $order_id,
             'status' => 2001
         ])->first();
+        $item->pay_method = $data['method'];
+        $item->save();
         if($item->paidin_price == '0') {
             return $this->subscribedWith($order_id);
         } else {
@@ -235,6 +237,7 @@ class shoppPayService extends BaseService
                         'status' => 2001
                     ])->first();
                     $item->status = 2101;
+                    $item->timeout = Carbon::now()->modify('+30 days')->toDateTimeString();
                     $item->save();
                 Log::info('订单支付宝异步回调处理结束', [
                     'order_id' => $data['out_trade_no']

@@ -42,7 +42,11 @@ class orderModel extends Model
     {
         $this->attributes['paidin_price'] = bcmul($value, 100);
     }
-
+    /*实缴价*/
+    public function setRefundAttribute($value)
+    {
+        $this->attributes['refund'] = bcmul($value, 100);
+    }
     /*换算总价*/
     public function getTotalPricesAttribute()
     {
