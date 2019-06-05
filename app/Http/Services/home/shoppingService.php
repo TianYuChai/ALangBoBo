@@ -70,8 +70,8 @@ class shoppingService extends BaseService
                 ];
                 $money = $this->goodsPrice($item, $num);
                 //先确认金额是否在可控之类，再去加入当前订单的金额中顺序不可乱
-                $this->authBuyWay($value['pay_method'], $money);
-                $this->calculatePrice($value['pay_method'], $money);
+                $this->authBuyWay($value['pay_method'], $money['monery']);
+                $this->calculatePrice($value['pay_method'], $money['monery']);
                 //获取推荐人编码
                 $referees_id = Redis::get('referess-'. $this->userId. '-'. $item->uid);
                 $goods_orders[] = [
@@ -80,12 +80,12 @@ class shoppingService extends BaseService
                     'sid' => $item->id,
                     'order_id' => $order_id,
                     'referees' => $referees_id,
-                    'money' => $money,
+                    'money' => $money['money'],
                     'num' => $num,
                     'fee' => $item->total_price,
                     'pay_method' => $value['pay_method'],
                     'goods' => json_encode($goods),
-                    'delivery_fee' => $item->delivery_price,
+                    'delivery_fee' => $money['delivery_fee'],
                     'pack_mail' => $item->free_price,
                     'satisfied_fee' => $item->satic_price,
                     'status' => 200
@@ -181,10 +181,15 @@ class shoppingService extends BaseService
     {
         try {
             $money = bcmul($data->total_price, $num, 2);
+            $delivery_fee = 0;
             if($data->delivery_price != 0 && $money < $data->free_price) {
                 $money = bcadd($money, $data->delivery_price, 2);
+                $delivery_fee = $data->delivery_price;
             }
-            return $money;
+            return [
+                'monery' => $money,
+                'delivery_fee' => $delivery_fee
+            ];
         } catch (Exception $e) {
             Log::info('下单流程->创建订单->计算商品价格:', [
                 'time' => getTime(),
