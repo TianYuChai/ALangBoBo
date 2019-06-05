@@ -68,7 +68,7 @@ class PersonalOrderService extends BaseService
     {
         $order = [
             'out_trade_no' => $data->order_id,
-            'refund_amount' => $data->moneys,
+            'refund_amount' => '0.5',
             'out_request_no' => $data->id,
             'refund_reason' => '订单退款'
         ];
