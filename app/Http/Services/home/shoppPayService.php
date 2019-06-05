@@ -200,7 +200,7 @@ class shoppPayService extends BaseService
         try {
             $order = [
                 'out_trade_no' => $data->order_id,
-                'total_amount' => '0.02',
+                'total_amount' => '1',
                 'subject' => '阿郎博波商务中心',
                 'body' => '商品购买',
             ];
