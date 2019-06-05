@@ -71,6 +71,7 @@ class PersonalHaveGoodsController extends BaseController
     public function show($id)
     {
         $item = $this->model::find($id);
+        dd($item->addresss);
         return view(self::ROUTE . 'order_show', compact('item'));
     }
 
