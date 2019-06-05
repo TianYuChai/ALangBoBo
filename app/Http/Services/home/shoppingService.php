@@ -70,8 +70,8 @@ class shoppingService extends BaseService
                 ];
                 $money = $this->goodsPrice($item, $num);
                 //先确认金额是否在可控之类，再去加入当前订单的金额中顺序不可乱
-                $this->authBuyWay($value['pay_method'], $money['monery']);
-                $this->calculatePrice($value['pay_method'], $money['monery']);
+                $this->authBuyWay($value['pay_method'], $money['money']);
+                $this->calculatePrice($value['pay_method'], $money['money']);
                 //获取推荐人编码
                 $referees_id = Redis::get('referess-'. $this->userId. '-'. $item->uid);
                 $goods_orders[] = [
@@ -80,7 +80,7 @@ class shoppingService extends BaseService
                     'sid' => $item->id,
                     'order_id' => $order_id,
                     'referees' => $referees_id,
-                    'money' => $money['monery'],
+                    'money' => $money['money'],
                     'num' => $num,
                     'fee' => $item->total_price,
                     'pay_method' => $value['pay_method'],
@@ -187,7 +187,7 @@ class shoppingService extends BaseService
                 $delivery_fee = $data->delivery_price;
             }
             return [
-                'monery' => $money,
+                'money' => $money,
                 'delivery_fee' => $delivery_fee
             ];
         } catch (Exception $e) {
