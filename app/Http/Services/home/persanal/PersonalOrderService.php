@@ -73,7 +73,10 @@ class PersonalOrderService extends BaseService
             'refund_reason' => '订单退款'
         ];
         $alipay = Pay::alipay($this->config)->refund($order);
-        dd($alipay);
+        if($alipay['msg'] == 'Success') {
+            
+        }
+        return true;
     }
 
 }
