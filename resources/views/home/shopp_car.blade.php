@@ -121,6 +121,12 @@
                 if (parseInt(t.val())!=1){
                     $('.min').attr('disabled',false);
                 };
+                let checked = $(this).parent().parent().find('input[name="checkbox"]');
+                if(checked.is(':checked')) {
+                    let money = $(this).parent().parent().find('.price span').text();
+                    let stitis_monery = $('.sumPrice').find('span').text();
+                    $('.sumPrice').find('span').text((parseFloat(stitis_monery) + parseFloat(money)).toFixed(2));
+                }
             })
             //数量减少操作
             $(".min").click(function(){
@@ -129,6 +135,12 @@
                 if (parseInt(t.val())==1){
                     $('.min').attr('disabled',true);
                 };
+                let checked = $(this).parent().parent().find('input[name="checkbox"]');
+                if(checked.is(':checked')) {
+                    let money = $(this).parent().parent().find('.price span').text();
+                    let stitis_monery = $('.sumPrice').find('span').text();
+                    $('.sumPrice').find('span').text((parseFloat(stitis_monery) - parseFloat(money)).toFixed(2));
+                }
             });
         });
         //全选点击事件
