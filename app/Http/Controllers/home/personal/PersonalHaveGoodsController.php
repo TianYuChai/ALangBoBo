@@ -9,6 +9,7 @@ namespace App\Http\Controllers\home\personal;
 
 use App\Http\Controllers\home\BaseController;
 use App\Http\Models\home\orderModel;
+use App\Http\Models\home\personal\AddressModel;
 use App\Http\Models\home\shoppOrderModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -71,7 +72,6 @@ class PersonalHaveGoodsController extends BaseController
     public function show($id)
     {
         $item = $this->model::find($id);
-        dd($item->addresss);
         return view(self::ROUTE . 'order_show', compact('item'));
     }
 

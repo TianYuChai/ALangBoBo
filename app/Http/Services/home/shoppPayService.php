@@ -76,7 +76,7 @@ class shoppPayService extends BaseService
         try {
             if(!empty($data['memo'])) {
                 $items = $this->shopp_orderModel::where('order_id', $order_id)->get();
-                $address = $this->addressModel::where('id', $data['address'])->get([
+                $address = $this->addressModel::where('id', $data['address'])->first([
                     'address', 'detailed', 'code', 'number', 'contacts',
                 ]);
                 foreach ($data['memo'] as $datum) {
