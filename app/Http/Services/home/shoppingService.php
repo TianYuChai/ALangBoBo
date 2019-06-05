@@ -80,7 +80,7 @@ class shoppingService extends BaseService
                     'sid' => $item->id,
                     'order_id' => $order_id,
                     'referees' => $referees_id,
-                    'money' => $money['money'],
+                    'money' => $money['monery'],
                     'num' => $num,
                     'fee' => $item->total_price,
                     'pay_method' => $value['pay_method'],
