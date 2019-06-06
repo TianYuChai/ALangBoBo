@@ -66,17 +66,28 @@ class PersonalOrderService extends BaseService
      */
     public function alipayRefunds($data)
     {
-        $order = [
-            'out_trade_no' => $data->order_id,
-            'refund_amount' => '0.5',
-            'out_request_no' => $data->id,
-            'refund_reason' => '订单退款'
-        ];
-        $alipay = Pay::alipay($this->config)->refund($order);
-        if($alipay['msg'] == 'Success') {
-            
+        try{
+            $order = [
+                'out_trade_no' => $data->order_id,
+                'refund_amount' => '0.5',
+                'out_request_no' => $data->id,
+                'refund_reason' => '订单退款'
+            ];
+            $alipay = Pay::alipay($this->config)->refund($order);
+            if($alipay['msg'] == 'Success') {
+                $data->status = 900;
+                $data->save();
+            }
+            return true;
+        } catch (Exception $e) {
+            Log::info('退款操作', [
+                'time' => getTime(),
+                'id' => $data->id,
+                'order_id' => $data->order_id,
+                'info' => $e->getMessage()
+            ]);
+            throw new Exception('退款错误, 请联系管理员');
         }
-        return true;
     }
 
 }

@@ -49,7 +49,7 @@ class shoppOrderModel extends Model
                         'order_id' => $query->order_id,
                         'g_order_id' => $query->id,
                     ])->update(['status' => $query->getDirty()['status']]);
-                    if($query->getDirty()['status'] == 100) {
+                    if(in_array($query->getDirty()['status'], [100, 900])) {
                         /*取消订单同时, 撤回对应流水以及商品库存*/
                         DB::beginTransaction();
                         try {
@@ -62,6 +62,12 @@ class shoppOrderModel extends Model
                             $item = GoodsModel::where('id', $query->sid)->sharedLock()->first();
                             $item->sold = busub($item->sold, $query->num);
                             $item->save();
+                            /*退款*/
+                            if($query->getDirty()['status'] == 900) {
+                                $order = orderModel::where('order_id', $query->order_id)->first();
+                                $order->refund = bcadd($order->refund, $query->money);
+                                $order->save();
+                            }
                             DB::commit();
                         } catch (Exception $e) {
                             DB::rollBack();

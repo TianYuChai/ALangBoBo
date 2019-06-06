@@ -122,6 +122,13 @@ class PersonalOrderController extends BaseController
         }
     }
 
+    /**
+     * 商家同意退款
+     *
+     * @param $id
+     * @param PersonalOrderService $service
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function reimburse($id, PersonalOrderService $service)
     {
         try{
