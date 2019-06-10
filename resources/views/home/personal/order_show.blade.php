@@ -117,6 +117,22 @@
                     </td>
                 </tr>
             @endif
+            @if($item->evaluation)
+                <tr>
+                    <td>评价</td>
+                    <td>
+                        满意度: {{ $item->evaluation }}% <br>
+                        商品评价: {{ $item->goods_evaluation }} <br>
+                        服务评价: {{ $item->service_evaluation }} <br>
+                        评价图片：
+                        @if(!empty($item->image))
+                            @foreach(json_decode($item->image) as $img)
+                                <img src="{{ FileUpload::url('img', $img) }}" class="fl">
+                            @endforeach
+                        @endif
+                    </td>
+                </tr>
+            @endif
             </tbody>
         </table>
     </div>

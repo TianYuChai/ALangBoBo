@@ -14,6 +14,7 @@ class VerifyCsrfToken extends Middleware
     protected $except = [
         'notify',
         'busin/notify',
-        'order/notify'
+        'order/notify',
+        'subscribed/order/notify'
     ];
 }

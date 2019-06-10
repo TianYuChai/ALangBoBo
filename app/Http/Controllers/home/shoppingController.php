@@ -156,6 +156,13 @@ class shoppingController extends BaseController
         }
     }
 
+    /**
+     * 结算购物车商品
+     *
+     * @param Request $request
+     * @param shoppingService $shoppingService
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function shoppSettlement(Request $request, shoppingService $shoppingService)
     {
         try {
@@ -195,6 +202,7 @@ class shoppingController extends BaseController
             ], 510);
         }
     }
+
     /**
      * 确认订单
      *

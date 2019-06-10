@@ -27,6 +27,7 @@ Route::group(['namespace' => 'home'], function () {
     Route::post('notify', ['as' => 'index.alipay.notify', 'uses' => 'personal\PersonalCreditMarginController@notify']);
     Route::post('busin/notify', ['as' => 'index.busin.notify', 'uses' => 'personal\PesonalBusinResidFeeController@notify']);
     Route::post('order/notify', ['as' => 'index.order.notify', 'uses' => 'shoppingController@notify']);
+    Route::post('subscribed/order/notify', ['as' => 'index.subscribed.notify', 'uses' => 'personal\PersonalHaveGoodsController@notify']);
 });
 /**
  * 前台管理路由设置
@@ -89,6 +90,8 @@ Route::group(['namespace' => 'home', 'middleware' => 'listenState'], function ()
             Route::get('havegoods/{id}/sign', ['as' => 'personal.havegoods.sign', 'uses' => 'PersonalHaveGoodsController@sign']);
             Route::get('havegoods/{id}/delorder', ['as' => 'personal.havegoods.delorder', 'uses' => 'PersonalHaveGoodsController@delOrder']);
             Route::post('havegoods/{id}/refundOrder', ['as' => 'personal.havegoods.refundorder', 'uses' => 'PersonalHaveGoodsController@refundOrder']);
+            Route::post('havegoods/{id}/evaluation', ['as' => 'personal.havegoods.evaluation', 'uses' => 'PersonalHaveGoodsController@evaluation']);
+            Route::get('havegoods/{id}/pay', ['as' => 'personal.havegoods.pay', 'uses' => 'PersonalHaveGoodsController@pay']);
             /*用户中心--商户*/
             Route::group(['namespace' => 'shop', 'middleware' => 'shop'], function () {
                 /*店铺店招*/

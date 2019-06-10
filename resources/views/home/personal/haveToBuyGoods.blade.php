@@ -8,6 +8,28 @@
     <link rel="stylesheet" href="{{ asset('home/css/merchantCenter_shInfo.css') }}"/>
     <link rel="stylesheet" href="{{ asset('home/css/merchantCenter_buyThings.css') }}"/>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/distpicker/2.0.3/distpicker.js"></script>
+    <style type="text/css">
+        input[type='file']{
+            width: 117px;
+            height: 102px;
+            position: absolute;
+            top: 0;
+            font-size:0;
+            cursor: pointer;
+            opacity: 0;
+        }
+        .display_img{
+            float:left;
+            position:relative;
+            margin-right:30px
+        }
+        .del{
+            position:absolute;
+            top:-9px;
+            left:110px;
+            cursor:pointer;
+        }
+    </style>
 @endsection
 @section('content')
     <!--搜索部分-->
@@ -79,7 +101,7 @@
                         </li>
                         <li class="borderRight"></li>
                         <li class="{{ $data['type'] == 'waitEvaluate' ? 'active' :''}}">
-                            <a href="{{ route('personal.havegoods', ['type' => 'waitEvaluate']) }}">待评价</a>
+                            <a href="{{ route('personal.havegoods', ['type' => 'waitEvaluate']) }}">评价与完成</a>
                         </li>
                     </ul>
                     <div id="myTabContent" class="tab-content">
@@ -177,7 +199,11 @@
                                                                 @break
                                                                 @default
                                                                     @if(in_array($item->status, [500, 600]))
-                                                                        <a>交易成功</a>
+                                                                        @if($item->evaluation)
+                                                                            <a>交易成功, 已评价</a>
+                                                                        @else
+                                                                            <a>交易成功</a>
+                                                                        @endif
                                                                     @endif
                                                                 @break
                                                             @endswitch
@@ -186,10 +212,12 @@
                                                         <td class="pd-20">
                                                             @if($item->pay_method != 200 && $item->pay_method == 'subscribed'
                                                             && $item->timeout != '0000-00-00 00:00:00')
-                                                                <a href="" class="payMoneyBtn">立即付款</a>
+                                                                <a href="javascript:void(0)" data-url="{{ route('personal.havegoods.pay', ['id' => $item->id]) }}" class="payMoneyBtn">立即付款</a>
                                                             @endif
                                                             @if(in_array($item->status, [200]))
-                                                                <a href="" class="payMoneyBtn">立即付款</a>
+                                                                <a href="javascript:void(0)"
+                                                                   data-url="{{ route('personal.havegoods.pay', ['id' => $item->id]) }}"
+                                                                   class="payMoneyBtn">立即付款</a>
                                                                 <a href="javascript:void(0)" class="deleteBtn del_order" data-action="{{ route('personal.havegoods.delorder', ['id' => $item->id]) }}">取消订单</a>
                                                             @elseif(in_array($item->status, [300, 400, 500, 600]))
                                                                 @switch($item->status)
@@ -198,7 +226,12 @@
                                                                            class="sureBtn" data-action="{{ route('personal.havegoods.sign', ['id' => $item->id]) }}">确认收货</a>
                                                                     @break
                                                                     @case(500)
-                                                                        <a class="deleteBtn" href="" data-toggle="modal" data-target="#editEvaluate">评价</a>
+                                                                        @if(!$item->evaluation)
+                                                                            <a class="deleteBtn evaluation"
+                                                                               data-action="{{ route('personal.havegoods.evaluation', ['id' => $item->id]) }}"
+                                                                               data-toggle="modal"
+                                                                               data-target="#editEvaluate">评价</a>
+                                                                        @endif
                                                                         <a class="deleteBtn" href="{{ url('details', ['id' => $item->sid]) }}">再次购买</a>
                                                                     @break
                                                                 @endswitch
@@ -240,7 +273,7 @@
                                     </div>
                                     <div class="modal-body">
                                         <div class="changeContent">
-                                            <form class="changeSignForm" id="changeSignForm" method="get" action="">
+                                            <form class="changeSignForm" id="changeSignForm" action="">
                                                 <fieldset class="fieldset clearfix">
                                                     <div class="manyidu mgt-20">
                                                         商品满意度评价：
@@ -253,31 +286,26 @@
                                                     </div>
                                                     <div class="productPingjia mgt-20">
                                                         商品评价：
-                                                        <textarea name="" cols="30" rows="10"></textarea>
+                                                        <textarea id="goods_evaluation" cols="30" rows="10"></textarea>
                                                     </div>
                                                     <div class="servicePingjia mgt-20">
                                                         服务评价：
-                                                        <textarea name="" cols="30" rows="10"></textarea>
+                                                        <textarea id="service_evaluation" cols="30" rows="10"></textarea>
                                                     </div>
                                                     <div class="relative bannerImgDiv clearfix mgt-20">
                                                         <p class="inline-block mgr-20 mgl-15 fl">晒图片：</p>
                                                         <!--晒图片-1-->
                                                         <div class="fl mgr-10">
-                                                            <img src="{{ asset('home/images/img/idImg.png') }}" alt="" class="jmImg"/>
-                                                            <!--浏览按钮-->
-                                                            <!--点击浏览按钮，显示上传预览弹框-->
-                                                            <img src="{{ asset('home/images/img/changeSignUpload.png') }}" alt="" class="uploadImg"/>
-                                                            <div class="shangchuan" style="display: none;">
-                                                                <form name="form1" id="form1">
-                                                                    <input type="file" name="file1" id="file1" multiple="multiple" />
-                                                                    <img src="" id="img1" style="width: 300px;height: 220px; margin-top:15px;">
-                                                                    <button type="submit" class="shangchuanSave">保存</button>
-                                                                </form>
+                                                            <img src="{{ asset('home/images/img/idImg.png') }}" class="img-rounded" style="margin-left: -35px;">
+                                                            <input type="file" id="goods_graph" accept="image/*" multiple>
+                                                            <label class="col-sm-2 control-label"></label>
+                                                            <div class="col-sm-10 exhibition" style="margin-top: 10px;" hidden>
+
                                                             </div>
                                                         </div>
                                                     </div>
                                                     <div class="mgt-10 mgl-80">
-                                                        <input type="checkbox"/>匿名评价
+                                                        <input type="checkbox" id="anonymous"/>匿名评价
                                                     </div>
                                                 </fieldset>
                                             </form>
@@ -286,8 +314,8 @@
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-default" data-dismiss="modal">关闭
                                         </button>
-                                        <button type="button" class="btn btn-primary">
-                                            发布
+                                        <button type="button" class="btn btn-primary confirm">
+                                            确认
                                         </button>
                                     </div>
                                 </div><!-- /.modal-content -->
@@ -463,5 +491,180 @@
                 });
             });
         });
+        /*轮播图--上传*/
+        $("input[id='goods_graph']").on('change', function () {
+            var that = $(this);
+            var file = that[0].files;
+            var formData = new FormData();
+            for (let i = 0; i < file.length; i++) {
+                formData.append('file[]', file[i]);
+            }
+
+            formData.append('type', 'layui');
+            $.ajax({
+                headers: {
+                    'X-CSRF-TOKEN': "{{ csrf_token() }}"
+                },
+                method:"POST",
+                url:"{!! route("file.upload") !!}",
+                processData: false,
+                contentType: false,
+                data:formData,
+                success:function (res) {
+                    if(res.status == 200) {
+                        let htm = '';
+                        let length = res.url.length;
+                        for (let i = 0; i < length; i++) {
+                            htm += '<div class="display_img"><img src="{{ FileUpload::url('image') }}'+res.url[i]+'" class="img-rounded" style="width:117px; height:101px;">' +
+                                '<span class="del">X</span><input type="hidden" name="rotation_chart" value="'+res.url[i]+'"></div>';
+                        }
+                        $('.exhibition').show();
+                        $('.exhibition').append(htm);
+                    }
+                },
+                error:function (XMLHttpRequest) {
+                    //返回提示信息
+                    try {
+                        var errors = XMLHttpRequest.responseJSON.errors;
+                        for (var value in errors) {
+                            layer.msg(errors[value][0]);return;
+                        }
+                    } catch (e) {
+                        var errors = JSON.parse(XMLHttpRequest.responseText)['errors']['info'];
+                        layer.msg(errors[0]);return;
+                    }
+                }
+            });
+        });
+        /*图片--删除*/
+        $('.exhibition').on('click', '.del', function () {
+            var that = $(this);
+            var img_path = that.next().val();
+            layer.confirm('是否删除该图片?', function(index) {
+                layer.close(index);
+                $.ajax({
+                    headers: {
+                        'X-CSRF-TOKEN': "{{ csrf_token() }}"
+                    },
+                    type:'POST',
+                    url:"{!! route('file.del') !!}",
+                    data:{img_path: img_path},
+                    success: function (res) {
+                        if(res.status == 200) {
+                            that.prev().remove();
+                            that.next().remove();
+                            that.remove();
+                            if(!$('.exhibition').has('input').length) {
+                                $('.exhibition').hide();
+                            }
+                        }
+                    },
+                    error:function (XMLHttpRequest) {
+                        //返回提示信息
+                        try {
+                            var errors = XMLHttpRequest.responseJSON.errors;
+                            for (var value in errors) {
+                                layer.msg(errors[value][0]);return;
+                            }
+                        } catch (e) {
+                            var errors = JSON.parse(XMLHttpRequest.responseText)['errors']['info'];
+                            layer.msg(errors[0]);return;
+                        }
+                    }
+                })
+            });
+        });
+
+        $('.evaluation').click(function () {
+            let url = $(this).data('action');
+            $('#changeSignForm').attr('action', url);
+        });
+        /*订单发布评价*/
+        $('.confirm').click(function () {
+            let satisfaction = $.trim($('.relative .manyiduActive').text());
+            let url = $('#changeSignForm').attr('action');
+            if(satisfaction == '') {
+               layer.msg('请对该订单进行评分'); return false;
+            }
+            let goods_evaluation = $('#goods_evaluation').val();
+            let service_evaluation = $('#service_evaluation').val();
+            let anonymous = $('#anonymous').is(':checked');
+            let images = [];
+            $('input[name="rotation_chart"]').each(function () {
+                images.push($(this).val());
+            });
+            $.ajax({
+                headers: {
+                    'X-CSRF-TOKEN': "{{ csrf_token() }}"
+                },
+                method:"POST",
+                url:url,
+                data:{satisfaction: satisfaction,
+                        goods_evaluation: goods_evaluation,
+                        service_evaluation: service_evaluation,
+                        anonymous: anonymous,
+                     images: images},
+                success:function (res) {
+                    if(res.status == 200) {
+                        layer.msg(res.info);
+                        setTimeout(function () {
+                            window.location.reload();
+                        }, 300)
+                    }
+                },
+                error:function (XMLHttpRequest, textStatus, errorThrown) {
+                    //返回提示信息
+                    try {
+                        if(XMLHttpRequest.status == 401) {
+                            var errors = JSON.parse(XMLHttpRequest.responseText)['errors']['info'];
+                            layer.msg(errors[0]);return;
+                        }
+                        var errors = XMLHttpRequest.responseJSON.errors;
+                        for (var value in errors) {
+                            layer.msg(errors[value][0]);return;
+                        }
+                    } catch (e) {
+                        var errors = JSON.parse(XMLHttpRequest.responseText)['errors'];
+                        for (var value in errors) {
+                            layer.msg(errors[value][0]);return;
+                        }
+                    }
+                }
+            });
+        });
+        /*支付*/
+        $('.payMoneyBtn').click(function () {
+            let url = $(this).data('url');
+            $.ajax({
+                headers: {
+                    'X-CSRF-TOKEN': "{{ csrf_token() }}"
+                },
+                method:"GET",
+                url:url,
+                data:"",
+                success:function (res) {
+                    $('body').append(res);
+                    $("form").attr("target", "_blank");
+                },
+                error:function (XMLHttpRequest, textStatus, errorThrown) {
+                    //返回提示信息
+                    try {
+                        if(XMLHttpRequest.status == 401) {
+                            var errors = JSON.parse(XMLHttpRequest.responseText)['errors']['info'];
+                            layer.msg(errors[0]);return;
+                        }
+                        var errors = XMLHttpRequest.responseJSON.errors;
+                        for (var value in errors) {
+                            layer.msg(errors[value][0]);return;
+                        }
+                    } catch (e) {
+                        var errors = JSON.parse(XMLHttpRequest.responseText)['errors'];
+                        for (var value in errors) {
+                            layer.msg(errors[value][0]);return;
+                        }
+                    }
+                }
+            });
+        })
     </script>
 @endsection

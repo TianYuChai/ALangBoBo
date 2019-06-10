@@ -8,13 +8,20 @@
 namespace App\Http\Controllers\home\personal;
 
 use App\Http\Controllers\home\BaseController;
+use App\Http\Models\currency\CapitalModel;
+use App\Http\Models\currency\UserModel;
+use App\Http\Models\home\evaluationModel;
 use App\Http\Models\home\orderModel;
 use App\Http\Models\home\personal\AddressModel;
 use App\Http\Models\home\shoppOrderModel;
+use App\Http\Services\home\persanal\PersonalHaveGoodsService;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Input;
 use Exception;
+use Yansongda\Pay\Pay;
+use Log;
 
 class PersonalHaveGoodsController extends BaseController
 {
@@ -24,7 +31,7 @@ class PersonalHaveGoodsController extends BaseController
         'waitPay' => 200,
         'waitSend' => 300,
         'waitReceive' => 400,
-        'waitEvaluate' => 500,
+        'waitEvaluate' => [500, 600],
         'refund' => [700, 800, 900]
     ];
     /**
@@ -32,12 +39,17 @@ class PersonalHaveGoodsController extends BaseController
      *
      * PersonalContentController constructor.
      */
-    public function __construct(shoppOrderModel $model, orderModel $orderModel)
+    public function __construct(shoppOrderModel $model,
+                                orderModel $orderModel,
+                                evaluationModel $evaluationModel,
+                                CapitalModel $capitalModel)
     {
-        $this->middleware(function ($request, $next) use ($model, $orderModel){
+        $this->middleware(function ($request, $next) use ($model, $orderModel, $evaluationModel, $capitalModel){
             $this->userId = Auth::guard('web')->user()->id;
             $this->model = $model;
-            $this->addressModel = $orderModel;
+            $this->orderModel = $orderModel;
+            $this->evaluationModel = $evaluationModel;
+            $this->capitalModel = $capitalModel;
             return $next($request);
         });
     }
@@ -90,7 +102,7 @@ class PersonalHaveGoodsController extends BaseController
                 'status' => 400
             ])->first()->update([
                 'status' => 500,
-                'signtime' => ''
+                'signtime' => Carbon::now()->modify('+7 days')->toDateTimeString()
             ]);
             return $this->ajaxReturn();
         } catch (Exception $e) {
@@ -151,5 +163,124 @@ class PersonalHaveGoodsController extends BaseController
                 'info' => $e->getMessage()
             ], 510);
         }
+    }
+
+    /**
+     * 评价
+     *
+     * @param $id
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function evaluation($id, Request $request)
+    {
+        try {
+            $satisfaction = trim($request->satisfaction);
+            if(empty($satisfaction)) {
+                throw new Exception('请对本订单进行评价');
+            }
+            $item = $this->model::where([
+                'id' => intval($id),
+                'uid' => $this->userId,
+                'status' => 500
+            ])->first();
+            if(!$item) {
+                throw new Exception('数据错误');
+            }
+            if($this->evaluationModel::where('order_id', $item->id)->exists()) {
+                throw new Exception('该订单已评价');
+            }
+            $satisfaction_value = explode('%', $satisfaction)[0];
+            if($satisfaction_value < 100) {
+                $calcul = bcdiv($satisfaction_value, 1000, 2);
+                $refund = bcsub($item->satisfied_fees, bcmul($item->satisfied_fees, $calcul, 2), 2);
+                $available_money = UserModel::where('id', $item->gid)->first()->availablemoney;
+                if($available_money > $refund) {
+                    $this->capitalModel::create([
+                        'uid' => $this->userId,
+                        'order_id' => $item->order_id,
+                        'money' => $refund,
+                        'trade_mode' => $item->order->pay_method,
+                        'memo' => '满意度评价返回金额',
+                        'category' => 400,
+                        'g_order_id' => $item->id,
+                        'status' => 1001
+                    ]);
+                    $this->capitalModel::create([
+                        'uid' => $item->gid,
+                        'order_id' => $item->order_id,
+                        'money' => '-'. $refund,
+                        'trade_mode' => $item->order->pay_method,
+                        'memo' => '满意度评价返回给用户金额',
+                        'category' => 500,
+                        'g_order_id' => $item->id,
+                        'status' => 1001
+                    ]);
+                }
+            }
+            $this->evaluationModel::create([
+                'sid' => $item->sid,
+                'uid' => $this->userId,
+                'satisfaction' => $satisfaction_value,
+                'goods_evaluation' => $request->goods_evaluation,
+                'service_evaluation' => $request->service_evaluation,
+                'anonymous' => $request->anonymous == true ? 1 : 0,
+                'order_id' => $item->id,
+                'images' => !empty($request->images) ? json_encode($request->images) : ''
+            ]);
+            $item->status = 600;
+            $item->save();
+            return $this->ajaxReturn();
+        } catch (Exception $e) {
+            return $this->ajaxReturn([
+                'status' => 510,
+                'info' => $e->getMessage()
+            ], 510);
+        }
+    }
+
+    /**
+     * 订单支付
+     *
+     * @param $id
+     * @return \Illuminate\Http\JsonResponse|\Symfony\Component\HttpFoundation\Response
+     */
+    public function pay($id, PersonalHaveGoodsService $service)
+    {
+        try {
+            $result = $service->pay($id);
+            if(is_array($result)) {
+                return $this->ajaxReturn([
+                    'status' => 200,
+                    'info' => $result['info'],
+                    'url' => $result['url'],
+                ], 200);
+            } else {
+                return $result;
+            }
+        } catch (Exception $e) {
+            return $this->ajaxReturn([
+                'status' => 510,
+                'info' => $e->getMessage()
+            ], 510);
+        }
+    }
+
+    /**
+     * 回调
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function notify(PersonalHaveGoodsService $service)
+    {
+        try {
+            $result = $service->notify();
+        } catch (Exception $e) {
+            return $this->ajaxReturn([
+                'status' => 510,
+                'info' => $e->getMessage()
+            ], 510);
+        }
+        return $result;
     }
 }

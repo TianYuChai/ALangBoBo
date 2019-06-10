@@ -45,11 +45,20 @@ class shoppOrderModel extends Model
         static::updated(function ($query) {
             try {
                 if(isset($query->getDirty()['status'])) {
+                    $status = $query->getDirty()['status'];
                     shareStatisticsModel::where([
                         'order_id' => $query->order_id,
                         'g_order_id' => $query->id,
                     ])->update(['status' => $query->getDirty()['status']]);
-                    if(in_array($query->getDirty()['status'], [100, 900])) {
+                    if($status == 500 && $query->pay_method == 'paidin') {
+                        CapitalModel::where([
+                            'order_id' => $query->order_id,
+                            'q_order_id' =>  $query->id,
+                            'category' => 500,
+                            'status' => 1003
+                        ])->update(['status' => 1001]);
+                    }
+                    if(in_array($status, [100, 900])) {
                         /*取消订单同时, 撤回对应流水以及商品库存*/
                         DB::beginTransaction();
                         try {
@@ -102,6 +111,11 @@ class shoppOrderModel extends Model
     public function merchant()
     {
         return $this->hasOne(MerchantModel::class, 'uid', 'gid');
+    }
+    /*商品评价*/
+    public function evaluation()
+    {
+        return $this->hasOne(evaluationModel::class, 'order_id', 'id');
     }
     /*总价*/
     public function setMoneyAttribute($value)

@@ -115,7 +115,7 @@ class shoppPayService extends BaseService
             $share = [];
             $items = $this->shopp_orderModel::where([
                 'order_id' => $order_id,
-                'pay_method' => 'paidin',
+//                'pay_method' => 'paidin',
                 'status' => 200
             ])->get();
             foreach ($items as $item) {
@@ -188,6 +188,7 @@ class shoppPayService extends BaseService
             throw new Exception('请联系管理员', 510);
         }
     }
+
     /**
      * 支付宝支付
      *
@@ -195,7 +196,7 @@ class shoppPayService extends BaseService
      * @return \Symfony\Component\HttpFoundation\Response
      * @throws Exception
      */
-    protected function alipay($data)
+    public function alipay($data)
     {
         try {
             $order = [
