@@ -9,26 +9,31 @@ namespace App\Http\Controllers\home\personal\shop;
 
 use App\Http\Controllers\home\BaseController;
 use App\Http\Models\home\shareModel;
+use App\Http\Models\home\shareStatisticsModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Exception;
+use Illuminate\Support\Facades\Input;
 
 class PersonalGeneralizeController extends BaseController
 {
     const ROUTE = HOME_PERSONAL_SHOP;
 
-    public function __construct(shareModel $shareModel)
+    public function __construct(shareModel $shareModel, shareStatisticsModel $shareStatisticsModel)
     {
-        $this->middleware(function ($request, $next) use ($shareModel) {
+        $this->middleware(function ($request, $next) use ($shareModel, $shareStatisticsModel) {
             $this->user = Auth::guard('web')->user();
             $this->shareModel = $shareModel;
+            $this->shareStatisticsModel = $shareStatisticsModel;
             return $next($request);
         });
     }
 
     public function index()
     {
-        return view(self::ROUTE . 'generalize');
+        $keyword = trim(Input::get('keyword', ''));
+        $items = $this->shareModel::where('gid', $this->user->id)->SearchShare($keyword)->paginate(parent::$page_limit);
+        return view(self::ROUTE . 'generalize', compact('items'));
     }
 
     /**

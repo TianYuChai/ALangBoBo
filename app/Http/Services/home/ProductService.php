@@ -77,7 +77,7 @@ class ProductService extends BaseService
     protected function optherData($where)
     {
         $nav = $this->goodsCategoryModel::where('status', 0)
-                        ->where('id',  intval($where['category_id']))->first();
+                            ->where('id',  intval($where['category_id']))->first();
         switch ($nav->level) {
             case 1:
                 $where_key = 'main_category';

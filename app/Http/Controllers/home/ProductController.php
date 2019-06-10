@@ -18,9 +18,11 @@ class ProductController extends BaseController
     {
         $min_price = $request->min_price;
         $max_price = $request->max_price;
+        $keyword = $request->keyword;
         $category_goodss = $service->entrance($type, [
             'min_price' => $min_price,
-            'max_price' => $max_price
+            'max_price' => $max_price,
+            'keyword' => $keyword
         ]);
         return view('home.product', compact('category_goodss'));
     }

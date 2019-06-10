@@ -62,10 +62,10 @@
                 <div class="bs-example" data-example-id="simple-table">
                     <table class="table">
                         <caption>
-                            <form class="form-inline">
+                            <form class="form-inline" method="get">
                                 <div class="form-group">
                                     <input type="text" class="form-control"
-                                           id="exampleInputName2" placeholder="请输入推广id">
+                                           id="exampleInputName2" name='keyword' placeholder="请输入推广id" value="{{ Input::get('keyword', '') }}">
                                 </div>
                                 <button type="submit" class="btn btn-default">搜索</button>
                                 <div style="float: right;">
@@ -81,17 +81,19 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr>
-                            <th scope="row">456741</th>
-                            <td>Mark</td>
-                            <td>
-                                <span class="text-danger">150</span>
-                            </td>
-                        </tr>
+                        @foreach($items as $item)
+                            <tr>
+                                <th scope="row">{{ $item->share_id }}</th>
+                                <td>{{ $item->name }}</td>
+                                <td>
+                                    <span class="text-danger">{{ $item->statistics->where('status', 500)->count() }}</span>
+                                </td>
+                            </tr>
+                        @endforeach
                         </tbody>
                     </table>
                     <div style="text-align: right;">
-                        {{--{!! $items->links() !!}--}}
+                        {!! $items->links() !!}
                     </div>
                 </div>
             </div>

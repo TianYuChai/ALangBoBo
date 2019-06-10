@@ -14,4 +14,8 @@ class shareStatisticsModel extends Model
     protected $table = 'share_statistics';
     protected $guarded = ['id'];
 
+    public function share()
+    {
+        return $this->hasOne(shareModel::class, 'id', 'share_id');
+    }
 }

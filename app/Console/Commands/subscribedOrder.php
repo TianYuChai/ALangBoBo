@@ -56,6 +56,8 @@ class subscribedOrder extends Command
                    $capital = $capitals->where('g_order_id', $item->id)->first();
                    $capital->status = 1001;
                    $capital->save();
+                   $item->timeout = '';
+                   $item->save();
                    CapitalModel::create([
                        'uid' => $user->id,
                        'order_id' => $item->order_id,

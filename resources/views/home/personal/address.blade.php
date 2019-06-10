@@ -134,7 +134,6 @@
                                         <th>邮编</th>
                                         <th>电话/手机</th>
                                         <th>操作</th>
-                                        r
                                     </tr>
                                     </thead>
                                     <tbody class="tbody tl">
@@ -184,7 +183,7 @@
                                             <textarea name="detailed" cols="30" rows="10" placeholder="不需要重复填写省/市/区"></textarea>
                                         </div>
                                         <div class="postNumDiv sendPostNumDiv mgt-20">
-                                            邮政编码：
+                                            <span class="receiveStar">*</span>邮政编码：
                                             <input type="text" class="sendPostNum"  name="code" autocomplete="off">
                                         </div>
                                         <div class="postNumDiv mgt-20 linkManDiv">
