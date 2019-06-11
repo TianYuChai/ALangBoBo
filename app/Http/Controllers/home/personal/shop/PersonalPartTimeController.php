@@ -70,6 +70,12 @@ class PersonalPartTimeController extends BaseController
        }
     }
 
+    /**
+     * 修改展示数据
+     *
+     * @param $id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function edit($id)
     {
         $item = $this->model::find($id);
@@ -79,5 +85,56 @@ class PersonalPartTimeController extends BaseController
         ])->get();
         $settle = partTimeModel::$_SETTLE;
         return view(self::ROUTE .'part_time_edit', compact('item', 'goodsCategorys', 'settle'));
+    }
+
+    /**
+     * 修改数据
+     *
+     * @param $id
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function update($id, Request $request)
+    {
+        try{
+            $this->model::where([
+                'id' => $id,
+                'uid' => $this->user->id
+            ])->update([
+                'title' => trim($request->title),
+                'category_id' => $request->category,
+                'image' => $request->cover_img,
+                'money' => bcmul(trim($request->total_price), 100),
+                'settle' => $request->settle,
+                'time' => $request->time,
+                'describe' => trim($request->describe),
+                'content' => $request->content
+            ]);
+            return $this->ajaxReturn();
+        } catch (Exception $e) {
+            return $this->ajaxReturn([
+                'status' => 510,
+                'info' => $e->getMessage()
+            ], 510);
+        }
+    }
+
+    /**
+     * 删除数据
+     * 
+     * @param $id
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function del($id)
+    {
+        try {
+            $this->model::destroy($id);
+            return $this->ajaxReturn();
+        } catch (Exception $e) {
+            return $this->ajaxReturn([
+                'status' => 510,
+                'info' => $e->getMessage()
+            ], 510);
+        }
     }
 }

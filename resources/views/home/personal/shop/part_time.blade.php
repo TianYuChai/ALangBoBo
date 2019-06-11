@@ -135,8 +135,8 @@
                                             <td>{{ $item->created_at }}</td>
                                             <td class="productOperat">
                                                 <a href="javascript:void(0)" class="block edit" data-action="{{ route('personal.partime.edit', ['id' => $item->id]) }}">编辑商品</a>
-                                                <a href="javascript:void(0)" class="block mgt-10 oper_status"
-                                                   data-action="{{ route('personal.goods.operstatus', ['id' => $item->id]) }}">删除</a>
+                                                <a href="javascript:void(0)" class="block mgt-10 open_status"
+                                                   data-action="{{ route('personal.partime.del', ['id' => $item->id]) }}">删除</a>
                                             </td>
                                         </tr>
                                     @endforeach
@@ -320,7 +320,7 @@ $('.edit').click(function () {
         content: url,
     });
 });
-$('.oper_status').click(function () {
+$('.open_status').click(function () {
     let url = $(this).data('action');
     layer.confirm('是否进行该操作？', {
         btn: ['是','否'] //按钮
@@ -360,52 +360,6 @@ $('.oper_status').click(function () {
         });
     });
 });
-$('.recom').click(function () {
-    let url = $(this).data('action');
-    layer.confirm('是否进行该操作？', {
-        btn: ['是','否'] //按钮
-    },  function(index){
-        layer.close(index);
-        $.ajax({
-            headers: {
-                'X-CSRF-TOKEN': "{{ csrf_token() }}"
-            },
-            method:"GET",
-            url:url,
-            success:function (res) {
-                if(res.status == 200) {
-                    window.location.reload();
-                }
-            },
-            error:function (XMLHttpRequest, textStatus, errorThrown) {
-                //返回提示信息
-                try {
-                    if(XMLHttpRequest.status == 401) {
-                        var errors = JSON.parse(XMLHttpRequest.responseText)['errors']['info'];
-                        layer.msg(errors[0]);return;
-                    }
-                    var errors = XMLHttpRequest.responseJSON.errors;
-                    for (var value in errors) {
-                        layer.msg(errors[value][0]);return;
-                    }
-                } catch (e) {
-                    try {
-                        var errors = JSON.parse(XMLHttpRequest.responseText)['errors']['info'];
-                        layer.msg(errors[0]);return;
-                    } catch (e) {
-                        layer.msg(JSON.parse(XMLHttpRequest.responseText)['message']);return;
-                    }
-                }
-            }
-        });
-    });
-});
-// //删除操作
-// function deleteTr(nowTr){
-//     $(nowTr).parent().parent().remove();
-//     $(this).closest('tr').remove();  //清空当前行
-// }
-
 /*封面图片--上传*/
 $("input[id='cover']").on('change', function () {
     var that = $(this);

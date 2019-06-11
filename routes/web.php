@@ -131,6 +131,8 @@ Route::group(['namespace' => 'home', 'middleware' => 'listenState'], function ()
                     Route::get('shop/goods/{id}/delattribute', ['as' => 'personal.goods.delattribute', 'uses' => 'PersonalGoodsController@delAttribute']);
                     Route::post('shop/parttime/create', ['as' => 'personal.partime.create', 'uses' => 'PersonalPartTimeController@create']);
                     Route::get('shop/partime/{id}/edit', ['as' => 'personal.partime.edit', 'uses' => 'PersonalPartTimeController@edit']);
+                    Route::post('shop/partime/{id}/update', ['as' => 'personal.partime.update', 'uses' => 'PersonalPartTimeController@update']);
+                    Route::get('shop/partime/{id}/del', ['as' => 'personal.partime.del', 'uses' => 'PersonalPartTimeController@del']);
                 });
                 /*店铺推广*/
                 Route::get('shop/generalize', ['as' => 'personal.shop.generalize', 'uses' => 'PersonalGeneralizeController@index']);

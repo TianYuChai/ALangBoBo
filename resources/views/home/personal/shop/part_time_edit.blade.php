@@ -45,7 +45,7 @@
     <div class="modal-body" style="width: 900px">
         <div class="changeContent">
             <form class="form-horizontal" id="update_part_time"
-                  method="post" action="{{ route('personal.goods.update', ['id' => $item->id]) }}">
+                  method="post" action="{{ route('personal.partime.update', ['id' => $item->id]) }}">
                 @csrf
                 <div class="form-group">
                     <label class="col-sm-2 control-label">兼职名称</label>
