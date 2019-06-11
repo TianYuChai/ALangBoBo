@@ -14,3 +14,5 @@ define('ADMIN_GOODS_CATEGORY', 'admin.goods.');
 define('HOME_PERSONAL', 'home.personal.');
 //个人中心商户管理路径
 define('HOME_PERSONAL_SHOP', 'home.personal.shop.');
+//后台订单
+define('ADMING_ORDER', 'admin.order.');

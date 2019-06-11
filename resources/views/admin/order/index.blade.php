@@ -2,8 +2,8 @@
 @section('content')
     <div class="weadmin-nav">
     <span class="layui-breadcrumb">
-        <a href="javascript:void(0);">首页</a> <a href="javascript:void(0);">商品管理</a>
-        <a href="javascript:void(0);"> <cite>商品列表</cite></a>
+        <a href="javascript:void(0);">首页</a> <a href="javascript:void(0);">订单管理</a>
+        <a href="javascript:void(0);"> <cite>订单列表</cite></a>
     </span>
         <a class="layui-btn layui-btn-sm" style="margin-top:3px;float:right"
            href="javascript:location.replace(location.href);"
@@ -19,15 +19,16 @@
                     <input type="hidden" name="s"/>
                 </div>
                 <div class="layui-inline">
-                    <input type="text" name="account_name" placeholder="请输入用户账号"
+                    <input type="text" name="order_id" placeholder="请输入用户账号"
                            autocomplete="off" class="layui-input"
-                           value="{{ Input::get('account_name', '') }}" />
+                           value="{{ Input::get('order_id', '') }}" />
                 </div>
                 <div class="layui-input-inline">
                     <select name="status" lay-search="">
-                        <option value="">请选择商品状态</option>
-                        <option value="0" {{ Input::get('status', '') == '0' ? 'selected':'' }}>出售</option>
-                        <option value="1" {{ Input::get('status', '') == '1' ? 'selected':''}}>下架</option>
+                        <option value="">请选择订单状态</option>
+                        @foreach($data['status'] as $key => $status)
+                            <option value="{{ $key }}" {{ Input::get('status', '') == $key ? 'selected':'' }}>{{ $status }}</option>
+                        @endforeach
                     </select>
                 </div>
                 <button class="layui-btn" lay-submit="" lay-filter="sreach">
@@ -39,47 +40,47 @@
             <button class="layui-btn layui-btn-danger" style="background-color:#F8F2F0">
                 {{--<i class="layui-icon layui-icon-delete"></i>批量封停--}}
             </button>
-            <span class="fr" style="line-height:40px">商品数量：{{ $data['goods_count'] }} </span>
+            {{--<span class="fr" style="line-height:40px">商品数量：{{ $data['goods_count'] }} </span>--}}
         </div>
         <table class="layui-table" id="memberList">
             <thead>
             <tr>
                 <th>商铺名称</th>
-                <th>商品类别</th>
-                <th>商品名称</th>
-                <th>添加时间</th>
+                <th>购买人</th>
+                <th>订单选购类别</th>
+                <th>购买时间</th>
                 <th>状态</th>
-                <th>操作</th>
+                {{--<th>操作</th>--}}
             </tr>
             </thead>
             <tbody>
             @foreach($data['items'] as $item)
                 <tr data-id="{{ $item->id }}">
-                    <td>{{ $item->user->merchant->shop_name }}</td>
-                    <td>{{ $item->user->merchant->dist_name }}</td>
+                    <td>{{ $item->merchant->shop_name }}</td>
+                    <td>{{ $item->user->account }}</td>
                     <td>
-                        {{ $item->title }}
+                        {{ $item->paymethods }}
                     </td>
                     <td>{{ $item->created_at }}</td>
                     <td>
                         {{ $item->status_name }}
                     </td>
-                    <td class="td-manage">
-                        <a title="查看"
-                           onclick="WeAdminShow('查看','{{ route('backstage.goods.look', ['id' => $item->id]) }}')"
-                           href="javascript:void(0);">
-                            <i class="layui-icon">&#xe63c;</i>
-                        </a>
-                        @if($item->status == 0)
-                            <a title="下架" onclick="goods_sealup(this,'{{ route('backstage.goods.operstatus', ['id' => $item->id]) }}')" href="javascript:void(0);">
-                                <i class="layui-icon layui-icon-delete"></i>
-                            </a>
-                        @else
-                            <a onclick="goods_stop(this,'{{ route('backstage.goods.operstatus', ['id' => $item->id]) }}')" href="javascript:void(0);" title="启用">
-                                <i class="layui-icon layui-icon-download-circle"></i>
-                            </a>
-                        @endif
-                    </td>
+                    {{--<td class="td-manage">--}}
+                        {{--<a title="查看"--}}
+                           {{--onclick="WeAdminShow('查看','{{ route('backstage.goods.look', ['id' => $item->id]) }}')"--}}
+                           {{--href="javascript:void(0);">--}}
+                            {{--<i class="layui-icon">&#xe63c;</i>--}}
+                        {{--</a>--}}
+                        {{--@if($item->status == 0)--}}
+                            {{--<a title="下架" onclick="goods_sealup(this,'{{ route('backstage.goods.operstatus', ['id' => $item->id]) }}')" href="javascript:void(0);">--}}
+                                {{--<i class="layui-icon layui-icon-delete"></i>--}}
+                            {{--</a>--}}
+                        {{--@else--}}
+                            {{--<a onclick="goods_stop(this,'{{ route('backstage.goods.operstatus', ['id' => $item->id]) }}')" href="javascript:void(0);" title="启用">--}}
+                                {{--<i class="layui-icon layui-icon-download-circle"></i>--}}
+                            {{--</a>--}}
+                        {{--@endif--}}
+                    {{--</td>--}}
                 </tr>
             @endforeach
             </tbody>

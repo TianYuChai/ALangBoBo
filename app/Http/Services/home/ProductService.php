@@ -9,6 +9,7 @@ namespace App\Http\Services\home;
 
 use App\Http\Models\admin\goods\goodsCategoryModel;
 use App\Http\Models\goods\GoodsModel;
+use Illuminate\Support\Facades\Redis;
 
 class ProductService extends BaseService
 {
@@ -19,7 +20,7 @@ class ProductService extends BaseService
         $this->goodsModel = $goodsModel;
     }
 
-    public function entrance($type, $wherePrice = [])
+    public function entrance($type, $wherePrice = [], $whereSearch = [])
     {
         $type = explode('-', $type);
         switch ($type[0]) {
@@ -27,6 +28,12 @@ class ProductService extends BaseService
                 $data = $this->presellData([
                     'category_id' => $type[1],
                     'price' => $wherePrice
+                ]);
+            break;
+            case 'search':
+                $data = $this->searchData([
+                    'price' => $wherePrice,
+                    'keyword' => $whereSearch
                 ]);
             break;
             default:
@@ -107,6 +114,37 @@ class ProductService extends BaseService
             'goods' => $goods_data,
             'nav' => $nav->parent_message,
             'selected' => $nav->id
+        ];
+    }
+
+    /**
+     * 搜索
+     *
+     * @param $where
+     * @return array
+     */
+    protected function searchData($where)
+    {
+        $keyowrd = $where["keyword"]['keyword'];
+        $goods_data = $this->goodsModel::where('status', 0)
+                                         ->where('title', 'like', "%$keyowrd%")
+                                         ->SearchPrice($where['price'])
+                                         ->orderBy('id', 'desc')->paginate(self::$page_limit);
+        $category_ids = $goods_data->pluck('three_category')->toArray();
+        $categorys = $this->goodsCategoryModel::whereIn('id', $category_ids)->where('status', 0)->get();
+        $keyowrds = Redis::get('keyword');
+        if($keyowrds != '') {
+            $data = json_decode($keyowrds);
+            array_push($data, $keyowrd);
+        } else {
+            $data[] = $keyowrd;
+        }
+        Redis::set('keyword', json_encode($data));
+        return [
+            'categorys' => $categorys,
+            'goods' => $goods_data,
+            'nav' => '搜索',
+            'selected' => ''
         ];
     }
 }

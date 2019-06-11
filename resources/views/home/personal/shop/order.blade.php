@@ -34,10 +34,13 @@
                     <a href="{{ route('personal.shop.banner') }}">店铺轮播</a>
                 </li>
                 <li>
-                    <a href="{{ route('personal.shop.goods') }}" class="leftNavActive">商品管理</a>
+                    <a href="{{ route('personal.shop.goods') }}">商品管理</a>
                 </li>
                 <li>
-                    <a href="{{ route('personal.shop.order', ['type' => 'allOrder']) }}">订单管理</a>
+                    <a href="{{ route('personal.partime.index') }}">兼职管理</a>
+                </li>
+                <li>
+                    <a href="{{ route('personal.shop.order', ['type' => 'allOrder']) }}" class="leftNavActive">订单管理</a>
                 </li>
             </ul>
         </li>

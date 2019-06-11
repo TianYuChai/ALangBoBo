@@ -3,7 +3,7 @@
         <img src="{{ asset('home/images/img/logo.png') }}" alt="" class="logoImg"/>
     </div>
     <div class="searchForm">
-        <form action="{{ url('product', ['type' =>'opther-all']) }}" method="get">
+        <form action="{{ url('product', ['type' =>'search-all']) }}" method="get">
             <fieldset class="fieldset">
                 <div class="searchDiv">
                     <input type="text" placeholder="" name="keyword" value="{{ Input::get('keyword') }}"/>
@@ -13,9 +13,16 @@
         </form>
         <div class="hotSearch">
             <ul class="hotSearchList clearfix">
-                <li>
-                    <a href=""  class="active mgl-10">水饺</a>
-                </li>
+                @if(Redis::get('keywords'))
+                    @foreach(json_decode(Redis::get('keywords')) as $key => $item)
+                        @if($key <= 5)
+                            <li>
+                                <a href="{{ url('product', ['type' =>'search-all']) }}?keyword={{ $item['name'] }}"
+                                   class="active mgl-10">{{ $item['name'] }}</a>
+                            </li>
+                        @endif
+                    @endforeach
+                @endif
             </ul>
         </div>
     </div>

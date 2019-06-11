@@ -56,7 +56,7 @@ Route::group(['prefix' => 'backstage', 'namespace' => 'admin'], function () {
             /*商铺-商品*/
             Route::get('goods/index', ['as' => 'backstage.goods.index', 'uses' => 'GoodsAdminController@index']);
             Route::get('goods/{id}/operstatus', ['as' => 'backstage.goods.operstatus', 'uses' => 'GoodsAdminController@operstatus']);
-            Route::get('goods/{id}/show', ['as' => 'backstage.goods.show', 'uses' => 'GoodsAdminController@show']);
+            Route::get('goods/{id}/look', ['as' => 'backstage.goods.look', 'uses' => 'GoodsAdminController@show']);
             /*商铺*/
             Route::get('goods/merchant/index', ['as' => 'backstage.merchant.index', 'uses' => 'GoodsMerchantController@index']);
             Route::get('goods/{id}/show', ['as' => 'backstage.merchant.show', 'uses' => 'GoodsMerchantController@show']);
@@ -77,6 +77,10 @@ Route::group(['prefix' => 'backstage', 'namespace' => 'admin'], function () {
                 Route::get('goods/banner/{id}/stateOperation', ['as' => 'backstage.banner.stateOperation', 'uses' => 'GoodsBannerController@stateOperation']);
                 Route::get('goods/banner/{id}/del', ['as' => 'backstage.banner.del', 'uses' => 'GoodsBannerController@del']);
             });
+        });
+        /*商铺-订单*/
+        Route::group(['namespace' => 'order'], function () {
+            Route::get('order/index', ['as' => 'backstage.order.index', 'uses' => 'orderController@index']);
         });
         /**
          * 系统设置

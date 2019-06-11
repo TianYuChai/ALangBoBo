@@ -227,6 +227,20 @@ class shoppOrderModel extends Model
     }
 
     /**
+     * 状态搜索
+     *
+     * @param $query
+     * @param $search
+     * @return mixed
+     */
+    public function scopeSearchStatus($query, $search)
+    {
+        if(!empty($search)) {
+            return $query->where('status', $search);
+        }
+    }
+
+    /**
      * 自动签收倒计时
      *
      * @return string

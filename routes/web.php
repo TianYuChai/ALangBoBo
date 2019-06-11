@@ -119,6 +119,8 @@ Route::group(['namespace' => 'home', 'middleware' => 'listenState'], function ()
                 Route::get('shop/goods', ['as' => 'personal.shop.goods', 'uses' => 'PersonalGoodsController@index']);
                 Route::get('shop/goods/{id}/edit', ['as' =>'personal.goods.edit', 'uses' => 'PersonalGoodsController@edit']);
                 Route::get('shop/goods/{id}/recom', ['as' => 'personal.goods.recom', 'uses' => 'PersonalGoodsController@recom']);
+                /*兼职管理*/
+                Route::get('shop/parttime/index', ['as' =>'personal.partime.index', 'uses' => 'PersonalPartTimeController@index']);
                 /*入驻费是否缴纳或到期*/
                 Route::group(['middleware' => 'whetherdueto'], function () {
                     Route::post('shop/goods/select', ['as' => 'personal.goods.select', 'uses' => 'PersonalGoodsController@select']);
@@ -127,6 +129,8 @@ Route::group(['namespace' => 'home', 'middleware' => 'listenState'], function ()
                     Route::get('shop/goods/{id}/operStatus', ['as' => 'personal.goods.operstatus', 'uses' => 'PersonalGoodsController@operstatus']);
                     Route::post('shop/goods/{id}/update', ['as' => 'personal.goods.update', 'uses' => 'PersonalGoodsController@update']);
                     Route::get('shop/goods/{id}/delattribute', ['as' => 'personal.goods.delattribute', 'uses' => 'PersonalGoodsController@delAttribute']);
+                    Route::post('shop/parttime/create', ['as' => 'personal.partime.create', 'uses' => 'PersonalPartTimeController@create']);
+                    Route::get('shop/partime/{id}/edit', ['as' => 'personal.partime.edit', 'uses' => 'PersonalPartTimeController@edit']);
                 });
                 /*店铺推广*/
                 Route::get('shop/generalize', ['as' => 'personal.shop.generalize', 'uses' => 'PersonalGeneralizeController@index']);

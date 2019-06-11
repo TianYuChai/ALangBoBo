@@ -15,6 +15,9 @@
                 <a href="{{ route('personal.shop.goods') }}">商品管理</a>
             </li>
             <li>
+                <a href="{{ route('personal.partime.index') }}">兼职管理</a>
+            </li>
+            <li>
                 <a href="{{ route('personal.shop.order', ['type' => 'allOrder']) }}">订单管理</a>
             </li>
         </ul>

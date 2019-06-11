@@ -79,7 +79,7 @@
                 </a>
                 <ul class="sub-menu">
                     <li>
-                        <a _href="./pages/order/list.html">
+                        <a _href="{{ route('backstage.order.index') }}">
                             <i class="iconfont">&#xe6a7;</i>
                             <cite>订单列表</cite>
                         </a>
