@@ -1,0 +1,31 @@
+.brand .typeActive>a{
+    color:#eba206!important;
+}
+.typeList .typeActive>a{
+    color:#eba206!important;
+}
+.wages input{
+    width:100px;
+    height:24px;
+}
+.wagesBtn{
+    font-size:12px;
+    color:#fff!important;
+    display: inline-block;
+    background-color: #eba206;
+    line-height: 24px;
+    width:50px;
+    text-align: center;
+    border-radius: 3px;
+    margin-left:20px!important;
+}
+.wagesBtn:hover{
+    color:#fff;
+}
+.partJobTip{
+    font-size:18px;
+    color:#a2a2a2;
+    margin-top:30px;
+    border-left:3px solid #f39826;
+    text-indent: 1em;
+}

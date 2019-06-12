@@ -15,7 +15,7 @@
                 <a href="{{ url('product', ['type' => 'presell-all']) }}">预售产品</a>
             </li>
             <li class="navLi">
-                <a href="">兼职工</a>
+                <a href="{{ url('partime') }}">兼职工</a>
             </li>
             <li class="navLi">
                 <a href="">直营店和加盟</a>
