@@ -71,7 +71,11 @@
                         @foreach($items->chunk(3)[0] as $item)
                             <tr>
                                 <td class="col-red">￥{{ $item->moneys }}元</td>
-                                <td>{{ $item->title }}</td>
+                                <td>
+                                    <a href="{{ route('partime.show', ['id' => $item->id]) }}" target="_blank">
+                                        {{ $item->title }}
+                                    </a>
+                                </td>
                                 <td class="font-12 col-gray">{{ $item->created_at }} 发布</td>
                             </tr>
                         @endforeach
@@ -91,7 +95,11 @@
                         @foreach($items->chunk(3)[1] as $item)
                             <tr>
                                 <td class="col-red">￥{{ $item->moneys }}元</td>
-                                <td>{{ $item->title }}</td>
+                                <td>
+                                    <a href="{{ route('partime.show', ['id' => $item->id]) }}" target="_blank">
+                                        {{ $item->title }}
+                                    </a>
+                                </td>
                                 <td class="font-12 col-gray">{{ $item->created_at }} 发布</td>
                             </tr>
                         @endforeach

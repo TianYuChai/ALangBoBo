@@ -7,6 +7,7 @@
  */
 namespace App\Http\Models\home;
 
+use App\Http\Models\currency\MerchantModel;
 use Illuminate\Database\Eloquent\Model;
 
 class partTimeModel extends Model
@@ -20,6 +21,15 @@ class partTimeModel extends Model
         14 => '小时'
     ];
 
+    public function merchant()
+    {
+        return $this->hasOne(MerchantModel::class, 'uid', 'uid');
+    }
+
+    public function send()
+    {
+        return $this->hasMany(partTimeSendModel::class, 'pid', 'id');
+    }
     public function getMoneysAttribute()
     {
         return bcdiv($this->money, 100, 2);

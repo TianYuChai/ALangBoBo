@@ -115,6 +115,7 @@
                                         <th class="tl" width="90">总工时</th>
                                         <th class="tl" width="150">发布时间</th>
                                         <th class="tl">操作</th>
+                                        <th class="tl">查看</th>
                                     </tr>
                                     </thead>
                                     <tbody class="listTbody">
@@ -134,9 +135,15 @@
                                             <td>{{ $item->time }}</td>
                                             <td>{{ $item->created_at }}</td>
                                             <td class="productOperat">
-                                                <a href="javascript:void(0)" class="block edit" data-action="{{ route('personal.partime.edit', ['id' => $item->id]) }}">编辑商品</a>
+                                                <a href="javascript:void(0)" class="block edit"
+                                                   data-action="{{ route('personal.partime.edit', ['id' => $item->id]) }}">编辑</a>
                                                 <a href="javascript:void(0)" class="block mgt-10 open_status"
                                                    data-action="{{ route('personal.partime.del', ['id' => $item->id]) }}">删除</a>
+                                            </td>
+                                            <td>
+                                                <a href="JavaScript:void(0)" class="block mgt-10 send" data-action="{{ route('personal.partime.show', ['id' => $item->id]) }}">
+                                                    查看投递记录
+                                                </a>
                                             </td>
                                         </tr>
                                     @endforeach
@@ -396,6 +403,18 @@ $("input[id='cover']").on('change', function () {
                 layer.msg(errors[0]);return;
             }
         }
+    });
+});
+/*查看记录*/
+$('.send').click(function () {
+    let url = $(this).data('action');
+    layer.open({
+        type: 2,
+        title: '投递记录',
+        shadeClose: true,
+        shade: 0.8,
+        area: ['950px', '85%'],
+        content: url,
     });
 });
 </script>

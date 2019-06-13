@@ -18,10 +18,10 @@
                 <a href="{{ url('partime') }}">兼职工</a>
             </li>
             <li class="navLi">
-                <a href="">直营店和加盟</a>
+                <a href="{{ url('merchant') }}">直营店和加盟</a>
             </li>
             <li class="navLi">
-                <a href="">百录倩影系列</a>
+                <a href="{{ url('demand') }}">百录倩影系列</a>
             </li>
             <li class="navLi">
                 <a href="">美容类</a>

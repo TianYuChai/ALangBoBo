@@ -131,6 +131,6 @@ class MemberService extends BaseService
             'category' => $category_id,
             'status' => 1
         ])->count();
-        return $category_id == 1 ? 'busi' : 'pers' . sprintf("%04d", $count);
+        return 'albobo'. sprintf("%04d", $count);
     }
 }

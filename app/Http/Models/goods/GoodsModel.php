@@ -216,4 +216,18 @@ class GoodsModel extends Model
             return $query->whereBetween('total_fee', [$min_price, $max_price]);
         }
     }
+
+    /**
+     * 导航分类筛选
+     *
+     * @param $query
+     * @param $search
+     * @return mixed
+     */
+    public function scopeSearchNavCategory($query, $search)
+    {
+        if(!empty($search)) {
+            return $query->where('nav_category', intval($search));
+        }
+    }
 }

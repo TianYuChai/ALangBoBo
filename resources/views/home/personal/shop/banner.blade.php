@@ -201,7 +201,7 @@
                                             </div>
                                             <div class="relative bannerImgDiv">
                                                 <p class="inline-block mgr-20 mgl-15">图片：</p>
-                                                <img src="{{ asset('home/images/img/idImg.png') }}" class="jmImg" id="image"/>
+                                                <img src="{{ asset('home/images/img/idImg.png') }}" class="jmImg" id="image" style="width: 112px;height: 102px"/>
                                                 <input type="file" class="file" accept="image/*">
                                                 <input type="hidden" name="img" value="" id="edit_img">
                                             </div>
@@ -415,7 +415,7 @@
             that.prev().attr('src', URL.createObjectURL(file)).css({"width":"117px","height":"101px"});
             var formData = new FormData();
             formData.append('file', file);
-            formData.append('image_path', image_path);
+            formData.append('image_path', '');
             $.ajax({
                 headers: {
                     'X-CSRF-TOKEN': "{{ csrf_token() }}"

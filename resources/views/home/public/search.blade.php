@@ -6,7 +6,7 @@
         <form action="{{ url('product', ['type' =>'search-all']) }}" method="get">
             <fieldset class="fieldset">
                 <div class="searchDiv">
-                    <input type="text" placeholder="" name="keyword" value="{{ Input::get('keyword') }}"/>
+                    <input type="text" placeholder="全站搜索" name="keyword" value="{{ Input::get('keyword') }}"/>
                     <button type="submit" class="searchBtn">搜索</button>
                 </div>
             </fieldset>

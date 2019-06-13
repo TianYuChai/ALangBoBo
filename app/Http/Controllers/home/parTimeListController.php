@@ -9,14 +9,20 @@ namespace App\Http\Controllers\home;
 
 use App\Http\Models\admin\goods\goodsCategoryModel;
 use App\Http\Models\home\partTimeModel;
+use App\Http\Models\home\partTimeSendModel;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Input;
+use Exception;
 
 class parTimeListController extends BaseController
 {
-    public function __construct(partTimeModel $model,goodsCategoryModel $categoryModel)
+    public function __construct(partTimeModel $model,
+                                goodsCategoryModel $categoryModel,
+                                partTimeSendModel $partTimeSendModel)
     {
         $this->model = $model;
         $this->categoryModel = $categoryModel;
+        $this->partTimeSendModel = $partTimeSendModel;
     }
 
     public function index()
@@ -34,5 +40,60 @@ class parTimeListController extends BaseController
         ])->get();
         $settles = partTimeModel::$_SETTLE;
         return view('home.part_time_list', compact('items', 'categorys', 'settles'));
+    }
+
+    /**
+     * 展示页
+     *
+     * @param $id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function show($id)
+    {
+        $item = $this->model::where('id', $id)->first();
+        if(Auth::guard('web')->check()) {
+            $result = $this->partTimeSendModel::where('uid', Auth::guard('web')->user()->id)->first();
+            if($result) {
+                $item->whetSend = true;
+            }
+        }
+        $categorys = $this->categoryModel::where([
+            'status' => 0,
+            'p_id' => 19
+        ])->get();
+        $settles = partTimeModel::$_SETTLE;
+        return view('home.part_time_show', compact('item', 'categorys', 'settles'));
+    }
+
+    /**
+     * 用户投递
+     *
+     * @param $id
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function send($id)
+    {
+        try {
+            if(!$this->model::where('id', intval($id))->exists()) {
+                throw new Exception('请刷新重试');
+            }
+            $uid = Auth::guard('web')->user()->id;
+            if($this->partTimeSendModel::where([
+                'uid' => $uid,
+                'pid' => intval($id)
+            ])->exists()){
+                throw new Exception('请勿重复投递');
+            }
+            $this->partTimeSendModel::create([
+                'uid' => $uid,
+                'pid' => intval($id)
+            ]);
+            return $this->ajaxReturn();
+        } catch (Exception $e) {
+            return $this->ajaxReturn([
+                'status' => 510,
+                'info' => $e->getMessage()
+            ], 510);
+        }
     }
 }

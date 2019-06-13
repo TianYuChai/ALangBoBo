@@ -61,6 +61,9 @@
                             <a href="{{ route('personal.havegoods', ['type' => 'allOrder']) }}"  class="leftNavActive">已买到的宝贝</a>
                         </li>
                         <li>
+                            <a href="{{ route('personal.sendtime.index') }}">兼职投递记录</a>
+                        </li>
+                        <li>
                             <a href="{{ route('personal.creditmargin') }}">信用保证金</a>
                         </li>
                         @include('home.personal.judge_merchange')

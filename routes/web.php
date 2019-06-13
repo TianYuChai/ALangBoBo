@@ -39,6 +39,11 @@ Route::group(['namespace' => 'home', 'middleware' => 'listenState'], function ()
     Route::get('product/{type}', 'ProductController@index');
     Route::get('details/{id}', 'ProductController@show');
     Route::get('partime', 'parTimeListController@index');
+    Route::get('partime/{id}', ['as' =>'partime.show', 'uses' => 'parTimeListController@show']);
+    Route::get('merchant', 'merchantController@index');
+    Route::get('merchant/{id}', ['as' => 'merchant.show', 'uses' => 'merchantController@show']);
+    Route::get('merchant/{id}/evenmore', ['as' =>'merchant.evenmore', 'uses' => 'merchantController@evenMore']);
+    Route::get('demand', 'demandController@index');
     /*首页-注册*/
     Route::group(['middleware' => 'whiterlogin'], function () {
         Route::get('register', ['as' => 'index.register', 'uses' => 'RegisterController@index']);
@@ -66,6 +71,8 @@ Route::group(['namespace' => 'home', 'middleware' => 'listenState'], function ()
             Route::post('shopp/delgoods', ['as' => 'shopp.shopp.delgoods', 'uses' => 'shoppingController@delGoods']);
             Route::post('shopp/shoppsettlement', ['as' => 'shopp.shopp.shoppsettlement', 'uses' => 'shoppingController@shoppSettlement']);
         });
+        /*投递*/
+        Route::get('parttime/{id}/send', ['as' => 'partime.send', 'uses' => 'parTimeListController@send']);
         Route::group(['namespace' => 'personal', 'prefix' => 'personal'], function () {
             /*用户中心*/
             Route::get('index', ['as' => 'personal.index', 'uses' => 'PersonalContentController@index']);
@@ -93,6 +100,8 @@ Route::group(['namespace' => 'home', 'middleware' => 'listenState'], function ()
             Route::post('havegoods/{id}/refundOrder', ['as' => 'personal.havegoods.refundorder', 'uses' => 'PersonalHaveGoodsController@refundOrder']);
             Route::post('havegoods/{id}/evaluation', ['as' => 'personal.havegoods.evaluation', 'uses' => 'PersonalHaveGoodsController@evaluation']);
             Route::get('havegoods/{id}/pay', ['as' => 'personal.havegoods.pay', 'uses' => 'PersonalHaveGoodsController@pay']);
+            Route::get('sendtime', ['as' => 'personal.sendtime.index', 'uses' => 'PersonalSendTimeController@index']);
+            Route::get('sendtime/{id}/del', ['as' =>'personal.sendtime.del' , 'uses' => 'PersonalSendTimeController@del']);
             /*用户中心--商户*/
             Route::group(['namespace' => 'shop', 'middleware' => 'shop'], function () {
                 /*店铺店招*/
@@ -122,6 +131,7 @@ Route::group(['namespace' => 'home', 'middleware' => 'listenState'], function ()
                 Route::get('shop/goods/{id}/recom', ['as' => 'personal.goods.recom', 'uses' => 'PersonalGoodsController@recom']);
                 /*兼职管理*/
                 Route::get('shop/parttime/index', ['as' =>'personal.partime.index', 'uses' => 'PersonalPartTimeController@index']);
+                Route::get('shop/parttime/{id}/show', ['as' => 'personal.partime.show', 'uses' => 'PersonalPartTimeController@show']);
                 /*入驻费是否缴纳或到期*/
                 Route::group(['middleware' => 'whetherdueto'], function () {
                     Route::post('shop/goods/select', ['as' => 'personal.goods.select', 'uses' => 'PersonalGoodsController@select']);

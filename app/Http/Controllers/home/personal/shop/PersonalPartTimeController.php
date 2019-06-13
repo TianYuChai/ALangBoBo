@@ -137,4 +137,10 @@ class PersonalPartTimeController extends BaseController
             ], 510);
         }
     }
+
+    public function show($id)
+    {
+        $item = $this->model::where('id', intval($id))->first();
+        return view(self::ROUTE . 'part_time_show', compact('item'));
+    }
 }

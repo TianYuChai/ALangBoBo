@@ -1,5 +1,5 @@
 @extends('home.public.subject')
-@section('title', "商品展示")
+@section('title', "店铺商品展示")
 @section('css')
     @parent
     <link rel="stylesheet" href="{{ asset('home/css/product.css') }}"/>
@@ -10,18 +10,17 @@
     <!--分类导航-->
     @include('home.public.category')
     <div class="container">
-        <p class="productType">
-            {{ $category_goodss['nav'] }}>
-        </p>
+        {{--<p class="productType">--}}
+            {{--{{ $category_goodss['nav'] }}>--}}
+        {{--</p>--}}
         <div class="productDetail">
             <ul class="clearfix type">
                 <li>种类：</li>
-                @foreach($category_goodss['categorys'] as $categorys)
+                @foreach($categorys as $category)
                     <li>
-                        <?php $type = $category_goodss['nav'] == '预售产品' ? 'presell' : 'opther'?>
-                        <a href="{{ url('product', ['type' => $type . '-' . $categorys->id]) }}"
-                           class="{{ $category_goodss['selected'] == $categorys->id ? 'typeActive' : '' }}">
-                            {{ $categorys->cate_name }}</a>
+                        <a href="{{ route('merchant.evenmore', ['id' => $id]) }}?category={{ $category->id }}"
+                           class="{{ $category->id == Input::get('category', '') ? 'typeActive' : '' }}">
+                            {{ $category->name }}</a>
                     </li>
                 @endforeach
             </ul>
@@ -40,7 +39,7 @@
                                value="{{ Input::get('max_price', '') }}"
                                onkeyup="this.value= this.value.match(/\d+(\.\d{0,2})?/) ? this.value.match(/\d+(\.\d{0,2})?/)[0] : ''"
                                onblur="this.v();"/>
-                        <a onclick="document:price.submit()" class="wagesBtn">确定</a>
+                        <a href="javascript:void(0)" class="wagesBtn">确定</a>
                     </li>
                 </form>
             </ul>
@@ -48,23 +47,23 @@
         <!--商品内容部分-->
         <div class="productDiv">
             <ul class="productList clearfix">
-                @foreach($category_goodss['goods'] as $goodss)
+                @foreach($goods as $good)
                     <li>
-                        <a class="productA" href="{{ url('details', ['id' => $goodss->id]) }}">
-                            <img src="{{ FileUpload::url('image', $goodss->cost_img) }}" alt="" class="productImg"/>
-                            <p class="productText">{!! $goodss->title !!}</p>
-                            <p class="productPrice">￥{!! $goodss->total_price !!}</p>
+                        <a class="productA" href="{{ url('details', ['id' => $good->id]) }}">
+                            <img src="{{ FileUpload::url('image', $good->cost_img) }}" alt="" class="productImg"/>
+                            <p class="productText">{!! $good->title !!}</p>
+                            <p class="productPrice">￥{!! $good->total_price !!}</p>
                         </a>
-                        <a href="{{ route('merchant.show', ['id' => $goodss->user->merchant['id']]) }}" class="shopLink">
+                        <a href="{{ route('merchant.show', ['id' => $good->user->merchant['id']]) }}" class="shopLink">
                             {{--<img src="" alt="" class="shopIcon"/>--}}
-                            {{ $goodss->user->merchant['shop_name'] }}
-                            <span class="mgl-70">{{ $goodss->user->merchant['address'] }}</span>
+                            {{ $good->user->merchant['shop_name'] }}
+                            <span class="mgl-70">{{ $good->user->merchant['address'] }}</span>
                         </a>
                     </li>
                 @endforeach
             </ul>
             <div class="tc paginationDiv">
-                {!! $category_goodss['goods']->links() !!}
+                {!! $goods->links() !!}
             </div>
         </div>
     </div>
@@ -88,6 +87,18 @@
 //            $(".productDetail .sureBtn button").css("margin-top","-5px");
                 $(".productDetail  .sureBtn button").css({"vertical-align":"top","margin-top":"5px"});
             }
+
+            $('.wagesBtn').click(function () {
+                let url = location.href;
+                let min_price = $('input[name="min_price"]').val();
+                let max_price = $('input[name="max_price"]').val();
+                let url_array = url.split('?');
+                if(url_array.length > 1) {
+                    window.location.href = url + '&min_price='+min_price + '&max_price='+max_price;
+                } else {
+                    window.location.href = url + '?min_price='+min_price + '&max_price='+max_price;
+                }
+            });
         });
     </script>
 @endsection
