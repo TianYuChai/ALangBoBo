@@ -27,7 +27,7 @@ class CancellModel extends Model
     public function scopeSearchAccount($query, $search)
     {
         if(!empty($search)) {
-            $user_ids = UserModel::where('account', 'like', "%$search%")->value('id');
+            $user_ids = UserModel::where('account', 'like', "%{$search}%")->value('id');
             return $query->where('uid', $user_ids);
         }
     }

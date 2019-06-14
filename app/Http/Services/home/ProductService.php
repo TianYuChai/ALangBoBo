@@ -127,7 +127,7 @@ class ProductService extends BaseService
     {
         $keyowrd = $where["keyword"]['keyword'];
         $goods_data = $this->goodsModel::where('status', 0)
-                                         ->where('title', 'like', "%$keyowrd%")
+                                         ->where('title', 'like', "%{$keyowrd}%")
                                          ->SearchPrice($where['price'])
                                          ->orderBy('id', 'desc')->paginate(self::$page_limit);
         $category_ids = $goods_data->pluck('three_category')->toArray();

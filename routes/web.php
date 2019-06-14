@@ -28,6 +28,7 @@ Route::group(['namespace' => 'home'], function () {
     Route::post('busin/notify', ['as' => 'index.busin.notify', 'uses' => 'personal\PesonalBusinResidFeeController@notify']);
     Route::post('order/notify', ['as' => 'index.order.notify', 'uses' => 'shoppingController@notify']);
     Route::post('subscribed/order/notify', ['as' => 'index.subscribed.notify', 'uses' => 'personal\PersonalHaveGoodsController@notify']);
+    Route::post('demand/alinotify', ['as' => 'index.demand.alinotify', 'uses' => 'demandController@aliNotify']);
 });
 /**
  * 前台管理路由设置
@@ -73,6 +74,8 @@ Route::group(['namespace' => 'home', 'middleware' => 'listenState'], function ()
         });
         /*投递*/
         Route::get('parttime/{id}/send', ['as' => 'partime.send', 'uses' => 'parTimeListController@send']);
+        /*需求*/
+        Route::post('demand/store', ['as' => 'demand.store', 'uses' => 'demandController@store']);
         Route::group(['namespace' => 'personal', 'prefix' => 'personal'], function () {
             /*用户中心*/
             Route::get('index', ['as' => 'personal.index', 'uses' => 'PersonalContentController@index']);
@@ -102,6 +105,8 @@ Route::group(['namespace' => 'home', 'middleware' => 'listenState'], function ()
             Route::get('havegoods/{id}/pay', ['as' => 'personal.havegoods.pay', 'uses' => 'PersonalHaveGoodsController@pay']);
             Route::get('sendtime', ['as' => 'personal.sendtime.index', 'uses' => 'PersonalSendTimeController@index']);
             Route::get('sendtime/{id}/del', ['as' =>'personal.sendtime.del' , 'uses' => 'PersonalSendTimeController@del']);
+            Route::get('demand', ['as' => 'personal.demand.index', 'uses' => 'demandOperationController@index']);
+            Route::get('demand/{id}/del', ['as' => 'personal.demand.del', 'uses' => 'demandOperationController@del']);
             /*用户中心--商户*/
             Route::group(['namespace' => 'shop', 'middleware' => 'shop'], function () {
                 /*店铺店招*/

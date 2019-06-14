@@ -222,7 +222,7 @@ class shoppOrderModel extends Model
     public function scopeSearchOrderId($query, $search)
     {
         if(!empty($search)) {
-            return $query->where('order_id', 'like', "%$search%");
+            return $query->where('order_id', 'like', "%{$search}%");
         }
     }
 

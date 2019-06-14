@@ -44,6 +44,9 @@
                             <a href="{{ route('personal.sendtime.index') }}">兼职投递记录</a>
                         </li>
                         <li>
+                            <a href="{{ route('personal.demand.index') }}">百录倩影</a>
+                        </li>
+                        <li>
                             <a href="{{ route('personal.creditmargin') }}" class="leftNavActive">信用保证金</a>
                         </li>
                         @include('home.personal.judge_merchange')

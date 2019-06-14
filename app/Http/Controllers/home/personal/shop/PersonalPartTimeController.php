@@ -59,7 +59,7 @@ class PersonalPartTimeController extends BaseController
                 'settle' => $request->settle,
                 'time' => $request->time,
                 'describe' => trim($request->describe),
-                'content' => $request->content
+                'content' => $request->input('content')
             ]);
             return $this->ajaxReturn();
        } catch (Exception $e) {
@@ -108,7 +108,7 @@ class PersonalPartTimeController extends BaseController
                 'settle' => $request->settle,
                 'time' => $request->time,
                 'describe' => trim($request->describe),
-                'content' => $request->content
+                'content' => $request->input('content')
             ]);
             return $this->ajaxReturn();
         } catch (Exception $e) {

@@ -15,6 +15,7 @@ class VerifyCsrfToken extends Middleware
         'notify',
         'busin/notify',
         'order/notify',
-        'subscribed/order/notify'
+        'subscribed/order/notify',
+        'demand/alinotify'
     ];
 }

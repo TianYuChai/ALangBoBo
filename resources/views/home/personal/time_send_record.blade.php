@@ -1,5 +1,5 @@
 @extends('home.public.subject')
-@section('title', '阿朗博波-店铺管理-兼职管理')
+@section('title', '阿朗博波-个人中心-兼职管理')
 @section('css')
     @parent
     <link rel="stylesheet" type="text/css" href="{{ asset('home/common/bootstrap.min.css') }}"><!--可无视-->
@@ -66,6 +66,9 @@
                     </li>
                     <li>
                         <a href="{{ route('personal.sendtime.index') }}" class="leftNavActive">兼职投递记录</a>
+                    </li>
+                    <li>
+                        <a href="{{ route('personal.demand.index') }}">百录倩影</a>
                     </li>
                     <li>
                         <a href="{{ route('personal.creditmargin') }}">信用保证金</a>

