@@ -7,7 +7,9 @@
  */
 namespace App\Http\Models\home;
 
+use App\Http\Models\admin\goods\goodsCategoryModel;
 use App\Http\Models\currency\MerchantModel;
+use App\Http\Models\currency\UserModel;
 use Illuminate\Database\Eloquent\Model;
 
 class partTimeModel extends Model
@@ -81,6 +83,19 @@ class partTimeModel extends Model
             $price[] = bcmul($search[0], 100);
             $price[] = bcmul($search[1], 100);
             return $query->whereBetween('money', $price);
+        }
+    }
+
+    public function getCategoryNameAttribute()
+    {
+        return goodsCategoryModel::where('id', $this->category_id)->value('cate_name');
+    }
+
+    public function scopeSearchAccout($query, $search)
+    {
+        if(!empty($search)) {
+            $user_ids = UserModel::where('account', 'like', "%{$search}%")->where('status', 0)->get()->pluck('id')->toArray();
+            return $query->whereIn('uid', $user_ids);
         }
     }
 }

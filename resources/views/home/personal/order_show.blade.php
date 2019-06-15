@@ -1,5 +1,5 @@
 @extends('home.public.subject')
-@section('title', '阿朗博波-店铺管理-商品管理')
+@section('title', '订单查看')
 @section('css')
     @parent
     <link href="https://cdn.bootcss.com/twitter-bootstrap/3.4.1/css/bootstrap.css" rel="stylesheet">
@@ -89,11 +89,13 @@
             <tr>
                 <td>收货地址</td>
                 <td>
-                    省市区: {{ $item->addresss->address }} <br>
-                    信息: {{ $item->addresss->detailed }} <br>
-                    邮编: {{ $item->addresss->code }} <br>
-                    收货人: {{ $item->addresss->contacts }} <br>
-                    收货人号码: {{ $item->addresss->number }}
+                    @if($item->addresss)
+                        省市区: {{ $item->addresss->address }} <br>
+                        信息: {{ $item->addresss->detailed }} <br>
+                        邮编: {{ $item->addresss->code }} <br>
+                        收货人: {{ $item->addresss->contacts }} <br>
+                        收货人号码: {{ $item->addresss->number }}
+                    @endif
                 </td>
             </tr>
             <tr>
@@ -121,13 +123,13 @@
                 <tr>
                     <td>评价</td>
                     <td>
-                        满意度: {{ $item->evaluation }}% <br>
-                        商品评价: {{ $item->goods_evaluation }} <br>
-                        服务评价: {{ $item->service_evaluation }} <br>
+                        满意度: {{ $item->evaluation->satisfaction }}% <br>
+                        商品评价: {{ $item->evaluation->goods_evaluation }} <br>
+                        服务评价: {{ $item->evaluation->service_evaluation }} <br>
                         评价图片：
-                        @if(!empty($item->image))
-                            @foreach(json_decode($item->image) as $img)
-                                <img src="{{ FileUpload::url('img', $img) }}" class="fl">
+                        @if(!empty($item->evaluation->images))
+                            @foreach(json_decode($item->evaluation->images) as $img)
+                                <img src="{{ FileUpload::url('image', $img) }}" class="fl">
                             @endforeach
                         @endif
                     </td>

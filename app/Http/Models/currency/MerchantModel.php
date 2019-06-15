@@ -3,6 +3,8 @@
 namespace App\Http\Models\currency;
 
 use App\Http\Models\admin\goods\goodsCategoryModel;
+use App\Http\Models\home\orderModel;
+use App\Http\Models\home\shoppOrderModel;
 use Illuminate\Database\Eloquent\Model;
 
 class MerchantModel extends Model
@@ -21,6 +23,10 @@ class MerchantModel extends Model
     public function user()
     {
         return $this->hasOne(UserModel::class, 'id', 'uid');
+    }
+    public function order()
+    {
+        return $this->hasMany(shoppOrderModel::class, 'gid', 'uid');
     }
     /*店铺分类*/
     public function categorys()

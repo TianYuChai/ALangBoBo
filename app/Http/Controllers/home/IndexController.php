@@ -7,6 +7,7 @@
  */
 namespace App\Http\Controllers\home;
 
+use App\Http\Models\setup\shoppDuiteModel;
 use App\Http\Services\home\IndexService;
 
 class IndexController extends BaseController
@@ -15,5 +16,11 @@ class IndexController extends BaseController
     {
         $data = $indexService->entrance();
         return view('home.index', compact('data'));
+    }
+
+    public function button($id)
+    {
+        $item = shoppDuiteModel::where('category_id', intval($id))->first();
+        return view('home.index_button', compact('item'));
     }
 }

@@ -68,7 +68,7 @@
                 </thead>
                 <tbody>
                     @if(!$items->isEmpty())
-                        @foreach($items->chunk(3)[0] as $item)
+                        @foreach($items->chunk(10)[0] as $item)
                             <tr>
                                 <td class="col-red">￥{{ $item->moneys }}元</td>
                                 <td>
@@ -91,8 +91,8 @@
                 </tr>
                 </thead>
                 <tbody>
-                    @if(!$items->isEmpty() && count($items->chunk(3)) >= 2)
-                        @foreach($items->chunk(3)[1] as $item)
+                    @if(!$items->isEmpty() && count($items->chunk(10)) >= 2)
+                        @foreach($items->chunk(10)[1] as $item)
                             <tr>
                                 <td class="col-red">￥{{ $item->moneys }}元</td>
                                 <td>

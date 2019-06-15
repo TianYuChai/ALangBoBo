@@ -77,10 +77,17 @@ Route::group(['prefix' => 'backstage', 'namespace' => 'admin'], function () {
                 Route::get('goods/banner/{id}/stateOperation', ['as' => 'backstage.banner.stateOperation', 'uses' => 'GoodsBannerController@stateOperation']);
                 Route::get('goods/banner/{id}/del', ['as' => 'backstage.banner.del', 'uses' => 'GoodsBannerController@del']);
             });
+            //兼职
+            Route::get('goods/parttime/index', ['as' => 'backstage.parttime.index', 'uses' => 'partTimeController@index']);
+            Route::get('goods/parttime/{id}/show', ['as' => 'backstage.parttime.show', 'uses' => 'partTimeController@show']);
+            //百录倩影
+            Route::get('goods/demand/index', ['as' => 'backstage.demand.index', 'uses' => 'demandAdminController@index']);
+            Route::get('goods/demand/{id}/show', ['as' => 'backstage.demand.show', 'uses' => 'demandAdminController@show']);
         });
         /*商铺-订单*/
         Route::group(['namespace' => 'order'], function () {
             Route::get('order/index', ['as' => 'backstage.order.index', 'uses' => 'orderController@index']);
+            Route::get('order/{id}/show', ['as' => 'backstage.order.show', 'uses' => 'orderController@show']);
         });
         /**
          * 系统设置
@@ -92,6 +99,13 @@ Route::group(['prefix' => 'backstage', 'namespace' => 'admin'], function () {
                 Route::get('setup/settled/create', ['as' => 'backstage.settled.create', 'uses' => 'SettledInController@create']);
                 Route::post('setup/settled/store', ['as' => 'backstage.settled.store', 'uses' => 'SettledInController@store']);
                 Route::get('setup/settled/{id}/del', ['as' => 'backstage.settled.del', 'uses' => 'SettledInController@del']);
+                Route::get('setup/issue/shopp_guide/index', ['as' => 'backstage.shopp_guide.index', 'uses' => 'issueController@index']);
+                Route::get('setup/issue/shopp_guide/duitecteate', ['as' =>'backstage.shopp_guide.duitecteate', 'uses' => 'issueController@duiteCteate']);
+                Route::post('setup/issue/shopp_guide/duitestore', ['as' => 'backstage.shopp_guide.duitestore', 'uses' => 'issueController@duiteStore']);
+                Route::get('setup/issue/shopp_guide/{id}/duiteedit', ['as' => 'backstage.shopp_guide.duiteedit', 'uses' => 'issueController@duiteEdit']);
+                Route::post('setup/issue/shopp_guide/{id}/duiteupdate', ['as' => 'backstage.shopp_guide.duiteupdate', 'uses' => 'issueController@duiteUpdate']);
+                Route::get('setup/issue/shopp_guide/{id}/duitedel', ['as' => 'backstage.shopp_guide.duitedel', 'uses' => 'issueController@duiteDel']);
+                Route::get('setup/issue/merchantService/index', ['as' => 'backstage.merchantService.index', 'uses' => 'issueController@merchantService']);
             });
         });
     });

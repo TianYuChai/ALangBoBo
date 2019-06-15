@@ -45,6 +45,8 @@ Route::group(['namespace' => 'home', 'middleware' => 'listenState'], function ()
     Route::get('merchant/{id}', ['as' => 'merchant.show', 'uses' => 'merchantController@show']);
     Route::get('merchant/{id}/evenmore', ['as' =>'merchant.evenmore', 'uses' => 'merchantController@evenMore']);
     Route::get('demand', 'demandController@index');
+    Route::get('demand/{id}/show', ['as' => 'demand.show', 'uses' => 'demandController@show']);
+    Route::get('button/{id}', ['as' => 'index.button', 'uses' => 'IndexController@button']);
     /*首页-注册*/
     Route::group(['middleware' => 'whiterlogin'], function () {
         Route::get('register', ['as' => 'index.register', 'uses' => 'RegisterController@index']);
@@ -75,7 +77,7 @@ Route::group(['namespace' => 'home', 'middleware' => 'listenState'], function ()
         /*投递*/
         Route::get('parttime/{id}/send', ['as' => 'partime.send', 'uses' => 'parTimeListController@send']);
         /*需求*/
-        Route::post('demand/store', ['as' => 'demand.store', 'uses' => 'demandController@store']);
+        Route::get('demand/{id}/send', ['as' => 'demand.send', 'uses' => 'demandController@send']);
         Route::group(['namespace' => 'personal', 'prefix' => 'personal'], function () {
             /*用户中心*/
             Route::get('index', ['as' => 'personal.index', 'uses' => 'PersonalContentController@index']);
@@ -107,6 +109,13 @@ Route::group(['namespace' => 'home', 'middleware' => 'listenState'], function ()
             Route::get('sendtime/{id}/del', ['as' =>'personal.sendtime.del' , 'uses' => 'PersonalSendTimeController@del']);
             Route::get('demand', ['as' => 'personal.demand.index', 'uses' => 'demandOperationController@index']);
             Route::get('demand/{id}/del', ['as' => 'personal.demand.del', 'uses' => 'demandOperationController@del']);
+            Route::post('demand/store', ['as' => 'personal.demand.store', 'uses' => 'demandOperationController@store']);
+            Route::get('demand/{id}/immediatelypay', ['as' => 'personal.demand.immediatelypay', 'uses' => 'demandOperationController@immediatelyPay']);
+            Route::get('demand/{id}/edit', ['as' => 'personal.demand.edit', 'uses' => 'demandOperationController@edit']);
+            Route::post('demand/{id}/update', ['as' => 'personal.demand.update', 'uses' => 'demandOperationController@update']);
+            Route::get('demand/{id}/confirm', ['as' => 'personal.demand.confirm', 'uses' => 'demandOperationController@confirm']);
+            Route::post('demand/{id}/high', ['as' => 'personal.demand.high', 'uses' => 'demandOperationController@high']);
+            Route::get('demand/list', ['as' => 'personal.demand.list', 'uses' => 'demandOperationController@list']);
             /*用户中心--商户*/
             Route::group(['namespace' => 'shop', 'middleware' => 'shop'], function () {
                 /*店铺店招*/

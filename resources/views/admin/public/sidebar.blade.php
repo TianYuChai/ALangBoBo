@@ -58,6 +58,18 @@
                         </a>
                     </li>
                     <li>
+                        <a _href="{{ route('backstage.parttime.index') }}">
+                            <i class="iconfont">&#xe6a7;</i>
+                            <cite>兼职列表</cite>
+                        </a>
+                    </li>
+                    <li>
+                        <a _href="{{ route('backstage.demand.index') }}">
+                            <i class="iconfont">&#xe6a7;</i>
+                            <cite>百录倩影列表</cite>
+                        </a>
+                    </li>
+                    <li>
                         <a _href="{{ route('backstage.category.index') }}">
                             <i class="iconfont">&#xe6a7;</i>
                             <cite>分类管理</cite>
@@ -106,45 +118,9 @@
                         </a>
                     </li>
                     <li>
-                        <a _href="./pages/echarts/echarts3.html">
+                        <a _href="{{ route('backstage.shopp_guide.index') }}">
                             <i class="iconfont">&#xe6a7;</i>
-                            <cite>地图</cite>
-                        </a>
-                    </li>
-                    <li>
-                        <a _href="./pages/echarts/echarts4.html">
-                            <i class="iconfont">&#xe6a7;</i>
-                            <cite>饼图</cite>
-                        </a>
-                    </li>
-                    <li>
-                        <a _href="./pages/echarts/echarts5.html">
-                            <i class="iconfont">&#xe6a7;</i>
-                            <cite>雷达图</cite>
-                        </a>
-                    </li>
-                    <li>
-                        <a _href="./pages/echarts/echarts6.html">
-                            <i class="iconfont">&#xe6a7;</i>
-                            <cite>k线图</cite>
-                        </a>
-                    </li>
-                    <li>
-                        <a _href="./pages/echarts/echarts7.html">
-                            <i class="iconfont">&#xe6a7;</i>
-                            <cite>热力图</cite>
-                        </a>
-                    </li>
-                    <li>
-                        <a _href="./pages/echarts/echarts8.html">
-                            <i class="iconfont">&#xe6a7;</i>
-                            <cite>仪表图</cite>
-                        </a>
-                    </li>
-                    <li>
-                        <a _href="./pages/echarts/echarts9.html">
-                            <i class="iconfont">&#xe6a7;</i>
-                            <cite>地图DIY实例</cite>
+                            <cite>底部内容</cite>
                         </a>
                     </li>
                 </ul>

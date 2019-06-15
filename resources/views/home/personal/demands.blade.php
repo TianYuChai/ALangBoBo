@@ -100,6 +100,7 @@
                             <div class="productListTop clearfix">
                                 <p><img src="{{ asset('home/images/icon/productList.png') }}" alt=""/>百录倩影列表</p>
                                 <a href="javascript:void(0)"  data-toggle="modal" data-target="#editProduct">+添加</a>
+                                <a href="javascript:void(0)" id="order_list">查单</a>
                             </div>
                             <form action="" method="get" id="subForm">
                                 <div>
@@ -132,7 +133,7 @@
                                                     {{ $item->order_id }}
                                                 </td>
                                                 <td>
-                                                    <a href="" target="_blank">{{ $item->title }}</a>
+                                                    <a href="{{ route('demand.show', ['id' => $item->id]) }}" target="_blank">{{ $item->title }}</a>
                                                 </td>
                                                 <td>
                                                     {{ $item->status_name }}
@@ -145,19 +146,23 @@
                                                         @case(302)
                                                             <a href="JavaScript:void(0)"
                                                                class="pay"
-                                                               data-action="">立即支付</a>
-                                                            <a href="JavaScript:void(0)"
-                                                               class="edit"
-                                                               data-action="">修改</a>
+                                                               data-action="{{ route('personal.demand.immediatelypay', ['id' => $item->id]) }}">立即支付</a>
                                                             <a href="javascript:void(0)"
                                                                class="cancel"
                                                                data-action="{{ route('personal.demand.del', ['id' => $item->id]) }}">取消</a>
                                                         @break
+                                                        @case(303)
+                                                            <a href="JavaScript:void(0)"
+                                                               class="edit"
+                                                               data-action="{{ route('personal.demand.edit', ['id' => $item->id]) }}">修改</a>
+                                                        @break
                                                         @case(304)
-                                                            <a href="javascript:void(0)">确认</a>
+                                                            <a href="javascript:void(0)" id="confirm" data-action="{{ route('personal.demand.confirm', ['id' => $item->id]) }}">确认</a>
                                                         @break
                                                         @case(305)
-                                                            <a href="javascript:void(0)">评价</a>
+                                                            <a href="javascript:void(0)"
+                                                               data-toggle="modal"
+                                                               data-target="#editEvaluate" class="evaluation" data-action="{{ route('personal.demand.high', ['id' => $item->id]) }}">评价</a>
                                                         @break
                                                     @endswitch
                                                 </td>
@@ -181,10 +186,121 @@
                                             </div>
                                             <div class="modal-body">
                                                 <div class="changeContent">
-                                                    <form class="form-horizontal" id="add_goods"
-                                                          method="post" action="{{ route('personal.goods.store') }}">
+                                                    <form class="form-horizontal" id="add_demand"
+                                                          method="post" action="{{ route('personal.demand.store') }}">
                                                         @csrf
+                                                        <div class="form-group">
+                                                            <label class="col-sm-2 control-label">需求名称</label>
+                                                            <div class="col-sm-10">
+                                                                <input type="text" class="form-control"
+                                                                       name="title" placeholder="请输入需求名称"
+                                                                       autocomplete="off" value="">
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="inputPassword" class="col-sm-2 control-label">需求表现形式</label>
+                                                            <div class="col-sm-10 goods">
+                                                                <select class="form-control goods_cate" name="display">
+                                                                    @foreach(\App\Http\Models\home\demandModel::$_DISPLAY as $k =>$display)
+                                                                        <option value="{{ $k }}"> {{ $display }}</option>
+                                                                    @endforeach
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="inputPassword" class="col-sm-2 control-label">材料选择</label>
+                                                            <div class="col-sm-10 goods">
+                                                                <select class="form-control goods_cate" name="material">
+                                                                    @foreach(\App\Http\Models\home\demandModel::$_MATERIAL as $key =>$material)
+                                                                        <option value="{{ $key }}"> {{ $material }}</option>
+                                                                    @endforeach
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="col-sm-2 control-label">其他要求(可用,分割)</label>
+                                                            <div class="col-sm-10">
+                                                                <input type="text" class="form-control"
+                                                                       name="other" placeholder="请输入其他要求, 如尺寸等"
+                                                                       autocomplete="off" value="">
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="col-sm-2 control-label" for="inputPassword">工期</label>
+                                                            <div class="input-group" style="width: 250px;margin-left: 165px;">
+                                                                <input type="text" class="form-control"
+                                                                       name="time" placeholder="单位：天"
+                                                                       value="">
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="col-sm-2 control-label" for="inputPassword"></label>
+                                                            <div class="input-group" style="width: 250px;margin-left: 165px;">
+                                                                <p class="help-block" style="color: red">总价 = 成本 + 满意度</p>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="col-sm-2 control-label" for="inputPassword">成本</label>
+                                                            <div class="input-group" style="width: 250px;margin-left: 165px;">
+                                                                <div class="input-group-addon">$</div>
+                                                                <input type="text" class="form-control"
+                                                                       name="cost" placeholder="单位：元"
+                                                                       onkeyup="this.value= this.value.match(/\d+(\.\d{0,2})?/) ? this.value.match(/\d+(\.\d{0,2})?/)[0] : ''"
+                                                                       onblur="this.v();" autocomplete="off" value="">
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="col-sm-2 control-label" for="inputPassword">满意度</label>
+                                                            <div class="input-group" style="width: 250px;margin-left: 165px;">
+                                                                <div class="input-group-addon">$</div>
+                                                                <input type="text" class="form-control"
+                                                                       name="satisfaction" placeholder="单位：元"
+                                                                       onkeyup="this.value= this.value.match(/\d+(\.\d{0,2})?/) ? this.value.match(/\d+(\.\d{0,2})?/)[0] : ''"
+                                                                       onblur="this.v();" autocomplete="off" value="">
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="col-sm-2 control-label" for="inputPassword">上架时长</label>
+                                                            <div class="input-group" style="width: 250px;margin-left: 165px;">
+                                                                <input type="text" class="form-control"
+                                                                       name="refund_timeout" placeholder="单位：天, 支付后多长时间无人接单进行退款。不可超过三十天"
+                                                                       value="" onbeforepaste="clipboardData.setData('text',clipboardData.getData('text').replace(/[^\d]/g,''))"
+                                                                       onkeyup="value=value.replace(/[^\d.]/g,'')">
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="col-sm-2 control-label">描述</label>
+                                                            <div class="col-sm-10">
+                                                                <textarea name="describe" id="" cols="30" rows="10"></textarea>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="col-sm-2 control-label">展示图</label>
+                                                            <div class="col-sm-10">
+                                                                <img src="{{ asset('home/images/img/idImg.png') }}"
+                                                                     class="img-rounded">
+                                                                <input type="file" id="cover" accept="image/*">
+                                                                <input type="hidden" name="img" value="">
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="inputPassword" class="col-sm-2 control-label">支付选择</label>
+                                                            <div class="col-sm-10 goods">
+                                                                <select class="form-control goods_cate" name="pay_method">
+                                                                    @foreach(["Alipay" => "支付宝","WeChat" => "微信"] as $s =>$pay)
+                                                                        <option value="{{ $s }}"> {{ $pay }}</option>
+                                                                    @endforeach
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="col-sm-2 control-label">详情</label>
+                                                            <div class="col-sm-10">
+                                                                <script id="ue-container" name="content"  type="text/plain">
 
+                                                                </script>
+                                                            </div>
+                                                        </div>
                                                     </form>
                                                 </div>
                                             </div>
@@ -193,6 +309,44 @@
                                                 </button>
                                                 <button type="button" class="btn btn-primary add">
                                                     发布
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal fade" id="editEvaluate" tabindex="-1" role="dialog" aria-labelledby="editEvaluate" aria-hidden="true">
+                                    <div class="modal-dialog modalWidth">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                                                    &times;
+                                                </button>
+                                                <h4 class="modal-title" id="myModalLabel-jm">
+                                                    <p class="changeContentTip"><img src="{{ asset('home/images/icon/changeContentIcon.png') }}" alt=""/>发表评价</p>
+                                                </h4>
+                                            </div>
+                                            <div class="modal-body">
+                                                <div class="changeContent">
+                                                    <form class="changeSignForm" id="changeSignForm" action="">
+                                                        <fieldset class="fieldset clearfix">
+                                                            <div class="manyidu mgt-20">
+                                                                评价：
+                                                                @for($i = 0; $i <= 10; $i++)
+                                                                    <span class="relative">
+                                                                {{ $i == 0 ? '' : $i }}0%
+                                                            <img src="{{ asset('home/images/img/activeStar.png') }}" alt="" class="activeStar"/>
+                                                        </span>
+                                                                @endfor
+                                                            </div>
+                                                        </fieldset>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-default" data-dismiss="modal">关闭
+                                                </button>
+                                                <button type="button" class="btn btn-primary hign">
+                                                    确认
                                                 </button>
                                             </div>
                                         </div>
@@ -212,9 +366,24 @@
     @parent
     <script src="{{ asset('home/js/public.js') }}"></script>
     <script src="http://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <!-- ueditor-mz 配置文件 -->
+    <script type="text/javascript" src="{{  asset('home/ueditor/ueditor.config.js') }}"></script>
+    <!-- 编辑器源码文件 -->
+    <script type="text/javascript" src="{{ asset('home/ueditor/ueditor.all.js') }}"></script>
+    <script src="https://cdn.bootcss.com/jquery.form/4.2.2/jquery.form.min.js"></script>
 @endsection
 @section('section')
     <script type="text/javascript">
+        var ue = UE.getEditor('ue-container');
+        ue.ready(function(){
+            ue.execCommand('serverparam', '_token', '{{ csrf_token() }}');
+        });
+        $(".manyidu span").on('click',function(){
+            $(this).siblings().removeClass('manyiduActive');
+            $(this).addClass('manyiduActive');
+            $(this).siblings().children('img').attr('src','{{ asset('home/images/img/whiteStar.png') }}');
+            $(this).children('img').attr('src','{{ asset('home/images/img/activeStar.png') }}');
+        });
         $('.cancel').click(function () {
             let url  = $(this).data('action');
             let that = $(this);
@@ -254,6 +423,220 @@
                             }
                         }
                     });
+            });
+        });
+        $('.add').click(function () {
+            $("#add_demand").ajaxSubmit({
+                success: function (res) {
+                    $('body').append(res);
+                    $("form").attr("target", "_blank");
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    //返回提示信息
+                    try {
+                        if (XMLHttpRequest.status == 401) {
+                            var errors = JSON.parse(XMLHttpRequest.responseText)['errors']['info'];
+                            layer.msg(errors[0]);
+                            return;
+                        }
+                        var errors = XMLHttpRequest.responseJSON.errors;
+                        for (var value in errors) {
+                            layer.msg(errors[value][0]);
+                            return;
+                        }
+                    } catch (e) {
+                        if (XMLHttpRequest.statusText == 'Unauthorized') {
+                            var index = parent.layer.getFrameIndex(window.name); //获取窗口索引
+                            parent.layer.close(index);
+                            parent.location.reload();
+                            window.location.href = "{{ route('index.login') }}";
+                        } else {
+                            var errors = JSON.parse(XMLHttpRequest.responseText)['errors']['info'];
+                            layer.msg(errors[0]);
+                            return;
+                        }
+                    }
+                }
+            });
+        });
+        /*封面图片--上传*/
+        $("input[id='cover']").on('change', function () {
+            var that = $(this);
+            var file = that[0].files[0];
+            var image = $('input[name="img"]');
+            var image_path = image.val();
+            that.prev().attr('src', URL.createObjectURL(file)).css({"width":"117px","height":"101px"});
+            var formData = new FormData();
+            formData.append('file', file);
+            formData.append('image_path', image_path);
+            formData.append('type', '');
+            $.ajax({
+                headers: {
+                    'X-CSRF-TOKEN': "{{ csrf_token() }}"
+                },
+                method:"POST",
+                url:"{!! route("file.upload") !!}",
+                processData: false,
+                contentType: false,
+                data:formData,
+                success:function (res) {
+                    if(res.status == 200) {
+                        image.val(res.url[0]);
+                    }
+                },
+                error:function (XMLHttpRequest) {
+                    //返回提示信息
+                    try {
+                        var errors = XMLHttpRequest.responseJSON.errors;
+                        for (var value in errors) {
+                            layer.msg(errors[value][0]);return;
+                        }
+                    } catch (e) {
+                        try {
+                            var errors = JSON.parse(XMLHttpRequest.responseText)['errors']['info'];
+                            layer.msg(errors[0]);return;
+                        } catch (e) {
+                            layer.msg(JSON.parse(XMLHttpRequest.responseText)['message']);return;
+                        }
+                    }
+                }
+            });
+        });
+        /*支付*/
+        $('.pay').click(function () {
+            let url = $(this).data('action');
+            layer.confirm('确认支付？',
+                {btn: ['确定', '取消'], title: "提示"}, function (index) {
+                    layer.close(index);
+                $.ajax({
+                    headers: {
+                        'X-CSRF-TOKEN': "{{ csrf_token() }}"
+                    },
+                    method:"get",
+                    url:url,
+                    data:'',
+                    success:function (res) {
+                        $('body').append(res);
+                        $("form").attr("target", "_blank");
+                    },
+                    error:function (XMLHttpRequest) {
+                        //返回提示信息
+                        try {
+                            var errors = XMLHttpRequest.responseJSON.errors;
+                            for (var value in errors) {
+                                layer.msg(errors[value][0]);return;
+                            }
+                        } catch (e) {
+                            try {
+                                var errors = JSON.parse(XMLHttpRequest.responseText)['errors']['info'];
+                                layer.msg(errors[0]);return;
+                            } catch (e) {
+                                layer.msg(JSON.parse(XMLHttpRequest.responseText)['message']);return;
+                            }
+                        }
+                    }
+                });
+            });
+        });
+        $('.edit').click(function () {
+            let url = $(this).data('action');
+            layer.open({
+                type: 2,
+                title: '修改需求',
+                shadeClose: true,
+                shade: 0.8,
+                area: ['950px', '85%'],
+                content: url,
+            });
+        });
+        $('#order_list').click(function () {
+            layer.open({
+                type: 2,
+                title: '查看',
+                shadeClose: true,
+                shade: 0.8,
+                area: ['1210px', '85%'],
+                content: "{{ route('personal.demand.list') }}",
+            });
+        });
+        $('#confirm').click(function () {
+            let url = $(this).data('action');
+            layer.confirm('确认收货？',
+                {btn: ['确定', '取消'], title: "提示"}, function (index) {
+                layer.close(index);
+                $.ajax({
+                    headers: {
+                        'X-CSRF-TOKEN': "{{ csrf_token() }}"
+                    },
+                    method:"get",
+                    url:url,
+                    data:'',
+                    success:function (res) {
+                        layer.msg(res.info);
+                        setTimeout(function () {
+                            window.location.reload();
+                        }, 500);
+                    },
+                    error:function (XMLHttpRequest) {
+                        //返回提示信息
+                        try {
+                            var errors = XMLHttpRequest.responseJSON.errors;
+                            for (var value in errors) {
+                                layer.msg(errors[value][0]);return;
+                            }
+                        } catch (e) {
+                            try {
+                                var errors = JSON.parse(XMLHttpRequest.responseText)['errors']['info'];
+                                layer.msg(errors[0]);return;
+                            } catch (e) {
+                                layer.msg(JSON.parse(XMLHttpRequest.responseText)['message']);return;
+                            }
+                        }
+                    }
+                });
+            });
+        });
+        /*评价*/
+        $('.evaluation').click(function () {
+            let url = $(this).data('action');
+            $('#changeSignForm').attr('action', url);
+        });
+        $('.hign').click(function () {
+            let satisfaction = $.trim($('.manyiduActive').text());
+            let url =  $('#changeSignForm').attr('action');
+            $.ajax({
+                headers: {
+                    'X-CSRF-TOKEN': "{{ csrf_token() }}"
+                },
+                method:"POST",
+                url:url,
+                data:{high: satisfaction},
+                success:function (res) {
+                    if(res.status == 200) {
+                        layer.msg(res.info);
+                        setTimeout(function () {
+                            window.location.reload();
+                        }, 300)
+                    }
+                },
+                error:function (XMLHttpRequest, textStatus, errorThrown) {
+                    //返回提示信息
+                    try {
+                        if(XMLHttpRequest.status == 401) {
+                            var errors = JSON.parse(XMLHttpRequest.responseText)['errors']['info'];
+                            layer.msg(errors[0]);return;
+                        }
+                        var errors = XMLHttpRequest.responseJSON.errors;
+                        for (var value in errors) {
+                            layer.msg(errors[value][0]);return;
+                        }
+                    } catch (e) {
+                        var errors = JSON.parse(XMLHttpRequest.responseText)['errors'];
+                        for (var value in errors) {
+                            layer.msg(errors[value][0]);return;
+                        }
+                    }
+                }
             });
         });
     </script>

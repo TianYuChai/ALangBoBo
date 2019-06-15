@@ -4,24 +4,24 @@
         <div class="copyRight">
             <ul class="clearfix">
                 <li>
-                    <p href="">购物指南</p>
-                    <a href="">导购演示</a>
-                    <a href="">免费注册</a>
-                    <a href="">常见问题</a>
+                    <p href="javascript:void(0)">购物指南</p>
+                    <a href="{{ route('index.button', ['id' => 1]) }}">导购演示</a>
+                    <a href="{{ route('index.register') }}">免费注册</a>
+                    <a href="{{ route('index.button', ['id' => 2]) }}">常见问题</a>
                 </li>
                 <li>
-                    <p href="">支付方式</p>
-                    <a href="">网银支付</a>
-                    <a href="">快捷支付</a>
-                    <a href="">认缴支付</a>
+                    <p href="javascript:void(0)">支付方式</p>
+                    <a href="javascript:void(0)">网银支付</a>
+                    <a href="javascript:void(0)">快捷支付</a>
+                    <a href="javascript:void(0)">认缴支付</a>
                 </li>
                 <li>
-                    <p href="">商家服务</p>
-                    <a href="">商家入驻</a>
-                    <a href="">培训中心</a>
-                    <a href="">商家帮助</a>
-                    <a href="">服务市场</a>
-                    <a href="">规则中心</a>
+                    <p href="javascript:void(0)">商家服务</p>
+                    <a href="{{ route('index.button', ['id' => 3]) }}">商家入驻</a>
+                    <a href="{{ route('index.button', ['id' => 4]) }}">培训中心</a>
+                    <a href="{{ route('index.button', ['id' => 5]) }}">商家帮助</a>
+                    <a href="{{ route('index.button', ['id' => 6]) }}">服务市场</a>
+                    <a href="{{ route('index.button', ['id' => 7]) }}">规则中心</a>
                 </li>
             </ul>
         </div>

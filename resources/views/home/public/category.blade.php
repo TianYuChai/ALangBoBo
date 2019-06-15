@@ -24,7 +24,7 @@
                 <a href="{{ url('demand') }}">百录倩影系列</a>
             </li>
             <li class="navLi">
-                <a href="">美容类</a>
+                <a href="{{ url('product', ['type' =>'opther-16']) }}">美容类</a>
             </li>
         </ul>
     </div>

@@ -26,4 +26,10 @@ class orderController extends BaseController
         ];
         return view(self::ROUTE . 'index', compact('data'));
     }
+
+    public function show($id)
+    {
+        $item = shoppOrderModel::find($id);
+        return view(self::ROUTE . 'show', compact('item'));
+    }
 }

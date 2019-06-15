@@ -23,7 +23,7 @@
             <p class="mgl-50"><span class="col-red">3、</span>获得解决方案</p>
             <p class="mgl-50"><span class="col-red">4、</span>验收满意确认付款</p>
         </div>
-        <a href="JavaScript:void(0)" class="publishNeed fr">发布需求</a>
+        <a href="{{ route('personal.demand.index') }}" class="publishNeed fr">发布需求</a>
     </div>
     <!--需求列表-->
     <div class="needListDiv">
@@ -45,10 +45,14 @@
                 </thead>
                 <tbody>
                 @if(!$items->isEmpty())
-                    @foreach($items->chunk(3)[0] as $item)
+                    @foreach($items->chunk(10)[0] as $item)
                         <tr>
                             <td class="col-red">￥{{ $item->moneys }}元</td>
-                            <td>{{ $item->title }}</td>
+                            <td>
+                                <a href="{{ route('demand.show', ['id' => $item->id]) }}">
+                                    {{ $item->title }}
+                                </a>
+                            </td>
                             <td class="font-12 col-gray">{{ $item->created_at }} 发布</td>
                         </tr>
                     @endforeach
@@ -64,11 +68,15 @@
                 </tr>
                 </thead>
                 <tbody>
-                @if(!$items->isEmpty())
-                    @foreach($items->chunk(3)[1] as $item)
+                @if(!$items->isEmpty() && count($items->chunk(3)) > 1)
+                    @foreach($items->chunk(10)[1] as $item)
                         <tr>
                             <td class="col-red">￥{{ $item->moneys }}元</td>
-                            <td>{{ $item->title }}</td>
+                            <td>
+                                <a href="{{ route('demand.show', ['id' => $item->id]) }}">
+                                    {{ $item->title }}
+                                </a>
+                            </td>
                             <td class="font-12 col-gray">{{ $item->created_at }} 发布</td>
                         </tr>
                     @endforeach
@@ -84,20 +92,4 @@
 <script src="{{ asset('home/js/toPage.js') }}"></script>
 @endsection
 @section('section')
-    <script type="text/javascript">
-        $('.publishNeed').click(function () {
-            if("{{ Auth::guard('web')->check() }}") {
-                layer.open({
-                    type: 2,
-                    title: '发布需求',
-                    shadeClose: true,
-                    shade: 0.8,
-                    area: ['950px', '85%'],
-                    content: "{{ url('demand/create') }}",
-                });
-            } else {
-                window.location.href = "{{ route('index.login') }}";
-            }
-        });
-    </script>
 @endsection

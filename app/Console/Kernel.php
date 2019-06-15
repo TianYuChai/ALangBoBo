@@ -36,6 +36,9 @@ class Kernel extends ConsoleKernel
         $schedule->command('sign_timeout')->everyMinute()->timezone('Asia/Shanghai')->runInBackground(); //订单定时签收
         $schedule->command('order_complete_timeout')->everyMinute()->timezone('Asia/Shanghai')->runInBackground(); //订单定时完成
         $schedule->command('keyword')->everyMinute()->timezone('Asia/Shanghai')->runInBackground(); //热搜处理
+        $schedule->command('demand_complete')->everyMinute()->timezone('Asia/Shanghai')->runInBackground(); //需求评价
+        $schedule->command('demand')->everyMinute()->timezone('Asia/Shanghai')->runInBackground(); //未支付需求
+        $schedule->command('demand_wait')->everyMinute()->timezone('Asia/Shanghai')->runInBackground(); //等待接单需求
     }
 
     /**

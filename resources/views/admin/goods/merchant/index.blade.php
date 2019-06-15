@@ -46,7 +46,6 @@
                 <th>商铺名称</th>
                 <th>商品类别</th>
                 <th>商铺编号</th>
-                <th>当日订单数</th>
                 <th>店铺总订单数</th>
                 <th>操作</th>
             </tr>
@@ -71,8 +70,7 @@
                         @endif
                     </td>
                     <td>{{ $item->code }}</td>
-                    <td>50</td>
-                    <td>100</td>
+                    <td>{{ $item->order->count() }}</td>
                     <td class="td-manage">
                         <a title="查看"
                            onclick="WeAdminShow('查看','{{ route('backstage.merchant.show', ['id' => $item->id]) }}')"

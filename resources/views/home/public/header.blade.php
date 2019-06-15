@@ -54,16 +54,16 @@
         <div class="fr">
             <ul class="clearfix rightNavList">
                 <li class="rightNavLi">
-                    <a href="">订单消息</a>
+                    <a href="{{ route('personal.havegoods', ['type' => 'allOrder']) }}">订单消息</a>
                 </li>
                 <li class="rightNavLi">
-                    <a href="">网页导航</a>
+                    <a href="{{ url('/') }}">网页导航</a>
                 </li>
                 <li class="rightNavLi">
                     <a href="">商家服务</a>
                 </li>
                 <li class="rightNavLi br-n">
-                    <a href="">客服</a>
+                    <a href="http://wpa.qq.com/msgrd?v=3&uin=1570915261&site=qq&menu=yes" target="_blank">客服</a>
                 </li>
                 <li class="fl shopCar">
                     <a href="{{ route('shopp.shopp.car') }}" class="relative">

@@ -1,5 +1,5 @@
 @extends('home.public.subject')
-@section('title', '阿朗博波-百录倩影-需求发布')
+@section('title', '阿朗博波-百录倩影-需求修改')
 @section('css')
     @parent
     <link rel="stylesheet" type="text/css" href="{{ asset('home/common/bootstrap.min.css') }}"><!--可无视-->
@@ -44,23 +44,23 @@
 @section('content')
     <div class="modal-body" style="width: 900px">
         <div class="changeContent">
-            <form class="form-horizontal" id="add_demand"
-                  method="post" action="{{ route('demand.store') }}">
+            <form class="form-horizontal" id="update_demand"
+                  method="post" action="{{ route('personal.demand.update', ['id' => $item->id]) }}">
                 @csrf
                 <div class="form-group">
                     <label class="col-sm-2 control-label">需求名称</label>
                     <div class="col-sm-10">
                         <input type="text" class="form-control"
                                name="title" placeholder="请输入需求名称"
-                               autocomplete="off" value="">
+                               autocomplete="off" value="{{ $item->title }}">
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="inputPassword" class="col-sm-2 control-label">需求表现形式</label>
                     <div class="col-sm-10 goods">
-                        <select class="form-control goods_cate" name="display">
+                        <select class="form-control" name="display">
                             @foreach(\App\Http\Models\home\demandModel::$_DISPLAY as $k =>$display)
-                                <option value="{{ $k }}"> {{ $display }}</option>
+                                <option value="{{ $k }}" {{ $item->display == $k ? 'selected' : '' }}> {{ $display }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -70,7 +70,7 @@
                     <div class="col-sm-10 goods">
                         <select class="form-control goods_cate" name="material">
                             @foreach(\App\Http\Models\home\demandModel::$_MATERIAL as $key =>$material)
-                                <option value="{{ $key }}"> {{ $material }}</option>
+                                <option value="{{ $key }}" {{ $item->material == $key ? 'selected' : '' }}> {{ $material }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -80,7 +80,7 @@
                     <div class="col-sm-10">
                         <input type="text" class="form-control"
                                name="other" placeholder="请输入其他要求, 如尺寸等"
-                               autocomplete="off" value="">
+                               autocomplete="off" value="{{ $item->other }}">
                     </div>
                 </div>
                 <div class="form-group">
@@ -88,7 +88,7 @@
                     <div class="input-group" style="width: 250px;margin-left: 165px;">
                         <input type="text" class="form-control"
                                name="time" placeholder="单位：天"
-                               value="">
+                               value="{{ $item->time }}">
                     </div>
                 </div>
                 <div class="form-group">
@@ -104,7 +104,7 @@
                         <input type="text" class="form-control"
                                name="cost" placeholder="单位：元"
                                onkeyup="this.value= this.value.match(/\d+(\.\d{0,2})?/) ? this.value.match(/\d+(\.\d{0,2})?/)[0] : ''"
-                               onblur="this.v();" autocomplete="off" value="">
+                               onblur="this.v();" autocomplete="off" value="{{ $item->cost_price }}">
                     </div>
                 </div>
                 <div class="form-group">
@@ -114,7 +114,7 @@
                         <input type="text" class="form-control"
                                name="satisfaction" placeholder="单位：元"
                                onkeyup="this.value= this.value.match(/\d+(\.\d{0,2})?/) ? this.value.match(/\d+(\.\d{0,2})?/)[0] : ''"
-                               onblur="this.v();" autocomplete="off" value="">
+                               onblur="this.v();" autocomplete="off" value="{{ $item->satisfaction_price }}">
                     </div>
                 </div>
                 <div class="form-group">
@@ -122,46 +122,36 @@
                     <div class="input-group" style="width: 250px;margin-left: 165px;">
                         <input type="text" class="form-control"
                                name="refund_timeout" placeholder="单位：天, 支付后多长时间无人接单进行退款。不可超过三十天"
-                               value="" onbeforepaste="clipboardData.setData('text',clipboardData.getData('text').replace(/[^\d]/g,''))"
+                               value="{{ $item->refund_timeout }}" onbeforepaste="clipboardData.setData('text',clipboardData.getData('text').replace(/[^\d]/g,''))"
                                onkeyup="value=value.replace(/[^\d.]/g,'')">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-2 control-label">描述</label>
                     <div class="col-sm-10">
-                        <textarea name="describe" id="" cols="30" rows="10"></textarea>
+                        <textarea name="describe" id="" cols="30" rows="10">{{ $item->describe }}</textarea>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-2 control-label">展示图</label>
                     <div class="col-sm-10">
-                        <img src="{{ asset('home/images/img/idImg.png') }}"
+                        <img src="{{ FileUpload::url('image', $item->img) }}"
                              class="img-rounded">
                         <input type="file" id="cover" accept="image/*">
-                        <input type="hidden" name="img" value="">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="inputPassword" class="col-sm-2 control-label">支付选择</label>
-                    <div class="col-sm-10 goods">
-                        <select class="form-control goods_cate" name="pay_method">
-                            @foreach(["Alipay" => "支付宝","WeChat" => "微信"] as $s =>$pay)
-                                <option value="{{ $s }}"> {{ $pay }}</option>
-                            @endforeach
-                        </select>
+                        <input type="hidden" name="img" value="{{ $item->img }}">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-2 control-label">详情</label>
                     <div class="col-sm-10">
                         <script id="ue-container" name="content"  type="text/plain">
-
+                            {!! $item->content !!}
                         </script>
                     </div>
                 </div>
             </form>
             <div class="form-group" style="text-align: right;margin-top: 20px;">
-                <button type="button" class="btn btn-primary add">确认修改</button>
+                <button type="button" class="btn btn-primary update">确认修改</button>
             </div>
         </div>
     </div>
@@ -190,14 +180,15 @@
         laydate.render({
             elem: '#test1' //指定元素
         });
-        $('.add').click(function () {
-            if ($('.layui-layer-msg').length) {
-                return;
-            }
-            $("#add_demand").ajaxSubmit({
+        $('.update').click(function () {
+            $("#update_demand").ajaxSubmit({
                 success: function (res) {
-                    $('body').append(res);
-                    $("form").attr("target", "_blank");
+                    layer.msg(res.info);
+                    setTimeout(function () {
+                        var index = parent.layer.getFrameIndex(window.name); //获取窗口索引
+                        parent.layer.close(index);
+                        parent.location.reload();
+                    }, 500)
                 },
                 error: function (XMLHttpRequest, textStatus, errorThrown) {
                     //返回提示信息

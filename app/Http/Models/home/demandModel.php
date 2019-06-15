@@ -7,10 +7,19 @@
  */
 namespace App\Http\Models\home;
 
+use App\Http\Models\currency\UserModel;
 use Illuminate\Database\Eloquent\Model;
 
 class demandModel extends Model
 {
+    public function user()
+    {
+        return $this->hasOne(UserModel::class, 'id', 'uid');
+    }
+    public function guser()
+    {
+        return $this->hasOne(UserModel::class, 'id', 'gid');
+    }
     /*需求表*/
     protected $table = 'demand';
     protected $guarded = ['id'];
@@ -68,7 +77,29 @@ class demandModel extends Model
     public function scopeSearchTitle($query, $search)
     {
         if(!empty($search)) {
-            return $this->where('title', 'like', "%{$search}%");
+            return $query->where('title', 'like', "%{$search}%");
         }
+    }
+
+    public function scopeSearchAccount($query, $search)
+    {
+        if(!empty($search)) {
+            $user_ids = UserModel::where('account', 'like', "%{$search}%")->get()->pluck('id')->toArray();
+            return $query->whereIn('uid', $user_ids);
+        }
+    }
+    public function getCostPriceAttribute()
+    {
+        return bcdiv($this->cost, 100, 2);
+    }
+
+    public function getSatisfactionPriceAttribute()
+    {
+        return bcdiv($this->satisfaction, 100, 2);
+    }
+
+    public function getPoundagePriceAttribute()
+    {
+        return bcdiv($this->poundage, 100, 2);
     }
 }
