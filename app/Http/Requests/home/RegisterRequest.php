@@ -25,7 +25,7 @@ class RegisterRequest extends FormRequest
     {
         return [
             'account' => 'required',
-            'password' => 'required|digits_between:6,12',
+            'password' => 'required',
             'category' => 'required|numeric',
             'name' => 'required',
             'id' => ['required', function($attribute, $value, $fail) {
@@ -48,7 +48,6 @@ class RegisterRequest extends FormRequest
         return [
             'account.required' => '账号不可为空',
             'password.required' => '密码不可为空',
-            'password.digits_between' => '密码长度为6-12字符',
             'category.required' => '请选择分类',
             'category.numeric' => '账户类型错误',
             'name.required' => '姓名不可为空',
