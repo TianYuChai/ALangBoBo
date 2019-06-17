@@ -673,7 +673,7 @@
                         if(!whether) {
                             $('#face').show();
                             $('#canvas').hide();
-                            layer.msg('人脸识别失败');return false;
+                            layer.msg('人脸识别失败, 请进行重新识别！');return false;
                         }
                     }
                 },
