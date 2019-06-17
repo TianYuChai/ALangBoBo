@@ -12,7 +12,7 @@
     <div class="container">
         <div class="">
             <div class="clearfix productList">
-                <p class="fl titleLeft">全部商品 <span>29</span></p>
+                <p class="fl titleLeft">全部商品 <span></span></p>
             </div>
             <div class="tableList mgt-20 mgb-300">
                 <table width="100%" border="0" cellspacing="0" cellpadding="0" id="shopping">
