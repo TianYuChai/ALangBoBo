@@ -615,7 +615,21 @@
                 }
             }
             //获得video摄像头区域
-            var promise = navigator.mediaDevices.getUserMedia(constraints);
+            // var promise = navigator.mediaDevices.getUserMedia(constraints);
+            //获得video摄像头区域
+            if(navigator.mediaDevices.getUserMedia){
+                //最新标准API
+                var promise = navigator.mediaDevices.getUserMedia(constraints);
+            } else if (navigator.webkitGetUserMedia){
+                //webkit内核浏览器
+                var promise = navigator.webkitGetUserMedia(constraints);
+            } else if (navigator.mozGetUserMedia){
+                //Firefox浏览器
+                var promise = navagator.mozGetUserMedia(constraints);
+            } else if (navigator.getUserMedia){
+                //旧版API
+                var promise = navigator.getUserMedia(constraints);
+            }
             promise.then(function (MediaStream) {
                 layer.alert('请对准摄像头, 五秒后自动拍照', {icon: 6}, function (index) {
                     layer.close(index);
