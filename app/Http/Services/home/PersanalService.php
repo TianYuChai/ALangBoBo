@@ -10,8 +10,8 @@ namespace App\Http\Services\home;
 use App\Http\Models\currency\CapitalModel;
 use App\Http\Models\home\personal\AddressModel;
 use Illuminate\Support\Facades\Auth;
-use Redis;
 use Exception;
+use Illuminate\Support\Facades\Redis;
 
 class PersanalService extends BaseService
 {
