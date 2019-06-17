@@ -116,8 +116,8 @@
                             <input type="hidden" name="fan" value="{{ isset($item) ? $item->card_opposite : "" }}">
                         </div>
                     </div>
-                    <div class="form-group" {{ isset($item) ? $item->category == 2 ? "hidden" : "" : "" }}>
-                        <label for="inputPassword" class="col-sm-2 control-label credit_code">统一社会信用代码</label>
+                    <div class="form-group credit_code" {{ isset($item) ? $item->category == 2 ? "hidden" : "" : "" }}>
+                        <label for="inputPassword" class="col-sm-2 control-label">统一社会信用代码</label>
                         <div class="col-sm-10">
                             <input type="text"
                                    class="form-control"
