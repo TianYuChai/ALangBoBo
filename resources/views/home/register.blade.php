@@ -144,7 +144,7 @@
                         </div>
                         <div class="idImgDiv mgt-30 relative faceCheckDiv">
                             <p class="inline-block mgr-20">人脸识别</p>
-                            <img src="{{ asset('home/images/img/idImg.png') }}" alt="" class="personalImg" id="face"/>
+                            <img src="{{ asset('home/images/img/idImg.png') }}" alt="" class="personalImg face" id="face"/>
                             {{--<input type="file" class="file" id="renlian" name="renlian">--}}
                         </div>
                         <div class="nameDiv relative mgt-30">
@@ -233,17 +233,17 @@
                         </div>
                         <div class="idImgDiv mgt-30 relative faceCheckDiv">
                             <p class="inline-block mgr-20">人脸识别</p>
-                            <img src="{{ asset('home/images/img/idImg.png') }}" alt="" class="personalImg" id="face"/>
+                            <img src="{{ asset('home/images/img/idImg.png') }}" alt="" class="personalImg face" id="face"/>
                             {{--<input type="file" class="file" id="renlian2" name="renlian">--}}
                         </div>
                         <div class="nameDiv relative mgt-30">
                             店名
                             <input type="text" placeholder="请输入店名" class="shopName" id="shopName2" name="shopName" autocomplete="off">
                         </div>
-                        <div class="idDiv mgt-30 relative">
-                            统一社会信用代码
-                            <input type="text" placeholder="请输入统一社会信用代码" class="shehuiDaima" id="shehuiDaima2" name="shehuiDaima" autocomplete="off">
-                        </div>
+                        {{--<div class="idDiv mgt-30 relative">--}}
+                            {{--统一社会信用代码--}}
+                            {{--<input type="text" placeholder="请输入统一社会信用代码" class="shehuiDaima" id="shehuiDaima2" name="shehuiDaima" autocomplete="off">--}}
+                        {{--</div>--}}
                         <div class="idImgDiv mgt-30 relative faceCheckDiv">
                             <p class="inline-block mgr-20">个人证件或作品上传</p>
                             <img src="{{ asset('home/images/img/idImg.png') }}" alt="" class="personalImg"/>
@@ -588,7 +588,7 @@
             return notEmpty;
         }
         /*调用摄像头*/
-        $('#face').click(function () {
+        $('.face').click(function () {
             var that = $(this);
             if($('input[name="zheng"]').val() == '') {
                 layer.msg('请先上传身份证');return false;
