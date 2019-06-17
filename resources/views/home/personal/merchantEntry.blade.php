@@ -434,6 +434,23 @@
                 video: {width: 500, height: 500},
                 audio: false
             };
+            if (navigator.mediaDevices === undefined) {
+                navigator.mediaDevices = {};
+            }
+            if (navigator.mediaDevices.getUserMedia === undefined) {
+                navigator.mediaDevices.getUserMedia = function(constraints) {
+                    // 首先，如果有getUserMedia的话，就获得它
+                    var getUserMedia = navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
+                    // 一些浏览器根本没实现它 - 那么就返回一个error到promise的reject来保持一个统一的接口
+                    if (!getUserMedia) {
+                        return Promise.reject(new Error('getUserMedia is not implemented in this browser'));
+                    }
+                    // 否则，为老的navigator.getUserMedia方法包裹一个Promise
+                    return new Promise(function(resolve, reject) {
+                        getUserMedia.call(navigator, constraints, resolve, reject);
+                    });
+                }
+            }
             //获得video摄像头区域
             var promise = navigator.mediaDevices.getUserMedia(constraints);
             promise.then(function (MediaStream) {
@@ -443,8 +460,18 @@
                     that.after('<video id="video" width="500" height="300" autoplay></video>' +
                         '<canvas id="canvas" width="450" height="250"></canvas>');
                     var video = document.getElementById("video");
-                    video.srcObject = MediaStream;
-                    video.play();
+                    // 旧的浏览器可能没有srcObject
+                    if ("srcObject" in video) {
+                        video.srcObject = MediaStream;
+                    } else {
+                        // 防止在新的浏览器里使用它，它已经不再支持了
+                        video.src = window.URL.createObjectURL(MediaStream);
+                    }
+                    video.onloadedmetadata = function(e) {
+                        video.play();
+                    };
+                    // video.srcObject = MediaStream;
+                    // video.play();
                     setTimeout(function () {
                         takePhoto();
                     }, 5000)
