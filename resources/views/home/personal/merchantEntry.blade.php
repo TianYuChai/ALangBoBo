@@ -510,7 +510,7 @@
                         if(!whether) {
                             $('#face').show();
                             $('#canvas').hide();
-                            layer.msg('请上传正确且清晰的图片');return false;
+                            layer.msg('人脸识别失败, 请进行重新识别！');return false;
                         }
                     }
                 },
