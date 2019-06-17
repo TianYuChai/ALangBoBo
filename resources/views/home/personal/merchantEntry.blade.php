@@ -92,15 +92,6 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="inputPassword" class="col-sm-2 control-label">统一社会信用代码</label>
-                        <div class="col-sm-10">
-                            <input type="text"
-                                   class="form-control"
-                                   value="{{ isset($item) ? $item->credit_code : "" }}"
-                                   placeholder="请输入统一社会信用代码" id="shehuiDaima" name="shehuiDaima" autocomplete="off">
-                        </div>
-                    </div>
-                    <div class="form-group">
                         <label for="inputPassword" class="col-sm-2 control-label">入驻类别</label>
                         <div class="col-sm-10">
                             <select class="form-control" name="category" id="category">
@@ -123,6 +114,15 @@
                              : asset('home/images/img/idImg.png') }}" class="img-rounded">
                             <input type="file" class="file" accept="image/*" data-id="fan">
                             <input type="hidden" name="fan" value="{{ isset($item) ? $item->card_opposite : "" }}">
+                        </div>
+                    </div>
+                    <div class="form-group" {{ isset($item) ? $item->category == 2 ? "hidden" : "" : "" }}>
+                        <label for="inputPassword" class="col-sm-2 control-label credit_code">统一社会信用代码</label>
+                        <div class="col-sm-10">
+                            <input type="text"
+                                   class="form-control"
+                                   value="{{ isset($item) ? $item->credit_code : "" }}"
+                                   placeholder="请输入统一社会信用代码" id="shehuiDaima" name="shehuiDaima" autocomplete="off">
                         </div>
                     </div>
                     <div class="form-group">
@@ -423,6 +423,7 @@
              category = val;
              $('.personals').toggle();
              $('.enterprise').toggle();
+             $('.credit_code').toggle();
         });
         /*调用摄像头*/
         $('#face').click(function () {
