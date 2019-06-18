@@ -102,13 +102,10 @@ class RegisterService extends BaseService
         ];
         switch ($category) {
             case 1:
-                $result;
-            break;
-            case 2:
                 $res = $this->verifiEnter($data);
                 $result['merchant'] = $res;
             break;
-            case 3:
+            case 2:
                 $res = $this->verifiPersonal($data);
                 $result['merchant'] = $res;
             break;
@@ -162,7 +159,6 @@ class RegisterService extends BaseService
         if(!FileUpload::exists('image', $data['zuopin'])) {
             throw new Exception('个人证件或作品图错误, 请重新上传');
         }
-        dd($result);
         $result['personal'] = $data['zuopin'];
         $result['category'] = 2;
         return $result;
