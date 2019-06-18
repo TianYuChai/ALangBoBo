@@ -186,7 +186,7 @@ class RegisterService extends BaseService
             'card_positive' => $data['zheng'],
             'card_opposite' => $data['fan'],
             'shop_name' => trim($data['shopName']),
-            'credit_code' => trim($data['shehuiDaima'])
+            'credit_code' => isset($data['shehuiDaima']) ? trim($data['shehuiDaima']) : ''
         ];
     }
 }
