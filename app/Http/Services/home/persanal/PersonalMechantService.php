@@ -51,7 +51,7 @@ class PersonalMechantService extends BaseService
             break;
         }
         $result['shop_name'] = trim($data['shopName']);
-        $result['credit_code'] = trim($data['shehuiDaima']);
+        $result['credit_code'] = isset($data['shehuiDaima']) ? trim($data['shehuiDaima']) : '';
         $result['category'] = $category;
         $result['status'] = 0;
         $result['uid'] = $this->userId;
@@ -138,7 +138,7 @@ class PersonalMechantService extends BaseService
             'card_positive' => $data['zheng'],
             'card_opposite' => $data['fan'],
             'shop_name' => trim($data['shopName']),
-            'credit_code' => trim($data['shehuiDaima'])
+            'credit_code' => isset($data['shehuiDaima']) ? trim($data['shehuiDaima']) : ''
         ];
     }
 }

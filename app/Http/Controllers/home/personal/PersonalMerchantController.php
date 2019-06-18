@@ -58,8 +58,8 @@ class PersonalMerchantController extends BaseController
     {
        try {
             $code = trim($request->verifyCode);
-            $loginService->vefiShort($this->mobile, $code);
-            $data = $service->start($request);
+           $data = $service->start($request);
+           $loginService->vefiShort($this->mobile, $code);
             $service->create($data);
             return $this->ajaxReturn();
        } catch (Exception $e) {
