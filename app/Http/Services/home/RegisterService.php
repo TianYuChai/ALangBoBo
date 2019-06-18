@@ -162,6 +162,7 @@ class RegisterService extends BaseService
         if(!FileUpload::exists('image', $data['zuopin'])) {
             throw new Exception('个人证件或作品图错误, 请重新上传');
         }
+        dd($result);
         $result['personal'] = $data['zuopin'];
         $result['category'] = 2;
         return $result;
