@@ -35,9 +35,9 @@ class RegisterService extends BaseService
     {
         $mobile = $data['mobile'];
         $verifyCode = intval($data['verifyCode']);
-        $this->verifyCode($mobile, $verifyCode);
         $category = intval(trim($data['category']));
         $res = $this->categoryHandleData($category, $data->toArray());
+        $this->verifyCode($mobile, $verifyCode);
         return $res;
     }
 
