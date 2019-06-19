@@ -42,7 +42,6 @@ class LoginService extends BaseService
             throw new Exception('账号密码错误', 510);
         }
         $user = auth()->guard('web')->user();
-        dd($user->status != 1);
         if($user->status != 1) {
             switch ($user->status) {
                 case 0:
@@ -51,8 +50,8 @@ class LoginService extends BaseService
                     } else {
                         throw new Exception('申请已驳回, 驳回理由:' +
                             $user->registerauditing['reject'] + ', 本站同时已清除该账户注册信息, 请重新进行注册提交', 401);
-                        $this->removeAccount($user->id);
-                        UserModel::destroy($user->id);
+//                        $this->removeAccount($user->id);
+//                        UserModel::destroy($user->id);
                     }
                     break;
                 case 2:
