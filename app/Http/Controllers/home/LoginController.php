@@ -7,6 +7,8 @@
  */
 namespace App\Http\Controllers\home;
 
+ini_set("error_reporting","E_ALL & ~E_NOTICE");
+
 use App\Http\Models\currency\UserModel;
 use App\Http\Services\home\LoginService;
 use Illuminate\Http\Request;
