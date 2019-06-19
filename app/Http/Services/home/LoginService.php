@@ -41,8 +41,8 @@ class LoginService extends BaseService
         if(!$item) {
             throw new Exception('账号密码错误', 510);
         }
-        dd(auth()->guard('web')->user());
         $user = auth()->guard('web')->user();
+        dd($user);
         if($user->status != 1) {
             switch ($user->status) {
                 case 0:
