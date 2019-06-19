@@ -38,6 +38,9 @@ class LoginController extends BaseController
             ], 200);
         } catch (Exception $e) {
             auth()->guard('web')->logout();
+            Log::info('登陆日志', [
+                'info' => $e->getMessage()
+            ]);
             return $this->ajaxReturn([
                 'info' => $e->getMessage(),
                 'status' => $e->getCode() == 0 ? 500 : $e->getCode()
