@@ -12,6 +12,7 @@ use App\Http\Services\home\LoginService;
 use Illuminate\Http\Request;
 use Exception;
 use Illuminate\Support\Facades\Auth;
+use Log;
 
 class LoginController extends BaseController
 {
@@ -38,6 +39,10 @@ class LoginController extends BaseController
             ], 200);
         } catch (Exception $e) {
             auth()->guard('web')->logout();
+            Log::info('登陆日志:', [
+                'status' => $e->getCode(),
+                'info' => $e->getMessage()
+            ]);
             return $this->ajaxReturn([
                 'info' => $e->getMessage(),
                 'status' => $e->getCode()
