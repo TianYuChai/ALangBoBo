@@ -15,7 +15,7 @@
             <ul class="hotSearchList clearfix">
                 <?php $redis = \Illuminate\Support\Facades\Redis::get('keywords') ?>
                 @if($redis)
-                    @foreach(json_decode($redis) as $key => $item)
+                    @foreach(json_decode($redis, true) as $key => $item)
                         @if($key <= 5)
                             <li>
                                 <a href="{{ url('product', ['type' =>'search-all']) }}?keyword={{ $item['name'] }}"
