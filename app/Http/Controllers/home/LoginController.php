@@ -33,7 +33,7 @@ class LoginController extends BaseController
         try{
             $loginService->dataFiltering($request);
             return $this->ajaxReturn([
-                'url' => !empty(session('url.intended')) ? session('url.intended') : route('personal.index'),
+                'url' => route('personal.index'),
                 'status' => 200
             ], 200);
         } catch (Exception $e) {
