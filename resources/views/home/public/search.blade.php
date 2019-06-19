@@ -13,8 +13,8 @@
         </form>
         <div class="hotSearch">
             <ul class="hotSearchList clearfix">
-                @if(\Illuminate\Support\Facades\Redis::get('keywords'))
-                    <?php $redis = \Illuminate\Support\Facades\Redis::get('keywords') ?>
+                <?php $redis = \Illuminate\Support\Facades\Redis::get('keywords') ?>
+                @if($redis)
                     @foreach(json_decode($redis) as $key => $item)
                         @if($key <= 5)
                             <li>
