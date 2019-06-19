@@ -45,7 +45,7 @@ class LoginService extends BaseService
         if($user->status != 1) {
             switch ($user->status) {
                 case 0:
-                    dd($user->registerauditing);
+                    dd(is_null($user->registerauditing));
                     if(is_null($user->registerauditing)) {
                         throw new Exception('账号正在审核中, 请耐心等候', 401);
                     } else {
