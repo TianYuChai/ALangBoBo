@@ -45,10 +45,10 @@ class LoginService extends BaseService
         if($user->status != 1) {
             switch ($user->status) {
                 case 0:
-                    dd(is_null($user->registerauditing));
                     if(is_null($user->registerauditing)) {
                         throw new Exception('账号正在审核中, 请耐心等候', 401);
                     } else {
+                        dd($user->registerauditing);
                         throw new Exception('申请已驳回, 驳回理由:' +
                             $user->registerauditing['reject'] + ', 本站同时已清除该账户注册信息, 请重新进行注册提交', 401);
 //                        $this->removeAccount($user->id);
