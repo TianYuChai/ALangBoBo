@@ -12,7 +12,6 @@ use App\Http\Services\home\LoginService;
 use Illuminate\Http\Request;
 use Exception;
 use Illuminate\Support\Facades\Auth;
-use Log;
 
 class LoginController extends BaseController
 {
@@ -34,19 +33,15 @@ class LoginController extends BaseController
         try{
             $loginService->dataFiltering($request);
             return $this->ajaxReturn([
-                'url' => route('personal.index'),
+                'url' => !empty(session('url.intended')) ? session('url.intended') : route('personal.index'),
                 'status' => 200
             ], 200);
         } catch (Exception $e) {
             auth()->guard('web')->logout();
-            Log::info('登陆日志:', [
-                'status' => $e->getCode(),
-                'info' => $e->getMessage()
-            ]);
             return $this->ajaxReturn([
                 'info' => $e->getMessage(),
-                'status' => $e->getCode()
-            ], $e->getCode());
+                'status' => $e->getCode() == 0 ? 500 : $e->getCode()
+            ], $e->getCode() == 0 ? 500 : $e->getCode());
         }
     }
 
