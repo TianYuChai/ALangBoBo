@@ -338,7 +338,7 @@
                                     htm = '<p>注册完成! 您的用户名：</p><span>'+res.data['account']+'</span>，您已成为了本站的正式会员！' +
                                         '<p><span class="down">5</span>秒钟后自动跳转到首页！</p><p>马上进入 <a href="">个人中心</a> <a href="">返回网站首页</a></p>'
                                 } else {
-                                    htm = '<p>注册完成, 请耐心等待审核！审核周期：1-2小时</p><p><span class="down">5</span>秒钟后自动跳转到首页！</p>';
+                                    htm = '<p>注册完成, 请耐心等待审核！审核周期：1-2小时, 之后请通过登陆查询审核结果。</p><p><span class="down">5</span>秒钟后自动跳转到首页！</p>';
                                 }
                                 $('.registerOverRight').append(htm);
                                 down();
@@ -375,6 +375,9 @@
                             }
                             if(val['value'].length < 6 || val['value'].length > 12) {
                                 layer.msg('密码长度需为6-12个字符');return false;
+                            }
+                            if(!/([a-zA-Z]+[0-9]+|[0-9]+[a-zA-Z])/.test(val['value'])) {
+                                layer.msg('密码安全程度过低');return false;
                             }
                         }
                         if(val['name'] == 'category') {
@@ -685,7 +688,7 @@
                         whether = res.info;
                         console.log('人脸识别2: ' + whether);
                         if(!whether) {
-                            $('#face').show();
+                            $('.face').show();
                             $('#canvas').hide();
                             layer.msg('人脸识别失败, 请进行重新识别！');return false;
                         }

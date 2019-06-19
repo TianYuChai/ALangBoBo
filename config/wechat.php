@@ -8,10 +8,10 @@
 return [
     'pay' => [
         'appid' => 'wxb3fxxxxxxxxxxx', // APP APPID
-        'app_id' => 'wxb3fxxxxxxxxxxx', // 公众号 APPID
+        'app_id' => 'ww524a9783d531ec19', // 公众号 APPID
         'miniapp_id' => 'wxb3fxxxxxxxxxxx', // 小程序 APPID
         'mch_id' => '1540573951',
-        'key' => 'mF2suE9sU6Mk1Cxxxxxxxxxxx',
+        'key' => 'lDNgQmbm9WetFyQdSU4ua0vnr3gl9OQa',
         'notify_url' => '',
         'cert_client' => './cert/apiclient_cert.pem', // optional，退款等情况时用到
         'cert_key' => './cert/apiclient_key.pem',// optional，退款等情况时用到

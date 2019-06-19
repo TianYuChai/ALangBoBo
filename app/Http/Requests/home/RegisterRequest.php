@@ -25,7 +25,11 @@ class RegisterRequest extends FormRequest
     {
         return [
             'account' => 'required',
-            'password' => 'required',
+            'password' => ['required', function($attribute, $value, $fail) {
+                if(!preg_match("/^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,12}$/", $value)) {
+                    return $fail('密码安全程度过低');
+                }
+            }],
             'category' => 'required|numeric',
             'name' => 'required',
             'id' => ['required', function($attribute, $value, $fail) {
