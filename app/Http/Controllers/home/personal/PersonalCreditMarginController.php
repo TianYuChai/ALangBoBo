@@ -56,6 +56,13 @@ class PersonalCreditMarginController extends BaseController
         return view(self::ROUTE . 'creditMargin', compact('data'));
     }
 
+    /**
+     * 支付
+     *
+     * @param Request $request
+     * @param AlipayService $alipayService
+     * @return \Illuminate\Http\JsonResponse|\Symfony\Component\HttpFoundation\Response
+     */
     public function pay(Request $request, AlipayService $alipayService)
     {
         try {
