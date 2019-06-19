@@ -49,8 +49,8 @@ class LoginService extends BaseService
                         throw new Exception('账号正在审核中, 请耐心等候', 401);
                     } else {
                         throw new Exception('申请已驳回, 驳回理由:'.$user->registerauditing['reject'].', 本站同时已清除该账户注册信息, 请重新进行注册提交', 401);
-//                        $this->removeAccount($user->id);
-//                        UserModel::destroy($user->id);
+                        $this->removeAccount($user->id);
+                        UserModel::destroy($user->id);
                     }
                     break;
                 case 2:
