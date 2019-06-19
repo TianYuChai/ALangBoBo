@@ -43,9 +43,9 @@ class LoginService extends BaseService
         }
         $user = auth()->guard('web')->user();
         if($user->status != 1) {
-            dd($user->status);
             switch ($user->status) {
                 case 0:
+                    dd($user->registerauditing);
                     if(is_null($user->registerauditing)) {
                         throw new Exception('账号正在审核中, 请耐心等候', 401);
                     } else {
