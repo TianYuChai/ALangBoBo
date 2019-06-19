@@ -12,6 +12,7 @@ use App\Http\Services\home\LoginService;
 use Illuminate\Http\Request;
 use Exception;
 use Illuminate\Support\Facades\Auth;
+use Log;
 
 class LoginController extends BaseController
 {
