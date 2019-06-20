@@ -11,6 +11,8 @@ use App\Http\Controllers\home\BaseController;
 use App\Http\Models\currency\CapitalModel;
 use App\Http\Models\setup\SettledModel;
 use App\Http\Services\home\AlipayService;
+use App\Http\Services\home\WechatService;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -63,7 +65,7 @@ class PersonalCreditMarginController extends BaseController
      * @param AlipayService $alipayService
      * @return \Illuminate\Http\JsonResponse|\Symfony\Component\HttpFoundation\Response
      */
-    public function pay(Request $request, AlipayService $alipayService)
+    public function pay(Request $request, AlipayService $alipayService, WechatService $wechatService)
     {
         try {
             $money = trim($request->money);
@@ -83,7 +85,7 @@ class PersonalCreditMarginController extends BaseController
             if($method == 'Alipay') {
                 $result = $alipayService->entrance($money);
             } else if($method == 'WeChat'){
-
+                $result = QrCode::size(150)->generate($wechatService->entrance($money));
             } else {
                 throw new Exception('类别错误');
             }
@@ -108,6 +110,25 @@ class PersonalCreditMarginController extends BaseController
             $result = $alipayService->notify();
         } catch (Exception $e) {
             Log::info('支付宝异步回调错误:' . $e->getMessage());
+        }
+        return $result;
+    }
+
+    /**
+     * 微信回调
+     *
+     * @param WechatService $wechatService
+     * @return mixed
+     */
+    public function wxnotify(WechatService $wechatService)
+    {
+        try {
+            $result = $wechatService->notify();
+        } catch (Exception $e) {
+            Log::info('微信异步回调错误:', [
+                'time' => getTime(),
+                'info' => $e->getMessage()
+            ]);
         }
         return $result;
     }

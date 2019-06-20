@@ -159,7 +159,7 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
-
+        SimpleSoftwareIO\QrCode\QrCodeServiceProvider::class
     ],
 
     /*
@@ -210,6 +210,7 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         'FileUpload' => FileUpload::class,
         'Input' => \Illuminate\Support\Facades\Input::class,
+        'QrCode' => SimpleSoftwareIO\QrCode\Facades\QrCode::class
     ],
 
 ];

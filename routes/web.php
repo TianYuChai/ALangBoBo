@@ -22,13 +22,14 @@ Route::post('delfile', ['as' => 'file.del', 'uses' => 'FileController@del']);
 Route::post('shortMessage', ['as' => 'index.shortMessage', 'uses' => 'shortMessageController@index'])->middleware('throttle:1,3');//
 //人脸识别
 Route::post('faceRecognition', ['as' => 'index.face', 'uses' => 'faceRecognitionController@index']);
-//支付宝回调地址
+//回调地址
 Route::group(['namespace' => 'home'], function () {
     Route::post('notify', ['as' => 'index.alipay.notify', 'uses' => 'personal\PersonalCreditMarginController@notify']);
     Route::post('busin/notify', ['as' => 'index.busin.notify', 'uses' => 'personal\PesonalBusinResidFeeController@notify']);
     Route::post('order/notify', ['as' => 'index.order.notify', 'uses' => 'shoppingController@notify']);
     Route::post('subscribed/order/notify', ['as' => 'index.subscribed.notify', 'uses' => 'personal\PersonalHaveGoodsController@notify']);
     Route::post('demand/alinotify', ['as' => 'index.demand.alinotify', 'uses' => 'demandController@aliNotify']);
+    ROUTE::post('wxnotify', ['as' => 'index.wx.notify', 'uses' => 'personal\PersonalCreditMarginController@wxnotify']);
 });
 /**
  * 前台管理路由设置

@@ -1,0 +1,180 @@
+2019-06-20 11:19:43 > yansongda.pay.INFO > Wechat PreOrder Method Has Called ["",{"appid":"ww524a9783d531ec19","mch_id":"1540573951","nonce_str":"40WggMCTET4W4OBW","spbill_create_ip":"127.0.0.1","out_trade_no":1561000782,"body":"subject-测试","total_fee":"0.01","trade_type":"JSAPI","sign":"0D13F466149FD524D4C036FD7ACD6351"}] 
+
+2019-06-20 11:20:02 > yansongda.pay.INFO > Wechat PreOrder Method Has Called ["",{"appid":"ww524a9783d531ec19","mch_id":"1540573951","nonce_str":"MBOKurQ4GYvVL1rO","spbill_create_ip":"127.0.0.1","out_trade_no":1561000802,"body":"subject-测试","total_fee":"0.1","trade_type":"JSAPI","sign":"1D183B7A22BAA434E9DB5DEB5849955F"}] 
+
+2019-06-20 11:20:29 > yansongda.pay.INFO > Wechat PreOrder Method Has Called ["",{"appid":"ww524a9783d531ec19","mch_id":"1540573951","nonce_str":"FxCW1K4czQO28JRO","spbill_create_ip":"127.0.0.1","out_trade_no":1561000829,"body":"subject-测试","total_fee":"100","trade_type":"JSAPI","sign":"0332D25BBFD432D9C6E8D8FA8DFC23B4"}] 
+
+2019-06-20 11:41:46 > yansongda.pay.INFO > Wechat PreOrder Method Has Called ["",{"appid":"ww524a9783d531ec19","mch_id":"1540573951","nonce_str":"USEpxeEMJfJm5cF7","notify_url":"http://www.456.com:8050/notify","spbill_create_ip":"127.0.0.1","out_trade_no":"2019062002106724158484","total_amount":"1","subject":"阿郎博波商务中心","body":"保证金充值","trade_type":"JSAPI","sign":"CB9BB90A7662B3237CC7C362B495B6EE"}] 
+
+2019-06-20 11:44:59 > yansongda.pay.INFO > Wechat PreOrder Method Has Called ["",{"appid":"ww524a9783d531ec19","mch_id":"1540573951","nonce_str":"9LtHM4YT0v9lojXA","notify_url":"http://www.456.com:8050/notify","trade_type":"JSAPI","spbill_create_ip":"127.0.0.1","out_trade_no":"2019062002299357758190","total_amount":"1","subject":"阿郎博波商务中心","body":"保证金充值","sign":"41F567C6F88CCC10485393B3C2F87BA2"}] 
+
+2019-06-20 11:45:29 > yansongda.pay.INFO > Wechat PreOrder Method Has Called ["",{"appid":"ww524a9783d531ec19","mch_id":"1540573951","nonce_str":"PdeRztbPQyoLRYQd","notify_url":"http://www.456.com:8050/notify","spbill_create_ip":"127.0.0.1","out_trade_no":"2019062002329402293044","total_fee":"1","body":"保证金充值","trade_type":"JSAPI","sign":"04D53A4E9EFCE4CD4F5FBF8DCB9E2958"}] 
+
+2019-06-20 11:46:07 > yansongda.pay.INFO > Wechat Scan Has Started ["https://api.mch.weixin.qq.com/",{"appid":"ww524a9783d531ec19","mch_id":"1540573951","nonce_str":"sdOs3kBzbLYk3YnB","notify_url":"http://www.456.com:8050/notify","spbill_create_ip":"127.0.0.1","out_trade_no":"2019062002367057644802","total_fee":"1","body":"保证金充值","trade_type":"NATIVE"}] 
+
+2019-06-20 11:46:07 > yansongda.pay.INFO > Wechat PreOrder Method Has Called ["",{"appid":"ww524a9783d531ec19","mch_id":"1540573951","nonce_str":"sdOs3kBzbLYk3YnB","notify_url":"http://www.456.com:8050/notify","spbill_create_ip":"127.0.0.1","out_trade_no":"2019062002367057644802","total_fee":"1","body":"保证金充值","trade_type":"NATIVE","sign":"A8F08C8D0E9BB904B86A48097FBFA7F1"}] 
+
+2019-06-20 15:14:26 > yansongda.pay.INFO > Wechat Scan Has Started ["https://api.mch.weixin.qq.com/",{"appid":"ww524a9783d531ec19","mch_id":"1540573951","nonce_str":"KZpXVBTMkIC2aCqg","notify_url":"http://www.456.com:8050/wxnotify","spbill_create_ip":"127.0.0.1","out_trade_no":"2019062014866028214971","total_fee":"1","body":"保证金充值","trade_type":"NATIVE"}] 
+
+2019-06-20 15:14:26 > yansongda.pay.INFO > Wechat PreOrder Method Has Called ["",{"appid":"ww524a9783d531ec19","mch_id":"1540573951","nonce_str":"KZpXVBTMkIC2aCqg","notify_url":"http://www.456.com:8050/wxnotify","spbill_create_ip":"127.0.0.1","out_trade_no":"2019062014866028214971","total_fee":"1","body":"保证金充值","trade_type":"NATIVE","sign":"840A0CFAC4AD907FA8E7C4BAD37244F0"}] 
+
+2019-06-20 15:59:02 > yansongda.pay.INFO > Wechat Scan Has Started ["https://api.mch.weixin.qq.com/",{"appid":"ww524a9783d531ec19","mch_id":"1540573951","nonce_str":"fQYELDKplOkLfVcy","notify_url":"http://www.456.com:8050/wxnotify","spbill_create_ip":"127.0.0.1","out_trade_no":"2019062017542353534023","total_fee":"1","body":"保证金充值","trade_type":"NATIVE"}] 
+
+2019-06-20 15:59:02 > yansongda.pay.INFO > Wechat PreOrder Method Has Called ["",{"appid":"ww524a9783d531ec19","mch_id":"1540573951","nonce_str":"fQYELDKplOkLfVcy","notify_url":"http://www.456.com:8050/wxnotify","spbill_create_ip":"127.0.0.1","out_trade_no":"2019062017542353534023","total_fee":"1","body":"保证金充值","trade_type":"NATIVE","sign":"4E19D9F20A5CA48C240828300EDE5336"}] 
+
+2019-06-20 16:07:41 > yansongda.pay.INFO > Wechat Scan Has Started ["https://api.mch.weixin.qq.com/",{"appid":"ww524a9783d531ec19","mch_id":"1540573951","nonce_str":"3yeRY6HwN6gEK8jz","notify_url":"http://www.456.com:8050/wxnotify","spbill_create_ip":"127.0.0.1","out_trade_no":"2019062018061633598569","total_fee":"1","body":"保证金充值","trade_type":"NATIVE"}] 
+
+2019-06-20 16:07:41 > yansongda.pay.INFO > Wechat PreOrder Method Has Called ["",{"appid":"ww524a9783d531ec19","mch_id":"1540573951","nonce_str":"3yeRY6HwN6gEK8jz","notify_url":"http://www.456.com:8050/wxnotify","spbill_create_ip":"127.0.0.1","out_trade_no":"2019062018061633598569","total_fee":"1","body":"保证金充值","trade_type":"NATIVE","sign":"AEFADC59DE90CB089125EA3BE8005473"}] 
+
+2019-06-20 16:10:01 > yansongda.pay.INFO > Wechat Scan Has Started ["https://api.mch.weixin.qq.com/",{"appid":"ww524a9783d531ec19","mch_id":"1540573951","nonce_str":"CXhxTNMD867gvaCH","notify_url":"http://www.456.com:8050/wxnotify","spbill_create_ip":"127.0.0.1","out_trade_no":"2019062018201190867497","total_fee":"1","body":"保证金充值","trade_type":"NATIVE"}] 
+
+2019-06-20 16:10:01 > yansongda.pay.INFO > Wechat PreOrder Method Has Called ["",{"appid":"ww524a9783d531ec19","mch_id":"1540573951","nonce_str":"CXhxTNMD867gvaCH","notify_url":"http://www.456.com:8050/wxnotify","spbill_create_ip":"127.0.0.1","out_trade_no":"2019062018201190867497","total_fee":"1","body":"保证金充值","trade_type":"NATIVE","sign":"3D604D1273D2904FB56A9DCF87AB6420"}] 
+
+2019-06-20 16:27:32 > yansongda.pay.INFO > Wechat Scan Has Started ["https://api.mch.weixin.qq.com/",{"appid":"ww524a9783d531ec19","mch_id":"1540573951","nonce_str":"OCO7tDxftdxYhmcp","notify_url":"http://www.456.com:8050/wxnotify","spbill_create_ip":"127.0.0.1","out_trade_no":"2019062019251999886249","total_fee":"1","body":"保证金充值","trade_type":"NATIVE"}] 
+
+2019-06-20 16:27:32 > yansongda.pay.INFO > Wechat PreOrder Method Has Called ["",{"appid":"ww524a9783d531ec19","mch_id":"1540573951","nonce_str":"OCO7tDxftdxYhmcp","notify_url":"http://www.456.com:8050/wxnotify","spbill_create_ip":"127.0.0.1","out_trade_no":"2019062019251999886249","total_fee":"1","body":"保证金充值","trade_type":"NATIVE","sign":"9C08E431077BA645CD16ADC4AFDE9F39"}] 
+
+2019-06-20 16:35:16 > yansongda.pay.INFO > Wechat Scan Has Started ["https://api.mch.weixin.qq.com/",{"appid":"ww524a9783d531ec19","mch_id":"1540573951","nonce_str":"e7jRLfoPRXCrbean","notify_url":"http://www.456.com:8050/wxnotify","spbill_create_ip":"127.0.0.1","out_trade_no":"2019062019716179818065","total_fee":"1","body":"保证金充值","trade_type":"NATIVE"}] 
+
+2019-06-20 16:35:16 > yansongda.pay.INFO > Wechat PreOrder Method Has Called ["",{"appid":"ww524a9783d531ec19","mch_id":"1540573951","nonce_str":"e7jRLfoPRXCrbean","notify_url":"http://www.456.com:8050/wxnotify","spbill_create_ip":"127.0.0.1","out_trade_no":"2019062019716179818065","total_fee":"1","body":"保证金充值","trade_type":"NATIVE","sign":"6A76B00F4406E3FF49D4342793EC7AD5"}] 
+
+2019-06-20 16:36:47 > yansongda.pay.INFO > Wechat Scan Has Started ["https://api.mch.weixin.qq.com/",{"appid":"ww524a9783d531ec19","mch_id":"1540573951","nonce_str":"3YCm1Y1D66NZ5Epg","notify_url":"http://www.456.com:8050/wxnotify","spbill_create_ip":"127.0.0.1","out_trade_no":"2019062019807952997502","total_fee":"1","body":"保证金充值","trade_type":"NATIVE"}] 
+
+2019-06-20 16:36:47 > yansongda.pay.INFO > Wechat PreOrder Method Has Called ["",{"appid":"ww524a9783d531ec19","mch_id":"1540573951","nonce_str":"3YCm1Y1D66NZ5Epg","notify_url":"http://www.456.com:8050/wxnotify","spbill_create_ip":"127.0.0.1","out_trade_no":"2019062019807952997502","total_fee":"1","body":"保证金充值","trade_type":"NATIVE","sign":"A374797EB6CDE759BD1562876159EF63"}] 
+
+2019-06-20 16:41:04 > yansongda.pay.INFO > Wechat Scan Has Started ["https://api.mch.weixin.qq.com/",{"appid":"ww524a9783d531ec19","mch_id":"1540573951","nonce_str":"2VklE7b4MGfiNmPU","notify_url":"http://www.456.com:8050/wxnotify","spbill_create_ip":"127.0.0.1","out_trade_no":"2019062020064961543608","total_fee":"1","body":"保证金充值","trade_type":"NATIVE"}] 
+
+2019-06-20 16:41:04 > yansongda.pay.INFO > Wechat PreOrder Method Has Called ["",{"appid":"ww524a9783d531ec19","mch_id":"1540573951","nonce_str":"2VklE7b4MGfiNmPU","notify_url":"http://www.456.com:8050/wxnotify","spbill_create_ip":"127.0.0.1","out_trade_no":"2019062020064961543608","total_fee":"1","body":"保证金充值","trade_type":"NATIVE","sign":"CCDA6930224B9BB2FD718A5DB47906ED"}] 
+
+2019-06-20 16:42:00 > yansongda.pay.INFO > Wechat Scan Has Started ["https://api.mch.weixin.qq.com/",{"appid":"ww524a9783d531ec19","mch_id":"1540573951","nonce_str":"XWuN2nFYhzTLqifG","notify_url":"http://www.456.com:8050/wxnotify","spbill_create_ip":"127.0.0.1","out_trade_no":"2019062020120490638709","total_fee":"1","body":"保证金充值","trade_type":"NATIVE"}] 
+
+2019-06-20 16:42:00 > yansongda.pay.INFO > Wechat PreOrder Method Has Called ["",{"appid":"ww524a9783d531ec19","mch_id":"1540573951","nonce_str":"XWuN2nFYhzTLqifG","notify_url":"http://www.456.com:8050/wxnotify","spbill_create_ip":"127.0.0.1","out_trade_no":"2019062020120490638709","total_fee":"1","body":"保证金充值","trade_type":"NATIVE","sign":"75EFCF6BAD1312C2F0F04A7821212AE0"}] 
+
+2019-06-20 16:42:51 > yansongda.pay.INFO > Wechat Scan Has Started ["https://api.mch.weixin.qq.com/",{"appid":"ww524a9783d531ec19","mch_id":"1540573951","nonce_str":"rXag8HXHNlghZJYU","notify_url":"http://www.456.com:8050/wxnotify","spbill_create_ip":"127.0.0.1","out_trade_no":"2019062020171281339242","total_fee":"1","body":"保证金充值","trade_type":"NATIVE"}] 
+
+2019-06-20 16:42:51 > yansongda.pay.INFO > Wechat PreOrder Method Has Called ["",{"appid":"ww524a9783d531ec19","mch_id":"1540573951","nonce_str":"rXag8HXHNlghZJYU","notify_url":"http://www.456.com:8050/wxnotify","spbill_create_ip":"127.0.0.1","out_trade_no":"2019062020171281339242","total_fee":"1","body":"保证金充值","trade_type":"NATIVE","sign":"6319F99470F4F1D3F656A633B0793EF3"}] 
+
+2019-06-20 16:43:14 > yansongda.pay.INFO > Wechat Scan Has Started ["https://api.mch.weixin.qq.com/",{"appid":"ww524a9783d531ec19","mch_id":"1540573951","nonce_str":"gHgEQXgJCLtJhcve","notify_url":"http://www.456.com:8050/wxnotify","spbill_create_ip":"127.0.0.1","out_trade_no":"2019062020194110671783","total_fee":"1","body":"保证金充值","trade_type":"NATIVE"}] 
+
+2019-06-20 16:43:14 > yansongda.pay.INFO > Wechat PreOrder Method Has Called ["",{"appid":"ww524a9783d531ec19","mch_id":"1540573951","nonce_str":"gHgEQXgJCLtJhcve","notify_url":"http://www.456.com:8050/wxnotify","spbill_create_ip":"127.0.0.1","out_trade_no":"2019062020194110671783","total_fee":"1","body":"保证金充值","trade_type":"NATIVE","sign":"027299B42D06979CBA2A2B66AB23F020"}] 
+
+2019-06-20 16:44:35 > yansongda.pay.INFO > Wechat Scan Has Started ["https://api.mch.weixin.qq.com/",{"appid":"ww524a9783d531ec19","mch_id":"1540573951","nonce_str":"CKLCELkGWOUqlSSZ","notify_url":"http://www.456.com:8050/wxnotify","spbill_create_ip":"127.0.0.1","out_trade_no":"2019062020275525937872","total_fee":"1","body":"保证金充值","trade_type":"NATIVE"}] 
+
+2019-06-20 16:44:35 > yansongda.pay.INFO > Wechat PreOrder Method Has Called ["",{"appid":"ww524a9783d531ec19","mch_id":"1540573951","nonce_str":"CKLCELkGWOUqlSSZ","notify_url":"http://www.456.com:8050/wxnotify","spbill_create_ip":"127.0.0.1","out_trade_no":"2019062020275525937872","total_fee":"1","body":"保证金充值","trade_type":"NATIVE","sign":"4FD101D927810CF467C4C689019C4A7D"}] 
+
+2019-06-20 16:45:09 > yansongda.pay.INFO > Wechat Scan Has Started ["https://api.mch.weixin.qq.com/",{"appid":"ww524a9783d531ec19","mch_id":"1540573951","nonce_str":"ypIff2UghpTIsJ1a","notify_url":"http://www.456.com:8050/wxnotify","spbill_create_ip":"127.0.0.1","out_trade_no":"2019062020309982677565","total_fee":"1","body":"保证金充值","trade_type":"NATIVE"}] 
+
+2019-06-20 16:45:09 > yansongda.pay.INFO > Wechat PreOrder Method Has Called ["",{"appid":"ww524a9783d531ec19","mch_id":"1540573951","nonce_str":"ypIff2UghpTIsJ1a","notify_url":"http://www.456.com:8050/wxnotify","spbill_create_ip":"127.0.0.1","out_trade_no":"2019062020309982677565","total_fee":"1","body":"保证金充值","trade_type":"NATIVE","sign":"9BD2F91E5CD6382A31F09E41B7BEF99A"}] 
+
+2019-06-20 16:52:27 > yansongda.pay.INFO > Wechat Scan Has Started ["https://api.mch.weixin.qq.com/",{"appid":"ww524a9783d531ec19","mch_id":"1540573951","nonce_str":"cdhxUm78q7ATcoW4","notify_url":"http://www.456.com:8050/wxnotify","spbill_create_ip":"127.0.0.1","out_trade_no":"2019062020747478553064","total_fee":"1","body":"保证金充值","trade_type":"NATIVE"}] 
+
+2019-06-20 16:52:27 > yansongda.pay.INFO > Wechat PreOrder Method Has Called ["",{"appid":"ww524a9783d531ec19","mch_id":"1540573951","nonce_str":"cdhxUm78q7ATcoW4","notify_url":"http://www.456.com:8050/wxnotify","spbill_create_ip":"127.0.0.1","out_trade_no":"2019062020747478553064","total_fee":"1","body":"保证金充值","trade_type":"NATIVE","sign":"36BE823BBF262C2485DF1AAEE0106DBE"}] 
+
+2019-06-20 16:56:47 > yansongda.pay.INFO > Wechat Scan Has Started ["https://api.mch.weixin.qq.com/",{"appid":"ww524a9783d531ec19","mch_id":"1540573951","nonce_str":"BB2n6pIKh4Nc9gsv","notify_url":"http://www.456.com:8050/wxnotify","spbill_create_ip":"127.0.0.1","out_trade_no":"2019062021007719938805","total_fee":"1","body":"保证金充值","trade_type":"NATIVE"}] 
+
+2019-06-20 16:56:47 > yansongda.pay.INFO > Wechat PreOrder Method Has Called ["",{"appid":"ww524a9783d531ec19","mch_id":"1540573951","nonce_str":"BB2n6pIKh4Nc9gsv","notify_url":"http://www.456.com:8050/wxnotify","spbill_create_ip":"127.0.0.1","out_trade_no":"2019062021007719938805","total_fee":"1","body":"保证金充值","trade_type":"NATIVE","sign":"003257BF03B1E4849E8584EE4AD29152"}] 
+
+2019-06-20 16:57:21 > yansongda.pay.INFO > Wechat Scan Has Started ["https://api.mch.weixin.qq.com/",{"appid":"ww524a9783d531ec19","mch_id":"1540573951","nonce_str":"aKzIjtLPO7ULuQNO","notify_url":"http://www.456.com:8050/wxnotify","spbill_create_ip":"127.0.0.1","out_trade_no":"2019062021041159711166","total_fee":"1","body":"保证金充值","trade_type":"NATIVE"}] 
+
+2019-06-20 16:57:21 > yansongda.pay.INFO > Wechat PreOrder Method Has Called ["",{"appid":"ww524a9783d531ec19","mch_id":"1540573951","nonce_str":"aKzIjtLPO7ULuQNO","notify_url":"http://www.456.com:8050/wxnotify","spbill_create_ip":"127.0.0.1","out_trade_no":"2019062021041159711166","total_fee":"1","body":"保证金充值","trade_type":"NATIVE","sign":"B5321237615D62158206721EEFE763D7"}] 
+
+2019-06-20 16:58:51 > yansongda.pay.INFO > Wechat Scan Has Started ["https://api.mch.weixin.qq.com/",{"appid":"ww524a9783d531ec19","mch_id":"1540573951","nonce_str":"mJOxIPPFQ9iVAPKz","notify_url":"http://www.456.com:8050/wxnotify","spbill_create_ip":"127.0.0.1","out_trade_no":"2019062021131798331843","total_fee":"1","body":"保证金充值","trade_type":"NATIVE"}] 
+
+2019-06-20 16:58:51 > yansongda.pay.INFO > Wechat PreOrder Method Has Called ["",{"appid":"ww524a9783d531ec19","mch_id":"1540573951","nonce_str":"mJOxIPPFQ9iVAPKz","notify_url":"http://www.456.com:8050/wxnotify","spbill_create_ip":"127.0.0.1","out_trade_no":"2019062021131798331843","total_fee":"1","body":"保证金充值","trade_type":"NATIVE","sign":"675D0C9A9B7AFFC9BC7A2FDF6FC5405F"}] 
+
+2019-06-20 16:59:09 > yansongda.pay.INFO > Wechat Scan Has Started ["https://api.mch.weixin.qq.com/",{"appid":"ww524a9783d531ec19","mch_id":"1540573951","nonce_str":"uYqnma2rn9zi6O7s","notify_url":"http://www.456.com:8050/wxnotify","spbill_create_ip":"127.0.0.1","out_trade_no":"2019062021149753312271","total_fee":"1","body":"保证金充值","trade_type":"NATIVE"}] 
+
+2019-06-20 16:59:09 > yansongda.pay.INFO > Wechat PreOrder Method Has Called ["",{"appid":"ww524a9783d531ec19","mch_id":"1540573951","nonce_str":"uYqnma2rn9zi6O7s","notify_url":"http://www.456.com:8050/wxnotify","spbill_create_ip":"127.0.0.1","out_trade_no":"2019062021149753312271","total_fee":"1","body":"保证金充值","trade_type":"NATIVE","sign":"AF8D3458D5267FC81B5E44519C9935B5"}] 
+
+2019-06-20 16:59:27 > yansongda.pay.INFO > Wechat Scan Has Started ["https://api.mch.weixin.qq.com/",{"appid":"ww524a9783d531ec19","mch_id":"1540573951","nonce_str":"XIop4IyHRh9BhA6y","notify_url":"http://www.456.com:8050/wxnotify","spbill_create_ip":"127.0.0.1","out_trade_no":"2019062021167786604194","total_fee":"1","body":"保证金充值","trade_type":"NATIVE"}] 
+
+2019-06-20 16:59:27 > yansongda.pay.INFO > Wechat PreOrder Method Has Called ["",{"appid":"ww524a9783d531ec19","mch_id":"1540573951","nonce_str":"XIop4IyHRh9BhA6y","notify_url":"http://www.456.com:8050/wxnotify","spbill_create_ip":"127.0.0.1","out_trade_no":"2019062021167786604194","total_fee":"1","body":"保证金充值","trade_type":"NATIVE","sign":"953D3CB6DEF998F7FDE35D3D055870C2"}] 
+
+2019-06-20 16:59:47 > yansongda.pay.INFO > Wechat Scan Has Started ["https://api.mch.weixin.qq.com/",{"appid":"ww524a9783d531ec19","mch_id":"1540573951","nonce_str":"sOyJsUSKrbKnbQtt","notify_url":"http://www.456.com:8050/wxnotify","spbill_create_ip":"127.0.0.1","out_trade_no":"2019062021187519807617","total_fee":"1","body":"保证金充值","trade_type":"NATIVE"}] 
+
+2019-06-20 16:59:47 > yansongda.pay.INFO > Wechat PreOrder Method Has Called ["",{"appid":"ww524a9783d531ec19","mch_id":"1540573951","nonce_str":"sOyJsUSKrbKnbQtt","notify_url":"http://www.456.com:8050/wxnotify","spbill_create_ip":"127.0.0.1","out_trade_no":"2019062021187519807617","total_fee":"1","body":"保证金充值","trade_type":"NATIVE","sign":"1C3108561B166644DDA7F2757057E3A2"}] 
+
+2019-06-20 17:00:08 > yansongda.pay.INFO > Wechat Scan Has Started ["https://api.mch.weixin.qq.com/",{"appid":"ww524a9783d531ec19","mch_id":"1540573951","nonce_str":"8ou0R8wp0xpWWivG","notify_url":"http://www.456.com:8050/wxnotify","spbill_create_ip":"127.0.0.1","out_trade_no":"2019062021208901907331","total_fee":"1","body":"保证金充值","trade_type":"NATIVE"}] 
+
+2019-06-20 17:00:08 > yansongda.pay.INFO > Wechat PreOrder Method Has Called ["",{"appid":"ww524a9783d531ec19","mch_id":"1540573951","nonce_str":"8ou0R8wp0xpWWivG","notify_url":"http://www.456.com:8050/wxnotify","spbill_create_ip":"127.0.0.1","out_trade_no":"2019062021208901907331","total_fee":"1","body":"保证金充值","trade_type":"NATIVE","sign":"CF821B7BFF1F3929B93826367F804149"}] 
+
+2019-06-20 17:00:19 > yansongda.pay.INFO > Wechat Scan Has Started ["https://api.mch.weixin.qq.com/",{"appid":"ww524a9783d531ec19","mch_id":"1540573951","nonce_str":"E2FuyVWl8Syu8SUa","notify_url":"http://www.456.com:8050/wxnotify","spbill_create_ip":"127.0.0.1","out_trade_no":"2019062021219311741464","total_fee":"1","body":"保证金充值","trade_type":"NATIVE"}] 
+
+2019-06-20 17:00:19 > yansongda.pay.INFO > Wechat PreOrder Method Has Called ["",{"appid":"ww524a9783d531ec19","mch_id":"1540573951","nonce_str":"E2FuyVWl8Syu8SUa","notify_url":"http://www.456.com:8050/wxnotify","spbill_create_ip":"127.0.0.1","out_trade_no":"2019062021219311741464","total_fee":"1","body":"保证金充值","trade_type":"NATIVE","sign":"82EBABD6ABA4651F33B1594532DBF9B6"}] 
+
+2019-06-20 17:00:55 > yansongda.pay.INFO > Wechat Scan Has Started ["https://api.mch.weixin.qq.com/",{"appid":"ww524a9783d531ec19","mch_id":"1540573951","nonce_str":"kbo1oiOD9Vl6JKFm","notify_url":"http://www.456.com:8050/wxnotify","spbill_create_ip":"127.0.0.1","out_trade_no":"2019062021255605461050","total_fee":"1","body":"保证金充值","trade_type":"NATIVE"}] 
+
+2019-06-20 17:00:55 > yansongda.pay.INFO > Wechat PreOrder Method Has Called ["",{"appid":"ww524a9783d531ec19","mch_id":"1540573951","nonce_str":"kbo1oiOD9Vl6JKFm","notify_url":"http://www.456.com:8050/wxnotify","spbill_create_ip":"127.0.0.1","out_trade_no":"2019062021255605461050","total_fee":"1","body":"保证金充值","trade_type":"NATIVE","sign":"A3154D4CE8DCC3C18D7B11C8D1B1C1D3"}] 
+
+2019-06-20 17:02:43 > yansongda.pay.INFO > Wechat Scan Has Started ["https://api.mch.weixin.qq.com/",{"appid":"ww524a9783d531ec19","mch_id":"1540573951","nonce_str":"1Y9HP7kDHnCG6c90","notify_url":"http://www.456.com:8050/wxnotify","spbill_create_ip":"127.0.0.1","out_trade_no":"2019062021363564688665","total_fee":"1","body":"保证金充值","trade_type":"NATIVE"}] 
+
+2019-06-20 17:02:43 > yansongda.pay.INFO > Wechat PreOrder Method Has Called ["",{"appid":"ww524a9783d531ec19","mch_id":"1540573951","nonce_str":"1Y9HP7kDHnCG6c90","notify_url":"http://www.456.com:8050/wxnotify","spbill_create_ip":"127.0.0.1","out_trade_no":"2019062021363564688665","total_fee":"1","body":"保证金充值","trade_type":"NATIVE","sign":"C109B2F978C1A5AF7A3647098CB15339"}] 
+
+2019-06-20 17:02:51 > yansongda.pay.INFO > Wechat Scan Has Started ["https://api.mch.weixin.qq.com/",{"appid":"ww524a9783d531ec19","mch_id":"1540573951","nonce_str":"3zscDLfSnENNCTER","notify_url":"http://www.456.com:8050/wxnotify","spbill_create_ip":"127.0.0.1","out_trade_no":"2019062021371834633004","total_fee":"1","body":"保证金充值","trade_type":"NATIVE"}] 
+
+2019-06-20 17:02:51 > yansongda.pay.INFO > Wechat PreOrder Method Has Called ["",{"appid":"ww524a9783d531ec19","mch_id":"1540573951","nonce_str":"3zscDLfSnENNCTER","notify_url":"http://www.456.com:8050/wxnotify","spbill_create_ip":"127.0.0.1","out_trade_no":"2019062021371834633004","total_fee":"1","body":"保证金充值","trade_type":"NATIVE","sign":"DE433EEDC4616336AB586745F6CD372D"}] 
+
+2019-06-20 17:02:59 > yansongda.pay.INFO > Wechat Scan Has Started ["https://api.mch.weixin.qq.com/",{"appid":"ww524a9783d531ec19","mch_id":"1540573951","nonce_str":"FGreSPKlQFkH8ioO","notify_url":"http://www.456.com:8050/wxnotify","spbill_create_ip":"127.0.0.1","out_trade_no":"2019062021379368385235","total_fee":"1","body":"保证金充值","trade_type":"NATIVE"}] 
+
+2019-06-20 17:02:59 > yansongda.pay.INFO > Wechat PreOrder Method Has Called ["",{"appid":"ww524a9783d531ec19","mch_id":"1540573951","nonce_str":"FGreSPKlQFkH8ioO","notify_url":"http://www.456.com:8050/wxnotify","spbill_create_ip":"127.0.0.1","out_trade_no":"2019062021379368385235","total_fee":"1","body":"保证金充值","trade_type":"NATIVE","sign":"36E18260C5414DCA9F40D33E0AE01991"}] 
+
+2019-06-20 17:03:09 > yansongda.pay.INFO > Wechat Scan Has Started ["https://api.mch.weixin.qq.com/",{"appid":"ww524a9783d531ec19","mch_id":"1540573951","nonce_str":"bUQio4M97hmfyqzd","notify_url":"http://www.456.com:8050/wxnotify","spbill_create_ip":"127.0.0.1","out_trade_no":"2019062021389712866445","total_fee":"1","body":"保证金充值","trade_type":"NATIVE"}] 
+
+2019-06-20 17:03:09 > yansongda.pay.INFO > Wechat PreOrder Method Has Called ["",{"appid":"ww524a9783d531ec19","mch_id":"1540573951","nonce_str":"bUQio4M97hmfyqzd","notify_url":"http://www.456.com:8050/wxnotify","spbill_create_ip":"127.0.0.1","out_trade_no":"2019062021389712866445","total_fee":"1","body":"保证金充值","trade_type":"NATIVE","sign":"202CF3E682890D9DEEB0E4D803ADA0D7"}] 
+
+2019-06-20 17:03:25 > yansongda.pay.INFO > Wechat Scan Has Started ["https://api.mch.weixin.qq.com/",{"appid":"ww524a9783d531ec19","mch_id":"1540573951","nonce_str":"qZIjiwThnmHNDjTq","notify_url":"http://www.456.com:8050/wxnotify","spbill_create_ip":"127.0.0.1","out_trade_no":"2019062021405048564213","total_fee":"1","body":"保证金充值","trade_type":"NATIVE"}] 
+
+2019-06-20 17:03:25 > yansongda.pay.INFO > Wechat PreOrder Method Has Called ["",{"appid":"ww524a9783d531ec19","mch_id":"1540573951","nonce_str":"qZIjiwThnmHNDjTq","notify_url":"http://www.456.com:8050/wxnotify","spbill_create_ip":"127.0.0.1","out_trade_no":"2019062021405048564213","total_fee":"1","body":"保证金充值","trade_type":"NATIVE","sign":"7352C25A911991C9BB3057807307D10E"}] 
+
+2019-06-20 17:03:33 > yansongda.pay.INFO > Wechat Scan Has Started ["https://api.mch.weixin.qq.com/",{"appid":"ww524a9783d531ec19","mch_id":"1540573951","nonce_str":"mbcQat16Py8fAaNY","notify_url":"http://www.456.com:8050/wxnotify","spbill_create_ip":"127.0.0.1","out_trade_no":"2019062021413638123237","total_fee":"1","body":"保证金充值","trade_type":"NATIVE"}] 
+
+2019-06-20 17:03:33 > yansongda.pay.INFO > Wechat PreOrder Method Has Called ["",{"appid":"ww524a9783d531ec19","mch_id":"1540573951","nonce_str":"mbcQat16Py8fAaNY","notify_url":"http://www.456.com:8050/wxnotify","spbill_create_ip":"127.0.0.1","out_trade_no":"2019062021413638123237","total_fee":"1","body":"保证金充值","trade_type":"NATIVE","sign":"192AC7CAEC996945E3C9385652245BCF"}] 
+
+2019-06-20 17:03:41 > yansongda.pay.INFO > Wechat Scan Has Started ["https://api.mch.weixin.qq.com/",{"appid":"ww524a9783d531ec19","mch_id":"1540573951","nonce_str":"aUcwqrd6iszPmDgh","notify_url":"http://www.456.com:8050/wxnotify","spbill_create_ip":"127.0.0.1","out_trade_no":"2019062021421357025534","total_fee":"1","body":"保证金充值","trade_type":"NATIVE"}] 
+
+2019-06-20 17:03:41 > yansongda.pay.INFO > Wechat PreOrder Method Has Called ["",{"appid":"ww524a9783d531ec19","mch_id":"1540573951","nonce_str":"aUcwqrd6iszPmDgh","notify_url":"http://www.456.com:8050/wxnotify","spbill_create_ip":"127.0.0.1","out_trade_no":"2019062021421357025534","total_fee":"1","body":"保证金充值","trade_type":"NATIVE","sign":"5FC2332808C1BA86B9BBB8A78F47B83E"}] 
+
+2019-06-20 17:03:48 > yansongda.pay.INFO > Wechat Scan Has Started ["https://api.mch.weixin.qq.com/",{"appid":"ww524a9783d531ec19","mch_id":"1540573951","nonce_str":"zSfINEjz5gCoeRdM","notify_url":"http://www.456.com:8050/wxnotify","spbill_create_ip":"127.0.0.1","out_trade_no":"2019062021428679521913","total_fee":"1","body":"保证金充值","trade_type":"NATIVE"}] 
+
+2019-06-20 17:03:48 > yansongda.pay.INFO > Wechat PreOrder Method Has Called ["",{"appid":"ww524a9783d531ec19","mch_id":"1540573951","nonce_str":"zSfINEjz5gCoeRdM","notify_url":"http://www.456.com:8050/wxnotify","spbill_create_ip":"127.0.0.1","out_trade_no":"2019062021428679521913","total_fee":"1","body":"保证金充值","trade_type":"NATIVE","sign":"05532DEE3A5C15B0BC9CC77B91F1209C"}] 
+
+2019-06-20 17:03:55 > yansongda.pay.INFO > Wechat Scan Has Started ["https://api.mch.weixin.qq.com/",{"appid":"ww524a9783d531ec19","mch_id":"1540573951","nonce_str":"74120qcu6CTxEm7s","notify_url":"http://www.456.com:8050/wxnotify","spbill_create_ip":"127.0.0.1","out_trade_no":"2019062021435056797106","total_fee":"1","body":"保证金充值","trade_type":"NATIVE"}] 
+
+2019-06-20 17:03:55 > yansongda.pay.INFO > Wechat PreOrder Method Has Called ["",{"appid":"ww524a9783d531ec19","mch_id":"1540573951","nonce_str":"74120qcu6CTxEm7s","notify_url":"http://www.456.com:8050/wxnotify","spbill_create_ip":"127.0.0.1","out_trade_no":"2019062021435056797106","total_fee":"1","body":"保证金充值","trade_type":"NATIVE","sign":"DE457B08755D94B7D3CBE2D8FEA6846D"}] 
+
+2019-06-20 17:04:02 > yansongda.pay.INFO > Wechat Scan Has Started ["https://api.mch.weixin.qq.com/",{"appid":"ww524a9783d531ec19","mch_id":"1540573951","nonce_str":"TZWYAblxi5DYBpF9","notify_url":"http://www.456.com:8050/wxnotify","spbill_create_ip":"127.0.0.1","out_trade_no":"2019062021442710135614","total_fee":"1","body":"保证金充值","trade_type":"NATIVE"}] 
+
+2019-06-20 17:04:02 > yansongda.pay.INFO > Wechat PreOrder Method Has Called ["",{"appid":"ww524a9783d531ec19","mch_id":"1540573951","nonce_str":"TZWYAblxi5DYBpF9","notify_url":"http://www.456.com:8050/wxnotify","spbill_create_ip":"127.0.0.1","out_trade_no":"2019062021442710135614","total_fee":"1","body":"保证金充值","trade_type":"NATIVE","sign":"5482FC3E25829D1FB28B635141B6CE74"}] 
+
+2019-06-20 17:04:10 > yansongda.pay.INFO > Wechat Scan Has Started ["https://api.mch.weixin.qq.com/",{"appid":"ww524a9783d531ec19","mch_id":"1540573951","nonce_str":"2QvrSyUDudffkDzF","notify_url":"http://www.456.com:8050/wxnotify","spbill_create_ip":"127.0.0.1","out_trade_no":"2019062021450484189683","total_fee":"1","body":"保证金充值","trade_type":"NATIVE"}] 
+
+2019-06-20 17:04:10 > yansongda.pay.INFO > Wechat PreOrder Method Has Called ["",{"appid":"ww524a9783d531ec19","mch_id":"1540573951","nonce_str":"2QvrSyUDudffkDzF","notify_url":"http://www.456.com:8050/wxnotify","spbill_create_ip":"127.0.0.1","out_trade_no":"2019062021450484189683","total_fee":"1","body":"保证金充值","trade_type":"NATIVE","sign":"D9AFFBBC46D52EA9195BAF5D6C3DC371"}] 
+
+2019-06-20 17:04:22 > yansongda.pay.INFO > Wechat Scan Has Started ["https://api.mch.weixin.qq.com/",{"appid":"ww524a9783d531ec19","mch_id":"1540573951","nonce_str":"XkMGbl5laoHeKw0V","notify_url":"http://www.456.com:8050/wxnotify","spbill_create_ip":"127.0.0.1","out_trade_no":"2019062021462603176558","total_fee":"1","body":"保证金充值","trade_type":"NATIVE"}] 
+
+2019-06-20 17:04:22 > yansongda.pay.INFO > Wechat PreOrder Method Has Called ["",{"appid":"ww524a9783d531ec19","mch_id":"1540573951","nonce_str":"XkMGbl5laoHeKw0V","notify_url":"http://www.456.com:8050/wxnotify","spbill_create_ip":"127.0.0.1","out_trade_no":"2019062021462603176558","total_fee":"1","body":"保证金充值","trade_type":"NATIVE","sign":"ED8C1A59F8FB128AAD23AB1ABE306C2C"}] 
+
+2019-06-20 17:04:46 > yansongda.pay.INFO > Wechat Scan Has Started ["https://api.mch.weixin.qq.com/",{"appid":"ww524a9783d531ec19","mch_id":"1540573951","nonce_str":"R0nDbMAwi9NAQo5V","notify_url":"http://www.456.com:8050/wxnotify","spbill_create_ip":"127.0.0.1","out_trade_no":"2019062021486121197192","total_fee":"1","body":"保证金充值","trade_type":"NATIVE"}] 
+
+2019-06-20 17:04:46 > yansongda.pay.INFO > Wechat PreOrder Method Has Called ["",{"appid":"ww524a9783d531ec19","mch_id":"1540573951","nonce_str":"R0nDbMAwi9NAQo5V","notify_url":"http://www.456.com:8050/wxnotify","spbill_create_ip":"127.0.0.1","out_trade_no":"2019062021486121197192","total_fee":"1","body":"保证金充值","trade_type":"NATIVE","sign":"BEC87136CCFEF0168DC0BF85321942F3"}] 
+
+2019-06-20 17:05:28 > yansongda.pay.INFO > Wechat Scan Has Started ["https://api.mch.weixin.qq.com/",{"appid":"ww524a9783d531ec19","mch_id":"1540573951","nonce_str":"u4sbcRp4ojjrqpkg","notify_url":"http://www.456.com:8050/wxnotify","spbill_create_ip":"127.0.0.1","out_trade_no":"2019062021528903122050","total_fee":"1","body":"保证金充值","trade_type":"NATIVE"}] 
+
+2019-06-20 17:05:28 > yansongda.pay.INFO > Wechat PreOrder Method Has Called ["",{"appid":"ww524a9783d531ec19","mch_id":"1540573951","nonce_str":"u4sbcRp4ojjrqpkg","notify_url":"http://www.456.com:8050/wxnotify","spbill_create_ip":"127.0.0.1","out_trade_no":"2019062021528903122050","total_fee":"1","body":"保证金充值","trade_type":"NATIVE","sign":"D4237DD70C2B996AE0CE60D336AADBE3"}] 
+
+2019-06-20 17:05:40 > yansongda.pay.INFO > Wechat Scan Has Started ["https://api.mch.weixin.qq.com/",{"appid":"ww524a9783d531ec19","mch_id":"1540573951","nonce_str":"R86YwcXygt45QaKL","notify_url":"http://www.456.com:8050/wxnotify","spbill_create_ip":"127.0.0.1","out_trade_no":"2019062021540646166917","total_fee":"1","body":"保证金充值","trade_type":"NATIVE"}] 
+
+2019-06-20 17:05:40 > yansongda.pay.INFO > Wechat PreOrder Method Has Called ["",{"appid":"ww524a9783d531ec19","mch_id":"1540573951","nonce_str":"R86YwcXygt45QaKL","notify_url":"http://www.456.com:8050/wxnotify","spbill_create_ip":"127.0.0.1","out_trade_no":"2019062021540646166917","total_fee":"1","body":"保证金充值","trade_type":"NATIVE","sign":"DDDEAF35683B5319FFA577AFC71658DF"}] 
+
+2019-06-20 17:06:08 > yansongda.pay.INFO > Wechat Scan Has Started ["https://api.mch.weixin.qq.com/",{"appid":"ww524a9783d531ec19","mch_id":"1540573951","nonce_str":"GaWbSyZsRpO393Tf","notify_url":"http://www.456.com:8050/wxnotify","spbill_create_ip":"127.0.0.1","out_trade_no":"2019062021568352332852","total_fee":"1","body":"保证金充值","trade_type":"NATIVE"}] 
+
+2019-06-20 17:06:08 > yansongda.pay.INFO > Wechat PreOrder Method Has Called ["",{"appid":"ww524a9783d531ec19","mch_id":"1540573951","nonce_str":"GaWbSyZsRpO393Tf","notify_url":"http://www.456.com:8050/wxnotify","spbill_create_ip":"127.0.0.1","out_trade_no":"2019062021568352332852","total_fee":"1","body":"保证金充值","trade_type":"NATIVE","sign":"11FD2AB54D1CB80C6D8608D9BFFE5E0C"}] 
+
+2019-06-20 17:06:35 > yansongda.pay.INFO > Wechat Scan Has Started ["https://api.mch.weixin.qq.com/",{"appid":"ww524a9783d531ec19","mch_id":"1540573951","nonce_str":"7A2UZkLojLL51yhb","notify_url":"http://www.456.com:8050/wxnotify","spbill_create_ip":"127.0.0.1","out_trade_no":"2019062021595344735844","total_fee":"1","body":"保证金充值","trade_type":"NATIVE"}] 
+
+2019-06-20 17:06:35 > yansongda.pay.INFO > Wechat PreOrder Method Has Called ["",{"appid":"ww524a9783d531ec19","mch_id":"1540573951","nonce_str":"7A2UZkLojLL51yhb","notify_url":"http://www.456.com:8050/wxnotify","spbill_create_ip":"127.0.0.1","out_trade_no":"2019062021595344735844","total_fee":"1","body":"保证金充值","trade_type":"NATIVE","sign":"0205EB48E03B078CE2A7526CE389EC4F"}] 
+
+2019-06-20 17:07:23 > yansongda.pay.INFO > Wechat Scan Has Started ["https://api.mch.weixin.qq.com/",{"appid":"ww524a9783d531ec19","mch_id":"1540573951","nonce_str":"4HxLP4KsMrumToa3","notify_url":"http://www.456.com:8050/wxnotify","spbill_create_ip":"127.0.0.1","out_trade_no":"2019062021643670754985","total_fee":"1","body":"保证金充值","trade_type":"NATIVE"}] 
+
+2019-06-20 17:07:23 > yansongda.pay.INFO > Wechat PreOrder Method Has Called ["",{"appid":"ww524a9783d531ec19","mch_id":"1540573951","nonce_str":"4HxLP4KsMrumToa3","notify_url":"http://www.456.com:8050/wxnotify","spbill_create_ip":"127.0.0.1","out_trade_no":"2019062021643670754985","total_fee":"1","body":"保证金充值","trade_type":"NATIVE","sign":"1F47883A7B9052DAA5C0355A4F94B275"}] 
+
