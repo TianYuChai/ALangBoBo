@@ -115,6 +115,9 @@ class LoginController extends BaseController
             if(stringLen($password) < 6 || stringLen($password) > 12) {
                 throw new Exception('密码长度错误, 请重新输入');
             }
+            if(!preg_match("/^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,12}$/", $password)) {
+                throw new Exception('密码安全程度过低');
+            }
             $item = UserModel::where('number', $mobile)->first();
             if(!$item) {
                 throw new Exception('该手机号，并未绑定账户');

@@ -62,8 +62,13 @@
             if(val['name'] == 'verifyCode' && val['value'].length != 6) {
                 layer.msg('验证码错误, 请填写正确的验证码'); return false;
             }
-            if(val['name'] == "password" && (val['value'].length < 6 || val['value'].length > 12)) {
-                layer.msg('密码格式不正确'); return false;
+            if(val['name'] == 'password') {
+                if(val['value'].length < 6 || val['value'].length > 12) {
+                    layer.msg('密码格式不正确'); return false;
+                }
+                if(!/([a-zA-Z]+[0-9]+|[0-9]+[a-zA-Z])/.test(val['value'])) {
+                    layer.msg('密码安全程度过低');return false;
+                }
             }
             obj[val['name']] = val['value'];
         });
