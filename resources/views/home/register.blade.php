@@ -27,6 +27,14 @@
                 <form class="cmxform" id="user_info">
                     <fieldset class="fieldset clearfix">
                         <div class="accountDiv relative">
+                            <span style="color: red">
+                                提示：注册企业商户和个人商户需进行人脸识别, 请使用火狐浏览器进行识别.
+                                <a href="https://download-ssl.firefox.com.cn/releases-sha2/stub/official/zh-CN/Firefox-latest.exe">
+                                    点我下载
+                                </a>
+                            </span>
+                        </div>
+                        <div class="accountDiv relative">
                             账号
                             <input type="text" placeholder="请输入账号"
                                    class="account"
@@ -111,22 +119,22 @@
                     <fieldset class="fieldset clearfix">
                         <p class="userInfo">企业商户资料填写：</p>
                         <div class="nameDiv relative">
-                            姓名
+                            法人姓名
                             <input type="text" placeholder="请输入姓名" class="name" id="qiyeName" name="name" autocomplete="off">
                         </div>
                         <div class="idDiv mgt-30 relative">
-                            身份证号
+                            法人身份证号
                             <input type="text" placeholder="请输入身份证号" class="password" id="qiyeId" name="id" autocomplete="off">
                         </div>
                         <div class="idImgDiv mgt-30 relative">
                             <div class="relative">
-                                <p class="inline-block mgr-20">身份证正面</p>
+                                <p class="inline-block mgr-20">法人身份证正面</p>
                                 <img src="{{ asset('home/images/img/idImg.png') }}" alt="" class="personalImg"/>
                                 <input type="file" class="file" accept="image/*" data-id="zheng">
                                 <input type="hidden" name="zheng">
                             </div>
                             <div class="relative">
-                                <p class="inline-block mgr-20">身份证反面</p>
+                                <p class="inline-block mgr-20">法人身份证反面</p>
                                 <img src="{{ asset('home/images/img/idImg.png') }}" alt="" class="personalImg"/>
                                 <input type="file" class="file" accept="image/*" data-id="fan">
                                 <input type="hidden" name="fan">

@@ -21,7 +21,7 @@
                 <a href="{{ url('merchant') }}">直营店和加盟</a>
             </li>
             <li class="navLi">
-                <a href="{{ url('demand') }}">百录倩影系列</a>
+                <a href="{{ url('demand') }}" target="_blank">百录倩影系列</a>
             </li>
             <li class="navLi">
                 <a href="{{ url('product', ['type' =>'opther-16']) }}">美容类</a>

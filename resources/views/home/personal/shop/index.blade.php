@@ -93,7 +93,11 @@
                         </thead>
                         <tbody class="tbody tc">
                         <tr>
-                            <td>{{ Auth::guard('web')->user()->merchant['shop_name'] }}</td>
+                            <td>
+                                <a href="{{ route('merchant.show', ['id' => Auth::guard('web')->user()->merchant['id']]) }}" target="_blank">
+                                    {{ Auth::guard('web')->user()->merchant['shop_name'] }}
+                                </a>
+                            </td>
                             <td>
                                 <img src="{{ Auth::guard('web')->user()->merchant['trademark'] ?
                                                 FileUpload::url('image', Auth::guard('web')->user()->merchant['trademark']) : '未上传' }}" alt="" class="shopSign"/>
@@ -168,7 +172,7 @@
                                                 </div>
                                             </div>
                                             <div class="relative">
-                                                <p class="inline-block mgr-20 mgl-15">二维码：</p>
+                                                <p class="inline-block mgr-20 mgl-15">客服二维码：</p>
                                                 <img src="{{ Auth::guard('web')->user()->merchant['qr_code'] ?
                                                 FileUpload::url('image', Auth::guard('web')->user()->merchant['qr_code'])
                                                 : asset('home/images/img/idImg.png') }}" class="jmImg"

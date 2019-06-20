@@ -245,7 +245,10 @@ class PersonalContentController extends BaseController
             ],[
                 'uid' => $request->user()->id
             ]);
-            return $this->ajaxReturn();
+            return $this->ajaxReturn([
+                'status' => 200,
+                'info' => '注销申请已提交，等待管理员审核，可在2小时后登录查询审核结果'
+            ], 200);
         } catch (Exception $e) {
             return $this->ajaxReturn([
                 'info' => $e->getMessage(),

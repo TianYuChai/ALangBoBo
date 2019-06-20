@@ -270,7 +270,7 @@
         MonHead = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
         //先给年下拉框赋内容
         var y  = new Date().getFullYear();
-        for (var i = (y-30); i < (y+30); i++) //以今年为准，前30年，后30年
+        for (var i = (y-90); i < (y+30); i++) //以今年为准，前90年，后30年
             document.reg_testdate.YYYY.options.add(new Option(" "+ i +" 年", i));
 
         //赋月份的下拉框

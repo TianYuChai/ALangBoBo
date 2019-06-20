@@ -53,7 +53,7 @@ class PersonalGeneralizeController extends BaseController
             ]);
             return $this->ajaxReturn([
                 'status' => 200,
-                'url' => $item->share_id
+                'url' => route('merchant.show', ['id' => $this->user->merchant['id']]).'?referess='.$item->share_id
             ], 200);
         } catch (Exception $e) {
             return $this->ajaxReturn([
