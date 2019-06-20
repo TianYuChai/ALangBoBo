@@ -16,7 +16,7 @@ return [
         'cert_client' => './cert/apiclient_cert.pem', // optional，退款等情况时用到
         'cert_key' => './cert/apiclient_key.pem',// optional，退款等情况时用到
         'log' => [ // optional
-            'file' => './logs/wechat.log',
+            'file' => '../storage/logs/wechat.log',
             'level' => 'info', // 建议生产环境等级调整为 info，开发环境为 debug
             'type' => 'daily', // optional, 可选 daily.
             'max_file' => 30, // optional, 当 type 为 daily 时有效，默认 30 天
