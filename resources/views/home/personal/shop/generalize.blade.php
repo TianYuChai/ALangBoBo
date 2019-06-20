@@ -86,7 +86,7 @@
                         <tbody>
                         @foreach($items as $item)
                             <tr>
-                                <th scope="row">{{ $item->share_id }}</th>
+                                <th scope="row">{{ route('merchant.show', ['id' => Auth::guard('web')->user()->merchant['id']]).'?referess='.$item->share_id }}</th>
                                 <td>{{ $item->name }}</td>
                                 <td>
                                     <span class="text-danger">{{ $item->statistics->where('status', 500)->count() }}</span>
