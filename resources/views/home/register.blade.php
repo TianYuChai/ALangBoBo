@@ -429,7 +429,7 @@
             monitor(that, 'name');
         });
         /*监听-身份证号*/
-        $('#id').blur(function() {
+        $('input[name="id"]').blur(function() {
             var that = $(this);
             monitor(that, 'id');
         });
