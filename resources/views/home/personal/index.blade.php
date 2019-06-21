@@ -267,9 +267,9 @@
                     if(val['value'] < 100) {
                         layer.msg('提现金额需大于100元'); return false;
                     }
-                    if(val['value'] > money) {
-                        layer.msg('大于可提现金额'); return false;
-                    }
+                    // if(val['value'] > money) {
+                    //     layer.msg('大于可提现金额'); return false;
+                    // }
                 }
                 if(val['name'] == 'code' && (val['value'].length < 6 || val['value'].length > 6)) {
                     layer.msg('验证码错误'); return false;
