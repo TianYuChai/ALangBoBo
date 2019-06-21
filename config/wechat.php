@@ -13,8 +13,10 @@ return [
         'mch_id' => '1540573951',
         'key' => 'lDNgQmbm9WetFyQdSU4ua0vnr3gl9OQa',
         'notify_url' => '',
-        'cert_client' => './cert/apiclient_cert.pem', // optional，退款等情况时用到
-        'cert_key' => './cert/apiclient_key.pem',// optional，退款等情况时用到
+//        'cert_client' => './cert/apiclient_cert.pem', // optional，退款等情况时用到
+//        'cert_key' => './cert/apiclient_key.pem',// optional，退款等情况时用到
+        'cert_client' => 'lDNgQmbm9WetFyQdSU4ua0vnr3gl9OQa', // optional，退款等情况时用到
+        'cert_key' => '7CAB5AECDF64BF2F17AC11FA51FE70B16363CFD0',// optional，退款等情况时用到
         'log' => [ // optional
             'file' => '../storage/logs/wechat.log',
             'level' => 'info', // 建议生产环境等级调整为 info，开发环境为 debug
