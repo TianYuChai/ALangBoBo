@@ -62,7 +62,7 @@ class WechatService extends BaseService
         $vailet = $this->vailet();
         $data = $vailet->all();
         Log::info('保证金---微信异步回调处理', [
-            'data' => $data['data']['return_code']
+            'data' => $data['return_code']
         ]);
 //        if($data['return_code'] == 'SUCCESS' || $data['result_code'] == 'SUCCESS'
 //            && $data['app_id'] == $this->config['app_id']) {
