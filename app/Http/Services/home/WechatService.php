@@ -90,4 +90,40 @@ class WechatService extends BaseService
     {
         return Pay::wechat($this->config)->verify();
     }
+
+    /**
+     * 微信提现
+     *
+     * @param $money
+     * @param $procedures_fee
+     * @param $account
+     * @return bool
+     */
+    public function cashWith($money, $procedures_fee, $account)
+    {
+        $order_id = create_order_no();
+        $item = $this->capitalmode::create([
+            'uid' => $this->userId,
+            'order_id' => $order_id,
+            'money' => '-'. bcadd($money, $procedures_fee, 2),
+            'trade_mode' => 'WeChat',
+            'memo' => '余额提现, 站方收取手续费金额：'. $procedures_fee.'元，提现账户为:'. $account,
+            'category' => 200,
+            'status' => 1002
+        ]);
+        $order = [
+            'partner_trade_no' => $item->order_id,              //商户订单号
+            'openid' => '',                        //收款人的openid
+            'check_name' => 'FORCE_CHECK',            //NO_CHECK：不校验真实姓名\FORCE_CHECK：强校验真实姓名
+            're_user_name'=> $account,              //check_name为 FORCE_CHECK 校验实名的时候必须提交
+            'amount' => bcmul($money, 100),                       //企业付款金额，单位为分
+            'desc' => '帐户提现',                  //付款说明
+        ];
+        $wechat = Pay::wechat($this->config)->transfer($order);
+        dd($wechat);
+//        if($alipay['msg'] == 'Success') {
+//            $this->capitalmode::where('order_id', $alipay['out_biz_no'])->update(['status' => 1001]);
+//        }
+//        return true;
+    }
 }

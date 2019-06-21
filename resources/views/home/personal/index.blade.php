@@ -286,10 +286,10 @@
                     data:obj,
                     success:function (res) {
                         if(res.status == 200) {
-                            layer.msg(res.info);
-                            setTimeout(function () {
-                                window.location.reload();
-                            }, 300)
+                            // layer.msg(res.info);
+                            // setTimeout(function () {
+                            //     window.location.reload();
+                            // }, 300)
                         }
                     },
                     error:function (XMLHttpRequest, textStatus, errorThrown) {

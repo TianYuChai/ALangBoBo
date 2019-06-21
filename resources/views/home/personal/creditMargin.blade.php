@@ -171,6 +171,7 @@
                                     'style="width: 200px;margin: 20px auto;display: block;" src="'+ res +'"></svg>',
                                 yes:function(index){
                                     layer.close(index);
+                                    window.location.reload();
                                 }
 
                             })

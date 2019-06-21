@@ -17,6 +17,7 @@ use App\Http\Services\home\AlipayService;
 use App\Http\Services\home\LoginService;
 use App\Http\Services\home\PersanalService;
 use App\Http\Services\home\persanal\PersanalAddressService;
+use App\Http\Services\home\WechatService;
 use Illuminate\Http\Request;
 use Exception;
 use FileUpload;
@@ -265,7 +266,10 @@ class PersonalContentController extends BaseController
      * @param LoginService $loginService
      * @return \Illuminate\Http\JsonResponse
      */
-    public function cashWithdrawal(Request $request, AlipayService $alipayService, LoginService $loginService)
+    public function cashWithdrawal(Request $request,
+                                   AlipayService $alipayService,
+                                   LoginService $loginService,
+                                   WechatService $wechatService)
     {
         try {
             $method = trim($request->input('method', ''));
@@ -287,15 +291,16 @@ class PersonalContentController extends BaseController
             //计算手续费 提现金额大于1K收千六小于1K收千六+1
             $cal_value = bcmul($cash_with_money, 0.006, 2);
             $procedures_fee =  $cash_with_money > 1000 ? $cal_value : bcadd($cal_value, 1, 2);
-            if(bcadd($cash_with_money, $procedures_fee) > Auth::guard('web')->user()->available_money) {
-                throw new Exception('提现失败, 提现金额为:'
-                                .$cash_with_money.'元, 手续费为:'.$procedures_fee.'元, 超出可提现范围', 510);
-            }
-            $loginService->vefiShort(Auth::guard('web')->user()->number, $code);
+//            if(bcadd($cash_with_money, $procedures_fee) > Auth::guard('web')->user()->available_money) {
+//                throw new Exception('提现失败, 提现金额为:'
+//                                .$cash_with_money.'元, 手续费为:'.$procedures_fee.'元, 超出可提现范围', 510);
+//            }
+//            $loginService->vefiShort(Auth::guard('web')->user()->number, $code);
             if($method == 'Alipay') {
                 $alipayService->cashWith($cash_with_money, $procedures_fee, $account);
             } else if($method == 'WeChat') {
-
+                $cash_with_money = '0.5';
+                $wechatService->cashWith($cash_with_money, $procedures_fee, $account);
             } else {
                 throw new Exception('提现类型错误');
             }

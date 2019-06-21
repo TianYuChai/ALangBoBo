@@ -1,5 +1,5 @@
 @extends('home.public.subject')
-@section('title', '阿朗博波-个人商务中心')
+@section('title', '阿朗博波-注销账户')
 @section('css')
     @parent
     <link rel="stylesheet" type="text/css" href="{{ asset('home/common/bootstrap.min.css') }}"><!--可无视-->
