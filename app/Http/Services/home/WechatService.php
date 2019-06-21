@@ -62,9 +62,25 @@ class WechatService extends BaseService
         $vailet = $this->vailet();
         $data = $vailet->all();
         Log::info('保证金---微信异步回调处理', [
-            'data' => $data
+            'data' => $data['data']['return_code']
         ]);
-        return $vailet->success();
+//        if($data['return_code'] == 'SUCCESS' || $data['result_code'] == 'SUCCESS'
+//            && $data['app_id'] == $this->config['app_id']) {
+//            $item = $this->capitalmode::where([
+//                'order_id' => strval($data['out_trade_no']),
+//                'category' => 300,
+//                'status' => 1002
+//            ])->first();
+//            Log::info('订单：'.strval($data['out_trade_no']).'执行中');
+//            if($item) {
+//                $item->status = 1003;
+//                $item->trans_at = getTime();
+//                $item->due_at = Carbon::now()->modify('+30 days')->toDateTimeString();
+//                $item->save();
+//            }
+//            Log::info('保证金---支付宝异步回调处理----------end');
+//        }
+        return Pay::wechat($this->config)->success();
     }
 
     /**
