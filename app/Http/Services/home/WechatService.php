@@ -8,6 +8,7 @@
 namespace App\Http\Services\home;
 
 use App\Http\Models\currency\CapitalModel;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Yansongda\Pay\Pay;
 use Exception;
@@ -26,19 +27,19 @@ class WechatService extends BaseService
     {
         try {
             $order_id = create_order_no();
-//        $item = $this->capitalmode::create([
-//            'uid' => $this->userId,
-//            'order_id' => $order_id,
-//            'money' => $data['money'],
-//            'trade_mode' => 'Wechat',
-//            'memo' => '保证金充值',
-//            'category' => 300,
-//            'status' => 1002
-//        ]);
+            $item = $this->capitalmode::create([
+                'uid' => $this->userId,
+                'order_id' => $order_id,
+                'money' => $money,
+                'trade_mode' => 'Wechat',
+                'memo' => '保证金充值',
+                'category' => 300,
+                'status' => 1002
+            ]);
             $order = [
-                'out_trade_no' => $order_id,
+                'out_trade_no' => $item->order_id,
                 'total_fee' => bcmul('0.01', 100),
-                'body' => '保证金充值',
+                'body' => '阿朗博博商务中心---保证金充值',
             ];
             $this->config['notify_url'] = route('index.wx.notify');
             $wechat = Pay::wechat($this->config)->scan($order);
@@ -61,25 +62,22 @@ class WechatService extends BaseService
     {
         $vailet = $this->vailet();
         $data = $vailet->all();
-        Log::info('保证金---微信异步回调处理', [
-            'data' => $data['return_code']
-        ]);
-//        if($data['return_code'] == 'SUCCESS' || $data['result_code'] == 'SUCCESS'
-//            && $data['app_id'] == $this->config['app_id']) {
-//            $item = $this->capitalmode::where([
-//                'order_id' => strval($data['out_trade_no']),
-//                'category' => 300,
-//                'status' => 1002
-//            ])->first();
-//            Log::info('订单：'.strval($data['out_trade_no']).'执行中');
-//            if($item) {
-//                $item->status = 1003;
-//                $item->trans_at = getTime();
-//                $item->due_at = Carbon::now()->modify('+30 days')->toDateTimeString();
-//                $item->save();
-//            }
-//            Log::info('保证金---支付宝异步回调处理----------end');
-//        }
+        if($data['return_code'] == 'SUCCESS' || $data['result_code'] == 'SUCCESS'
+            && $data['app_id'] == $this->config['app_id']) {
+            $item = $this->capitalmode::where([
+                'order_id' => strval($data['out_trade_no']),
+                'category' => 300,
+                'status' => 1002
+            ])->first();
+            Log::info('订单：'.strval($data['out_trade_no']).'执行中');
+            if($item) {
+                $item->status = 1003;
+                $item->trans_at = getTime();
+                $item->due_at = Carbon::now()->modify('+30 days')->toDateTimeString();
+                $item->save();
+            }
+            Log::info('保证金---微信异步回调处理结束');
+        }
         return Pay::wechat($this->config)->success();
     }
 
