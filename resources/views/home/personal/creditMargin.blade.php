@@ -148,7 +148,7 @@
                 obj[val['name']] = val['value'];
             });
             if(!$('.layui-layer-msg').length) {
-                let pay_method = $('select[name="method"]').val();
+                let pay_method = obj['method'];
                 $.ajax({
                     headers: {
                         'X-CSRF-TOKEN': "{{ csrf_token() }}"

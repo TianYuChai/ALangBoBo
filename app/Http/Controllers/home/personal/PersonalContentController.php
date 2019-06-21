@@ -268,8 +268,7 @@ class PersonalContentController extends BaseController
      */
     public function cashWithdrawal(Request $request,
                                    AlipayService $alipayService,
-                                   LoginService $loginService,
-                                   WechatService $wechatService)
+                                   LoginService $loginService)
     {
         try {
             $method = trim($request->input('method', ''));

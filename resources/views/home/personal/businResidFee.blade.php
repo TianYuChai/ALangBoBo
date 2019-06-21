@@ -140,6 +140,7 @@
                 obj[val['name']] = val['value'];
             });
             if(!$('.layui-layer-msg').length) {
+                let pay_method = obj['method'];
                 $.ajax({
                     headers: {
                         'X-CSRF-TOKEN': "{{ csrf_token() }}"
@@ -149,14 +150,27 @@
                     data:obj,
                     dateType:'html',
                     success:function (res) {
-                        $('body').append(res);
-                        $("form").attr("target", "_blank");
-                        // if(res.status == 200) {
-                        //     layer.msg(res.info);
-                        //     setTimeout(function () {
-                        //         window.location.reload();
-                        //     }, 300)
-                        // }
+                        if(pay_method == 'WeChat') {
+                            layer.open({
+                                type: 1,
+                                closeBtn: false,
+                                title: '微信支付',
+                                skin: 'layui-layer-rim', //加上边框
+                                area: ['420px', '300px'], //宽高
+                                btn: ['完成'],
+                                btnAlign: 'c',
+                                content: '<svg class="ewmImg" ' +
+                                    'style="width: 200px;margin: 20px auto;display: block;" src="'+ res +'"></svg>',
+                                yes:function(index){
+                                    layer.close(index);
+                                    window.location.reload();
+                                }
+
+                            })
+                        } else {
+                            $('body').append(res);
+                            $("form").attr("target", "_blank");
+                        }
                     },
                     error:function (XMLHttpRequest, textStatus, errorThrown) {
                         //返回提示信息

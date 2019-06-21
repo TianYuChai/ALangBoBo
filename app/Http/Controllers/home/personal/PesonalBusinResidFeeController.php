@@ -12,11 +12,13 @@ use App\Http\Models\currency\CapitalModel;
 use App\Http\Models\currency\MerchantModel;
 use App\Http\Models\setup\SettledModel;
 use App\Http\Services\home\persanal\businAlipayService;
-use Carbon\Carbon;
+use App\Http\Services\home\persanal\businWechatService;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Exception;
 use Log;
+
 class PesonalBusinResidFeeController extends BaseController
 {
     const ROUTE = HOME_PERSONAL;
@@ -61,7 +63,7 @@ class PesonalBusinResidFeeController extends BaseController
      * @param businAlipayService $alipayService
      * @return \Illuminate\Http\JsonResponse|\Symfony\Component\HttpFoundation\Response
      */
-    public function pay(Request $request, businAlipayService $alipayService)
+    public function pay(Request $request, businAlipayService $alipayService, businWechatService $wechatService)
     {
         try {
             $method = trim($request->input('method', ''));
@@ -73,7 +75,7 @@ class PesonalBusinResidFeeController extends BaseController
             if($method == 'Alipay') {
                 $result = $alipayService->entrance($item);
             } else if($method == 'WeChat') {
-
+                $result = QrCode::size(150)->generate($wechatService->entrance($item));
             } else {
                 throw new Exception('类别错误');
             }
@@ -87,9 +89,9 @@ class PesonalBusinResidFeeController extends BaseController
     }
 
     /**
-     * 异步回调
+     * 支付宝异步回调
      *
-     * @param AlipayService $alipayService
+     * @param businAlipayService $alipayService
      * @return mixed
      */
     public function notify(businAlipayService $alipayService)
@@ -98,6 +100,25 @@ class PesonalBusinResidFeeController extends BaseController
             $result = $alipayService->notify();
         } catch (Exception $e) {
             Log::info('支付宝异步回调错误:' . $e->getMessage());
+        }
+        return $result;
+    }
+
+    /**
+     * 微信异步回调
+     *
+     * @param businWechatService $wechatService
+     * @return mixed
+     */
+    public function wxnotify(businWechatService $wechatService)
+    {
+        try {
+            $result = $wechatService->notify();
+        } catch (Exception $e) {
+            Log::info('微信入驻费异步回调: ', [
+               'time' => getTime(),
+               'info' => $e->getMessage()
+            ]);
         }
         return $result;
     }
