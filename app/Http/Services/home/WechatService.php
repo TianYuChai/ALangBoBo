@@ -99,7 +99,7 @@ class WechatService extends BaseService
      * @param $account
      * @return bool
      */
-    public function cashWith($money, $procedures_fee, $account)
+    public function  cashWith($money, $procedures_fee, $account)
     {
         $order_id = create_order_no();
         $item = $this->capitalmode::create([
@@ -120,7 +120,6 @@ class WechatService extends BaseService
             'desc' => '帐户提现',                  //付款说明
         ];
         $wechat = Pay::wechat($this->config)->transfer($order);
-        dd($wechat);
 //        if($alipay['msg'] == 'Success') {
 //            $this->capitalmode::where('order_id', $alipay['out_biz_no'])->update(['status' => 1001]);
 //        }

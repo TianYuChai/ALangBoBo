@@ -223,7 +223,6 @@
                     '                                            <div class="inline-block receiveFormaddress">\n' +
                     '                                                <select name="method">\n' +
                     '                                                    <option value="Alipay">支付宝</option>\n' +
-                    '                                                    <option value="WeChat">微信</option>\n' +
                     '                                                </select>\n' +
                     '                                            </div>\n' +
                     '                                        </div>\n' +
@@ -237,7 +236,7 @@
                     '                                           <input type="text" class="mobile" name="account" autocomplete="off" style="width: 240px">' +
                     '                                    </div> <div class="receiveNameDiv mgt-20" style="text-align:left">' +
                     '                                                             <span class="receiveStar"></span>' +
-                    '                                                               <span style="color: red">请填入正确账号，根据提现方式不同，填入不同的账号</span>' +
+                    '                                                               <span style="color: red">请填入正确提现账号</span>' +
                     '                                                       </div>' +
                     '                                    <div class="receiveNameDiv mgt-20" style="text-align:left">' +
                     '                                    <span class="receiveStar">*</span>手机号：<span style="color: red">验证码会发送到绑定的手机上请注意查收</span></div>' +
@@ -267,9 +266,9 @@
                     if(val['value'] < 100) {
                         layer.msg('提现金额需大于100元'); return false;
                     }
-                    // if(val['value'] > money) {
-                    //     layer.msg('大于可提现金额'); return false;
-                    // }
+                    if(val['value'] > money) {
+                        layer.msg('大于可提现金额'); return false;
+                    }
                 }
                 if(val['name'] == 'code' && (val['value'].length < 6 || val['value'].length > 6)) {
                     layer.msg('验证码错误'); return false;
@@ -286,10 +285,10 @@
                     data:obj,
                     success:function (res) {
                         if(res.status == 200) {
-                            // layer.msg(res.info);
-                            // setTimeout(function () {
-                            //     window.location.reload();
-                            // }, 300)
+                            layer.msg(res.info);
+                            setTimeout(function () {
+                                window.location.reload();
+                            }, 300)
                         }
                     },
                     error:function (XMLHttpRequest, textStatus, errorThrown) {
