@@ -122,6 +122,7 @@ class shoppingController extends BaseController
                 }
             }
             $data = array_values($data);
+            dd($data);
             return view('home.shopp_car', compact('data'));
         } catch (Exception $e) {
             Log::info('购物车: ', [
