@@ -54,9 +54,9 @@ class shoppingService extends BaseService
                 if($item->uid == $this->user->id) {
                     throw new Exception('商家不可购买自己店铺的商品');
                 }
-                if($item->presell_time && $item->presell_time < getTime('ymd')) {
-                    throw new Exception($item->title. ', 该商品为预售商品, 并未到达售卖时间');
-                }
+//                if($item->presell_time && $item->presell_time < getTime('ymd')) {
+//                    throw new Exception($item->title. ', 该商品为预售商品, 并未到达售卖时间');
+//                }
                 if($num > $item->stocks) {
                     throw new Exception($item->title.', 商品超出可售范围');
                 }

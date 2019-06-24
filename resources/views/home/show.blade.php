@@ -37,7 +37,7 @@
                 @if($item->presell_time && $item->presell_time > getTime('ymd'))
                     <p class="advanceSaleTip">
                         <img src="{{ asset('home/images/icon/advanceSaleIcon.png') }}" alt=""/>
-                        预售商品, 出售日期：{{ $item->presell_time }}
+                        预售商品, 发货日期：{{ $item->presell_time }}
                     </p>
                 @endif
                 <div class="clothesPriceDiv">
@@ -109,9 +109,7 @@
                     <input type="radio" name="buyWay" class="shijiao" value="paidin"/>实缴
                 </div>
                 <div class="mgt-30 buyBtn">
-                    @if(!$item->presell_time || $item->presell_time < getTime())
-                        <a href="javascript:void(0)" class="buyNow">立即购买</a>
-                    @endif
+                    <a href="javascript:void(0)" class="buyNow">立即购买</a>
                     <a href="javascript:void(0)" class="addCar relative addshop"><i></i>加入购物车</a>
                 </div>
             </div>
