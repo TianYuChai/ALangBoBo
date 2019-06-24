@@ -51,9 +51,11 @@
                                                     </div>
                                                 </td>
                                                 <td class="shopAttr" width="200">
-                                                    @foreach($value['goods_attribute'] as $v)
-                                                        <p>{{ $v['name'] }}：{{ $v['value'] }}</p>
-                                                    @endforeach
+                                                    @if($value['goods_attribute'] != 'null')
+                                                        @foreach($value['goods_attribute'] as $v)
+                                                            <p>{{ $v['name'] }}：{{ $v['value'] }}</p>
+                                                        @endforeach
+                                                    @endif
                                                 </td>
                                                 <td class="price" width="150">￥<span>{{ $value->goods->total_price }}</span></td>
                                                 <td class="number" width="150">
