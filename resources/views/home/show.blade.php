@@ -76,7 +76,7 @@
                         </span>
                     </p>
                 @endif
-                @if(!$item->attributes->isEmpty())
+                @if(!$item->attributes)
                     @foreach($item->attributes as $key => $attributes)
                         <ul class="pdl-10 mgt-20 attribute">
                             <li>
