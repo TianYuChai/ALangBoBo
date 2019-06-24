@@ -45,7 +45,9 @@ class PersonalHaveGoodsController extends BaseController
                                 CapitalModel $capitalModel)
     {
         $this->middleware(function ($request, $next) use ($model, $orderModel, $evaluationModel, $capitalModel){
-            $this->userId = Auth::guard('web')->user()->id;
+            if(Auth::guard('web')->check()) {
+                $this->userId = Auth::guard('web')->user()->id;
+            }
             $this->model = $model;
             $this->orderModel = $orderModel;
             $this->evaluationModel = $evaluationModel;
@@ -122,7 +124,6 @@ class PersonalHaveGoodsController extends BaseController
     public function delOrder($id)
     {
         try{
-            dd($this->userId);
             $this->model::where([
                 'id' => intval($id),
                 'uid' => $this->userId,
