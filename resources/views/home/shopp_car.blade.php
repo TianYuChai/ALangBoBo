@@ -51,7 +51,7 @@
                                                     </div>
                                                 </td>
                                                 <td class="shopAttr" width="200">
-                                                    @if($value['goods_attribute'] != 'null')
+                                                    @if(!empty($value['goods_attribute']))
                                                         @foreach($value['goods_attribute'] as $v)
                                                             <p>{{ $v['name'] }}：{{ $v['value'] }}</p>
                                                         @endforeach

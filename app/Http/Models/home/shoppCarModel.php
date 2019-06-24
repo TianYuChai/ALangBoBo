@@ -36,6 +36,9 @@ class shoppCarModel extends Model
      */
     public function getGoodsAttributeAttribute()
     {
+        if($this->attribute == 'null') {
+            return [];
+        }
         $attributes = json_decode($this->attribute);
         $result = [];
         $items = goodsAttributeModel::whereIn('id', $attributes)->get();
