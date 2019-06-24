@@ -293,6 +293,7 @@
                 obj['method'] = $(this).val();
             }
         });
+        let pay_method = obj['method'];
         $.ajax({
             headers: {
                 'X-CSRF-TOKEN': "{{ csrf_token() }}"
@@ -301,8 +302,12 @@
             url:"{{ route("shopp.shopp.store", ['order_id' => $data['orders']['order_id']]) }}",
             data:obj,
             success:function (res) {
-                $('body').append(res);
-                $("form").attr("target", "_blank");
+                if(pay_method == 'WeChat') {
+
+                } else {
+                    $('body').append(res);
+                    $("form").attr("target", "_blank");
+                }
             },
             error:function (XMLHttpRequest, textStatus, errorThrown) {
                 //返回提示信息

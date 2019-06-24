@@ -210,7 +210,7 @@ class shoppPayService extends BaseService
             $alipay = Pay::alipay($this->config)->web($order);
             return $alipay;
         } catch (Exception $e) {
-            Log::info('订单支付：', [
+            Log::info('支付宝订单支付：', [
                 'time' => getTime(),
                 'order_id' => $data->order_id,
                 'info' => $e->getMessage()
@@ -219,6 +219,24 @@ class shoppPayService extends BaseService
         }
     }
 
+    /**
+     *
+     * @param $data
+     * @throws Exception
+     */
+    public function wechat($data)
+    {
+        try {
+
+        } catch (Exception $e) {
+            Log::info('微信订单支付:', [
+                'time' => getTime(),
+                'order_id' => $data->order_id,
+                'info' => $e->getMessage()
+            ]);
+            throw new Exception('请联系管理员', 510);
+        }
+    }
     /**
      * 订单支付回调
      *

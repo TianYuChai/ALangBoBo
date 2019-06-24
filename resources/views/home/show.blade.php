@@ -76,20 +76,22 @@
                         </span>
                     </p>
                 @endif
-                @foreach($item->attributes as $key => $attributes)
-                    <ul class="pdl-10 mgt-20 attribute">
-                        <li>
-                            <span class="productAttrFont attrWidth mgt-10">{{ $key }}</span>
-                            <ul class="sizeAttrList clearfix">
-                                @foreach($attributes as $k => $attribute)
-                                    <li class="@if($k == 0) sizeActive @endif sizeBtn" data-id="{{ $attribute['id'] }}">
-                                        <p>{{ $attribute['value'] }}</p>
-                                    </li>
-                                @endforeach
-                            </ul>
-                        </li>
-                    </ul>
-                @endforeach
+                @if(!$item->attributes->isEmpty())
+                    @foreach($item->attributes as $key => $attributes)
+                        <ul class="pdl-10 mgt-20 attribute">
+                            <li>
+                                <span class="productAttrFont attrWidth mgt-10">{{ $key }}</span>
+                                <ul class="sizeAttrList clearfix">
+                                    @foreach($attributes as $k => $attribute)
+                                        <li class="@if($k == 0) sizeActive @endif sizeBtn" data-id="{{ $attribute['id'] }}">
+                                            <p>{{ $attribute['value'] }}</p>
+                                        </li>
+                                    @endforeach
+                                </ul>
+                            </li>
+                        </ul>
+                    @endforeach
+                @endif
                 <ul class="clearfix mgt-20 detailNum pdl-10">
                     <li class="fl fontStyle mgr-20 productAttrFont">数量</li>
                     <li class="mgr-10 fl">
