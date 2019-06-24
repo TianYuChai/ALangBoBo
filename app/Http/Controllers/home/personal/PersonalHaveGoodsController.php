@@ -124,7 +124,6 @@ class PersonalHaveGoodsController extends BaseController
     public function delOrder($id)
     {
         try{
-            dd($id, $this->userId);
             $this->model::where([
                 'id' => intval($id),
                 'uid' => $this->userId,
