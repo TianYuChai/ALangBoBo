@@ -423,16 +423,16 @@
             var that = $(this);
             monitor(that, 'account');
         });
-        // /*监听-姓名*/
-        // $('.name').blur(function() {
-        //     var that = $(this);
-        //     monitor(that, 'name');
-        // });
-        // /*监听-身份证号*/
-        // $('input[name="id"]').blur(function() {
-        //     var that = $(this);
-        //     monitor(that, 'id');
-        // });
+        /*监听-姓名*/
+        $('.name').blur(function() {
+            var that = $(this);
+            monitor(that, 'name');
+        });
+        /*监听-身份证号*/
+        $('input[name="id"]').blur(function() {
+            var that = $(this);
+            monitor(that, 'id');
+        });
         /*监听-号码*/
         // .bind("input propertychange",
         $('.mobile').blur(function() {
@@ -448,6 +448,9 @@
             }
             var data = {};
             data[parameter] = val;
+            if(category != 0) {
+                data['category'] = category;
+            }
             $.ajax({
                 headers: {
                     'X-CSRF-TOKEN': "{{ csrf_token() }}"

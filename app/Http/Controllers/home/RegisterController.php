@@ -64,7 +64,17 @@ class RegisterController extends BaseController
             ];
             $where = array_unique(array_diff($data, array("")));
             if(!empty($where)) {
-                $item = UserModel::where($where)->where('status', '!=', 3)->first();
+                if($where['card'] != '' || $where['name'] != '') {
+                    $category = $request->category;
+                    if($where['card'] != '') {
+                        $query = UserModel::where('card', $where['card']);
+                    } else {
+                        $query = UserModel::where('name', $where['name']);
+                    }
+                    $item = $query->where('category', $category)->first();
+                } else {
+                    $item = UserModel::where($where)->where('status', '!=', 3)->first();
+                }
                 if($item) {
                    throw new Exception('已存在');
                 }
