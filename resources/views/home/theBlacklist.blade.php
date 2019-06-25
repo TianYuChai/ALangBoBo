@@ -36,7 +36,13 @@
                     <ul class="blackListUl-sj clearfix">
                        @foreach($data['merchants'] as $item)
                             <li>
-                                <p>店铺名称：<span>{{ $item->user->merchant['shop_name'] }}</span></p>
+                                <p>{{ $item->user->merchant['shop_name'] }}：<span>
+                                        @if($item->user->merchant['credit_code'] != '')
+                                            {{ $item->user->merchant['credit_code'] }}
+                                        @else
+                                            {{ $item->user->card }}
+                                        @endif
+                                    </span></p>
                                 <p>黑名单原因 ：<span>{{ $item['why'] }}</span></p>
                                 <p>处理结果 ：<span>{{ $item['result'] }}</span></p>
                                 <p>禁止营业时间：<span>{{ $item['end_time'] }}</span></p>
