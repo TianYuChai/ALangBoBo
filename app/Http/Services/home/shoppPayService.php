@@ -178,7 +178,7 @@ class shoppPayService extends BaseService
                 'status' => 300,
                 'timeout' => Carbon::now()->modify('+30 days')->toDateTimeString()
             ]);
-            return ['info' => '支付完成', 'url' => ''];
+            return ['info' => '支付完成', 'url' => route('personal.havegoods', ['type' => 'allOrder'])];
         } catch (Exception $e) {
             Log::info('认缴订单处理流程：', [
                'time' => getTime(),
@@ -198,11 +198,10 @@ class shoppPayService extends BaseService
      */
     public function alipay($data)
     {
-        dd($data);
         try {
             $order = [
                 'out_trade_no' => $data->order_id,
-                'total_amount' => $data->moneys,
+                'total_amount' => $data->paidin_prices,
                 'subject' => '阿郎博波商务中心',
                 'body' => '商品购买',
             ];
