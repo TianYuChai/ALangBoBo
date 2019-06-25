@@ -7,6 +7,7 @@
  */
 namespace App\Http\Controllers\home;
 
+use App\Http\Models\currency\MerchantModel;
 use App\Http\Models\currency\UserModel;
 use App\Http\Requests\home\RegisterRequest;
 use App\Http\Services\home\RegisterService;
@@ -60,7 +61,8 @@ class RegisterController extends BaseController
                 'account' => trim($request->account),
                 'name' => trim($request->name),
                 'card' => trim($request->id),
-                'number' => trim($request->mobile)
+                'number' => trim($request->mobile),
+                'shehuidaima' => trim($request->shehuiDaima)
             ];
             $where = array_unique(array_diff($data, array("")));
             if(!empty($where)) {
@@ -72,6 +74,8 @@ class RegisterController extends BaseController
                         $query = UserModel::where('name', $where['name']);
                     }
                     $item = $query->where('category', $category)->first();
+                } elseif ($where['shehuidaima'] != '') {
+                    $item = MerchantModel::where('credit_code', $where['shehuidaima'])->first();
                 } else {
                     $item = UserModel::where($where)->where('status', '!=', 3)->first();
                 }

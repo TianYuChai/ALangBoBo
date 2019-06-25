@@ -380,6 +380,11 @@
             var that = $(this);
             monitor(that, 'name');
         });
+        /*监听-营业执照*/
+        $('input[name="shehuiDaima"]').blur(function () {
+            var that = $(this);
+            monitor(that, 'shehuiDaima');
+        });
         /*监听-提交*/
         function monitor(that, parameter)
         {

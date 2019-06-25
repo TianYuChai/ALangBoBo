@@ -212,7 +212,7 @@
                                                     <select class="form-control" name="address">
                                                         <option value="">不选择，则为地址信息中设置的默认发货地址</option>
                                                         @foreach($address as $address)
-                                                            <option value="{{ $address->id }}">{{ $address->address }}</option>
+                                                            <option value="{{ $address->id }}">{{ $address->address . '/' . $address->detailed}}</option>
                                                         @endforeach
                                                     </select>
                                                 </div>

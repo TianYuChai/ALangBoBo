@@ -72,6 +72,21 @@
                             <form class="cmxform" id="receiveForm">
                                 <fieldset class="fieldset clearfix">
                                     <div class="receiveNameDiv mgt-20" style="text-align:left">
+                                        到期时间：
+                                        <div  class="distpicker inline-block">
+                                            <div class="inline-block receiveFormaddress">
+                                               <span>
+                                                   @if(Auth::guard('web')->user()->merchant->due_at != '0000-00-00 00:00:00' ||
+                                                   Auth::guard('web')->user()->merchant->due_at != '')
+                                                        {{ Auth::guard('web')->user()->merchant->due_at }}
+                                                   @else
+                                                       未缴纳入驻费
+                                                   @endif
+                                               </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="receiveNameDiv mgt-20" style="text-align:left">
                                         <span class="receiveStar">*</span>充值方式：
                                         <div  class="distpicker inline-block">
                                             <div class="inline-block receiveFormaddress">

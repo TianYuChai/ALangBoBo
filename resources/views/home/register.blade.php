@@ -433,6 +433,11 @@
             var that = $(this);
             monitor(that, 'id');
         });
+        /*监听-营业执照*/
+        $('input[name="shehuiDaima"]').blur(function () {
+            var that = $(this);
+            monitor(that, 'shehuiDaima');
+        });
         /*监听-号码*/
         // .bind("input propertychange",
         $('.mobile').blur(function() {
