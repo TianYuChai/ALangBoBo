@@ -448,6 +448,7 @@
             }
             var data = {};
             data[parameter] = val;
+            data['category'] = category;
             $.ajax({
                 headers: {
                     'X-CSRF-TOKEN': "{{ csrf_token() }}"
