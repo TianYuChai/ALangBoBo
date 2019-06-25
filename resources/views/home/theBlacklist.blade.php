@@ -51,8 +51,8 @@
                     <ul class="blackListUl-mj clearfix">
                         @foreach($data['users'] as $value)
                             <li>
-                                <p>{{ $item->user['name'] }}：<span>{{ $item->user['number'] }}</span></p>
-                                <p>身份证号码：<span>{{ $item->user['card'] }}</span></p>
+                                <p>{{ !empty($item->user) ? $item->user['name'] : '' }}：<span>{{ !empty($item->user) ? $item->user['number'] : '' }}</span></p>
+                                <p>身份证号码：<span>{{ !empty($item->user) ? $item->user['card'] : '' }}</span></p>
                                 <p>黑名单原因 ：<span>{{ $item->why }}</span></p>
                                 <p>处理结果 ：<span>{{ $item->result }}</span></p>
                             </li>
