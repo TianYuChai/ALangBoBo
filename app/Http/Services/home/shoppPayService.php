@@ -17,6 +17,7 @@ use Carbon\Carbon;
 use Exception;
 use Illuminate\Support\Facades\DB;
 use Log;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
 use Yansongda\Pay\Pay;
 
 class shoppPayService extends BaseService
@@ -36,6 +37,7 @@ class shoppPayService extends BaseService
         $this->shareStatisticsModel = $shareStatisticsModel;
         $this->addressModel = $addressModel;
         $this->config = config('alipay.pay');
+        $this->wxconfig = config('wechat.pay');
     }
 
     public function entrance($order_id, $data)
@@ -57,7 +59,8 @@ class shoppPayService extends BaseService
             if($data['method'] == 'Alipay') {
                 return $this->alipay($item);
             } else if($data['method'] == 'WeChat'){
-
+                $result = $this->wechat($item);
+                return QrCode::size(150)->generate($result);
             } else {
                 throw new Exception('支付类型错误, 请重新选择', 510);
             }
@@ -220,6 +223,7 @@ class shoppPayService extends BaseService
     }
 
     /**
+     * 微信支付
      *
      * @param $data
      * @throws Exception
@@ -227,7 +231,15 @@ class shoppPayService extends BaseService
     public function wechat($data)
     {
         try {
+            $order = [
+                'out_trade_no' => $data->order_id,
+                'total_fee' => $data->paidin_price,
+                'body' => '阿朗博博商务中心---商品购买',
+            ];
 
+            $this->wxconfig['notify_url'] = route('index.order.wxnotify');
+            $wechat = Pay::wechat($this->wxconfig)->scan($order);
+            return $wechat['code_url'];
         } catch (Exception $e) {
             Log::info('微信订单支付:', [
                 'time' => getTime(),
@@ -237,6 +249,7 @@ class shoppPayService extends BaseService
             throw new Exception('请联系管理员', 510);
         }
     }
+
     /**
      * 订单支付回调
      *
@@ -265,6 +278,41 @@ class shoppPayService extends BaseService
             return Pay::alipay($this->config)->success();
         } catch (Exception $e) {
             Log::info('支付宝支付回调:', [
+                'time' => getTime(),
+                'info' => $e->getMessage()
+            ]);
+        }
+    }
+
+    /**
+     * 微信回调
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function wxnotify()
+    {
+        try {
+            $vailet = Pay::wechat($this->wxconfig)->verify();
+            $data = $vailet->all();
+            if($data['return_code'] == 'SUCCESS' || $data['result_code'] == 'SUCCESS'
+                && $data['app_id'] == $this->wxconfig['app_id']) {
+                Log::info('微信商品支付返回参数', [
+                    'data' => $data
+                ]);
+                $item = $this->orderModel::where([
+                    'order_id' => strval($data['out_trade_no']),
+                    'status' => 2001
+                ])->first();
+                $item->status = 2101;
+                $item->timeout = Carbon::now()->modify('+30 days')->toDateTimeString();
+                $item->save();
+                Log::info('订单微信回调处理结束', [
+                    'order_id' => $data['out_trade_no']
+                ]);
+            }
+            return Pay::wechat($this->wxconfig)->success();
+        } catch (Exception $e) {
+            Log::info('微信支付回调:', [
                 'time' => getTime(),
                 'info' => $e->getMessage()
             ]);

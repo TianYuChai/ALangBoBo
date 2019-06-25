@@ -281,4 +281,21 @@ class shoppingController extends BaseController
         }
         return $result;
     }
+
+    /**
+     * 微信
+     * 异步回调
+     *
+     * @param shoppingService $shoppingService
+     * @return mixed
+     */
+    public function wxnotify(shoppPayService $shoppPayService)
+    {
+        try {
+            $result = $shoppPayService->wxnotify();
+        } catch (Exception $e) {
+            Log::info('微信异步回调错误:' . $e->getMessage());
+        }
+        return $result;
+    }
 }

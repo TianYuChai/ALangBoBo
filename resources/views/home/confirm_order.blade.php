@@ -302,11 +302,40 @@
             url:"{{ route("shopp.shopp.store", ['order_id' => $data['orders']['order_id']]) }}",
             data:obj,
             success:function (res) {
-                if(pay_method == 'WeChat') {
+                try {
+                    if(typeof res != "object") {
+                        if(pay_method == 'WeChat') {
+                            layer.open({
+                                type: 1,
+                                closeBtn: false,
+                                title: '微信支付',
+                                skin: 'layui-layer-rim', //加上边框
+                                area: ['420px', '300px'], //宽高
+                                btn: ['完成'],
+                                btnAlign: 'c',
+                                content: '<svg class="ewmImg" ' +
+                                    'style="width: 200px;margin: 20px auto;display: block;" src="'+ res +'"></svg>',
+                                yes:function(index){
+                                    layer.close(index);
+                                    window.location.href = '{!! route('personal.havegoods', ['type' => 'allOrder']) !!}';
+                                }
 
-                } else {
-                    $('body').append(res);
-                    $("form").attr("target", "_blank");
+                            })
+                        } else {
+                            $('body').append(res);
+                            $("form").attr("target", "_blank");
+                        }
+                    } else {
+                        layer.msg(res.info);
+                        setTimeout(function () {
+                            window.location.href = res.url;
+                        }, 500);
+                    }
+                } catch (e) {
+                    layer.msg(res.info);
+                    setTimeout(function () {
+                        window.location.href = res.url;
+                    }, 500);
                 }
             },
             error:function (XMLHttpRequest, textStatus, errorThrown) {
