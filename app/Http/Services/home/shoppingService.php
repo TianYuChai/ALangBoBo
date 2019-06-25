@@ -144,6 +144,7 @@ class shoppingService extends BaseService
     {
         try {
             if($data == 'subscribed') {
+                dd(intval(bcmul($this->user->frozen_capital, 100)));
                 if(intval(bcmul($this->user->frozen_capital, 100)) < 0) {
                     throw new Exception('该购买方式下, 请先充值保证金');
                 }
