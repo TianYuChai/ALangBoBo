@@ -18,6 +18,7 @@ class partTimeModel extends Model
     protected $guarded = ['id'];
 
     public static $_SETTLE = [
+        11 => '次',
         12 => '月',
         13 => '天',
         14 => '小时'

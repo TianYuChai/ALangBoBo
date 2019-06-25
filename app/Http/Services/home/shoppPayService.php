@@ -198,6 +198,7 @@ class shoppPayService extends BaseService
      */
     public function alipay($data)
     {
+        dd($data);
         try {
             $order = [
                 'out_trade_no' => $data->order_id,
