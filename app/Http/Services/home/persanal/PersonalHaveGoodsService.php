@@ -61,7 +61,7 @@ class PersonalHaveGoodsService extends BaseService
             }
             if($item->order->pay_method == 'Alipay') {
                 $order = [
-                    'out_trade_no' => $item->order_id,
+                    'out_trade_no' => create_order_no(),
                     'total_amount' => $item->moneys,
                     'extra_common_param' => $item->id,
                     'subject' => '阿郎博波商务中心',
@@ -89,7 +89,7 @@ class PersonalHaveGoodsService extends BaseService
                 && $data['app_id'] == $this->config['app_id']) {
                 $item = $this->model::where([
                     'id' => intval($data['extra_common_param']),
-                    'order_id' => strval($data['out_trade_no']),
+//                    'order_id' => strval($data['out_trade_no']),
                     'pay_method' => 'subscribed'
                 ])->where('timeout', '!=', '0000-00-00 00:00:00')->first();
                 $item->timeout = '';

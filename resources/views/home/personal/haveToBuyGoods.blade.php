@@ -216,7 +216,7 @@
                                                                 <a href="javascript:void(0)" class="order_show" data-action="{{ route('personal.havegoods.show', ['id' => $item->id]) }}">订单详情</a>
                                                         </td>
                                                         <td class="pd-20">
-                                                            @if($item->pay_method != 200 && $item->pay_method == 'subscribed'
+                                                        @if($item->pay_method != 200 && $item->pay_method == 'subscribed'
                                                             && $item->timeout != '0000-00-00 00:00:00')
                                                                 <a href="javascript:void(0)" data-url="{{ route('personal.havegoods.pay', ['id' => $item->id]) }}" class="payMoneyBtn">立即付款</a>
                                                             @endif
@@ -241,6 +241,11 @@
                                                                         <a class="deleteBtn" href="{{ url('details', ['id' => $item->sid]) }}">再次购买</a>
                                                                     @break
                                                                 @endswitch
+                                                                {{--@if($item->status != 600)--}}
+                                                                        {{--<a href="javascript:void(0)"--}}
+                                                                           {{--data-url="{{ route('personal.havegoods.pay', ['id' => $item->id]) }}"--}}
+                                                                           {{--class="payMoneyBtn">投诉与建议</a>--}}
+                                                                {{--@endif--}}
                                                                 @if($item->pay_method == 'paidin' || $item->pay_method == 'subscribed' && $item->timeout == '0000-00-00 00:00:00')
                                                                     @if(in_array($item->status, [300, 400]))
                                                                             <a href="javascript:void(0)" class="deleteBtn refund" data-action="{{ route('personal.havegoods.refundorder', ['id' => $item->id]) }}">申请退款</a>
