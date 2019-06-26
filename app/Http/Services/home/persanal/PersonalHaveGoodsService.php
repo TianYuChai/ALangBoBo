@@ -56,7 +56,7 @@ class PersonalHaveGoodsService extends BaseService
             if($item->order->pay_method == 'Alipay') {
                 $result = $shoppPayService->alipay([
                     'order_id' => create_order_no(),
-                    'extra_common_param' => $item->id,
+                    'passback_params' => $item->id,
                     'paidin_prices' => $item->moneys,
                 ]);
             } else {
@@ -74,11 +74,10 @@ class PersonalHaveGoodsService extends BaseService
                 $order = [
                     'out_trade_no' => create_order_no(),
                     'total_amount' => $item->moneys,
-                    'extra_common_param' => $item->id,
+                    'passback_params' => $item->id,
                     'subject' => '阿郎博波商务中心',
                     'body' => '认缴订单完成支付',
                 ];
-                dd($order);
                 $this->config['notify_url'] = route('index.subscribed.notify');
                 $this->config['return_url'] = route('personal.havegoods', ['type' => 'allOrder']);
                 $result = Pay::alipay($this->config)->web($order);
@@ -105,7 +104,7 @@ class PersonalHaveGoodsService extends BaseService
                     'data' => $data
                 ]);
                 $item = $this->model::where([
-                    'id' => intval($data['extra_common_param']),
+                    'id' => intval($data['passback_params']),
 //                    'order_id' => strval($data['out_trade_no']),
                     'pay_method' => 'subscribed'
                 ])->where('timeout', '!=', '0000-00-00 00:00:00')->first();

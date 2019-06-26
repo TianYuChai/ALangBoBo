@@ -208,8 +208,8 @@ class shoppPayService extends BaseService
                 'subject' => '阿郎博波商务中心',
                 'body' => '商品购买',
             ];
-            if(isset($data['extra_common_param'])) {
-                $order['extra_common_param'] = $data['extra_common_param'];
+            if(isset($data['passback_params'])) {
+                $order['passback_params '] = $data['passback_params '];
             }
             $this->config['notify_url'] = route('index.order.notify');
             $this->config['return_url'] = route('personal.creditmargin');
@@ -269,8 +269,8 @@ class shoppPayService extends BaseService
             $data = $vailet->all();
             if($data['trade_status'] == 'TRADE_SUCCESS' || $data['trade_status'] == 'TRADE_FINISHED'
                 && $data['app_id'] == $this->config['app_id']) {
-                    if(isset($data['extra_common_param']) && !empty($data['extra_common_param'])) {
-                        $this->processing($data['extra_common_param']);
+                    if(isset($data['passback_params ']) && !empty($data['passback_params '])) {
+                        $this->processing($data['passback_params ']);
                     } else {
                         $item = $this->orderModel::where([
                             'order_id' => strval($data['out_trade_no']),
