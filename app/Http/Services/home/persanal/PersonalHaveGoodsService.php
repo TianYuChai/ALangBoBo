@@ -78,6 +78,7 @@ class PersonalHaveGoodsService extends BaseService
                     'subject' => '阿郎博波商务中心',
                     'body' => '认缴订单完成支付',
                 ];
+                dd($order);
                 $this->config['notify_url'] = route('index.subscribed.notify');
                 $this->config['return_url'] = route('personal.havegoods', ['type' => 'allOrder']);
                 $result = Pay::alipay($this->config)->web($order);
