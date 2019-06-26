@@ -203,13 +203,13 @@ class shoppPayService extends BaseService
     {
         try {
             $order = [
-                'out_trade_no' => $data->order_id,
-                'total_amount' => $data->paidin_prices,
+                'out_trade_no' => $data['order_id'],
+                'total_amount' => $data['paidin_prices'],
                 'subject' => '阿郎博波商务中心',
                 'body' => '商品购买',
             ];
-            if(isset($data->extra_common_param)) {
-                $order['extra_common_param'] = $data->extra_common_param;
+            if(isset($data['extra_common_param'])) {
+                $order['extra_common_param'] = $data['extra_common_param'];
             }
             $this->config['notify_url'] = route('index.order.notify');
             $this->config['return_url'] = route('personal.creditmargin');

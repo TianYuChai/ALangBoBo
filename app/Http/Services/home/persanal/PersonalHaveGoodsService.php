@@ -53,12 +53,11 @@ class PersonalHaveGoodsService extends BaseService
         }
         if($item->pay_method == 'paidin') {
             if($item->order->pay_method == 'Alipay') {
-                dd(collect([
+                $result = $shoppPayService->alipay([
                     'order_id' => create_order_no(),
                     'extra_common_param' => $item->id,
                     'paidin_prices' => $item->moneys,
-                ]));
-                $result = $shoppPayService->alipay();
+                ]);
             }
         } else {
             if($item->timeout == '0000-00-00 00:00:00') {
