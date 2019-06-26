@@ -46,7 +46,6 @@ class PersonalOrderController extends BaseController
         $status = self::$types[$type];
         $order_id = trim(Input::get('order_id', ''));
         $items = $this->model::where(function ($query) use ($status) {
-            $query->where('gid', $this->user->id);
             if(!empty($status)) {
                 if(!is_array($status)) {
                     $query->where('status', $status);
@@ -56,7 +55,9 @@ class PersonalOrderController extends BaseController
             } else {
                 $query->whereIn('status', [300, 400, 500, 600]);
             }
-        })->SearchOrderId($order_id)->orderBy('status', 'asc')->paginate(parent::$page_limit);
+        })->where('gid', $this->user->id)
+            ->SearchOrderId($order_id)
+            ->orderBy('status', 'asc')->paginate(parent::$page_limit);
         $data = [
             'type' => $type,
             'items' => $items
