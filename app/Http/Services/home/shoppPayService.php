@@ -235,10 +235,13 @@ class shoppPayService extends BaseService
     {
         try {
             $order = [
-                'out_trade_no' => $data->order_id,
-                'total_fee' => $data->paidin_price,
+                'out_trade_no' => $data['order_id'],
+                'total_fee' => $data['paidin_price'],
                 'body' => '阿朗博博商务中心---商品购买',
             ];
+            if(isset($data['attach'])) {
+                $order['attach'] = $data['attach'];
+            }
             $this->wxconfig['notify_url'] = route('index.order.wxnotify');
             $wechat = Pay::wechat($this->wxconfig)->scan($order);
             return $wechat['code_url'];
@@ -267,31 +270,7 @@ class shoppPayService extends BaseService
             if($data['trade_status'] == 'TRADE_SUCCESS' || $data['trade_status'] == 'TRADE_FINISHED'
                 && $data['app_id'] == $this->config['app_id']) {
                     if(isset($data['extra_common_param']) && !empty($data['extra_common_param'])) {
-                        $item = $this->shoppOrderModel::where([
-                            'id' => intval($data['extra_common_param']),
-                            'status' => 200
-                        ])->first();
-                        $orders = $this->shoppOrderModel::where([
-                            'order_id' => strval($item->order_id),
-                            'status' => 200
-                        ])->where('id', '!=', $item->id)->get();
-                        if($orders->isEmpty()) {
-                            $this->orderModel::where([
-                                'order_id' => strval($item->order_id),
-                                'status' => 2001
-                            ])->first()->update([
-                                'status' => 2101,
-                                'timeout' => Carbon::now()->modify('+30 days')->toDateTimeString()
-                            ]);
-                        } else {
-                            shareStatisticsModel::where([
-                                'order_id' => $item->order_id,
-                                'g_order_id' => $item->id,
-                                'status' => 200,
-                            ])->update(['status' => 300]);
-                        }
-                        $item->status = 300;
-                        $item->save();
+                        $this->processing($data['extra_common_param']);
                     } else {
                         $item = $this->orderModel::where([
                             'order_id' => strval($data['out_trade_no']),
@@ -329,13 +308,17 @@ class shoppPayService extends BaseService
                 Log::info('微信商品支付返回参数', [
                     'data' => $data
                 ]);
-                $item = $this->orderModel::where([
-                    'order_id' => strval($data['out_trade_no']),
-                    'status' => 2001
-                ])->first();
-                $item->status = 2101;
-                $item->timeout = Carbon::now()->modify('+30 days')->toDateTimeString();
-                $item->save();
+                if(isset($data['attach']) && !empty($data['attach'])) {
+                    $this->processing($data['attach']);
+                } else {
+                    $item = $this->orderModel::where([
+                        'order_id' => strval($data['out_trade_no']),
+                        'status' => 2001
+                    ])->first();
+                    $item->status = 2101;
+                    $item->timeout = Carbon::now()->modify('+30 days')->toDateTimeString();
+                    $item->save();
+                }
                 Log::info('订单微信回调处理结束', [
                     'order_id' => $data['out_trade_no']
                 ]);
@@ -344,6 +327,48 @@ class shoppPayService extends BaseService
         } catch (Exception $e) {
             Log::info('微信支付回调:', [
                 'time' => getTime(),
+                'info' => $e->getMessage()
+            ]);
+        }
+    }
+
+    /**
+     * 子订单支付
+     *
+     * @param $id
+     */
+    public function processing($id)
+    {
+        try {
+            $item = $this->shoppOrderModel::where([
+                'id' => intval($id),
+                'status' => 200
+            ])->first();
+            $orders = $this->shoppOrderModel::where([
+                'order_id' => strval($item->order_id),
+                'status' => 200
+            ])->where('id', '!=', $item->id)->get();
+            if($orders->isEmpty()) {
+                $this->orderModel::where([
+                    'order_id' => strval($item->order_id),
+                    'status' => 2001
+                ])->first()->update([
+                    'status' => 2101,
+                    'timeout' => Carbon::now()->modify('+30 days')->toDateTimeString()
+                ]);
+            } else {
+                shareStatisticsModel::where([
+                    'order_id' => $item->order_id,
+                    'g_order_id' => $item->id,
+                    'status' => 200,
+                ])->update(['status' => 300]);
+            }
+            $item->status = 300;
+            $item->save();
+        } catch (Exception $e) {
+            Log::info('子订单支付', [
+                'time' => getTime(),
+                'order_id' => $id,
                 'info' => $e->getMessage()
             ]);
         }

@@ -218,11 +218,14 @@
                                                         <td class="pd-20">
                                                         @if($item->pay_method != 200 && $item->pay_method == 'subscribed'
                                                             && $item->timeout != '0000-00-00 00:00:00')
-                                                                <a href="javascript:void(0)" data-url="{{ route('personal.havegoods.pay', ['id' => $item->id]) }}" class="payMoneyBtn">立即付款</a>
+                                                                <a href="javascript:void(0)"
+                                                                   data-url="{{ route('personal.havegoods.pay', ['id' => $item->id]) }}"
+                                                                   class="payMoneyBtn" data-method="{{ $item->order->pay_method }}">立即付款</a>
                                                             @endif
                                                             @if(in_array($item->status, [200]))
                                                                 <a href="javascript:void(0)"
                                                                    data-url="{{ route('personal.havegoods.pay', ['id' => $item->id]) }}"
+                                                                   data-method="{{ $item->order->pay_method }}"
                                                                    class="payMoneyBtn">立即付款</a>
                                                                 <a href="javascript:void(0)" class="deleteBtn del_order" data-action="{{ route('personal.havegoods.delorder', ['id' => $item->id]) }}">取消订单</a>
                                                             @elseif(in_array($item->status, [300, 400, 500, 600]))
@@ -646,6 +649,7 @@
         /*支付*/
         $('.payMoneyBtn').click(function () {
             let url = $(this).data('url');
+            let pay_method = $(this).data('method');
             $.ajax({
                 headers: {
                     'X-CSRF-TOKEN': "{{ csrf_token() }}"
@@ -654,8 +658,12 @@
                 url:url,
                 data:"",
                 success:function (res) {
-                    $('body').append(res);
-                    $("form").attr("target", "_blank");
+                    if(pay_method == 'Alipay') {
+                        $('body').append(res);
+                        $("form").attr("target", "_blank");
+                    } else {
+
+                    }
                 },
                 error:function (XMLHttpRequest, textStatus, errorThrown) {
                     //返回提示信息

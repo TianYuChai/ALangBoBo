@@ -15,6 +15,7 @@ use App\Http\Services\home\BaseService;
 use App\Http\Services\home\shoppPayService;
 use function Couchbase\defaultDecoder;
 use Exception;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
 use Yansongda\Pay\Pay;
 use Log;
 
@@ -58,6 +59,12 @@ class PersonalHaveGoodsService extends BaseService
                     'extra_common_param' => $item->id,
                     'paidin_prices' => $item->moneys,
                 ]);
+            } else {
+                $result = QrCode::size(150)->generate($shoppPayService->wechat([
+                    'order_id' => create_order_no(),
+                    'attach' => $item->id,
+                    'paidin_prices' => $item->money,
+                ]));
             }
         } else {
             if($item->timeout == '0000-00-00 00:00:00') {
@@ -74,6 +81,8 @@ class PersonalHaveGoodsService extends BaseService
                 $this->config['notify_url'] = route('index.subscribed.notify');
                 $this->config['return_url'] = route('personal.havegoods', ['type' => 'allOrder']);
                 $result = Pay::alipay($this->config)->web($order);
+            } else {
+
             }
         }
         return $result;
@@ -96,6 +105,9 @@ class PersonalHaveGoodsService extends BaseService
 //                    'order_id' => strval($data['out_trade_no']),
                     'pay_method' => 'subscribed'
                 ])->where('timeout', '!=', '0000-00-00 00:00:00')->first();
+                Log::info('认缴订单支付宝异步回调', [
+                    'data' => $item->toArray()
+                ]);
                 $item->timeout = '';
                 $item->save();
                 if($item->satatus == 500) {
@@ -104,7 +116,7 @@ class PersonalHaveGoodsService extends BaseService
                         'order_id' => $item->order_id,
                         'g_order_id' => $item->id,
                         'money' => bcsub($item->moneys, $item->satisfiedfees, 2),
-                        'trade_mode' => $item->pay_method,
+                        'trade_mode' => $item->order->pay_method,
                         'memo' => '用户备注:' . empty($item->memo) ? '无, 平台备注: 用户下单支付订单' :
                             $item->memo. ','. '平台备注: 用户下单支付订单',
                         'category' => 500,

@@ -56,7 +56,7 @@ class shoppOrderModel extends Model
                             'order_id' => $query->order_id,
                             'g_order_id' => $query->id,
                             'money' => bcsub($query->moneys, $query->satisfiedfees, 2),
-                            'trade_mode' => $query->pay_method,
+                            'trade_mode' => $query->order->pay_method,
                             'memo' => '用户备注:' . empty($query->memo) ? '无, 平台备注: 用户下单支付订单' :
                                                 $query->memo. ','. '平台备注: 用户下单支付订单',
                             'category' => 500,
