@@ -54,7 +54,7 @@ class PersonalOrderController extends BaseController
                     $query->whereIn('status', $status);
                 }
             } else {
-                $query->whereIn('status', [300, 400]);
+                $query->whereIn('status', [300, 400, 500, 600]);
             }
         })->SearchOrderId($order_id)->orderBy('status', 'asc')->paginate(parent::$page_limit);
         $data = [
