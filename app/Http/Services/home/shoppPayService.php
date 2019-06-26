@@ -208,6 +208,9 @@ class shoppPayService extends BaseService
                 'subject' => '阿郎博波商务中心',
                 'body' => '商品购买',
             ];
+            if(isset($data->extra_common_param)) {
+                $order['extra_common_param'] = $data->extra_common_param;
+            }
             $this->config['notify_url'] = route('index.order.notify');
             $this->config['return_url'] = route('personal.creditmargin');
             $alipay = Pay::alipay($this->config)->web($order);
@@ -264,13 +267,41 @@ class shoppPayService extends BaseService
             $data = $vailet->all();
             if($data['trade_status'] == 'TRADE_SUCCESS' || $data['trade_status'] == 'TRADE_FINISHED'
                 && $data['app_id'] == $this->config['app_id']) {
-                    $item = $this->orderModel::where([
-                        'order_id' => strval($data['out_trade_no']),
-                        'status' => 2001
-                    ])->first();
-                    $item->status = 2101;
-                    $item->timeout = Carbon::now()->modify('+30 days')->toDateTimeString();
-                    $item->save();
+                    if(isset($data['extra_common_param']) && !empty($data['extra_common_param'])) {
+                        $item = $this->shoppOrderModel::where([
+                            'id' => intval($data['extra_common_param']),
+                            'status' => 200
+                        ])->first();
+                        $orders = $this->shoppOrderModel::where([
+                            'order_id' => strval($item->order_id),
+                            'status' => 200
+                        ])->where('id', '!=', $item->id)->get();
+                        if($orders->isEmpty()) {
+                            $this->orderModel::where([
+                                'order_id' => strval($item->order_id),
+                                'status' => 2001
+                            ])->first()->update([
+                                'status' => 2101,
+                                'timeout' => Carbon::now()->modify('+30 days')->toDateTimeString()
+                            ]);
+                        } else {
+                            shareStatisticsModel::where([
+                                'order_id' => $item->order_id,
+                                'g_order_id' => $item->id,
+                                'status' => 200,
+                            ])->update(['status' => 300]);
+                        }
+                        $item->status = 300;
+                        $item->save();
+                    } else {
+                        $item = $this->orderModel::where([
+                            'order_id' => strval($data['out_trade_no']),
+                            'status' => 2001
+                        ])->first();
+                        $item->status = 2101;
+                        $item->timeout = Carbon::now()->modify('+30 days')->toDateTimeString();
+                        $item->save();
+                    }
                 Log::info('订单支付宝异步回调处理结束', [
                     'order_id' => $data['out_trade_no']
                 ]);

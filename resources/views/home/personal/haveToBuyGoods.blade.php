@@ -241,11 +241,11 @@
                                                                         <a class="deleteBtn" href="{{ url('details', ['id' => $item->sid]) }}">再次购买</a>
                                                                     @break
                                                                 @endswitch
-                                                                {{--@if($item->status != 600)--}}
-                                                                        {{--<a href="javascript:void(0)"--}}
-                                                                           {{--data-url="{{ route('personal.havegoods.pay', ['id' => $item->id]) }}"--}}
-                                                                           {{--class="payMoneyBtn">投诉与建议</a>--}}
-                                                                {{--@endif--}}
+                                                                @if($item->status != 600)
+                                                                        <a href="javascript:void(0)"
+                                                                           data-url="{{ route('personal.havegoods.pay', ['id' => $item->id]) }}"
+                                                                           class="payMoneyBtn complAndsugg">投诉与建议</a>
+                                                                @endif
                                                                 @if($item->pay_method == 'paidin' || $item->pay_method == 'subscribed' && $item->timeout == '0000-00-00 00:00:00')
                                                                     @if(in_array($item->status, [300, 400]))
                                                                             <a href="javascript:void(0)" class="deleteBtn refund" data-action="{{ route('personal.havegoods.refundorder', ['id' => $item->id]) }}">申请退款</a>
@@ -676,6 +676,10 @@
                     }
                 }
             });
-        })
+        });
+        /*投诉与建议*/
+        $('.complAndsugg').click(function () {
+            
+        });
     </script>
 @endsection
