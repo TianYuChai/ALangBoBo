@@ -296,4 +296,23 @@ class PersonalHaveGoodsController extends BaseController
         }
         return $result;
     }
+
+    /**
+     * 微信回调
+     *
+     * @param PersonalHaveGoodsService $service
+     * @return \Illuminate\Http\JsonResponse|\Symfony\Component\HttpFoundation\Response
+     */
+    public function wxnotify(PersonalHaveGoodsService $service)
+    {
+        try {
+            $result = $service->wxnotify();
+        } catch (Exception $e) {
+            return $this->ajaxReturn([
+                'status' => 510,
+                'info' => $e->getMessage()
+            ], 510);
+        }
+        return $result;
+    }
 }

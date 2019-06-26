@@ -32,6 +32,7 @@ Route::group(['namespace' => 'home'], function () {
     Route::post('wxnotify', ['as' => 'index.wx.notify', 'uses' => 'personal\PersonalCreditMarginController@wxnotify']);
     Route::post('busin/wxnotify', ['as' => 'index.busin.wxnotify', 'uses' => 'personal\PesonalBusinResidFeeController@wxnotify']);
     Route::post('order/wxnotify', ['as' => 'index.order.wxnotify', 'uses' => 'shoppingController@wxnotify']);
+    Route::post('subscribed/order/wxnotify', ['as' => 'index.subscribed.wxnotify', 'uses' => 'personal\PersonalHaveGoodsController@wxnotify']);
 });
 /**
  * 前台管理路由设置
