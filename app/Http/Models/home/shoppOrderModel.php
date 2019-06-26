@@ -51,23 +51,29 @@ class shoppOrderModel extends Model
                         'g_order_id' => $query->id,
                     ])->update(['status' => $query->getDirty()['status']]);
                     if($status == 500 && $query->pay_method == 'paidin') {
-                        CapitalModel::where([
+                        CapitalModel::create([
+                            'uid' => $query->gid,
                             'order_id' => $query->order_id,
-                            'q_order_id' =>  $query->id,
+                            'g_order_id' => $query->id,
+                            'money' => bcsub($query->moneys, $query->satisfiedfees, 2),
+                            'trade_mode' => $query->pay_method,
+                            'memo' => '用户备注:' . empty($query->memo) ? '无, 平台备注: 用户下单支付订单' :
+                                                $query->memo. ','. '平台备注: 用户下单支付订单',
                             'category' => 500,
-                            'status' => 1003
-                        ])->update(['status' => 1001]);
+                            'status' => 1001,
+                            'trans_at' => $query->created_at,
+                        ]);
                     }
                     if(in_array($status, [100, 900])) {
                         /*取消订单同时, 撤回对应流水以及商品库存*/
                         DB::beginTransaction();
                         try {
-                            CapitalModel::where([
-                                'order_id' => $query->order_id,
-                                'g_order_id' => $query->id,
-                                'category' => 500,
-                                'status' => 1003
-                            ])->update(['status' => 1002]);
+//                            CapitalModel::where([
+//                                'order_id' => $query->order_id,
+//                                'g_order_id' => $query->id,
+//                                'category' => 500,
+//                                'status' => 1003
+//                            ])->update(['status' => 1002]);
                             $item = GoodsModel::where('id', $query->sid)->sharedLock()->first();
                             $item->sold = bcsub()($item->sold, $query->num);
                             $item->save();

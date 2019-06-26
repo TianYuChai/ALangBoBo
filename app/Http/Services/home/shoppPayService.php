@@ -114,7 +114,7 @@ class shoppPayService extends BaseService
     {
         DB::beginTransaction();
         try {
-            $capitai = [];
+//            $capitai = [];
             $share = [];
             $items = $this->shopp_orderModel::where([
                 'order_id' => $order_id,
@@ -122,19 +122,19 @@ class shoppPayService extends BaseService
                 'status' => 200
             ])->get();
             foreach ($items as $item) {
-                $capitai[] = [
-                    'uid' => $item->gid,
-                    'order_id' => $item->order_id,
-                    'g_order_id' => $item->id,
-                    'money' => $item->moneys,
-                    'trade_mode' => $data['method'],
-                    'memo' => '用户备注:' . empty($item->memo) ? '无, 平台备注: 用户下单支付订单' : $item->memo. ','. '平台备注: 用户下单支付订单',
-                    'category' => 500,
-                    'status' => 1003,
-                    'trans_at' => getTime(),
-                    'created_at' => getTime(),
-                    'updated_at' => getTime()
-                ];
+//                $capitai[] = [
+//                    'uid' => $item->gid,
+//                    'order_id' => $item->order_id,
+//                    'g_order_id' => $item->id,
+//                    'money' => $item->moneys,
+//                    'trade_mode' => $data['method'],
+//                    'memo' => '用户备注:' . empty($item->memo) ? '无, 平台备注: 用户下单支付订单' : $item->memo. ','. '平台备注: 用户下单支付订单',
+//                    'category' => 500,
+//                    'status' => 1003,
+//                    'trans_at' => getTime(),
+//                    'created_at' => getTime(),
+//                    'updated_at' => getTime()
+//                ];
                 if($item->referees) {
                     $share[] = [
                         'gid' => $item->gid,
@@ -147,7 +147,7 @@ class shoppPayService extends BaseService
                     ];
                 }
             }
-            $this->capitalModel::insert($capitai);
+//            $this->capitalModel::insert($capitai);
             if(!empty($share)) {
                 $this->shareStatisticsModel::insert($share);
             }

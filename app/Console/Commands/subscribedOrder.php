@@ -49,13 +49,26 @@ class subscribedOrder extends Command
                                             ->whereIn('status', [300, 400, 500, 600])
                                             ->where('timeout', '<', getTime())
                                             ->get();
-           $capitals = CapitalModel::whereIn('g_order_id', $items->pluck('id')->toArray())->get();
            foreach ($items as $item) {
                $user = UserModel::where('id', $item->uid)->first();
                if($item->moneys < $user->frozen_capital) {
-                   $capital = $capitals->where('g_order_id', $item->id)->first();
-                   $capital->status = 1001;
-                   $capital->save();
+                   if($item->status < 600) {
+                       $moneys = bcsub($item->moneys, $item->satisfiedfees, 2);
+                   } else {
+                       $moneys = $item->moneys;
+                   }
+                   CapitalModel::create([
+                       'uid' => $item->gid,
+                       'order_id' => $item->order_id,
+                       'g_order_id' => $item->id,
+                       'money' => $moneys,
+                       'trade_mode' => $item->pay_method,
+                       'memo' => '用户备注:' . empty($item->memo) ? '无, 平台备注: 用户下单支付订单' :
+                           $item->memo. ','. '平台备注: 用户下单支付订单',
+                       'category' => 500,
+                       'status' => 1001,
+                       'trans_at' => $item->created_at,
+                   ]);
                    $item->timeout = '';
                    $item->save();
                    CapitalModel::create([

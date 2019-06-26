@@ -196,29 +196,37 @@ class PersonalHaveGoodsController extends BaseController
             if($satisfaction_value < 100) {
                 $calcul = bcdiv($satisfaction_value, 1000, 2);
                 $refund = bcsub($item->satisfied_fees, bcmul($item->satisfied_fees, $calcul, 2), 2);
-                $available_money = UserModel::where('id', $item->gid)->first()->availablemoney;
-                if($available_money > $refund) {
-                    $this->capitalModel::create([
-                        'uid' => $this->userId,
-                        'order_id' => $item->order_id,
-                        'money' => $refund,
-                        'trade_mode' => $item->order->pay_method,
-                        'memo' => '满意度评价返回金额',
-                        'category' => 400,
-                        'g_order_id' => $item->id,
-                        'status' => 1001
-                    ]);
-                    $this->capitalModel::create([
-                        'uid' => $item->gid,
-                        'order_id' => $item->order_id,
-                        'money' => '-'. $refund,
-                        'trade_mode' => $item->order->pay_method,
-                        'memo' => '满意度评价返回给用户金额',
-                        'category' => 500,
-                        'g_order_id' => $item->id,
-                        'status' => 1001
-                    ]);
-                }
+                $this->capitalModel::create([
+                    'uid' => $this->userId,
+                    'order_id' => $item->order_id,
+                    'money' => $refund,
+                    'trade_mode' => $item->order->pay_method,
+                    'memo' => '满意度评价返回金额',
+                    'category' => 400,
+                    'g_order_id' => $item->id,
+                    'status' => 1001
+                ]);
+                $this->capitalModel::create([
+                    'uid' => $item->gid,
+                    'order_id' => $item->order_id,
+                    'money' => bcmul($item->satisfied_fees, $calcul, 2),
+                    'trade_mode' => $item->order->pay_method,
+                    'memo' => '满意度评价返回给用户金额',
+                    'category' => 500,
+                    'g_order_id' => $item->id,
+                    'status' => 1001
+                ]);
+            } else {
+                $this->capitalModel::create([
+                    'uid' => $item->gid,
+                    'order_id' => $item->order_id,
+                    'money' => $item->satisfied_fees,
+                    'trade_mode' => $item->order->pay_method,
+                    'memo' => '满意度评价金额',
+                    'category' => 500,
+                    'g_order_id' => $item->id,
+                    'status' => 1001
+                ]);
             }
             $this->evaluationModel::create([
                 'sid' => $item->sid,

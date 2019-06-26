@@ -62,7 +62,7 @@ class PersonalHaveGoodsService extends BaseService
             if($item->order->pay_method == 'Alipay') {
                 $order = [
                     'out_trade_no' => $item->order_id,
-                    'total_amount' => '1',
+                    'total_amount' => $item->moneys,
                     'extra_common_param' => $item->id,
                     'subject' => '阿郎博波商务中心',
                     'body' => '认缴订单完成支付',
@@ -94,13 +94,20 @@ class PersonalHaveGoodsService extends BaseService
                 ])->where('timeout', '!=', '0000-00-00 00:00:00')->first();
                 $item->timeout = '';
                 $item->save();
-                $this->capitalModel::where([
-                    'order_id' => strval($data['out_trade_no']),
-                    'g_order_id' => intval($data['extra_common_param']),
-                    'category' => 500,
-                    'status' => 1003,
-                    'uid' => $item->gid
-                ])->update(['status' => 1001]);
+                if($item->satatus == 500) {
+                    $this->capitalModel::create([
+                        'uid' => $item->gid,
+                        'order_id' => $item->order_id,
+                        'g_order_id' => $item->id,
+                        'money' => bcsub($item->moneys, $item->satisfiedfees, 2),
+                        'trade_mode' => $item->pay_method,
+                        'memo' => '用户备注:' . empty($item->memo) ? '无, 平台备注: 用户下单支付订单' :
+                            $item->memo. ','. '平台备注: 用户下单支付订单',
+                        'category' => 500,
+                        'status' => 1001,
+                        'trans_at' => $item->created_at,
+                    ]);
+                }
                 Log::info('认缴订单支付宝异步回调处理结束', [
                     'order_id' => $data['out_trade_no']
                 ]);
