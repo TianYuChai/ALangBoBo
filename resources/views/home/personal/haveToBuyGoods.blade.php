@@ -662,7 +662,22 @@
                         $('body').append(res);
                         $("form").attr("target", "_blank");
                     } else {
+                        layer.open({
+                            type: 1,
+                            closeBtn: false,
+                            title: '微信支付',
+                            skin: 'layui-layer-rim', //加上边框
+                            area: ['420px', '300px'], //宽高
+                            btn: ['完成'],
+                            btnAlign: 'c',
+                            content: '<svg class="ewmImg" ' +
+                                'style="width: 200px;margin: 20px auto;display: block;" src="'+ res +'"></svg>',
+                            yes:function(index){
+                                layer.close(index);
+                                window.location.reload();
+                            }
 
+                        })
                     }
                 },
                 error:function (XMLHttpRequest, textStatus, errorThrown) {

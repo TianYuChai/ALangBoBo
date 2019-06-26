@@ -194,7 +194,7 @@ class PersonalHaveGoodsController extends BaseController
             }
             $satisfaction_value = explode('%', $satisfaction)[0];
             if($satisfaction_value < 100) {
-                $calcul = bcdiv($satisfaction_value, 1000, 2);
+                $calcul = bcdiv($satisfaction_value, 100, 2);
                 $shopp_money = bcdiv(bcmul($item->satisfied_fees, $calcul, 2), 10, 2);
                 $refund = bcsub($item->satisfied_fees, $shopp_money, 2);
                 $this->capitalModel::create([
@@ -205,7 +205,8 @@ class PersonalHaveGoodsController extends BaseController
                     'memo' => '满意度评价返回金额',
                     'category' => 400,
                     'g_order_id' => $item->id,
-                    'status' => 1001
+                    'status' => 1001,
+                    'created_at' => getTime()
                 ]);
                 $this->capitalModel::create([
                     'uid' => $item->gid,
@@ -215,7 +216,8 @@ class PersonalHaveGoodsController extends BaseController
                     'memo' => '满意度评价返回给用户金额',
                     'category' => 500,
                     'g_order_id' => $item->id,
-                    'status' => 1001
+                    'status' => 1001,
+                    'created_at' => getTime()
                 ]);
             } else {
                 $this->capitalModel::create([
