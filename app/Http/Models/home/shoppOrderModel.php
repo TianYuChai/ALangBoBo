@@ -196,7 +196,12 @@ class shoppOrderModel extends Model
      */
     public function getAddresssAttribute()
     {
-        return json_decode($this->address, true)[0];
+        $result = json_decode($this->address, true);
+        if(is_array($result)) {
+            return $result[0];
+        } else {
+            return $result;
+        }
     }
     /**
      * 支付方式
