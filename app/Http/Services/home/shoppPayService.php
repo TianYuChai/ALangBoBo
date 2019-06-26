@@ -239,7 +239,6 @@ class shoppPayService extends BaseService
                 'total_fee' => $data->paidin_price,
                 'body' => '阿朗博博商务中心---商品购买',
             ];
-
             $this->wxconfig['notify_url'] = route('index.order.wxnotify');
             $wechat = Pay::wechat($this->wxconfig)->scan($order);
             return $wechat['code_url'];
