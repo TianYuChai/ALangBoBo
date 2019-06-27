@@ -65,4 +65,9 @@ class IndexService extends BaseService
                                 ->groupBy('sid')->orderBy('ids', 'desc')->limit(6)->get();
         return GoodsModel::whereIn('id', $shopp_order_goods->pluck('sid')->toArray())->get();
     }
+
+    public function goodBusiness()
+    {
+
+    }
 }

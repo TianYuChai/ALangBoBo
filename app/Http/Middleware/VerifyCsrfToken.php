@@ -20,6 +20,7 @@ class VerifyCsrfToken extends Middleware
         'wxnotify',
         'busin/wxnotify',
         'order/wxnotify',
-        'subscribed/order/wxnotify'
+        'subscribed/order/wxnotify',
+        'demand/wxnotify'
     ];
 }

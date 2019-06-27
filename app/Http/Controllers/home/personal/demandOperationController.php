@@ -10,6 +10,7 @@ namespace App\Http\Controllers\home\personal;
 use App\Http\Controllers\home\BaseController;
 use App\Http\Models\currency\CapitalModel;
 use App\Http\Models\home\demandModel;
+use BaconQrCode\Encoder\QrCode;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -284,12 +285,12 @@ class demandOperationController extends BaseController
      */
     protected function pay($data, $pay_method)
     {
-        $cofig = config('alipay.pay');
         try {
             if($pay_method == 'Alipay') {
+                $cofig = config('alipay.pay');
                 $order = [
                     'out_trade_no' => $data->order_id,
-                    'total_amount' => '0.05',
+                    'total_amount' => $data->moneys,
                     'subject' => '阿郎博波商务中心',
                     'body' => '百录倩影—需求支付',
                 ];
@@ -298,7 +299,15 @@ class demandOperationController extends BaseController
                 $alipay = Pay::alipay($cofig)->web($order);
                 return $alipay;
             } else if($pay_method == 'WeChat') {
-
+                $wxcofig = config('wechat.pay');
+                $order = [
+                    'out_trade_no' => $data->order_id,
+                    'total_fee' => $data->money,
+                    'body' => '阿朗博博商务中心-百录倩影-需求支付',
+                ];
+                $wxcofig['notify_url'] = route('index.demand.wxnotify');
+                $wechat = Pay::wechat($wxcofig)->scan($order);
+                return QrCode::size(150)->generate($wechat['code_url']);
             } else {
                 throw new Exception('支付方式错误');
             }
@@ -316,7 +325,7 @@ class demandOperationController extends BaseController
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    protected function aliNotify()
+    public function aliNotify()
     {
         try {
             $cofig = config('alipay.pay');
@@ -349,6 +358,50 @@ class demandOperationController extends BaseController
             return Pay::alipay($cofig)->success();
         } catch (Exception $e) {
             Log::info('支付宝支付回调:', [
+                'time' => getTime(),
+                'info' => $e->getMessage()
+            ]);
+        }
+    }
+
+    /**
+     * 微信支付回调
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function wxnotify()
+    {
+        try {
+            $cofig = config('wechat.pay');
+            $vailet = Pay::wechat($cofig)->verify();
+            $data = $vailet->all();
+            if($data['return_code'] == 'SUCCESS' || $data['result_code'] == 'SUCCESS'
+                && $data['app_id'] == $this->config['app_id']) {
+                $item = demandModel::where([
+                    'order_id' => strval($data['out_trade_no']),
+                    'status' => 302
+                ])->first();
+                $item->status = 303;
+                $item->timeout = Carbon::now()->modify('+'.$item->refund_timeout.' days')->toDateTimeString();
+                $item->save();
+                CapitalModel::create([
+                    'uid' => $item->uid,
+                    'order_id' => $item->order_id,
+                    'money' => $item->money,
+                    'trade_mode' => $item->pay_method,
+                    'memo' => '需求支付',
+                    'category' => 100,
+                    'g_order_id' => '',
+                    'status' => 1003
+                ]);
+                Log::info('百录倩影-订单微信异步回调处理结束', [
+                    'info' => '需求',
+                    'order_id' => $data['out_trade_no']
+                ]);
+            }
+            return Pay::wechat($cofig)->success();
+        } catch (Exception $e) {
+            Log::info('百录倩影-微信支付回调:', [
                 'time' => getTime(),
                 'info' => $e->getMessage()
             ]);
@@ -417,13 +470,14 @@ class demandOperationController extends BaseController
                 'status' => 1002,
                 'memo' => '支付完成'
             ]);
-            $calcul = bcdiv($high_array[0], 1000, 2);
-            $refund = bcsub($item->satisfaction_price, bcmul($item->satisfaction_price, $calcul, 2), 2);
+            $calcul = bcdiv($high_array[0], 10, 2);
+            $shopp_money = bcdiv(bcmul($item->satisfaction_price, $calcul, 2), 10, 2);
+            $refund = bcsub($item->satisfaction_price, $shopp_money, 2);
             if(intval($high_array[0]) != 100) {
                 CapitalModel::create([
                     'uid' => $this->user->id,
                     'order_id' => $item->order_id,
-                    'money' => $item->satisfaction_price - $refund,
+                    'money' => $refund,
                     'trade_mode' => $item->pay_method,
                     'memo' => '满意度评价返回金额',
                     'category' => 400,
@@ -431,13 +485,13 @@ class demandOperationController extends BaseController
                     'status' => 1001
                 ]);
             }
-            $moeys = ($item->moneys - ($item->satisfaction_price - $refund)) - $item->poundage_price;
+            $moeys = ($item->moneys - $refund) - $item->poundage_price;
             CapitalModel::create([
                 'uid' => $item->gid,
                 'order_id' => $item->order_id,
                 'money' => $moeys,
                 'trade_mode' => $item->pay_method,
-                'memo' => '总金额: '.$item->moneys.', 收到金额: '.$moeys.', 扣除平台手续费: '. $item->poundage_price. '评价金额:'.$item->satisfaction_price - $refund,
+                'memo' => '总金额: '.$item->moneys.', 收到金额: '.$moeys.', 扣除平台手续费: '. $item->poundage_price. '评价金额:'.$shopp_money,
                 'category' => 500,
                 'g_order_id' => '',
                 'status' => 1001

@@ -85,11 +85,11 @@
             <ul id="myTab" class="nav nav-tabs tabList">
                 <li class="active mgl-650">
                     <a href="#canyin1" data-toggle="tab">
-                        餐饮类1
+                        百录倩影系列
                     </a>
                 </li>
                 <li>
-                    <a href="#canyin2" data-toggle="tab">餐饮类2</a>
+                    <a href="#canyin2" data-toggle="tab">百货类</a>
                 </li>
                 <li>
                     <a href="#canyin3" data-toggle="tab">
