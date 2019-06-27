@@ -55,72 +55,29 @@
         <div class="hotGoodsShow relative">
             <p class="hotGoodsTittle">热卖产品展示区</p>
             <div class="wrap wrapperDiv">
-                <div class="fenye">
-                    <ul>
-                        <li class="xifenye" id="xifenye">
-                            <a id="xiye">1</a>/<a id="mo">3</a>
-                        </li>
-                        <li id="top" onclick="topclick()" class="leftArrow"><a href=""><</a></li>
-                        <li id="down" onclick="downclick()" class="rightArrow"><a href="">></a></li>
-                    </ul>
+                {{--<div class="fenye">--}}
+                    {{--<ul>--}}
+                        {{--<li class="xifenye" id="xifenye">--}}
+                            {{--<a id="xiye">1</a>/<a id="mo">{{ ceil(count($data['selling_goods']) / 6) }}</a>--}}
+                        {{--</li>--}}
+                        {{--<li id="top" onclick="topclick()" class="leftArrow"><a href="javascript:void(0)"><</a></li>--}}
+                        {{--<li id="down" onclick="downclick()" class="rightArrow"><a href="javascript:void(0)">></a></li>--}}
+                    {{--</ul>--}}
 
-                </div>
+                {{--</div>--}}
             </div>
             <ul class="hotGoodsList clearfix">
-                <li>
-                    <a href="" class="hotGoodsLink">
-                        <div class="imgDiv">
-                            <img src="../images/img/hotGood.png" alt=""/>
-                        </div>
-                        <p class="hotName">451升WIFI智能家用风冷无451升WIFI智能家用风冷无</p>
-                        <p class="hotPrice"><span class="priceIcon">￥</span>2999.00</p>
-                    </a>
-                </li>
-                <li>
-                    <a href="" class="hotGoodsLink">
-                        <div class="imgDiv">
-                            <img src="../images/img/hotGood.png" alt=""/>
-                        </div>
-                        <p class="hotName">451升WIFI智能家用风冷无451升WIFI智能家用风冷无</p>
-                        <p class="hotPrice"><span class="priceIcon">￥</span>2999.00</p>
-                    </a>
-                </li>
-                <li>
-                    <a href="" class="hotGoodsLink">
-                        <div class="imgDiv">
-                            <img src="../images/img/hotGood.png" alt=""/>
-                        </div>
-                        <p class="hotName">451升WIFI智能家用风冷无451升WIFI智能家用风冷无</p>
-                        <p class="hotPrice"><span class="priceIcon">￥</span>2999.00</p>
-                    </a>
-                </li>
-                <li>
-                    <a href="" class="hotGoodsLink">
-                        <div class="imgDiv">
-                            <img src="../images/img/hotGood.png" alt=""/>
-                        </div>
-                        <p class="hotName">451升WIFI智能家用风冷无451升WIFI智能家用风冷无</p>
-                        <p class="hotPrice"><span class="priceIcon">￥</span>2999.00</p>
-                    </a>
-                </li>
-                <li>
-                    <a href="" class="hotGoodsLink">
-                        <div class="imgDiv">
-                            <img src="../images/img/hotGood.png" alt=""/>
-                        </div>
-                        <p class="hotName">451升WIFI智能家用风冷无451升WIFI智能家用风冷无</p>
-                        <p class="hotPrice"><span class="priceIcon">￥</span>2999.00</p>
-                    </a>
-                </li>
-                <li>
-                    <a href="" class="hotGoodsLink">
-                        <div class="imgDiv">
-                            <img src="../images/img/hotGood.png" alt=""/>
-                        </div>
-                        <p class="hotName">451升WIFI智能家用风冷无451升WIFI智能家用风冷无</p>
-                        <p class="hotPrice"><span class="priceIcon">￥</span>2999.00</p>
-                    </a>
-                </li>
+                @foreach($data['selling_goods'] as $good)
+                    <li>
+                        <a href="{{ url('details', ['id' => $good->id]) }}" class="hotGoodsLink" target="_blank">
+                            <div class="imgDiv">
+                                <img src="{{ FileUpload::url('image', $good['cost_img']) }}" alt=""/>
+                            </div>
+                            <p class="hotName">{{ $good->title }}</p>
+                            <p class="hotPrice"><span class="priceIcon">￥</span>{{ $good->total_price }}</p>
+                        </a>
+                    </li>
+                @endforeach
             </ul>
         </div>
         <!--优秀商家展示区-->

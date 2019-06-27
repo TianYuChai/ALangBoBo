@@ -10,6 +10,9 @@ namespace App\Http\Services\home;
 
 use App\Http\Models\admin\goods\BannerModel;
 use App\Http\Models\admin\goods\goodsCategoryModel;
+use App\Http\Models\goods\GoodsModel;
+use App\Http\Models\home\shoppOrderModel;
+use Illuminate\Support\Facades\DB;
 
 class IndexService extends BaseService
 {
@@ -17,9 +20,11 @@ class IndexService extends BaseService
     {
         $categorys = $this->category();
         $banners = $this->banner();
+        $sellingGoods = $this->sellingGoods();
         return [
             'categorys' => $categorys,
-            'banners' => $banners
+            'banners' => $banners,
+            'selling_goods' => $sellingGoods
         ];
     }
 
@@ -47,5 +52,17 @@ class IndexService extends BaseService
         return BannerModel::where([
             'status' => 1
         ])->orderBy('sort', 'desc')->get(['image_url', 'url', 'sort']);
+    }
+
+    /**
+     * 热卖商品
+     *
+     * @return mixed
+     */
+    public function sellingGoods()
+    {
+        $shopp_order_goods = shoppOrderModel::select(DB::raw('*, count(id) as ids'))
+                                ->groupBy('sid')->orderBy('ids', 'desc')->limit(18)->get();
+        return GoodsModel::whereIn('id', $shopp_order_goods->pluck('sid')->toArray())->get();
     }
 }
