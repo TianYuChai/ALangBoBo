@@ -54,7 +54,7 @@
         <!--热卖产品展示区-->
         <div class="hotGoodsShow relative">
             <p class="hotGoodsTittle">热卖产品展示区</p>
-            <div class="wrap wrapperDiv">
+            {{--<div class="wrap wrapperDiv">--}}
                 {{--<div class="fenye">--}}
                     {{--<ul>--}}
                         {{--<li class="xifenye" id="xifenye">--}}
@@ -65,7 +65,7 @@
                     {{--</ul>--}}
 
                 {{--</div>--}}
-            </div>
+            {{--</div>--}}
             <ul class="hotGoodsList clearfix">
                 @foreach($data['selling_goods'] as $good)
                     <li>
