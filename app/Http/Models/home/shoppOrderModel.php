@@ -124,6 +124,9 @@ class shoppOrderModel extends Model
     public function getComplainAttribute()
     {
         $items = complainModel::where('g_order_id', $this->id)->get();
+        if($items->isEmpty()) {
+            return false;
+        }
         foreach ($items as $item) {
             if($item->uid == Auth::guard('web')->user()->id) {
                 return true;
