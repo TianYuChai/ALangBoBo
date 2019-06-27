@@ -127,6 +127,7 @@ class shoppOrderModel extends Model
         if($items->isEmpty()) {
             return false;
         }
+
         foreach ($items as $item) {
             if($item->uid == Auth::guard('web')->user()->id) {
                 return true;

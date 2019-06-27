@@ -51,6 +51,7 @@ Route::group(['namespace' => 'home', 'middleware' => 'listenState'], function ()
     Route::get('demand', 'demandController@index');
     Route::get('demand/{id}/show', ['as' => 'demand.show', 'uses' => 'demandController@show']);
     Route::get('button/{id}', ['as' => 'index.button', 'uses' => 'IndexController@button']);
+    Route::get('complain', 'complainsController@index');
     /*首页-注册*/
     Route::group(['middleware' => 'whiterlogin'], function () {
         Route::get('register', ['as' => 'index.register', 'uses' => 'RegisterController@index']);

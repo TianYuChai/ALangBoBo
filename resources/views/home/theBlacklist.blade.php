@@ -50,6 +50,9 @@
                        @endforeach
                     </ul>
                 </div>
+                <div class="tc paginationDiv">
+                    {!! $data['merchants']->links() !!}
+                </div>
                 <!--tab2 买家黑名单-->
                 <div class="tab-pane fade in" id="blackList-mj">
                     <!--黑名单内容不限-->
@@ -64,6 +67,9 @@
                             </li>
                         @endforeach
                     </ul>
+                </div>
+                <div class="tc paginationDiv">
+                    {!! $data['users']->links() !!}
                 </div>
             </div>
             <!--商家黑名单 发布黑名单弹框-->

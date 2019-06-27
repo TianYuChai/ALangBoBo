@@ -28,6 +28,9 @@ Route::group(['prefix' => 'backstage', 'namespace' => 'admin'], function () {
         Route::get('blackList/index', ['as' => 'backstage.blackList.index', 'uses' => 'other\blackListController@index']);
         Route::post('blackList/{id}/store', ['as' => 'backstage.blackList.store', 'uses' => 'other\blackListController@store']);
         Route::get('blackList/{id}/del', ['as' => 'backstage.blackList.del', 'uses' => 'other\blackListController@del']);
+        /*投诉与建议*/
+        Route::get('complain/index', ['as' => 'backstage.complain.index', 'uses' => 'other\complainController@index']);
+        Route::post('complain/{id}/{type}/handle', ['as' => 'backstage.complain.handle', 'uses' => 'other\complainController@handle']);
         /**
          * 会员管理
          */
@@ -47,6 +50,8 @@ Route::group(['prefix' => 'backstage', 'namespace' => 'admin'], function () {
             /*会员-注销申请*/
             Route::get('member/cancel/index', ['as' => 'backstage.cancel.index', 'uses' => 'MemberCancelController@index']);
             Route::get('member/cancel/{id}/agree', ['as' => 'backstage.cancel.agree', 'uses' => 'MemberCancelController@agree']);
+            /*会员-流水*/
+            Route::get('member/{id}/runningWater', ['as' => 'backstage.member.water', 'uses' => 'MemberController@runningWater']);
         });
 
         /**
@@ -107,6 +112,9 @@ Route::group(['prefix' => 'backstage', 'namespace' => 'admin'], function () {
                 Route::get('setup/issue/shopp_guide/{id}/duitedel', ['as' => 'backstage.shopp_guide.duitedel', 'uses' => 'issueController@duiteDel']);
                 Route::get('setup/issue/merchantService/index', ['as' => 'backstage.merchantService.index', 'uses' => 'issueController@merchantService']);
             });
+            /*客服设置*/
+            Route::get('kefu/index', ['as' => 'backstage.kefu.index', 'uses' => 'keFuController@index']);
+            Route::post('kefu/store', ['as' => 'backstage.kefu.store', 'uses' => 'keFuController@store']);
         });
     });
 });

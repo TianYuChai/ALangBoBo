@@ -118,6 +118,18 @@
                         </a>
                     </li>
                     <li>
+                        <a _href="{{ route('backstage.complain.index') }}">
+                            <i class="iconfont">&#xe6a7;</i>
+                            <cite>投诉与建议</cite>
+                        </a>
+                    </li>
+                    <li>
+                        <a _href="{{ route('backstage.kefu.index') }}">
+                            <i class="iconfont">&#xe6a7;</i>
+                            <cite>客服设置</cite>
+                        </a>
+                    </li>
+                    <li>
                         <a _href="{{ route('backstage.shopp_guide.index') }}">
                             <i class="iconfont">&#xe6a7;</i>
                             <cite>底部内容</cite>

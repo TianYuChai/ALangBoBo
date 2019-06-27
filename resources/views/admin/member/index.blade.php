@@ -130,6 +130,11 @@
                            href="javascript:void(0);">
                             <i class="layui-icon">&#xe63c;</i>
                         </a>
+                        <a title="查看流水"
+                           onclick="WeAdminShow('查看流水','{{ route('backstage.member.water', ['id' => $item->id]) }}')"
+                           href="javascript:void(0);">
+                            <i class="layui-icon">&#xe63c;</i>
+                        </a>
                         @if($item->status == 0)
                             @if(!empty($item->registerauditing))
                                 <span class="layui-btn layui-btn-normal layui-btn-xs layui-btn-disabled">

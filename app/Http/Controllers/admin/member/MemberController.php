@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\admin\member;
 
 use App\Http\Controllers\admin\BaseController;
+use App\Http\Models\currency\CapitalModel;
 use App\Http\Models\currency\MerchantModel;
 use App\Http\Models\currency\UserModel;
 use App\Http\Services\admin\Member\MemberService;
@@ -210,5 +211,27 @@ class MemberController extends BaseController
                 'status' => 510
             ], 510);
         }
+    }
+
+    /**
+     * 查看流水
+     * @param $id
+     */
+    public function runningWater($id)
+    {
+        $items = CapitalModel::where('uid', intval($id))->orderBy('id', 'desc')->get();
+        foreach ($items as $key => $item) {
+            $items[$key]['trade_mode_name'] = $item['trade_mode_name'];
+            $items[$key]['category_name'] = $item['category_name'];
+            $items[$key]['status_name'] = $item['status_name'];
+        }
+        $avail = CapitalModel::where(function ($query) {
+            $query->where('category', '!=', 600)->whereIn('status', [1001]);
+        })->sum('money');
+        $frost  = CapitalModel::where([
+            'category' => 300,
+            'status' => 1003
+        ])->sum('money');
+        return view('admin.member.water', compact('items', 'avail', 'frost'));
     }
 }
