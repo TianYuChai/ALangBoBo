@@ -132,10 +132,12 @@ class shoppOrderModel extends Model
     }
     public function getComplainTextAttribute()
     {
-        return complainModel::where([
-            'uid' => Auth::guard('web')->user()->id,
-            'g_order_id' => $this->id
-        ])->first();
+        if($this->complain) {
+            return complainModel::where([
+                'uid' => Auth::guard('web')->user()->id,
+                'g_order_id' => $this->id
+            ])->first();
+        }
     }
     /*商品评价*/
     public function evaluation()
