@@ -120,6 +120,7 @@ Route::group(['namespace' => 'home', 'middleware' => 'listenState'], function ()
             Route::get('demand/{id}/confirm', ['as' => 'personal.demand.confirm', 'uses' => 'demandOperationController@confirm']);
             Route::post('demand/{id}/high', ['as' => 'personal.demand.high', 'uses' => 'demandOperationController@high']);
             Route::get('demand/list', ['as' => 'personal.demand.list', 'uses' => 'demandOperationController@list']);
+            Route::post('havegoods/{id}/complain', ['as' => 'personal.havegoods.complain', 'uses' => 'PersonalHaveGoodsController@complain']);
             /*用户中心--商户*/
             Route::group(['namespace' => 'shop', 'middleware' => 'shop'], function () {
                 /*店铺店招*/

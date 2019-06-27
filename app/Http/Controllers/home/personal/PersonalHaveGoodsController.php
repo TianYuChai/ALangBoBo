@@ -14,6 +14,7 @@ use App\Http\Models\home\evaluationModel;
 use App\Http\Models\home\orderModel;
 use App\Http\Models\home\personal\AddressModel;
 use App\Http\Models\home\shoppOrderModel;
+use App\Http\Models\setup\complainModel;
 use App\Http\Services\home\persanal\PersonalHaveGoodsService;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -42,9 +43,10 @@ class PersonalHaveGoodsController extends BaseController
     public function __construct(shoppOrderModel $model,
                                 orderModel $orderModel,
                                 evaluationModel $evaluationModel,
-                                CapitalModel $capitalModel)
+                                CapitalModel $capitalModel,
+                                complainModel $complainModel)
     {
-        $this->middleware(function ($request, $next) use ($model, $orderModel, $evaluationModel, $capitalModel){
+        $this->middleware(function ($request, $next) use ($model, $orderModel, $evaluationModel, $capitalModel, $complainModel){
             if(Auth::guard('web')->check()) {
                 $this->userId = Auth::guard('web')->user()->id;
             }
@@ -52,6 +54,7 @@ class PersonalHaveGoodsController extends BaseController
             $this->orderModel = $orderModel;
             $this->evaluationModel = $evaluationModel;
             $this->capitalModel = $capitalModel;
+            $this->complainModel = $complainModel;
             return $next($request);
         });
     }
@@ -194,7 +197,7 @@ class PersonalHaveGoodsController extends BaseController
             }
             $satisfaction_value = explode('%', $satisfaction)[0];
             if($satisfaction_value < 100) {
-                $calcul = bcdiv($satisfaction_value, 100, 2);
+                $calcul = bcdiv($satisfaction_value, 10, 2);
                 $shopp_money = bcdiv(bcmul($item->satisfied_fees, $calcul, 2), 10, 2);
                 $refund = bcsub($item->satisfied_fees, $shopp_money, 2);
                 $this->capitalModel::create([
@@ -279,6 +282,37 @@ class PersonalHaveGoodsController extends BaseController
         }
     }
 
+    /**
+     * 投诉与建议
+     *
+     * @param $id
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function complain($id, Request $request)
+    {
+        try {
+            $text = trim($request->text);
+            $item = $this->model::find($id);
+            if(!$item) {
+                throw new Exception('订单错误');
+            }
+            $this->complainModel::create([
+                'order_id' => $item->order_id,
+                'uid' => $this->userId,
+                'gid' => $item->gid,
+                'name' => 0,
+                'g_order_id' => $item->id,
+                'content' => $text,
+            ]);
+            return $this->ajaxReturn();
+        } catch (Exception $e) {
+            return $this->ajaxReturn([
+                'status' => 510,
+                'info' => $e->getMessage()
+            ], 510);
+        }
+    }
     /**
      * 回调
      *

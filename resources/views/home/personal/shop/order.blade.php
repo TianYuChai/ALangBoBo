@@ -214,6 +214,13 @@
                                                                 <a href="javascript:void(0)" class="deleteBtn reimburse" data-action="{{ route('personal.order.reimburse', ['id' => $item->id]) }}">确认退款</a>
                                                         @endif
                                                     @endif
+                                                    @if(in_array($item->status, [300, 400, 500]))
+                                                        @if(!$item->complain)
+                                                            <a href="javascript:void(0)"
+                                                               data-url="{{ route('personal.havegoods.complain', ['id' => $item->id]) }}"
+                                                               class="payMoneyBtn complAndsugg" style="margin-top: 10px">投诉与建议</a>
+                                                        @endif
+                                                    @endif
                                                 </td>
                                             </tr>
                                             </tbody>
@@ -394,6 +401,50 @@
                         }
                     }
                 }
+            });
+        });
+    });
+    /*投诉与建议*/
+    $('.complAndsugg').click(function () {
+        let url = $(this).data('url');
+        layer.confirm('是否进行投诉与建议?', function(index) {
+            layer.close(index);
+            layer.prompt({title: '投诉内容', formType: 2}, function(text, index) {
+                layer.close(index);
+                $.ajax({
+                    headers: {
+                        'X-CSRF-TOKEN': "{{ csrf_token() }}"
+                    },
+                    method:"POST",
+                    url:url,
+                    data:{text: text},
+                    success:function (res) {
+                        if(res.status == 200) {
+                            layer.msg(res.info);
+                            setTimeout(function () {
+                                window.location.reload();
+                            }, 500)
+                        }
+                    },
+                    error:function (XMLHttpRequest, textStatus, errorThrown) {
+                        //返回提示信息
+                        try {
+                            if(XMLHttpRequest.status == 401) {
+                                var errors = JSON.parse(XMLHttpRequest.responseText)['errors']['info'];
+                                layer.msg(errors[0]);return;
+                            }
+                            var errors = XMLHttpRequest.responseJSON.errors;
+                            for (var value in errors) {
+                                layer.msg(errors[value][0]);return;
+                            }
+                        } catch (e) {
+                            var errors = JSON.parse(XMLHttpRequest.responseText)['errors'];
+                            for (var value in errors) {
+                                layer.msg(errors[value][0]);return;
+                            }
+                        }
+                    }
+                });
             });
         });
     });

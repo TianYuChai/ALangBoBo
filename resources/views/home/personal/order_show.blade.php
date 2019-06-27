@@ -135,6 +135,15 @@
                     </td>
                 </tr>
             @endif
+            @if($item->complain)
+                <tr>
+                    <td>投诉与建议</td>
+                    <td>
+                        投诉原因: {{ $item->complain_text->content }}
+                        投诉结果: {{ empty($item->complain_text->result) ? '暂未处理' : '是否公示'.$item->complain_text->status_name .'<br>'. '处理结果:' . $item->complain_text->result }}
+                    </td>
+                </tr>
+            @endif
             </tbody>
         </table>
     </div>

@@ -10,6 +10,7 @@ namespace App\Http\Controllers\home\personal\shop;
 use App\Http\Controllers\home\BaseController;
 use App\Http\Models\home\orderModel;
 use App\Http\Models\home\shoppOrderModel;
+use App\Http\Models\setup\complainModel;
 use App\Http\Services\home\persanal\PersonalOrderService;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -31,12 +32,13 @@ class PersonalOrderController extends BaseController
             700, 800, 900
         ]
     ];
-    public function __construct(shoppOrderModel $model, orderModel $orderModel)
+    public function __construct(shoppOrderModel $model, orderModel $orderModel, complainModel $complainModel)
     {
-        $this->middleware(function ($request, $next) use ($model, $orderModel){
+        $this->middleware(function ($request, $next) use ($model, $orderModel, $complainModel){
             $this->user = Auth::guard('web')->user();
             $this->model = $model;
             $this->orderModel = $orderModel;
+            $this->complainModel = $complainModel;
             return $next($request);
         });
     }
@@ -134,6 +136,38 @@ class PersonalOrderController extends BaseController
     {
         try{
             $service->refund($id);
+            return $this->ajaxReturn();
+        } catch (Exception $e) {
+            return $this->ajaxReturn([
+                'status' => 510,
+                'info' => $e->getMessage()
+            ], 510);
+        }
+    }
+
+    /**
+     * 投诉与建议
+     *
+     * @param $id
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function complain($id, Request $request)
+    {
+        try {
+            $text = trim($request->text);
+            $item = $this->model::find($id);
+            if(!$item) {
+                throw new Exception('订单错误');
+            }
+            $this->complainModel::create([
+                'order_id' => $item->order_id,
+                'uid' => $this->userId,
+                'gid' => $item->uid,
+                'name' => 1,
+                'g_order_id' => $item->id,
+                'content' => $text,
+            ]);
             return $this->ajaxReturn();
         } catch (Exception $e) {
             return $this->ajaxReturn([

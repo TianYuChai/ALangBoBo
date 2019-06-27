@@ -13,6 +13,7 @@ use App\Http\Services\home\BaseService;
 use Illuminate\Support\Facades\Auth;
 use Exception;
 use Yansongda\Pay\Pay;
+use Log;
 
 class PersonalOrderService extends BaseService
 {
@@ -23,6 +24,7 @@ class PersonalOrderService extends BaseService
         $this->model = $model;
         $this->orderModel = $orderModel;
         $this->config = config('alipay.pay');
+        $this->wxconfig = config('wechat.pay');
     }
 
 
@@ -51,12 +53,12 @@ class PersonalOrderService extends BaseService
         if($order->pay_method == 'Alipay') {
             $this->alipayRefunds($item);
         } else {
-
+            $this->wechatRefunds($item);
         }
     }
 
     /**
-     * 阿里退款
+     * 支付宝退款
      *
      * @param $data
      * @return bool
@@ -80,7 +82,7 @@ class PersonalOrderService extends BaseService
             }
             return true;
         } catch (Exception $e) {
-            Log::info('退款操作', [
+            Log::info('支付宝-退款操作', [
                 'time' => getTime(),
                 'id' => $data->id,
                 'order_id' => $data->order_id,
@@ -90,4 +92,37 @@ class PersonalOrderService extends BaseService
         }
     }
 
+    /**
+     * 微信退款
+     *
+     * @param $data
+     * @return bool
+     * @throws Exception
+     */
+    public function wechatRefunds($data)
+    {
+        try {
+            $order = [
+                'out_trade_no' => $data->order_id,
+                'out_refund_no' => create_order_no(),
+                'total_fee' => $data->order->total_price,
+                'refund_fee' => $data->money,
+                'refund_desc' => '商家订单退款',
+            ];
+            $wechat = Pay::wechat($this->wxconfig)->refund($order);
+            if($wechat['return_code'] == 'SUCCESS') {
+                $data->status = 900;
+                $data->save();
+            }
+            return true;
+        } catch (Exception $e) {
+            Log::info('微信-退款操作', [
+               'time' => getTime(),
+               'id' => $data->id,
+               'order_id' => $data->order_id,
+               'info' => $e->getMessage()
+            ]);
+            throw new Exception('退款错误, 请联系管理员');
+        }
+    }
 }

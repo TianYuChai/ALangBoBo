@@ -11,9 +11,11 @@ use App\Http\Models\currency\CapitalModel;
 use App\Http\Models\currency\MerchantModel;
 use App\Http\Models\currency\UserModel;
 use App\Http\Models\goods\GoodsModel;
+use App\Http\Models\setup\complainModel;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Exception;
+use Illuminate\Support\Facades\Auth;
 use Log;
 use Illuminate\Support\Facades\DB;
 
@@ -117,6 +119,23 @@ class shoppOrderModel extends Model
     public function merchant()
     {
         return $this->hasOne(MerchantModel::class, 'uid', 'gid');
+    }
+    /*投诉与建议*/
+    public function getComplainAttribute()
+    {
+        $items = complainModel::where('g_order_id', $this->id)->get();
+        foreach ($items as $item) {
+            if($item->uid == Auth::guard('web')->user()->id) {
+                return true;
+            }
+        }
+    }
+    public function getComplainTextAttribute()
+    {
+        return complainModel::where([
+            'uid' => Auth::guard('web')->user()->id,
+            'g_order_id' => $this->id
+        ])->first();
     }
     /*商品评价*/
     public function evaluation()
