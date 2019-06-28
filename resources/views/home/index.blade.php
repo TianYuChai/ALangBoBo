@@ -448,7 +448,7 @@
                 </div>
             </div>
             <div class="yishuPartTipDiv">
-                <p class="enjoyPartTip">艺术品拍卖区</p>
+                <p class="enjoyPartTip">美容类展示区</p>
             </div>
         </div>
         <!--代办服务展示区-->
@@ -472,7 +472,8 @@
                         @foreach($commissions as $commission)
                             <li>
                                 <a href="{{ url('details', ['id' => $commission->id]) }}" class="block artPartLink" target="_blank">
-                                    <img src="{{ FileUpload::url('image', $commission->cost_img) }}" alt="" class="perfectImg"/>
+                                    <img src="{{ FileUpload::url('image', $commission->cost_img) }}"
+                                         alt="" class="perfectImg" style="width: 194px; height: 194px;"/>
                                     <p class="perfectName">
                                         {{ $commission->title }}
                                     </p>
