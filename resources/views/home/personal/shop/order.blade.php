@@ -148,7 +148,9 @@
                                             </tr>
                                             <tr>
                                                 <td class="clearfix shopcarListTd1 pd-20 pdl-10" width="430">
-                                                    <img src="{{ FileUpload::url('image', $item->goodss->img) }}" class="fl"/>
+                                                    <a href="{{ url('details', ['id' => $item->sid]) }}" target="_blank">
+                                                        <img src="{{ FileUpload::url('image', $item->goodss->img) }}" class="fl"/>
+                                                    </a>
                                                     <div class="fl">
                                                         <p>{{ $item->goodss->title }}</p>
                                                         @foreach($item->goodss->attribute as $attribute)
@@ -214,7 +216,7 @@
                                                                 <a href="javascript:void(0)" class="deleteBtn reimburse" data-action="{{ route('personal.order.reimburse', ['id' => $item->id]) }}">确认退款</a>
                                                         @endif
                                                     @endif
-                                                    @if(in_array($item->status, [300, 400, 500]))
+                                                    @if(in_array($item->status, [300, 400, 500, 600]))
                                                         @if(!$item->complain)
                                                             <a href="javascript:void(0)"
                                                                data-url="{{ route('personal.havegoods.complain', ['id' => $item->id]) }}"

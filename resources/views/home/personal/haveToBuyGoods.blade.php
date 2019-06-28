@@ -171,7 +171,9 @@
                                                     </tr>
                                                     <tr>
                                                         <td class="clearfix shopcarListTd1 pd-20 pdl-10" width="430">
-                                                            <img src="{{ FileUpload::url('image', $item->goodss->img) }}" class="fl"/>
+                                                            <a href="{{ url('details', ['id' => $item->sid]) }}" target="_blank">
+                                                                <img src="{{ FileUpload::url('image', $item->goodss->img) }}" class="fl"/>
+                                                            </a>
                                                             <div class="fl">
                                                                 <p>{{ $item->goodss->title }}</p>
                                                                 @foreach($item->goodss->attribute as $attribute)
@@ -244,12 +246,10 @@
                                                                         <a class="deleteBtn" href="{{ url('details', ['id' => $item->sid]) }}">再次购买</a>
                                                                     @break
                                                                 @endswitch
-                                                                @if($item->status != 600)
-                                                                    @if(!$item->complain)
-                                                                        <a href="javascript:void(0)"
-                                                                           data-url="{{ route('personal.havegoods.complain', ['id' => $item->id]) }}"
-                                                                           class="payMoneyBtn complAndsugg" style="margin-top: 10px">投诉与建议</a>
-                                                                    @endif
+                                                                @if(!$item->complain)
+                                                                    <a href="javascript:void(0)"
+                                                                       data-url="{{ route('personal.havegoods.complain', ['id' => $item->id]) }}"
+                                                                       class="payMoneyBtn complAndsugg" style="margin-top: 10px">投诉与建议</a>
                                                                 @endif
                                                                 @if($item->pay_method == 'paidin' || $item->pay_method == 'subscribed' && $item->timeout == '0000-00-00 00:00:00')
                                                                     @if(in_array($item->status, [300, 400]))

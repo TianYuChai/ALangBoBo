@@ -119,22 +119,22 @@
                     <fieldset class="fieldset clearfix">
                         <p class="userInfo">企业商户资料填写：</p>
                         <div class="nameDiv relative">
-                            法人姓名
+                            姓名
                             <input type="text" placeholder="请输入姓名" class="name" id="qiyeName" name="name" autocomplete="off">
                         </div>
                         <div class="idDiv mgt-30 relative">
-                            法人身份证号
+                            身份证号
                             <input type="text" placeholder="请输入身份证号" class="password" id="qiyeId" name="id" autocomplete="off">
                         </div>
                         <div class="idImgDiv mgt-30 relative">
                             <div class="relative">
-                                <p class="inline-block mgr-20">法人身份证正面</p>
+                                <p class="inline-block mgr-20">身份证正面</p>
                                 <img src="{{ asset('home/images/img/idImg.png') }}" alt="" class="personalImg"/>
                                 <input type="file" class="file" accept="image/*" data-id="zheng">
                                 <input type="hidden" name="zheng">
                             </div>
                             <div class="relative">
-                                <p class="inline-block mgr-20">法人身份证反面</p>
+                                <p class="inline-block mgr-20">身份证反面</p>
                                 <img src="{{ asset('home/images/img/idImg.png') }}" alt="" class="personalImg"/>
                                 <input type="file" class="file" accept="image/*" data-id="fan">
                                 <input type="hidden" name="fan">

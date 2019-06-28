@@ -146,12 +146,22 @@ class GoodsModel extends Model
     public function getGoodsCategoryAttribute()
     {
         $category_name = '';
-        $ids = [$this->mai_category, $this->sub_category, $this->three_category];
+        $ids = [$this->main_category, $this->sub_category, $this->three_category];
         $categorys = goodsCategoryModel::whereIn('id', $ids)->orderBy('level', 'asc')->get(['cate_name']);
         foreach ($categorys as $category) {
             $category_name .= $category->cate_name. '-';
         }
         return $category_name;
+    }
+
+    /**
+     * 主分类名称
+     *
+     * @return mixed
+     */
+    public function getGoodsMainCategoryNameAttribute()
+    {
+        return goodsCategoryModel::where('id', $this->main_category)->value('cate_name');
     }
     /*当前库存*/
     public function getStocksAttribute()
