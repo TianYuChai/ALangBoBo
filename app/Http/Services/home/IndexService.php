@@ -30,6 +30,8 @@ class IndexService extends BaseService
         $recreationProductss = $this->recreationProductss();
         $presellGoods = $this->presellGoods();
         $presellGoodss = $this->presellGoodss();
+        $commissionCategory = $this->commissionCategory();
+        $commissions = $this->commissions();
         return [
             'categorys' => $categorys,
             'banners' => $banners,
@@ -40,7 +42,9 @@ class IndexService extends BaseService
             'recreationProducts' => $recreationProducts,
             'recreationProductss' => $recreationProductss,
             'presellGoods' =>  $presellGoods,
-            'presellGoodss' =>  $presellGoodss
+            'presellGoodss' =>  $presellGoodss,
+            'commissionCategory' => $commissionCategory,
+            'commissions' => $commissions
         ];
     }
 
@@ -211,7 +215,7 @@ class IndexService extends BaseService
                             ->groupBy('evaluation.sid')
                             ->get();
         foreach ($data as $datum) {
-            if(isset($result[$datum->main_category]) && count($result[$datum->main_category]) < 5) {
+            if(isset($result[$datum->main_category]) && count($result[$datum->main_category]) < 8) {
                 $result[$datum->main_category][] = $datum;
             } else {
                 if(!isset($result[$datum->main_category])) {
@@ -275,6 +279,28 @@ class IndexService extends BaseService
      */
     public function commissionCategory()
     {
-        return goodsCategoryModel::where('pid', 24)->get();
+        return goodsCategoryModel::where('pid', 24)->where('status', 0)->get();
+    }
+
+    public function commissions()
+    {
+        $result = [];
+        $data = GoodsModel::whereIn('goods.sub_category', $this->commissionCategory()->pluck('id')->toArray())
+                                ->leftJoin('evaluation', 'goods.id', '=', 'evaluation.sid')
+                                ->select(DB::raw('albb_goods.*, avg(albb_evaluation.satisfaction) as avg_value'))
+                                ->where('goods.status', 0)
+                                ->orderBy('avg_value', 'desc')
+                                ->groupBy('evaluation.sid')
+                                ->get();
+        foreach ($data as $datum) {
+            if(isset($result[$datum->sub_category]) && count($result[$datum->sub_category]) < 8) {
+                $result[$datum->sub_category][] = $datum;
+            } else {
+                if(!isset($result[$datum->sub_category])) {
+                    $result[$datum->sub_category][] = $datum;
+                }
+            }
+        }
+        return $result;
     }
 }
