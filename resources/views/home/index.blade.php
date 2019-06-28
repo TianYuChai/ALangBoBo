@@ -138,7 +138,7 @@
                                     class="block artPartLink" target="_blank">
                                     <img src="{{ FileUpload::url('image', $item->img) }}" alt="" class="perfectImg"/>
                                     <p class="perfectName">{{ $item->title }}</p>
-                                    <p class="hotPrice"><span class="priceIcon">￥</span>{{ $item->moneys }}</p>
+                                    <p class="hotprice"><span class="priceicon">￥</span>{{ $item->total_price }}</p>
                                 </a>
                             </li>
                         @endforeach
@@ -175,7 +175,7 @@
                                     <p class="enjoyName">
                                         {{ $productss->title }}
                                     </p>
-                                    <p class="enjoyPrice"><span class="font-normal">￥</span>{{ $productss->moneys }}</p>
+                                    <p class="enjoyPrice"><span class="font-normal">￥</span>{{ $productss->total_price }}</p>
                                 </a>
                             </li>
                             @endforeach
@@ -212,7 +212,7 @@
                                     <p class="perfectName">
                                         {{ $goodss->title }}
                                     </p>
-                                    <p class="hotPrice"><span class="priceIcon">￥</span>{{ $goodss->moneys }}</p>
+                                    <p class="hotPrice"><span class="priceIcon">￥</span>{{ $goodss->total_price }}</p>
                                 </a>
                             </li>
                         @endforeach
