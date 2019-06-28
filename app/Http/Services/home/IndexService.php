@@ -11,6 +11,7 @@ namespace App\Http\Services\home;
 use App\Http\Models\admin\goods\BannerModel;
 use App\Http\Models\admin\goods\goodsCategoryModel;
 use App\Http\Models\goods\GoodsModel;
+use App\Http\Models\home\demandModel;
 use App\Http\Models\home\evaluationModel;
 use App\Http\Models\home\shoppOrderModel;
 use Illuminate\Support\Facades\DB;
@@ -24,12 +25,14 @@ class IndexService extends BaseService
         $sellingGoods = $this->sellingGoods();
         $good_business = $this->goodBusiness();
         $good_business_category = $this->goodBusinessCategory();
+        $demands = $this->demands();
         return [
             'categorys' => $categorys,
             'banners' => $banners,
             'selling_goods' => $sellingGoods,
             'good_business' => $good_business,
-            'good_business_category' => $good_business_category
+            'good_business_category' => $good_business_category,
+            'demands' => $demands
         ];
     }
 
@@ -79,7 +82,7 @@ class IndexService extends BaseService
     public function goodBusiness()
     {
         $result = [];
-        $data = GoodsModel::whereIn('goods.main_category', [6, 1])
+        $data = GoodsModel::whereIn('goods.main_category', [26, 25, 19, 105])
                                             ->leftJoin('evaluation', 'goods.id', '=', 'evaluation.sid')
                                             ->select(DB::raw('albb_goods.*, avg(albb_evaluation.satisfaction) as avg_value'))
                                             ->where('goods.status', 0)
@@ -107,13 +110,43 @@ class IndexService extends BaseService
     {
         return [
             [
-                'id' => 6,
+                'id' => 26,
                 'value' => '百货类'
             ],
             [
-                'id' => 1,
+                'id' => 25,
                 'value' => '数码类'
             ],
+            [
+                'id' => 19,
+                'value' => '服装类'
+            ],
+            [
+                'id' => 105,
+                'value' => '美容类'
+            ],
         ];
+    }
+
+    /**
+     * 百录倩影
+     *
+     * @return array
+     */
+    public function demands()
+    {
+        $result = [];
+        $items = demandModel::where('gid', 0)->where('status', 303)
+                                ->orderBy('id', 'desc')->get();
+        foreach ($items as $item) {
+            if(isset($result[$item->display]) && count($result[$item->display]) < 8) {
+                $result[$item->display][] = $item;
+            } else {
+                if(!isset($result[$item->display])) {
+                    $result[$item->display][] = $item;
+                }
+            }
+        }
+        return $result;
     }
 }
