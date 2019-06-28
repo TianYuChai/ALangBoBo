@@ -98,7 +98,7 @@
                     <ul class="clearfix">
                         @foreach($good_business as $good_busines)
                             <li class="perfectBl">
-                                <img src="{{ FileUpload::url('image', $good_busines->cost_img) }}" alt="" class="perfectImg"/>
+                                <img src="{{ FileUpload::url('image', $good_busines->cost_img) }}" alt="" class="perfectImg" style="width: 193px; height: 193.97px;"/>
                                 <p class="perfectName">
                                     {{ $good_busines->title }}
                                 </p>
@@ -136,7 +136,7 @@
                             <li class="mgl-10">
                                 <a href="{{ route('demand.show', ['id' => $item->id]) }}"
                                     class="block artPartLink" target="_blank">
-                                    <img src="{{ FileUpload::url('image', $item->img) }}" alt="" class="perfectImg"/>
+                                    <img src="{{ FileUpload::url('image', $item->img) }}" alt="" class="perfectImg" style="width: 194px; height: 194.98px;"/>
                                     <p class="perfectName">{{ $item->title }}</p>
                                     <p class="hotprice"><span class="priceicon">￥</span>{{ $item->moneys }}</p>
                                 </a>
@@ -171,7 +171,7 @@
                             @foreach($recreationProductss as $productss)
                             <li>
                                 <a href="{{ url('details', ['id' => $productss->id]) }}" target="_blank">
-                                    <img src="{{ FileUpload::url('image', $productss->cost_img) }}" alt="" class="perfectImg"/>
+                                    <img src="{{ FileUpload::url('image', $productss->cost_img) }}" alt="" class="perfectImg" style="width: 186px;height: 186.94px"/>
                                     <p class="enjoyName">
                                         {{ $productss->title }}
                                     </p>
@@ -208,7 +208,8 @@
                         @foreach($presellGoodss as $goodss)
                             <li>
                                 <a href="{{ url('details', ['id' => $goodss->id]) }}" class="block artPartLink" target="_blank">
-                                    <img src="{{ FileUpload::url('image', $goodss->cost_img) }}" alt="" class="perfectImg"/>
+                                    <img src="{{ FileUpload::url('image', $goodss->cost_img) }}"
+                                         alt="" class="perfectImg" style="width: 194px; height: 194.98px"/>
                                     <p class="perfectName">
                                         {{ $goodss->title }}
                                     </p>
@@ -230,222 +231,30 @@
         <!--艺术品拍卖区-->
         <div class="enjoyPart perfectShop relative" id="yishuPart">
             <ul id="myTab5" class="nav nav-tabs tabList">
-                <li class="active mgl-650">
-                    <a href="#canyin51" data-toggle="tab">
-                        餐饮类1
-                    </a>
-                </li>
-                <li>
-                    <a href="#canyin52" data-toggle="tab">餐饮类2</a>
-                </li>
-                <li>
-                    <a href="#canyin53" data-toggle="tab">
-                        餐饮类3
-                    </a>
-                </li>
-                <li>
-                    <a href="#canyin54" data-toggle="tab">餐饮类4</a>
-                </li>
-                <li>
-                    <a href="#all5" data-toggle="tab">全部</a>
-                </li>
+                @foreach($data['beauty'] as $key => $beauty)
+                    <li class="{{ $key == 0 ? 'active mgl-650' : '' }}">
+                        <a href="#{{ $beauty->id }}" data-toggle="tab">
+                            {{ $beauty->cate_name }}
+                        </a>
+                    </li>
+                @endforeach
             </ul>
             <div id="myTabContent5" class="tab-content">
-                <div class="tab-pane fade in active canyin1" id="canyin51">
+                @foreach($data['beautys'] as $key => $beautys)
+                <div class="tab-pane fade in {{ $key == '' ? 'active' : '' }} canyin1" id="{{ $key }}">
                     <ul class="clearfix">
+                        @foreach($beautys as $value)
                         <li>
-                            <a href="">
-                                <img src="../images/img/perfectGoods.png" alt="" class="perfectImg"/>
-                                <p class="enjoyName">以纯线上品牌A21 2019冬季新 品保暖夹棉连帽中长风衣女 可以纯线上品牌A21 2019冬季新 品保暖夹棉连帽中长风衣女 可</p>
-                                <p class="enjoyPrice"><span class="font-normal">￥</span>3799.00</p>
+                            <a href="{{ url('details', ['id' => $value->id]) }}" target="_blank">
+                                <img src="{{ FileUpload::url('image', $value->cost_img) }}" alt="" class="perfectImg" style="width: 186px;height: 186.94px"/>
+                                <p class="enjoyName">{{ $value->title }}</p>
+                                <p class="enjoyPrice"><span class="font-normal">￥</span>{{ $value->total_price }}</p>
                             </a>
                         </li>
-                        <li>
-                            <a href="">
-                                <img src="../images/img/perfectGoods.png" alt="" class="perfectImg"/>
-                                <p class="enjoyName">以纯线上品牌A21 2019冬季新 品保暖夹棉连帽中长风衣女 可以纯线上品牌A21 2019冬季新 品保暖夹棉连帽中长风衣女 可</p>
-                                <p class="enjoyPrice"><span class="font-normal">￥</span>3799.00</p>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="">
-                                <img src="../images/img/perfectGoods.png" alt="" class="perfectImg"/>
-                                <p class="enjoyName">以纯线上品牌A21 2019冬季新 品保暖夹棉连帽中长风衣女 可以纯线上品牌A21 2019冬季新 品保暖夹棉连帽中长风衣女 可</p>
-                                <p class="enjoyPrice"><span class="font-normal">￥</span>3799.00</p>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="">
-                                <img src="../images/img/perfectGoods.png" alt="" class="perfectImg"/>
-                                <p class="enjoyName">以纯线上品牌A21 2019冬季新 品保暖夹棉连帽中长风衣女 可以纯线上品牌A21 2019冬季新 品保暖夹棉连帽中长风衣女 可</p>
-                                <p class="enjoyPrice"><span class="font-normal">￥</span>3799.00</p>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="">
-                                <img src="../images/img/perfectGoods.png" alt="" class="perfectImg"/>
-                                <p class="enjoyName">以纯线上品牌A21 2019冬季新 品保暖夹棉连帽中长风衣女 可以纯线上品牌A21 2019冬季新 品保暖夹棉连帽中长风衣女 可</p>
-                                <p class="enjoyPrice"><span class="font-normal">￥</span>3799.00</p>
-                            </a>
-                        </li>
+                        @endforeach
                     </ul>
                 </div>
-                <div class="tab-pane fade in canyin1" id="canyin52">
-                    <ul class="clearfix">
-                        <li>
-                            <a href="">
-                                <img src="../images/img/perfectGoods.png" alt="" class="perfectImg"/>
-                                <p class="enjoyName">以纯线上品牌A21 2019冬季新 品保暖夹棉连帽中长风衣女 可以纯线上品牌A21 2019冬季新 品保暖夹棉连帽中长风衣女 可</p>
-                                <p class="enjoyPrice"><span class="font-normal">￥</span>3799.00</p>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="">
-                                <img src="../images/img/perfectGoods.png" alt="" class="perfectImg"/>
-                                <p class="enjoyName">以纯线上品牌A21 2019冬季新 品保暖夹棉连帽中长风衣女 可以纯线上品牌A21 2019冬季新 品保暖夹棉连帽中长风衣女 可</p>
-                                <p class="enjoyPrice"><span class="font-normal">￥</span>3799.00</p>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="">
-                                <img src="../images/img/perfectGoods.png" alt="" class="perfectImg"/>
-                                <p class="enjoyName">以纯线上品牌A21 2019冬季新 品保暖夹棉连帽中长风衣女 可以纯线上品牌A21 2019冬季新 品保暖夹棉连帽中长风衣女 可</p>
-                                <p class="enjoyPrice"><span class="font-normal">￥</span>3799.00</p>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="">
-                                <img src="../images/img/perfectGoods.png" alt="" class="perfectImg"/>
-                                <p class="enjoyName">以纯线上品牌A21 2019冬季新 品保暖夹棉连帽中长风衣女 可以纯线上品牌A21 2019冬季新 品保暖夹棉连帽中长风衣女 可</p>
-                                <p class="enjoyPrice"><span class="font-normal">￥</span>3799.00</p>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="">
-                                <img src="../images/img/perfectGoods.png" alt="" class="perfectImg"/>
-                                <p class="enjoyName">以纯线上品牌A21 2019冬季新 品保暖夹棉连帽中长风衣女 可以纯线上品牌A21 2019冬季新 品保暖夹棉连帽中长风衣女 可</p>
-                                <p class="enjoyPrice"><span class="font-normal">￥</span>3799.00</p>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-                <div class="tab-pane fade in canyin1" id="canyin53">
-                    <ul class="clearfix">
-                        <li>
-                            <a href="">
-                                <img src="../images/img/perfectGoods.png" alt="" class="perfectImg"/>
-                                <p class="enjoyName">以纯线上品牌A21 2019冬季新 品保暖夹棉连帽中长风衣女 可以纯线上品牌A21 2019冬季新 品保暖夹棉连帽中长风衣女 可</p>
-                                <p class="enjoyPrice"><span class="font-normal">￥</span>3799.00</p>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="">
-                                <img src="../images/img/perfectGoods.png" alt="" class="perfectImg"/>
-                                <p class="enjoyName">以纯线上品牌A21 2019冬季新 品保暖夹棉连帽中长风衣女 可以纯线上品牌A21 2019冬季新 品保暖夹棉连帽中长风衣女 可</p>
-                                <p class="enjoyPrice"><span class="font-normal">￥</span>3799.00</p>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="">
-                                <img src="../images/img/perfectGoods.png" alt="" class="perfectImg"/>
-                                <p class="enjoyName">以纯线上品牌A21 2019冬季新 品保暖夹棉连帽中长风衣女 可以纯线上品牌A21 2019冬季新 品保暖夹棉连帽中长风衣女 可</p>
-                                <p class="enjoyPrice"><span class="font-normal">￥</span>3799.00</p>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="">
-                                <img src="../images/img/perfectGoods.png" alt="" class="perfectImg"/>
-                                <p class="enjoyName">以纯线上品牌A21 2019冬季新 品保暖夹棉连帽中长风衣女 可以纯线上品牌A21 2019冬季新 品保暖夹棉连帽中长风衣女 可</p>
-                                <p class="enjoyPrice"><span class="font-normal">￥</span>3799.00</p>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="">
-                                <img src="../images/img/perfectGoods.png" alt="" class="perfectImg"/>
-                                <p class="enjoyName">以纯线上品牌A21 2019冬季新 品保暖夹棉连帽中长风衣女 可以纯线上品牌A21 2019冬季新 品保暖夹棉连帽中长风衣女 可</p>
-                                <p class="enjoyPrice"><span class="font-normal">￥</span>3799.00</p>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-                <div class="tab-pane fade in canyin1" id="canyin54">
-                    <ul class="clearfix">
-                        <li>
-                            <a href="">
-                                <img src="../images/img/perfectGoods.png" alt="" class="perfectImg"/>
-                                <p class="enjoyName">以纯线上品牌A21 2019冬季新 品保暖夹棉连帽中长风衣女 可以纯线上品牌A21 2019冬季新 品保暖夹棉连帽中长风衣女 可</p>
-                                <p class="enjoyPrice"><span class="font-normal">￥</span>3799.00</p>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="">
-                                <img src="../images/img/perfectGoods.png" alt="" class="perfectImg"/>
-                                <p class="enjoyName">以纯线上品牌A21 2019冬季新 品保暖夹棉连帽中长风衣女 可以纯线上品牌A21 2019冬季新 品保暖夹棉连帽中长风衣女 可</p>
-                                <p class="enjoyPrice"><span class="font-normal">￥</span>3799.00</p>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="">
-                                <img src="../images/img/perfectGoods.png" alt="" class="perfectImg"/>
-                                <p class="enjoyName">以纯线上品牌A21 2019冬季新 品保暖夹棉连帽中长风衣女 可以纯线上品牌A21 2019冬季新 品保暖夹棉连帽中长风衣女 可</p>
-                                <p class="enjoyPrice"><span class="font-normal">￥</span>3799.00</p>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="">
-                                <img src="../images/img/perfectGoods.png" alt="" class="perfectImg"/>
-                                <p class="enjoyName">以纯线上品牌A21 2019冬季新 品保暖夹棉连帽中长风衣女 可以纯线上品牌A21 2019冬季新 品保暖夹棉连帽中长风衣女 可</p>
-                                <p class="enjoyPrice"><span class="font-normal">￥</span>3799.00</p>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="">
-                                <img src="../images/img/perfectGoods.png" alt="" class="perfectImg"/>
-                                <p class="enjoyName">以纯线上品牌A21 2019冬季新 品保暖夹棉连帽中长风衣女 可以纯线上品牌A21 2019冬季新 品保暖夹棉连帽中长风衣女 可</p>
-                                <p class="enjoyPrice"><span class="font-normal">￥</span>3799.00</p>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-                <div class="tab-pane fade in canyin1" id="all5">
-                    <ul class="clearfix">
-                        <li>
-                            <a href="">
-                                <img src="../images/img/perfectGoods.png" alt="" class="perfectImg"/>
-                                <p class="enjoyName">以纯线上品牌A21 2019冬季新 品保暖夹棉连帽中长风衣女 可以纯线上品牌A21 2019冬季新 品保暖夹棉连帽中长风衣女 可</p>
-                                <p class="enjoyPrice"><span class="font-normal">￥</span>3799.00</p>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="">
-                                <img src="../images/img/perfectGoods.png" alt="" class="perfectImg"/>
-                                <p class="enjoyName">以纯线上品牌A21 2019冬季新 品保暖夹棉连帽中长风衣女 可以纯线上品牌A21 2019冬季新 品保暖夹棉连帽中长风衣女 可</p>
-                                <p class="enjoyPrice"><span class="font-normal">￥</span>3799.00</p>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="">
-                                <img src="../images/img/perfectGoods.png" alt="" class="perfectImg"/>
-                                <p class="enjoyName">以纯线上品牌A21 2019冬季新 品保暖夹棉连帽中长风衣女 可以纯线上品牌A21 2019冬季新 品保暖夹棉连帽中长风衣女 可</p>
-                                <p class="enjoyPrice"><span class="font-normal">￥</span>3799.00</p>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="">
-                                <img src="../images/img/perfectGoods.png" alt="" class="perfectImg"/>
-                                <p class="enjoyName">以纯线上品牌A21 2019冬季新 品保暖夹棉连帽中长风衣女 可以纯线上品牌A21 2019冬季新 品保暖夹棉连帽中长风衣女 可</p>
-                                <p class="enjoyPrice"><span class="font-normal">￥</span>3799.00</p>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="">
-                                <img src="../images/img/perfectGoods.png" alt="" class="perfectImg"/>
-                                <p class="enjoyName">以纯线上品牌A21 2019冬季新 品保暖夹棉连帽中长风衣女 可以纯线上品牌A21 2019冬季新 品保暖夹棉连帽中长风衣女 可</p>
-                                <p class="enjoyPrice"><span class="font-normal">￥</span>3799.00</p>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
+                @endforeach
             </div>
             <div class="yishuPartTipDiv">
                 <p class="enjoyPartTip">美容类展示区</p>
@@ -473,7 +282,7 @@
                             <li>
                                 <a href="{{ url('details', ['id' => $commission->id]) }}" class="block artPartLink" target="_blank">
                                     <img src="{{ FileUpload::url('image', $commission->cost_img) }}"
-                                         alt="" class="perfectImg" style="width: 194px; height: 194px;"/>
+                                         alt="" class="perfectImg" style="width: 194px; height: 194.98px;"/>
                                     <p class="perfectName">
                                         {{ $commission->title }}
                                     </p>

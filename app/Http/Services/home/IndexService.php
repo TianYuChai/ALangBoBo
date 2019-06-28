@@ -32,6 +32,8 @@ class IndexService extends BaseService
         $presellGoodss = $this->presellGoodss();
         $commissionCategory = $this->commissionCategory();
         $commissions = $this->commissions();
+        $beauty = $this->beauty();
+        $beautys = $this->beautys();
         return [
             'categorys' => $categorys,
             'banners' => $banners,
@@ -44,7 +46,9 @@ class IndexService extends BaseService
             'presellGoods' =>  $presellGoods,
             'presellGoodss' =>  $presellGoodss,
             'commissionCategory' => $commissionCategory,
-            'commissions' => $commissions
+            'commissions' => $commissions,
+            'beauty' => $beauty,
+            'beautys' => $beautys
         ];
     }
 
@@ -282,6 +286,11 @@ class IndexService extends BaseService
         return goodsCategoryModel::where('p_id', 24)->where('status', 0)->get();
     }
 
+    /**
+     * 代办分类值
+     *
+     * @return array
+     */
     public function commissions()
     {
         $result = [];
@@ -304,5 +313,35 @@ class IndexService extends BaseService
         return $result;
     }
 
+    /**
+     * 美容类
+     *
+     * @return mixed
+     */
+    public function beauty()
+    {
+        return goodsCategoryModel::where('p_id', 105)->where('status', 0)->get();
+    }
 
+    public function beautys()
+    {
+        $result = [];
+        $data = GoodsModel::whereIn('goods.sub_category', $this->beauty()->pluck('id')->toArray())
+                                    ->leftJoin('evaluation', 'goods.id', '=', 'evaluation.sid')
+                                    ->select(DB::raw('albb_goods.*, avg(albb_evaluation.satisfaction) as avg_value'))
+                                    ->where('goods.status', 0)
+                                    ->orderBy('avg_value', 'desc')
+                                    ->groupBy('evaluation.sid')
+                                    ->get();
+        foreach ($data as $datum) {
+            if(isset($result[$datum->sub_category]) && count($result[$datum->sub_category]) < 5) {
+                $result[$datum->sub_category][] = $datum;
+            } else {
+                if(!isset($result[$datum->sub_category])) {
+                    $result[$datum->sub_category][] = $datum;
+                }
+            }
+        }
+        return $result;
+    }
 }
