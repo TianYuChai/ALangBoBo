@@ -66,7 +66,7 @@ class RegisterController extends BaseController
             ];
             $where = array_unique(array_diff($data, array("")));
             if(!empty($where)) {
-                if($where['card'] != '' || $where['name'] != '') {
+                if(isset($where['card']) || isset($where['name'])) {
                     $category = $request->category;
                     if($where['card'] != '') {
                         $query = UserModel::where('card', $where['card']);
@@ -74,7 +74,7 @@ class RegisterController extends BaseController
                         $query = UserModel::where('name', $where['name']);
                     }
                     $item = $query->where('category', $category)->first();
-                } elseif ($where['shehuidaima'] != '') {
+                } elseif (isset($where['shehuidaima'])) {
                     $item = MerchantModel::where('credit_code', $where['shehuidaima'])->first();
                 } else {
                     $item = UserModel::where($where)->where('status', '!=', 3)->first();

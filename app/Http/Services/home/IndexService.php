@@ -26,13 +26,21 @@ class IndexService extends BaseService
         $good_business = $this->goodBusiness();
         $good_business_category = $this->goodBusinessCategory();
         $demands = $this->demands();
+        $recreationProducts = $this->recreationProducts();
+        $recreationProductss = $this->recreationProductss();
+        $presellGoods = $this->presellGoods();
+        $presellGoodss = $this->presellGoodss();
         return [
             'categorys' => $categorys,
             'banners' => $banners,
             'selling_goods' => $sellingGoods,
             'good_business' => $good_business,
             'good_business_category' => $good_business_category,
-            'demands' => $demands
+            'demands' => $demands,
+            'recreationProducts' => $recreationProducts,
+            'recreationProductss' => $recreationProductss,
+            'presellGoods' =>  $presellGoods,
+            'presellGoodss' =>  $presellGoodss
         ];
     }
 
@@ -129,6 +137,116 @@ class IndexService extends BaseService
     }
 
     /**
+     * 娱乐产品
+     *
+     * @return array
+     */
+    public function recreationProducts()
+    {
+        return [
+            [
+                'id' => 25,
+                'value' => '数码类'
+            ],
+            [
+                'id' => 19,
+                'value' => '服装类'
+            ],
+            [
+                'id' => 23,
+                'value' => '旅行类'
+            ],
+            [
+                'id' => 105,
+                'value' => '美容类'
+            ],
+            [
+                'id' => 22,
+                'value' => '房宿类'
+            ]
+        ];
+    }
+
+    /**
+     * 预售商品
+     *
+     * @return array
+     */
+    public function presellGoods()
+    {
+        return [
+            [
+                'id' => 19,
+                'value' => '服装类'
+            ],
+            [
+                'id' => 24,
+                'value' => '代办类'
+            ],
+            [
+                'id' => 22,
+                'value' => '房宿类'
+            ],
+            [
+                'id' => 25,
+                'value' => '数码类'
+            ],
+        ];
+    }
+
+    /**
+     * 预售商品
+     *
+     * @return array
+     */
+    public function presellGoodss()
+    {
+        $result = [];
+        $data = GoodsModel::whereIn('goods.main_category', [19, 24, 22, 25])
+                            ->leftJoin('evaluation', 'goods.id', '=', 'evaluation.sid')
+                            ->select(DB::raw('albb_goods.*, avg(albb_evaluation.satisfaction) as avg_value'))
+                            ->where('goods.status', 0)
+                            ->where('goods.presell_time', '!=', '')
+                            ->orderBy('avg_value', 'desc')
+                            ->groupBy('evaluation.sid')
+                            ->get();
+        foreach ($data as $datum) {
+            if(isset($result[$datum->main_category]) && count($result[$datum->main_category]) < 5) {
+                $result[$datum->main_category][] = $datum;
+            } else {
+                if(!isset($result[$datum->main_category])) {
+                    $result[$datum->main_category][] = $datum;
+                }
+            }
+        }
+        return $result;
+    }
+
+    /**
+     * 娱乐商品
+     */
+    public function recreationProductss()
+    {
+        $result = [];
+        $data = GoodsModel::whereIn('goods.main_category', [25, 19, 23, 105, 22])
+                            ->leftJoin('evaluation', 'goods.id', '=', 'evaluation.sid')
+                            ->select(DB::raw('albb_goods.*, avg(albb_evaluation.satisfaction) as avg_value'))
+                            ->where('goods.status', 0)
+                            ->orderBy('avg_value', 'desc')
+                            ->groupBy('evaluation.sid')
+                            ->get();
+        foreach ($data as $datum) {
+            if(isset($result[$datum->main_category]) && count($result[$datum->main_category]) < 5) {
+                $result[$datum->main_category][] = $datum;
+            } else {
+                if(!isset($result[$datum->main_category])) {
+                    $result[$datum->main_category][] = $datum;
+                }
+            }
+        }
+        return $result;
+    }
+    /**
      * 百录倩影
      *
      * @return array
@@ -148,5 +266,15 @@ class IndexService extends BaseService
             }
         }
         return $result;
+    }
+
+    /**
+     * 代办分类
+     *
+     * @return mixed
+     */
+    public function commissionCategory()
+    {
+        return goodsCategoryModel::where('pid', 24)->get();
     }
 }
