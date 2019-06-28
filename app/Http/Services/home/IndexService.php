@@ -279,7 +279,7 @@ class IndexService extends BaseService
      */
     public function commissionCategory()
     {
-        return goodsCategoryModel::where('pid', 24)->where('status', 0)->get();
+        return goodsCategoryModel::where('p_id', 24)->where('status', 0)->get();
     }
 
     public function commissions()
