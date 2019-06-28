@@ -72,7 +72,7 @@
                     <li>
                         <a href="{{ url('details', ['id' => $good->id]) }}" class="hotGoodsLink" target="_blank">
                             <div class="imgDiv">
-                                <img src="{{ FileUpload::url('image', $good['cost_img']) }}" alt=""/>
+                                <img src="{{ FileUpload::url('image', $good['cost_img']) }}" alt="" style="width: 135px; height: 135px;"/>
                             </div>
                             <p class="hotName">{{ $good->title }}</p>
                             <p class="hotPrice"><span class="priceIcon">￥</span>{{ $good->total_price }}</p>
