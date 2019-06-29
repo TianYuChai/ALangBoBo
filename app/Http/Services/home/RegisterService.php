@@ -34,6 +34,7 @@ class RegisterService extends BaseService
     public function dataFiltering($data)
     {
         $mobile = $data['mobile'];
+
         $verifyCode = intval($data['verifyCode']);
         $category = intval(trim($data['category']));
         $res = $this->categoryHandleData($category, $data->toArray());
@@ -89,6 +90,9 @@ class RegisterService extends BaseService
         $item = $this->model::where('account', $account)->first();
         if($item) {
             throw new Exception('账号已存在');
+        }
+        if($this->model::where('number', trim($data['mobile']))->exists()) {
+            throw new Exception('手机号已被注册');
         }
         $result['user'] = [
             'account' => $account,
