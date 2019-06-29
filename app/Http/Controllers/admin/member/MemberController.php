@@ -225,12 +225,13 @@ class MemberController extends BaseController
             $items[$key]['category_name'] = $item['category_name'];
             $items[$key]['status_name'] = $item['status_name'];
         }
-        $avail = CapitalModel::where(function ($query) {
-            $query->where('category', '!=', 600)->whereIn('status', [1001]);
+        $avail = CapitalModel::where(function ($query) use ($id){
+            $query->where('category', '!=', 600)->whereIn('status', [1001])->where('uid', intval($id));
         })->sum('money');
         $frost  = CapitalModel::where([
             'category' => 300,
-            'status' => 1003
+            'status' => 1003,
+            'uid' => intval($id)
         ])->sum('money');
         return view('admin.member.water', compact('items', 'avail', 'frost'));
     }
