@@ -68,7 +68,7 @@ class RegisterController extends BaseController
             if(!empty($where)) {
                 if(isset($where['card']) || isset($where['name'])) {
                     $category = $request->category;
-                    if($where['card'] != '') {
+                    if(isset($where['card']) && $where['card'] != '') {
                         $query = UserModel::where('card', $where['card']);
                     } else {
                         $query = UserModel::where('name', $where['name']);
