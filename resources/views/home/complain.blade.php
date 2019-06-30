@@ -42,14 +42,12 @@
                                        {{ $item->name == 0 ?  $item->buser->merchant->shop_name : $item->buser->account }} ({{ $item->name == 0 ? '商家': '用户' }})
                                    </span>
                                </p>
-                                @if($item->name == 0 && $item->buser->merchant->category == 1)
                                 <p>
-                                    社会信用代码:
+                                    {{ $item->name == 0 && $item->buser->merchant->category == 1 ? '社会信用代码' : '真实姓名'}}:
                                     <span>
-                                        {{ $item->buser->merchant->credit_code }}
+                                            {{ $item->name == 0 && $item->buser->merchant->category == 1 ? $item->buser->merchant->credit_code : $item->buser->name }}
                                     </span>
                                 </p>
-                                @endif
                                 <p>
                                     公示原因:
                                     <span>
