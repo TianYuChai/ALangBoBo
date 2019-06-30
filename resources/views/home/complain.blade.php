@@ -39,15 +39,17 @@
                                <p>
                                    公示:
                                    <span>
-                                       {{ $item->name == 0 ?  $item->buser->merchant->shop_name : $item->buser->account }}
+                                       {{ $item->name == 0 ?  $item->buser->merchant->shop_name : $item->buser->account }} : {{ $item->name == 0 ? '商家': '用户' }}
                                    </span>
                                </p>
+                                @if($item->name == 0 && $item->buser->merchant->category == 1)
                                 <p>
-                                    公式类别:
+                                    社会信用代码:
                                     <span>
-                                        {{ $item->name == 0 ? '商家': '用户' }}
+                                        {{ $item->buser->merchant->credit_code }}
                                     </span>
                                 </p>
+                                @endif
                                 <p>
                                     公示原因:
                                     <span>
