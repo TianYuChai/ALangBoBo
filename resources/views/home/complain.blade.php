@@ -1,5 +1,5 @@
 @extends('home.public.subject')
-@section('title', '黑名单公示')
+@section('title', '投诉与建议公示')
 @section('css')
     @parent
     <link rel="stylesheet" href="{{ asset('home/css/product.css') }}"/>
