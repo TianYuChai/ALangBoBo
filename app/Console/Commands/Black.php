@@ -48,7 +48,10 @@ class Black extends Command
             $ids = $items->pluck('gid')->toArray();
             $this->timeModel::whereIn('gid', $ids)->delete();
             $this->userModel::whereIn('id', $ids)->update(['status' => 1]);
-            $items->update(['status' => 2]);
+            foreach ($items as $item) {
+                $item->status = 2;
+                $item->save();
+            }
         } catch (Exception $e) {
             Log::info('脚本去除黑名单', [
                 'time' => getTime(),

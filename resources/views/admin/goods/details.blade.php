@@ -42,7 +42,7 @@
                 @foreach($item->attributes as $key => $value)
                     <span>
                         {{ $key }} :
-                        @foreach($value as $v)
+                          @foreach($value as $v)
                             {{ $v['value'] }}
                         @endforeach
                     </span> <br/>
