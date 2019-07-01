@@ -226,7 +226,9 @@ class MemberController extends BaseController
             $items[$key]['status_name'] = $item['status_name'];
         }
         $avail = CapitalModel::where(function ($query) use ($id){
-            $query->where('category', '!=', 600)->whereIn('status', [1001])->where('uid', intval($id));
+            $query->where('category', '!=', 600)
+                    ->whereIn('status', [1001])
+                    ->where('uid', intval($id));
         })->sum('money');
         $frost  = CapitalModel::where([
             'category' => 300,

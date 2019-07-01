@@ -38,14 +38,16 @@
     <div style="margin-top: 10px">
         <blockquote class="layui-elem-quote layui-quote-nm" id="footer">
             商品属性: <br/>
-            @foreach($item->attributes as $key => $value)
-                <span>
-                    {{ $key }} :
-                    @foreach($value as $v)
-                        {{ $v['value'] }}
-                    @endforeach
-                </span> <br/>
-            @endforeach
+            @if($item->attributes)
+                @foreach($item->attributes as $key => $value)
+                    <span>
+                        {{ $key }} :
+                        @foreach($value as $v)
+                            {{ $v['value'] }}
+                        @endforeach
+                    </span> <br/>
+                @endforeach
+            @endif
         </blockquote>
     </div>
     <div style="margin-top: 10px">
