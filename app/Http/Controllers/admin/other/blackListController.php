@@ -11,6 +11,7 @@ use App\Http\Controllers\admin\BaseController;
 use App\Http\Models\currency\UserModel;
 use App\Http\Models\home\blackTimeModel;
 use App\Http\Models\home\theBlackListModel;
+use App\Http\Services\admin\Member\MemberService;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Exception;
@@ -43,7 +44,7 @@ class blackListController extends BaseController
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function store($id, Request $request)
+    public function store($id, Request $request, MemberService $memberService)
     {
         try {
             $text = trim($request->input('content', ''));
@@ -66,7 +67,12 @@ class blackListController extends BaseController
                     'time' => $time
                 ]);
             }
-            $this->userModel::where('id', $res->gid)->update(['status' => 2]);
+            $item = $this->userModel::where('id', $res->gid)->first();
+            if(in_array($item->categorys, [1, 2])) {
+                $memberService->saelUpMemberGoods($item);
+            }
+            $item->status = 2;
+            $item->save();
             return $this->ajaxReturn();
         } catch (Exception $e) {
             return $this->ajaxReturn([
@@ -81,10 +87,18 @@ class blackListController extends BaseController
      * @param $id
      * @return \Illuminate\Http\JsonResponse
      */
-    public function del($id)
+    public function del($id, MemberService $memberService)
     {
         try {
-            $this->model::destroy($id);
+            $res = $this->model::where('id', intval($id))->first();
+            $item = $this->userModel::where('id', $res->gid)->first();
+            if(in_array($item->categorys, [1, 2])) {
+                $memberService->stopMemberGoods($item);
+            }
+            $this->timeModel::where('gid', $res->gid)->delete();
+            $res->delete();
+            $item->status = 1;
+            $item->save();
             return $this->ajaxReturn();
         } catch (Exception $e) {
             return $this->ajaxReturn([

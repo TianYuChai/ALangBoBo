@@ -21,7 +21,8 @@ class theBlackListModel extends Model
     ];
     public static $_STATUS = [
         0 => '申请',
-        1 => '已处理'
+        1 => '已处理',
+        2 => '封禁过期'
     ];
     public function user()
     {

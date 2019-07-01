@@ -11,6 +11,8 @@ use App\Http\Models\currency\CapitalModel;
 use App\Http\Models\currency\UserModel;
 use App\Http\Models\home\blackTimeModel;
 use Illuminate\Console\Command;
+use Exception;
+use Log;
 
 class Black extends Command
 {
@@ -33,6 +35,7 @@ class Black extends Command
         parent::__construct();
         $this->model = blackTimeModel::class;
         $this->userModel = UserModel::class;
+        $this->timeModel = blackTimeModel::class;
     }
 
     /**
@@ -40,7 +43,17 @@ class Black extends Command
      */
     public function handle()
     {
-        $items = $this->model::where('time', '<', getTime())->get(['gid']);
-        $this->userModel::whereIn('id', $items)->update(['status' => 1]);
+        try {
+            $items = $this->model::where('time', '<', getTime())->get();
+            $ids = $items->pluck('gid')->toArray();
+            $this->timeModel::whereIn('gid', $ids)->delete();
+            $this->userModel::whereIn('id', $ids)->update(['status' => 1]);
+            $items->update(['status' => 2]);
+        } catch (Exception $e) {
+            Log::info('脚本去除黑名单', [
+                'time' => getTime(),
+                'info' => $e->getMessage()
+            ]);
+        }
     }
 }
