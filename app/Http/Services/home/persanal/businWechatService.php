@@ -58,11 +58,11 @@ class businWechatService extends BaseService
         $vailet = $this->vailet();
         Log::info('入驻费---微信异步回调处理-------start');
         $data = $vailet->all();
+        Log::info('微信入驻费返回参数', [
+            'data' => $data
+        ]);
         if($data['return_code'] == 'SUCCESS' || $data['result_code'] == 'SUCCESS'
             && $data['app_id'] == $this->config['app_id']) {
-            Log::info('微信入驻费返回参数', [
-                'data' => $data
-            ]);
             $item = $this->capitalmode::where([
                 'order_id' => strval($data['out_trade_no']),
                 'category' => 600,
