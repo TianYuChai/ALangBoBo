@@ -10,6 +10,7 @@ namespace App\Console\Commands;
 use App\Http\Models\currency\CapitalModel;
 use App\Http\Models\currency\UserModel;
 use App\Http\Models\home\blackTimeModel;
+use App\Http\Models\home\theBlackListModel;
 use Illuminate\Console\Command;
 use Exception;
 use Log;
@@ -35,7 +36,7 @@ class Black extends Command
         parent::__construct();
         $this->model = blackTimeModel::class;
         $this->userModel = UserModel::class;
-        $this->timeModel = blackTimeModel::class;
+        $this->theBlackListModel = theBlackListModel::class;
     }
 
     /**
@@ -46,12 +47,9 @@ class Black extends Command
         try {
             $items = $this->model::where('time', '<', getTime())->get();
             $ids = $items->pluck('gid')->toArray();
-            $this->timeModel::whereIn('gid', $ids)->delete();
+            $this->theBlackListModel::whereIn('gid', $ids)->update(['status' => 2]);
             $this->userModel::whereIn('id', $ids)->update(['status' => 1]);
-            foreach ($items as $item) {
-                $item->status = 2;
-                $item->save();
-            }
+            $items->delete();
         } catch (Exception $e) {
             Log::info('脚本去除黑名单', [
                 'time' => getTime(),
