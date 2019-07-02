@@ -55,6 +55,14 @@
                         </p>
                     </div>
                 </div>
+                <p class="productAttrFont mgt-20 pdl-10">
+                    商家店铺
+                    <span class="col-black mgl-30">
+                        <a href="{{ route('merchant.show', ['id' => $goodss->user->merchant['id']]) }}" target="_blank">
+                            点击进入
+                        </a>
+                    </span>
+                </p>
                 <p class="productAttrFont mgt-20 pdl-10">发货地址
                     <span class="col-black mgl-30">{{ $item->addresss->address }}</span>
                 </p>
