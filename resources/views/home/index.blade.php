@@ -171,7 +171,7 @@
                             @foreach($recreationProductss as $productss)
                             <li>
                                 <a href="{{ url('details', ['id' => $productss->id]) }}" target="_blank">
-                                    <img src="{{ FileUpload::url('image', $productss->cost_img) }}" alt="" class="perfectImg" style="width: 186px;height: 186.94px"/>
+                                    <img src="{{ FileUpload::url('image', $productss->cost_img) }}" alt="" class="perfectImg"/>
                                     <p class="enjoyName">
                                         {{ $productss->title }}
                                     </p>
