@@ -38,8 +38,8 @@
             </div>
             <div class="fr experienceCodeDiv">
                 <div class="experienceCode">
-                    @if(!empty($item->user->merchant))
-                        <img src="{{ FileUpload::url('image', $item->user->qr_code) }}" alt=""/>
+                    @if(!empty($item->user->merchant->qr_code))
+                        <img src="{{ FileUpload::url('image', $item->user->merchant->qr_code) }}" alt=""/>
                     @else
                         <span>{{ $item->user->number }}</span>
                     @endif
