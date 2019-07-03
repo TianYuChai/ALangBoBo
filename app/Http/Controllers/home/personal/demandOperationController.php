@@ -458,20 +458,21 @@ class demandOperationController extends BaseController
                 'status' => 305,
                 'id' => intval($id),
                 'uid' => $this->user->id
-            ])->first()->update([
-                'status' => 306,
-                'high_praise' => intval($high_array[0])
-            ]);
+            ])->first();
+            $item->status = 306;
+            $item->high_praise = intval($high_array[0]);
+            $item->save();
             $capital = CapitalModel::where([
                 'status' => 1003,
                 'category' => 100,
                 'order_id' => $item->order_id,
                 'uid' => $this->user->id
-            ])->first()->update([
-                'category' => 400,
-                'status' => 1002,
-                'memo' => '支付完成'
-            ]);
+            ])->first();
+            $capital->category = 400;
+            $capital->status = 1002;
+            $capital->memo = '支付完成';
+            $capital->save();
+
             $calcul = bcdiv($high_array[0], 10, 2);
             $shopp_money = bcdiv(bcmul($item->satisfaction_price, $calcul, 2), 10, 2);
             $refund = bcsub($item->satisfaction_price, $shopp_money, 2);
