@@ -116,7 +116,7 @@
                                 </tr>
                                 </thead>
                                 <tbody class="listTbody">
-                                @if(!$items->isEmpty())
+                                @if(!is_null($items))
                                     @foreach($items as $item)
                                         <tr>
                                             <td>
