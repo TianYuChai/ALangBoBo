@@ -74,10 +74,14 @@ class parTimeListController extends BaseController
     public function send($id)
     {
         try {
-            if(!$this->model::where('id', intval($id))->exists()) {
+            $item = $this->model::where('id', intval($id))->first();
+            if(!$item) {
                 throw new Exception('请刷新重试');
             }
             $uid = Auth::guard('web')->user()->id;
+            if($uid == $item->uid) {
+                throw new Exception('不可投递自己发布的需求');
+            }
             if($this->partTimeSendModel::where([
                 'uid' => $uid,
                 'pid' => intval($id)
