@@ -62,7 +62,7 @@ class shoppingService extends BaseService
 //                    throw new Exception($item->title. ', 该商品为预售商品, 并未到达售卖时间');
 //                }
                 if($num > $item->stocks) {
-                    throw new Exception($item->title.', 商品超出可售范围');
+                    throw new Exception($item->title.', 该商品库存不足');
                 }
                 if(!empty($value['attribute'])) {
                     $attribute = $this->buyNowAttribute($value['id'], $value['attribute']);

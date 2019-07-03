@@ -218,7 +218,7 @@
                                                                 <a href="javascript:void(0)" class="order_show" data-action="{{ route('personal.havegoods.show', ['id' => $item->id]) }}">订单详情</a>
                                                         </td>
                                                         <td class="pd-20">
-                                                        @if($item->pay_method != 200 && $item->pay_method == 'subscribed'
+                                                        @if($item->status == 200 && $item->pay_method == 'subscribed'
                                                             && $item->timeout != '0000-00-00 00:00:00')
                                                                 <a href="javascript:void(0)"
                                                                    data-url="{{ route('personal.havegoods.pay', ['id' => $item->id]) }}"
