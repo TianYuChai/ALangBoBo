@@ -10,7 +10,7 @@ namespace App\Http\Controllers\home\personal;
 use App\Http\Controllers\home\BaseController;
 use App\Http\Models\currency\CapitalModel;
 use App\Http\Models\home\demandModel;
-use BaconQrCode\Encoder\QrCode;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
