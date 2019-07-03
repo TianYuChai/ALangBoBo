@@ -136,7 +136,7 @@
                             <li class="mgl-10">
                                 <a href="{{ route('demand.show', ['id' => $item->id]) }}"
                                     class="block artPartLink" target="_blank">
-                                    <img src="{{ FileUpload::url('image', $item->img) }}" alt="" class="perfectImg" style="width: 194px; height: 194.98px;"/>
+                                    <img src="{{ FileUpload::url('image', $item->img) }}" alt="" class="perfectImg"/>
                                     <p class="perfectName">{{ $item->title }}</p>
                                     <p class="hotprice"><span class="priceicon">￥</span>{{ $item->moneys }}</p>
                                 </a>
@@ -171,7 +171,7 @@
                             @foreach($recreationProductss as $productss)
                             <li>
                                 <a href="{{ url('details', ['id' => $productss->id]) }}" target="_blank">
-                                    <img src="{{ FileUpload::url('image', $productss->cost_img) }}" alt="" class="perfectImg"/>
+                                    <img src="{{ FileUpload::url('image', $productss->cost_img) }}" alt="" class="perfectImg" style="width: 186px;height: 186.94px"/>
                                     <p class="enjoyName">
                                         {{ $productss->title }}
                                     </p>
