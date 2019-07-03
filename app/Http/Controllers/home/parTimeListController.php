@@ -59,7 +59,7 @@ class parTimeListController extends BaseController
         }
         $categorys = $this->categoryModel::where([
             'status' => 0,
-            'p_id' => 19
+            'p_id' => 124
         ])->get();
         $settles = partTimeModel::$_SETTLE;
         return view('home.part_time_show', compact('item', 'categorys', 'settles'));
