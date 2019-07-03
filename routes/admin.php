@@ -94,6 +94,7 @@ Route::group(['prefix' => 'backstage', 'namespace' => 'admin'], function () {
             Route::get('order/index', ['as' => 'backstage.order.index', 'uses' => 'orderController@index']);
             Route::get('order/{id}/show', ['as' => 'backstage.order.show', 'uses' => 'orderController@show']);
             Route::post('order/{id}/addtime', ['as' => 'backstage.order.addtime', 'uses' => 'orderController@addtime']);
+            Route::get('order/{id}/cancelorder', ['as' => 'backstage.order.cancelorder', 'uses' => 'orderController@cancelOrder']);
         });
         /**
          * 系统设置

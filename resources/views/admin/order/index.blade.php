@@ -80,6 +80,11 @@
                                href="javascript:void(0);">
                                 添加时长
                             </a>
+                            <a title="取消订单"
+                               onclick="cancelOrder('取消订单','{{ route('backstage.order.cancelorder', ['id' => $item->id]) }}')"
+                               href="javascript:void(0);">
+                                <i class="layui-icon layui-icon-download-circle"></i>
+                            </a>
                         @endif
                     </td>
                 </tr>
@@ -111,6 +116,35 @@
                         method:"POST",
                         url:url,
                         data:{'numbern': number},
+                        success:function (res) {
+                            if(res.status == 200) {
+                                layer.msg(res.info);
+                                setTimeout(function () {
+                                    window.location.reload();
+                                }, 1000)
+                            }
+                        },
+                        error:function (XMLHttpRequest) {
+                            //返回提示信息
+                            var errors = XMLHttpRequest.responseJSON.errors;
+                            for (var value in errors) {
+                                layer.msg(errors[value][0]);return;
+                            }
+                        }
+                    });
+                });
+            };
+            window.cancelOrder = function(obj, url)
+            {
+                layer.confirm('是否确认取消该订单?', function(index) {
+                    layer.close(index);
+                    $.ajax({
+                        headers: {
+                            'X-CSRF-TOKEN': "{{ csrf_token() }}"
+                        },
+                        method:"GET",
+                        url:url,
+                        data:'',
                         success:function (res) {
                             if(res.status == 200) {
                                 layer.msg(res.info);

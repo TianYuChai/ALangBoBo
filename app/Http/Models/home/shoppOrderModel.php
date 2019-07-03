@@ -77,7 +77,7 @@ class shoppOrderModel extends Model
 //                                'status' => 1003
 //                            ])->update(['status' => 1002]);
                             $item = GoodsModel::where('id', $query->sid)->sharedLock()->first();
-                            $item->sold = bcsub()($item->sold, $query->num);
+                            $item->sold = bcsub($item->sold, $query->num);
                             $item->save();
                             /*退款*/
                             if($query->getDirty()['status'] == 900) {

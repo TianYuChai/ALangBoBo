@@ -70,4 +70,31 @@ class orderController extends BaseController
             ], 510);
         }
     }
+
+    /**
+     * 取消订单
+     *
+     * @param $id
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function cancelOrder($id)
+    {
+        try {
+            $item = shoppOrderModel::where('id', intval($id))
+                                ->whereIn('status', [300, 400, 500])
+                                ->where('timeout', '!=', '0000-00-00 00:00:00')
+                                ->where('pay_method', 'subscribed')->first();
+            if (!$item) {
+                throw new Exception('订单查询错误, 请刷新重试');
+            }
+            $item->status = 100;
+            $item->save();
+            return $this->ajaxReturn();
+        } catch (Exception $e) {
+            return $this->ajaxReturn([
+                'status' => 510,
+                'info' => $e->getMessage()
+            ], 510);
+        }
+    }
 }
