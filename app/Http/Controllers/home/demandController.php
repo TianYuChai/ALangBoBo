@@ -39,6 +39,9 @@ class demandController extends BaseController
                 'status' => 303
             ])->first();
             if($item) {
+                if($item->uid == Auth::guard('web')->user()->id) {
+                    throw new Exception('不可接单自己发布的需求');
+                }
                 $item->gid = Auth::guard('web')->user()->id;
                 $item->status = 304;
                 $item->save();

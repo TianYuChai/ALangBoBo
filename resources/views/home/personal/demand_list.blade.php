@@ -58,6 +58,9 @@
                                 @endswitch
                             </span>
                         {{ $item->title }}
+                        <span class="badge">
+                            接单人: {{ $item->guser->account .'('.$item->user->number.')'}}
+                        </span>
                     </a>
                 </li>
                 <div style="text-align: right;">
