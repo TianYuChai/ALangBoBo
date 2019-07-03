@@ -93,6 +93,7 @@ Route::group(['prefix' => 'backstage', 'namespace' => 'admin'], function () {
         Route::group(['namespace' => 'order'], function () {
             Route::get('order/index', ['as' => 'backstage.order.index', 'uses' => 'orderController@index']);
             Route::get('order/{id}/show', ['as' => 'backstage.order.show', 'uses' => 'orderController@show']);
+            Route::post('order/{id}/addtime', ['as' => 'backstage.order.addtime', 'uses' => 'orderController@addtime']);
         });
         /**
          * 系统设置

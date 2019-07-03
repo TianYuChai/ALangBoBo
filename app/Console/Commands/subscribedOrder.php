@@ -40,7 +40,7 @@ class subscribedOrder extends Command
     }
 
     /**
-     * 用户生成订单情况下未进行相关支付操作。再一段时间后进行关闭订单操作
+     * 认缴订单超时未支付处理
      */
     public function handle()
     {

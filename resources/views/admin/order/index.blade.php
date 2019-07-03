@@ -73,6 +73,14 @@
                            href="javascript:void(0);">
                             <i class="layui-icon">&#xe63c;</i>
                         </a>
+                        @if($item->pay_method == 'subscribed' &&
+                            in_array($item->status, [300, 400, 500]) && $item->timeout != '0000-00-00 00:00:00')
+                            <a title="操作"
+                               onclick="addTime('操作','{{ route('backstage.order.addtime', ['id' => $item->id]) }}')"
+                               href="javascript:void(0);">
+                                添加时长
+                            </a>
+                        @endif
                     </td>
                 </tr>
             @endforeach
@@ -92,6 +100,35 @@
                 ,type: 'datetime'
                 ,range: true
             });
+            window.addTime = function(obj, url)
+            {
+                layer.prompt({title: '请确认是否是该订单, 如确认是此订单, 请输入天数!', formType: 2}, function(number, index){
+                    layer.close(index);
+                    $.ajax({
+                        headers: {
+                            'X-CSRF-TOKEN': "{{ csrf_token() }}"
+                        },
+                        method:"POST",
+                        url:url,
+                        data:{'numbern': number},
+                        success:function (res) {
+                            if(res.status == 200) {
+                                layer.msg(res.info);
+                                setTimeout(function () {
+                                    window.location.reload();
+                                }, 1000)
+                            }
+                        },
+                        error:function (XMLHttpRequest) {
+                            //返回提示信息
+                            var errors = XMLHttpRequest.responseJSON.errors;
+                            for (var value in errors) {
+                                layer.msg(errors[value][0]);return;
+                            }
+                        }
+                    });
+                });
+            }
         })
     </script>
 @endsection
