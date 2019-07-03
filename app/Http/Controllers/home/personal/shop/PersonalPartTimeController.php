@@ -34,7 +34,7 @@ class PersonalPartTimeController extends BaseController
     {
         $items = $this->model::where('uid', $this->user->id)->paginate(parent::$page_limit);
         $goodsCategorys = goodsCategoryModel::where([
-            'p_id' => 19,
+            'p_id' => 124,
             'status' => 0
         ])->get();
         $settle = partTimeModel::$_SETTLE;
