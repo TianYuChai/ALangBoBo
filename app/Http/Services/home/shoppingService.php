@@ -7,6 +7,7 @@
  */
 namespace App\Http\Services\home;
 use App\Http\Models\admin\goods\goodsCategoryAttributeModel;
+use App\Http\Models\currency\UserModel;
 use App\Http\Models\goods\goodsAttributeModel;
 use App\Http\Models\goods\GoodsModel;
 use App\Http\Models\home\orderModel;
@@ -53,6 +54,9 @@ class shoppingService extends BaseService
                 }
                 if($item->uid == $this->user->id) {
                     throw new Exception('商家不可购买自己店铺的商品');
+                }
+                if($this->user->card == UserModel::where('id', $item->uid)->first()->card) {
+                    throw new Exception('同类型账户不可购买');
                 }
 //                if($item->presell_time && $item->presell_time < getTime('ymd')) {
 //                    throw new Exception($item->title. ', 该商品为预售商品, 并未到达售卖时间');
