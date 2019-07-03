@@ -337,19 +337,21 @@ class demandOperationController extends BaseController
                     'order_id' => strval($data['out_trade_no']),
                     'status' => 302
                 ])->first();
-                $item->status = 303;
-                $item->timeout = Carbon::now()->modify('+'.$item->refund_timeout.' days')->toDateTimeString();
-                $item->save();
-                CapitalModel::create([
-                    'uid' => $item->uid,
-                    'order_id' => $item->order_id,
-                    'money' => $item->money,
-                    'trade_mode' => $item->pay_method,
-                    'memo' => '需求支付',
-                    'category' => 100,
-                    'g_order_id' => '',
-                    'status' => 1003
-                ]);
+                if($item) {
+                    $item->status = 303;
+                    $item->timeout = Carbon::now()->modify('+'.$item->refund_timeout.' days')->toDateTimeString();
+                    $item->save();
+                    CapitalModel::create([
+                        'uid' => $item->uid,
+                        'order_id' => $item->order_id,
+                        'money' => $item->money,
+                        'trade_mode' => $item->pay_method,
+                        'memo' => '需求支付',
+                        'category' => 100,
+                        'g_order_id' => '',
+                        'status' => 1003
+                    ]);
+                }
                 Log::info('订单支付宝异步回调处理结束', [
                     'info' => '需求',
                     'order_id' => $data['out_trade_no']
