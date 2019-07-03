@@ -34,9 +34,7 @@ class PersonalSendTimeController extends BaseController
         $items = $this->model::where('uid', $this->user->id)
                             ->SearchTitle($title)
                             ->orderBy('id', 'desc')->paginate(parent::$page_limit);
-        foreach ($items as $item) {
-            dd($item->part);
-        }
+        dd($items);
         return view(self::ROUTE . 'time_send_record', compact('items'));
     }
 
