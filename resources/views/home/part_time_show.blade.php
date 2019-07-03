@@ -27,7 +27,7 @@
         </div>
         <div class="fr experienceCodeDiv">
             <div class="experienceCode">
-                @if(!empty($item->user->merchant->qr_code))
+                @if(!empty($item->merchant->qr_code))
                     <img src="{{ FileUpload::url('image', $item->user->merchant->qr_code) }}" alt="商家未上传图片"/>
                 @else
                     <span> 用户联系方式: {{ $item->merchant->user->number }} </span>
