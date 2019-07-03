@@ -116,24 +116,26 @@
                                 </tr>
                                 </thead>
                                 <tbody class="listTbody">
-                                @foreach($items as $item)
-                                    <tr>
-                                        <td>
-                                            <p class="fl productName">
-                                                <a href="{{ route('partime.show', ['id' => $item->pid]) }}" target="_blank">
-                                                    {{ $item->part->title }}
-                                                </a>
-                                            </p>
-                                        </td>
-                                        <td>
-                                            <p class="fl productName">{{ $item->created_at }}</p>
-                                        </td>
-                                        <td>
-                                            <a href="javascript:void(0)" class="block mgt-10 dele"
-                                               data-action="{{ route('personal.sendtime.del', ['id' => $item->id]) }}">删除</a>
-                                        </td>
-                                    </tr>
-                                @endforeach
+                                @if(!$items->isEmpty())
+                                    @foreach($items as $item)
+                                        <tr>
+                                            <td>
+                                                <p class="fl productName">
+                                                    <a href="{{ route('partime.show', ['id' => $item->pid]) }}" target="_blank">
+                                                        {{ $item->part->title }}
+                                                    </a>
+                                                </p>
+                                            </td>
+                                            <td>
+                                                <p class="fl productName">{{ $item->created_at }}</p>
+                                            </td>
+                                            <td>
+                                                <a href="javascript:void(0)" class="block mgt-10 dele"
+                                                   data-action="{{ route('personal.sendtime.del', ['id' => $item->id]) }}">删除</a>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                @endif
                                 </tbody>
                             </table>
                             <div style="text-align: right;">
