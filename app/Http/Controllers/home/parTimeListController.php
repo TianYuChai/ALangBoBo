@@ -62,6 +62,7 @@ class parTimeListController extends BaseController
             'p_id' => 124
         ])->get();
         $settles = partTimeModel::$_SETTLE;
+        dd($item->merchant);
         return view('home.part_time_show', compact('item', 'categorys', 'settles'));
     }
 
