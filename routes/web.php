@@ -28,12 +28,12 @@ Route::group(['namespace' => 'home'], function () {
     Route::post('busin/notify', ['as' => 'index.busin.notify', 'uses' => 'personal\PesonalBusinResidFeeController@notify']);
     Route::post('order/notify', ['as' => 'index.order.notify', 'uses' => 'shoppingController@notify']);
     Route::post('subscribed/order/notify', ['as' => 'index.subscribed.notify', 'uses' => 'personal\PersonalHaveGoodsController@notify']);
-    Route::post('demand/alinotify', ['as' => 'index.demand.alinotify', 'uses' => 'personal\demandController@aliNotify']);
+    Route::post('demand/alinotify', ['as' => 'index.demand.alinotify', 'uses' => 'personal\demandOperationController@aliNotify']);
     Route::post('wxnotify', ['as' => 'index.wx.notify', 'uses' => 'personal\PersonalCreditMarginController@wxnotify']);
     Route::post('busin/wxnotify', ['as' => 'index.busin.wxnotify', 'uses' => 'personal\PesonalBusinResidFeeController@wxnotify']);
     Route::post('order/wxnotify', ['as' => 'index.order.wxnotify', 'uses' => 'shoppingController@wxnotify']);
     Route::post('subscribed/order/wxnotify', ['as' => 'index.subscribed.wxnotify', 'uses' => 'personal\PersonalHaveGoodsController@wxnotify']);
-    Route::post('demand/wxnotify', ['as' => 'index.demand.wxnotify', 'uses' => 'personal\demandController@wxnotify']);
+    Route::post('demand/wxnotify', ['as' => 'index.demand.wxnotify', 'uses' => 'personal\demandOperationController@wxnotify']);
 });
 /**
  * 前台管理路由设置
