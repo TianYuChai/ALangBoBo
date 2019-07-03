@@ -218,11 +218,13 @@
                                                                 <a href="javascript:void(0)" class="order_show" data-action="{{ route('personal.havegoods.show', ['id' => $item->id]) }}">订单详情</a>
                                                         </td>
                                                         <td class="pd-20">
-                                                        @if($item->status == 200 && $item->pay_method == 'subscribed'
-                                                            && $item->timeout != '0000-00-00 00:00:00')
+                                                            @if($item->pay_method == 'subscribed'
+                                                            && ($item->timeout != '' || $item->timeout != '0000-00-00 00:00:00')
+                                                            && in_array($item->status, [300, 400, 500]))
                                                                 <a href="javascript:void(0)"
                                                                    data-url="{{ route('personal.havegoods.pay', ['id' => $item->id]) }}"
-                                                                   class="payMoneyBtn" data-method="{{ $item->order->pay_method }}">立即付款</a>
+                                                                   data-method="{{ $item->order->pay_method }}"
+                                                                   class="payMoneyBtn">立即付款</a>
                                                             @endif
                                                             @if(in_array($item->status, [200]))
                                                                 <a href="javascript:void(0)"
@@ -238,10 +240,13 @@
                                                                     @break
                                                                     @case(500)
                                                                         @if(!$item->evaluation)
-                                                                            <a class="deleteBtn evaluation"
-                                                                               data-action="{{ route('personal.havegoods.evaluation', ['id' => $item->id]) }}"
-                                                                               data-toggle="modal"
-                                                                               data-target="#editEvaluate">评价</a>
+                                                                            @if($item->pay_method == 'paidin' || $item->pay_method == 'subscribed'
+                                                                                && ($item->timeout == '' || $item->timeout == '0000-00-00 00:00:00'))
+                                                                                <a class="deleteBtn evaluation"
+                                                                                   data-action="{{ route('personal.havegoods.evaluation', ['id' => $item->id]) }}"
+                                                                                   data-toggle="modal"
+                                                                                   data-target="#editEvaluate">评价</a>
+                                                                            @endif
                                                                         @endif
                                                                         <a class="deleteBtn" href="{{ url('details', ['id' => $item->sid]) }}">再次购买</a>
                                                                     @break
@@ -251,7 +256,8 @@
                                                                        data-url="{{ route('personal.havegoods.complain', ['id' => $item->id]) }}"
                                                                        class="payMoneyBtn complAndsugg" style="margin-top: 10px">投诉与建议</a>
                                                                 @endif
-                                                                @if($item->pay_method == 'paidin' || $item->pay_method == 'subscribed' && $item->timeout == '0000-00-00 00:00:00')
+                                                                @if($item->pay_method == 'paidin' || $item->pay_method == 'subscribed'
+                                                                && ($item->timeout == '' || $item->timeout == '0000-00-00 00:00:00'))
                                                                     @if(in_array($item->status, [300, 400]))
                                                                             <a href="javascript:void(0)" class="deleteBtn refund" data-action="{{ route('personal.havegoods.refundorder', ['id' => $item->id]) }}">申请退款</a>
                                                                     @endif

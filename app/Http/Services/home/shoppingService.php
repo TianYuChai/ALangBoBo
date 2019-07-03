@@ -148,15 +148,18 @@ class shoppingService extends BaseService
     {
         try {
             if($data == 'subscribed') {
-                if(intval(bcmul($this->user->frozen_capital, 100)) <= 0) {
+                $subscribed_money = intval(bcmul($this->user->frozen_capital, 100));
+                if($subscribed_money <= 0) {
                     throw new Exception('该购买方式下, 请先充值保证金');
                 }
-                $item = $this->shopp_orderModel::where('uid', $this->user->id)
+                $items = $this->shopp_orderModel::where('uid', $this->user->id)
                                                 ->where('pay_method', $data)
-                                                ->where('timeout', '<>', '0000-00-00 00:00:00')->exists();
-                if($item) {
-                    throw new Exception('订单创建失败, 有未完成认缴订单, 请先完
-                                                    成认缴订单的缴纳或取消当前订单中的认缴订单');
+                                                ->where('timeout', '<>', '0000-00-00 00:00:00')->get();
+                if(!$items->isEmpty()) {
+                    if($items->pluck('money')->sum() >= $subscribed_money) {
+                        throw new Exception('订单创建失败, 请先完
+                                                    成认缴订单的缴纳, 也可取消当前订单中的认缴订单和充值更多的保证金');
+                    }
                 }
                 $subscribed_price = $this->all_data['order_message']['subscribed_price'];
                 if($subscribed_price > bcmul($this->user->frozen_capital, 10, 2)) {
