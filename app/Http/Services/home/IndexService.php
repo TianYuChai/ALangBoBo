@@ -61,7 +61,9 @@ class IndexService extends BaseService
     {
         $all_category = goodsCategoryModel::where([
             'status' => 0,
-        ])->orderBy('sort', 'desc')->get();
+        ])->where('id', '!=', 124)
+          ->where('p_id', '!=', 124)
+          ->orderBy('sort', 'desc')->get();
 
         return infiniteCate($all_category);
     }
