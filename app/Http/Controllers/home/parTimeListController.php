@@ -36,7 +36,7 @@ class parTimeListController extends BaseController
                                 ->SearchPrice([$search_min_price, $search_max_price])->paginate(20);
         $categorys = $this->categoryModel::where([
             'status' => 0,
-            'p_id' => 19
+            'p_id' => 124
         ])->get();
         $settles = partTimeModel::$_SETTLE;
         return view('home.part_time_list', compact('items', 'categorys', 'settles'));
