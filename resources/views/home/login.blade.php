@@ -8,7 +8,7 @@
 @section('content')
     <div class="container">
         <div class="loginTop">
-            <img src="{{ asset('home/images/img/loginLogo.png') }}" alt=""/>
+            <img src="{{ asset('home/images/img/logo.png') }}" alt="" style="height: 95px; width: 160px"/>
             <p>欢迎登录</p>
         </div>
     </div>
