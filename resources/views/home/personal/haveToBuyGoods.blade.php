@@ -219,8 +219,7 @@
                                                         </td>
                                                         <td class="pd-20">
                                                             @if($item->pay_method == 'subscribed'
-                                                            && $item->timeout != '0000-00-00 00:00:00' && $item->timeout != "")
-                                                            && in_array($item->status, [300, 400, 500]))
+                                                            && $item->timeout != '0000-00-00 00:00:00' && $item->timeout != "" && in_array($item->status, [300, 400, 500]))
                                                                 <a href="javascript:void(0)"
                                                                    data-url="{{ route('personal.havegoods.pay', ['id' => $item->id]) }}"
                                                                    data-method="{{ $item->order->pay_method }}"
