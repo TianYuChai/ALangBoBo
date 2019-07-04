@@ -53,6 +53,7 @@ class parTimeListController extends BaseController
         $item = $this->model::where('id', $id)->first();
         if(Auth::guard('web')->check()) {
             $result = $this->partTimeSendModel::where('uid', Auth::guard('web')->user()->id)->first();
+            dd($result);
             if($result) {
                 $item->whetSend = true;
             }
