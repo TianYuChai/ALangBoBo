@@ -31,6 +31,7 @@ class LoginController extends BaseController
      */
     public function operation(Request $request, LoginService $loginService)
     {
+        dd(session('url.intended'));
         try{
             $loginService->dataFiltering($request);
             return $this->ajaxReturn([
