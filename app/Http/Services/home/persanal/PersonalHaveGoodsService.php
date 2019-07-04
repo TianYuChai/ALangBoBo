@@ -118,6 +118,7 @@ class PersonalHaveGoodsService extends BaseService
                 ])->where('timeout', '!=', '0000-00-00 00:00:00')->first();
                 if($item) {
                     $item->timeout = '';
+                    $item->order_id = strval($data['out_trade_no']);
                     $item->save();
                     if($item->satatus == 500) {
                         $this->capitalModel::create([
@@ -169,6 +170,7 @@ class PersonalHaveGoodsService extends BaseService
                 ])->where('timeout', '!=', '0000-00-00 00:00:00')->first();
                 if($item) {
                     $item->timeout = '';
+                    $item->order_id = strval($data['out_trade_no']);
                     $item->save();
                     if($item->satatus == 500) {
                         $this->capitalModel::create([

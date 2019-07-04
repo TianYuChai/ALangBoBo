@@ -52,12 +52,12 @@ class shoppingService extends BaseService
                 if(!$item) {
                     throw new Exception('商品信息错误, 请刷新重试');
                 }
-                if($item->uid == $this->user->id) {
-                    throw new Exception('商家不可购买自己店铺的商品');
-                }
-                if($this->user->card == UserModel::where('id', $item->uid)->first()->card) {
-                    throw new Exception('同类型账户不可购买');
-                }
+//                if($item->uid == $this->user->id) {
+//                    throw new Exception('商家不可购买自己店铺的商品');
+//                }
+//                if($this->user->card == UserModel::where('id', $item->uid)->first()->card) {
+//                    throw new Exception('同类型账户不可购买');
+//                }
 //                if($item->presell_time && $item->presell_time < getTime('ymd')) {
 //                    throw new Exception($item->title. ', 该商品为预售商品, 并未到达售卖时间');
 //                }

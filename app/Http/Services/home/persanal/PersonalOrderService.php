@@ -42,11 +42,13 @@ class PersonalOrderService extends BaseService
             throw new Exception('认缴单, 用户未完成支付，无法进行退款');
         }
         $order = $this->orderModel::where('order_id', $item->order_id)->first();
-        if($order->timeout < getTime()) {
-            throw new Exception('该订单已超出可退款期限');
-        }
-        if(bcsub($order->total_price, $order->refund) < $item->money) {
-            throw new Exception('该订单已超出可退款金额');
+        if($order) {
+            if($order->timeout < getTime()) {
+                throw new Exception('该订单已超出可退款期限');
+            }
+            if(bcsub($order->total_price, $order->refund) < $item->money) {
+                throw new Exception('该订单已超出可退款金额');
+            }
         }
         $item->status = 800;
         $item->save();
@@ -71,7 +73,7 @@ class PersonalOrderService extends BaseService
         try{
             $order = [
                 'out_trade_no' => $data->order_id,
-                'refund_amount' => '0.5',
+                'refund_amount' => $data->moneys,
                 'out_request_no' => $data->id,
                 'refund_reason' => '订单退款'
             ];

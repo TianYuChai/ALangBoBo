@@ -59,8 +59,8 @@
                             </span>
                         {{ $item->title }}
                         <span class="badge">
-                            @if(!empty($item->guser))
-                                接单人: {{ $item->guser->account .'('.$item->user->number.')'}}
+                            @if(!empty($item->user))
+                                出单人: {{ $item->user->account .'('.$item->user->number.')'}}
                             @endif
                         </span>
                     </a>

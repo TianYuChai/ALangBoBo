@@ -270,7 +270,7 @@ class shoppPayService extends BaseService
             if($data['trade_status'] == 'TRADE_SUCCESS' || $data['trade_status'] == 'TRADE_FINISHED'
                 && $data['app_id'] == $this->config['app_id']) {
                     if(isset($data['passback_params ']) && !empty($data['passback_params '])) {
-                        $this->processing($data['passback_params ']);
+                        $this->processing($data['passback_params'], $data['out_trade_no']);
                     } else {
                         $item = $this->orderModel::where([
                             'order_id' => strval($data['out_trade_no']),
@@ -309,7 +309,7 @@ class shoppPayService extends BaseService
                     'data' => $data
                 ]);
                 if(isset($data['attach']) && !empty($data['attach'])) {
-                    $this->processing($data['attach']);
+                    $this->processing($data['attach'], $data['out_trade_no']);
                 } else {
                     $item = $this->orderModel::where([
                         'order_id' => strval($data['out_trade_no']),
@@ -336,8 +336,9 @@ class shoppPayService extends BaseService
      * 子订单支付
      *
      * @param $id
+     * @param $order_id
      */
-    public function processing($id)
+    public function processing($id, $order_id)
     {
         try {
             $item = $this->shoppOrderModel::where([
@@ -361,9 +362,10 @@ class shoppPayService extends BaseService
                     'order_id' => $item->order_id,
                     'g_order_id' => $item->id,
                     'status' => 200,
-                ])->update(['status' => 300]);
+                ])->update(['status' => 300, 'order_id' => $order_id]);
             }
             $item->status = 300;
+            $item->order_id = $order_id;
             $item->save();
         } catch (Exception $e) {
             Log::info('子订单支付', [

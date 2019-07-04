@@ -209,7 +209,6 @@ class PersonalHaveGoodsController extends BaseController
                     'category' => 400,
                     'g_order_id' => $item->id,
                     'status' => 1001,
-                    'created_at' => getTime()
                 ]);
                 $this->capitalModel::create([
                     'uid' => $item->gid,
@@ -220,7 +219,6 @@ class PersonalHaveGoodsController extends BaseController
                     'category' => 500,
                     'g_order_id' => $item->id,
                     'status' => 1001,
-                    'created_at' => getTime()
                 ]);
             } else {
                 $this->capitalModel::create([

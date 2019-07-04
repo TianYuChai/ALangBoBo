@@ -219,7 +219,7 @@
                                                         </td>
                                                         <td class="pd-20">
                                                             @if($item->pay_method == 'subscribed'
-                                                            && ($item->timeout != '' || $item->timeout != '0000-00-00 00:00:00')
+                                                            && $item->timeout != '0000-00-00 00:00:00' && $item->timeout != "")
                                                             && in_array($item->status, [300, 400, 500]))
                                                                 <a href="javascript:void(0)"
                                                                    data-url="{{ route('personal.havegoods.pay', ['id' => $item->id]) }}"
@@ -241,7 +241,7 @@
                                                                     @case(500)
                                                                         @if(!$item->evaluation)
                                                                             @if($item->pay_method == 'paidin' || $item->pay_method == 'subscribed'
-                                                                                && ($item->timeout == '' || $item->timeout == '0000-00-00 00:00:00'))
+                                                                                && $item->timeout == '0000-00-00 00:00:00' && $item->timeout != "")
                                                                                 <a class="deleteBtn evaluation"
                                                                                    data-action="{{ route('personal.havegoods.evaluation', ['id' => $item->id]) }}"
                                                                                    data-toggle="modal"

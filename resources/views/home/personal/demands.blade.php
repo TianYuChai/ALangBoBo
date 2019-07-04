@@ -100,7 +100,7 @@
                             <div class="productListTop clearfix">
                                 <p><img src="{{ asset('home/images/icon/productList.png') }}" alt=""/>百录倩影列表</p>
                                 <a href="javascript:void(0)"  data-toggle="modal" data-target="#editProduct">+添加</a>
-                                <a href="javascript:void(0)" id="order_list">查单</a>
+                                <a href="javascript:void(0)" id="order_list">查看已接单</a>
                             </div>
                             <form action="" method="get" id="subForm">
                                 <div>
@@ -122,6 +122,7 @@
                                         <th class="tl" width="200">订单号</th>
                                         <th class="tl" width="200">名称</th>
                                         <th class="tl" width="90">状态</th>
+                                        <th class="tl" width="90">是否接单</th>
                                         <th class="tl" width="90">创建时间</th>
                                         <th class="tl" width="90">操作</th>
                                     </tr>
@@ -137,6 +138,11 @@
                                                 </td>
                                                 <td>
                                                     {{ $item->status_name }}
+                                                </td>
+                                                <td>
+                                                    @if($item->guid)
+                                                        {{ $item->guser->account .'('.$item->guser->number.')' }}
+                                                    @endif
                                                 </td>
                                                 <td>
                                                     {{ $item->created_at }}
