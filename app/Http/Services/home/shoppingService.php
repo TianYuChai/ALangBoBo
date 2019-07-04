@@ -155,6 +155,7 @@ class shoppingService extends BaseService
                 $items = $this->shopp_orderModel::where('uid', $this->user->id)
                                                 ->where('pay_method', $data)
                                                 ->where('timeout', '<>', '0000-00-00 00:00:00')->get();
+                dd($items->pluck('money')->sum(), $subscribed_money);
                 if(!$items->isEmpty()) {
                     if($items->pluck('money')->sum() >= $subscribed_money) {
                         throw new Exception('订单创建失败, 请先完
