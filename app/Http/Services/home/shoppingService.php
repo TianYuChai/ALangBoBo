@@ -148,7 +148,7 @@ class shoppingService extends BaseService
     {
         try {
             if($data == 'subscribed') {
-                $subscribed_money = intval(bcmul($this->user->frozen_capital, 100));
+                $subscribed_money = intval(bcmul($this->user->frozen_capital, 10, 2));
                 if($subscribed_money <= 0) {
                     throw new Exception('该购买方式下, 请先充值保证金');
                 }
@@ -156,9 +156,8 @@ class shoppingService extends BaseService
                                                 ->where('pay_method', $data)
                                                 ->whereIn('status', [200, 300, 400, 500])
                                                 ->where('timeout', '<>', '0000-00-00 00:00:00')->get();
-                dd($items->pluck('money')->sum(), $subscribed_money);
                 if(!$items->isEmpty()) {
-                    if($items->pluck('money')->sum() >= $subscribed_money) {
+                    if(bcdiv($items->pluck('money')->sum(), 100, 2) >= $subscribed_money) {
                         throw new Exception('订单创建失败, 请先完
                                                     成认缴订单的缴纳, 也可取消当前订单中的认缴订单和充值更多的保证金');
                     }
