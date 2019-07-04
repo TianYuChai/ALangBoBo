@@ -164,7 +164,9 @@ class shoppingService extends BaseService
                     }
                 }
                 $subscribed_price = $this->all_data['order_message']['subscribed_price'];
-                dd($money);
+                if($subscribed_price == 0) {
+                    $subscribed_price = $money;
+                }
                 if($subscribed_price > bcmul($this->user->frozen_capital, 10, 2)) {
                     throw new Exception('已超出保证金金额');
                 }
