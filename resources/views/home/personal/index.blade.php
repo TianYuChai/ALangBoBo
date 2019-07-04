@@ -109,7 +109,7 @@
                                     @foreach($items['alltrade'] as $item)
                                         <tr>
                                             <td width="185px">{{ $item->order_id }}</td>
-                                            <td> {{ $item->trans_at }} </td>
+                                            <td> {{ $item->created_at }} </td>
                                             <td width="80px"> {{ $item->money }} 元 </td>
                                             <td width="80px">
                                                 @if($item->category == 100 || $item->category == 600)
