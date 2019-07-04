@@ -59,7 +59,7 @@ class PersonalOrderController extends BaseController
             }
         })->where('gid', $this->user->id)
             ->SearchOrderId($order_id)
-            ->orderBy('status', 'asc')->paginate(parent::$page_limit);
+            ->orderBy('id', 'desc')->paginate(parent::$page_limit);
         $data = [
             'type' => $type,
             'items' => $items

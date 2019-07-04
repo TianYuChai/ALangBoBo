@@ -72,7 +72,7 @@ class PersonalHaveGoodsController extends BaseController
                     $query->whereIn('status', $status);
                 }
             }
-        })->SearchOrderId($order_id)->orderBy('status', 'asc')->paginate(parent::$page_limit);
+        })->SearchOrderId($order_id)->orderBy('id', 'desc')->paginate(parent::$page_limit);
         $data = [
             'type' => $type,
             'items' => $items
