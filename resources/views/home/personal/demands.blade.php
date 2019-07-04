@@ -122,7 +122,7 @@
                                         <th class="tl" width="200">订单号</th>
                                         <th class="tl" width="200">名称</th>
                                         <th class="tl" width="90">状态</th>
-                                        <th class="tl" width="90">是否接单</th>
+                                        <th class="tl" width="90">接单方</th>
                                         <th class="tl" width="90">创建时间</th>
                                         <th class="tl" width="90">操作</th>
                                     </tr>
