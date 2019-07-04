@@ -156,6 +156,7 @@ class shoppingService extends BaseService
                                                 ->where('pay_method', $data)
                                                 ->whereIn('status', [200, 300, 400, 500])
                                                 ->where('timeout', '<>', '0000-00-00 00:00:00')->get();
+                dd($items->pluck('money')->sum(), $subscribed_money, $subscribed_price);
                 if(!$items->isEmpty()) {
                     if($items->pluck('money')->sum() >= $subscribed_money) {
                         throw new Exception('订单创建失败, 请先完
@@ -163,7 +164,6 @@ class shoppingService extends BaseService
                     }
                 }
                 $subscribed_price = $this->all_data['order_message']['subscribed_price'];
-                dd($items->pluck('money')->sum(), $subscribed_money, $subscribed_price);
                 if($subscribed_price > bcmul($this->user->frozen_capital, 10, 2)) {
                     throw new Exception('已超出保证金金额');
                 }
