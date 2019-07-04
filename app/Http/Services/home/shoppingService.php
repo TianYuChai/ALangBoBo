@@ -154,7 +154,7 @@ class shoppingService extends BaseService
                 }
                 $items = $this->shopp_orderModel::where('uid', $this->user->id)
                                                 ->where('pay_method', $data)
-                                                ->whereIn('status', [200, 300, 400, 500])
+                                                ->whereIn('status', [200, 400, 500])
                                                 ->where('timeout', '<>', '0000-00-00 00:00:00')->get();
                 if(!$items->isEmpty()) {
                     if($items->pluck('money')->sum() >= $subscribed_money) {
