@@ -27,7 +27,7 @@
                         <a href="{{ route('merchant.show', ['id' => $item->id]) }}" class="shopLink">
                             <img src="{{ asset('home/images/icon/shopIcon.png') }}" alt="" class="shopIcon"/>
                             {{ $item->dist_name }}
-                            <span class="mgl-70">{{ $item->arrdess }}</span>
+                            <span class="mgl-70">{{ mb_substr($item->arrdess, 0, 8, 'utf-8') }}</span>
                         </a>
                     </li>
                 @endforeach
