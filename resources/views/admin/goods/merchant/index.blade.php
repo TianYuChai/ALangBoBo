@@ -58,7 +58,7 @@
                     <td>
                         @if($item->category != 0 && $item->status == 1)
                             <div class="layui-input-inline">
-                                <select name="level" id="distinguish" lay-filter="level"
+                                <select name="level" class="distinguish" lay-filter="level"
                                         data-action="{{ route('backstage.member.updateDistinguish', ['id' => $item->id]) }}">
                                     <option value="0" {{ $item->distinguish == 0 ? 'selected' : '' }}>普通商户</option>
                                     <option value="1" {{ $item->distinguish == 1 ? 'selected' : '' }}>加盟店</option>
@@ -96,7 +96,7 @@
                 ,type: 'datetime'
                 ,range: true
             });
-            $('#distinguish').change(function () {
+            $('.distinguish').change(function () {
                 var distinguish_id = $(this).val();
                 var url = $(this).data('action');
                 $.ajax({
