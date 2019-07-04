@@ -140,7 +140,7 @@
                                                     {{ $item->status_name }}
                                                 </td>
                                                 <td>
-                                                    @if(!empty($item->guid))
+                                                    @if(!empty($item->guser))
                                                         {{ $item->guser->account .'('.$item->guser->number.')' }}
                                                     @endif
                                                 </td>

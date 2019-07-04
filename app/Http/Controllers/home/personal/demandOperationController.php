@@ -41,9 +41,6 @@ class demandOperationController extends BaseController
                                 ->SearchTitle($title)
                                 ->orderBy('updated_at', 'desc')
                                 ->paginate(parent::$page_limit);
-        foreach ($items as $item) {
-            dd($item->guser);
-        }
         return view(self::ROUTE . 'demands', compact('items'));
     }
 
