@@ -142,9 +142,10 @@ class shoppingService extends BaseService
      * 则去查询是否有认缴未付款的订单
      *
      * @param $data
+     * @param $money
      * @throws Exception
      */
-    protected function authBuyWay($data)
+    protected function authBuyWay($data, $money)
     {
         try {
             if($data == 'subscribed') {
@@ -163,7 +164,7 @@ class shoppingService extends BaseService
                     }
                 }
                 $subscribed_price = $this->all_data['order_message']['subscribed_price'];
-                dd($subscribed_price, bcmul($this->user->frozen_capital, 10, 2));
+                dd($money);
                 if($subscribed_price > bcmul($this->user->frozen_capital, 10, 2)) {
                     throw new Exception('已超出保证金金额');
                 }
