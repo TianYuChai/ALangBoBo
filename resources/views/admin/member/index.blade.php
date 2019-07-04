@@ -100,7 +100,7 @@
                     <td>
                         @if($item->category != 0 && $item->merchant->status == 1)
                             <div class="layui-input-inline">
-                                <select name="level" id="distinguish" lay-filter="level" data-action="{{ route('backstage.member.updateDistinguish', ['id' => $item->merchant->id]) }}">
+                                <select name="level" class="distinguish" lay-filter="level" data-action="{{ route('backstage.member.updateDistinguish', ['id' => $item->merchant->id]) }}">
                                     <option value="0" {{ $item->merchant->distinguish == 0 ? 'selected' : '' }}>普通商户</option>
                                     <option value="1" {{ $item->merchant->distinguish == 1 ? 'selected' : '' }}>加盟店</option>
                                     <option value="2" {{ $item->merchant->distinguish == 2 ? 'selected' : '' }}>直营店</option>
@@ -355,7 +355,7 @@
                     });
                 })
             };
-            $('#distinguish').change(function () {
+            $('.distinguish').change(function () {
                 var distinguish_id = $(this).val();
                 var url = $(this).data('action');
                 $.ajax({

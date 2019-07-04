@@ -89,7 +89,8 @@ class IndexService extends BaseService
     {
         $shopp_order_goods = shoppOrderModel::select(DB::raw('*, count(id) as ids'))
                                 ->groupBy('sid')->orderBy('ids', 'desc')->limit(6)->get();
-        return GoodsModel::whereIn('id', $shopp_order_goods->pluck('sid')->toArray())->where('status', 0)->get();
+        return GoodsModel::whereIn('id', $shopp_order_goods->pluck('sid')->toArray())
+                                    ->where('status', 0)->get();
     }
 
     /**
