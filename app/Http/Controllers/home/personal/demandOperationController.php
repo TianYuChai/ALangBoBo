@@ -344,7 +344,7 @@ class demandOperationController extends BaseController
                     CapitalModel::create([
                         'uid' => $item->uid,
                         'order_id' => $item->order_id,
-                        'money' => $item->money,
+                        'money' => $item->moneys,
                         'trade_mode' => $item->pay_method,
                         'memo' => '需求支付',
                         'category' => 100,
@@ -389,7 +389,7 @@ class demandOperationController extends BaseController
                 CapitalModel::create([
                     'uid' => $item->uid,
                     'order_id' => $item->order_id,
-                    'money' => $item->money,
+                    'money' => $item->moneys,
                     'trade_mode' => $item->pay_method,
                     'memo' => '需求支付',
                     'category' => 100,
