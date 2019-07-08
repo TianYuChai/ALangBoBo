@@ -169,7 +169,7 @@
                     <div class="tab-pane fade in {{ $key == 25 ? 'active' : '' }} canyin1" id="{{ $key }}">
                         <ul class="clearfix">
                             @foreach($recreationProductss as $productss)
-                            <li>
+                            <li style="width: auto">
                                 <a href="{{ url('details', ['id' => $productss->id]) }}" target="_blank">
                                     <img src="{{ FileUpload::url('image', $productss->cost_img) }}" alt="" class="perfectImg" style="width: 186px;height: 186.94px"/>
                                     <p class="enjoyName">
