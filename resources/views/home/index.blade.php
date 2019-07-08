@@ -169,7 +169,7 @@
                     <div class="tab-pane fade in {{ $key == 25 ? 'active' : '' }} canyin1" id="{{ $key }}">
                         <ul class="clearfix">
                             @foreach($recreationProductss as $productss)
-                            <li style="width: auto">
+                            <li>
                                 <a href="{{ url('details', ['id' => $productss->id]) }}" target="_blank">
                                     <img src="{{ FileUpload::url('image', $productss->cost_img) }}" alt="" class="perfectImg" style="width: 186px;height: 186.94px"/>
                                     <p class="enjoyName">
@@ -206,7 +206,7 @@
                 <div class="tab-pane fade in {{ $key == 19 ? 'active' : '' }} canyin1 canyin21 fl" id="{{ $key }}">
                     <ul class="clearfix">
                         @foreach($presellGoodss as $goodss)
-                            <li>
+                            <li style="width: auto">
                                 <a href="{{ url('details', ['id' => $goodss->id]) }}" class="block artPartLink" target="_blank">
                                     <img src="{{ FileUpload::url('image', $goodss->cost_img) }}"
                                          alt="" class="perfectImg" style="width: 194px; height: 194.98px"/>
