@@ -14,6 +14,7 @@
         <div class="hotSearch">
             <ul class="hotSearchList clearfix">
                 <?php $redis = \Illuminate\Support\Facades\Redis::get('keywords') ?>
+                <?php echo  json_decode($redis, true)?>
                 @if($redis)
                     @foreach(json_decode($redis, true) as $key => $item)
                         @if($key <= 5)
