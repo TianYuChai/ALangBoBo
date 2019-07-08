@@ -85,7 +85,7 @@
             <tr>
                 <td>销售方式</td>
                 <td>
-                    @if(!empty($item->sales_way))
+                    @if(!empty($item->sales_way) && $item->sales_way != '0')
                         @if($item->sales_way == 1)
                             商家代售
                         @else
