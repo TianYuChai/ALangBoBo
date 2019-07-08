@@ -83,6 +83,18 @@
                 </td>
             </tr>
             <tr>
+                <td>销售方式</td>
+                <td>
+                    @if(!empty($item->sales_way))
+                        @if($item->sales_way == 1)
+                            商家代售
+                        @else
+                            自己销售
+                        @endif
+                    @endif
+                </td>
+            </tr>
+            <tr>
                 <td>订单状态</td>
                 <td>{{ $item->status_name }}</td>
             </tr>

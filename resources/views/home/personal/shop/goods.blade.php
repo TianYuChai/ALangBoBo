@@ -304,23 +304,6 @@
                                                 </div>
                                             </div>
                                             <div class="form-group">
-                                                <label class="col-sm-2 control-label">销售方式</label>
-                                                <div class="col-sm-10">
-                                                    <div class="has-warning">
-                                                        <div class="checkbox">
-                                                            <label>
-                                                                <input type="radio" name="sales_way" id="sales_way" value="1">
-                                                                商家代售
-                                                            </label>
-                                                            <label>
-                                                                <input type="radio" name="sales_way" id="sales_way" value="2">
-                                                                自售
-                                                            </label>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
                                                 <label class="col-sm-2 control-label">封面图</label>
                                                 <div class="col-sm-10">
                                                     <img src="{{ asset('home/images/img/idImg.png') }}" class="img-rounded">

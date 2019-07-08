@@ -92,6 +92,7 @@ class shoppingService extends BaseService
                     'delivery_fee' => $money['delivery_fee'],
                     'pack_mail' => $item->free_price,
                     'satisfied_fee' => $item->satic_price,
+                    'sales_way' => intval($value['sales_way']),
                     'status' => 200
                 ];
             }

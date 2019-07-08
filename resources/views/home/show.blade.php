@@ -63,18 +63,6 @@
                         </a>
                     </span>
                 </p>
-                @if(!empty($item->sales_way))
-                    <p class="productAttrFont mgt-20 pdl-10">
-                        销售方式
-                        <span class="col-black mgl-30">
-                           @if($item->sales_way == 1)
-                               商家代售
-                           @else
-                               自售
-                            @endif
-                        </span>
-                    </p>
-                @endif
                 <p class="productAttrFont mgt-20 pdl-10">发货地址
                     <span class="col-black mgl-30">{{ $item->addresss->address }}</span>
                 </p>
@@ -123,6 +111,11 @@
                         <p class="kucun">当前库存 <span>{{ $item->stocks }}</span></p>
                     </li>
                 </ul>
+                <div class="pdl-10 productAttrFont mgt-20 buyWayDiv">
+                    <span class="mgr-10">销售方式</span>
+                    <input type="radio" name="sales_way" value="1"/>商家代售
+                    <input type="radio" name="sales_way" class="shijiao" value="2"/>自己销售
+                </div>
                 <div class="pdl-10 productAttrFont mgt-20 buyWayDiv">
                     <span class="mgr-10">购买方式</span>
                     <input type="radio" name="buyWay" value="subscribed"/>认缴
@@ -232,6 +225,11 @@
                     obj['pay_method'] = $(this).val();
                 }
             });
+            $('input[name="sales_way"]').each(function () {
+                if($(this).is(':checked')) {
+                    obj['sales_way'] = $(this).val();
+                }
+            });
             if(!obj['pay_method']) {
                 layer.msg('请选择付款方式'); return false;
             }
@@ -284,6 +282,11 @@
             $('input[name="buyWay"]').each(function () {
                 if($(this).is(':checked')) {
                     obj['pay_method'] = $(this).val();
+                }
+            });
+            $('input[name="sales_way"]').each(function () {
+                if($(this).is(':checked')) {
+                    obj['sales_way'] = $(this).val();
                 }
             });
             if(!obj['pay_method']) {
