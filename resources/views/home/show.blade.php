@@ -63,6 +63,18 @@
                         </a>
                     </span>
                 </p>
+                @if(!empty($item->sales_way))
+                    <p class="productAttrFont mgt-20 pdl-10">
+                        销售方式
+                        <span class="col-black mgl-30">
+                           @if($item->sales_way == 1)
+                               商家代售
+                           @else
+                               自售
+                            @endif
+                        </span>
+                    </p>
+                @endif
                 <p class="productAttrFont mgt-20 pdl-10">发货地址
                     <span class="col-black mgl-30">{{ $item->addresss->address }}</span>
                 </p>

@@ -61,7 +61,8 @@ class PersonalGoodsService extends BaseService
                 'stock' => intval($data['stock']),
                 'new_goods' => isset($data['new_products']) ? intval($data['new_products']) : 0,
                 'content' => isset($data['content']) ? $data['content'] : '',
-                'presell_time' => isset($data['presell_time']) ? $data['presell_time'] : ''
+                'presell_time' => isset($data['presell_time']) ? $data['presell_time'] : '',
+                'sales_way' => isset($data['sales_way']) ? $data['sales_way'] : '',
             ],
             'attribute' => isset($attributes) ? $attributes : '',
             'images' => $images

@@ -85,6 +85,19 @@
                     </div>
                 </div>
                 <div class="form-group">
+                    <label class="col-sm-2 control-label">最佳入职时间</label>
+                    <div class="col-sm-10">
+                        <div class="has-warning">
+                            <div class="checkbox">
+                                <label>
+                                    <input type="text" class="form-control"
+                                           autocomplete="off" id="test1" name="the_time" value="{{ $item->the_time }}">
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
                     <label class="col-sm-2 control-label" for="inputPassword">薪资</label>
                     <div class="input-group" style="width: 250px;margin-left: 165px;">
                         <div class="input-group-addon">$</div>

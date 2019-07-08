@@ -81,6 +81,16 @@
                 </ul>
             </li>
         </ul>
+        <ul class="productAttrUl">
+            <li class="showStyle ">
+                <p>最近入职时间:</p>
+                <ul class="clearfix attrList">
+                    <li class="showStyleActive">
+                        <p>{{ $item->the_time }}</p>
+                    </li>
+                </ul>
+            </li>
+        </ul>
     </div>
     <!--详情-->
     <div class="textRecord mgt-50">

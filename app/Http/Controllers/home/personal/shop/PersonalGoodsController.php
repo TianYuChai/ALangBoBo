@@ -69,7 +69,7 @@ class PersonalGoodsController extends BaseController
         $goodsCategorys = $this->goodsCategory::where([
             'status' => 0,
             'p_id' => 0
-        ])->orderBy('sort', 'desc')->get();
+        ])->where('id', '!=', 124)->orderBy('sort', 'desc')->get();
         //地址
         $address = $this->addressModel::where([
             'uid' => $this->user->id,
@@ -217,7 +217,7 @@ class PersonalGoodsController extends BaseController
         $goodsMainCategorys = $this->goodsCategory::where([
             'status' => 0,
             'p_id' => 0
-        ])->orderBy('sort', 'desc')->get();
+        ])->where('id', '!=', 124)->orderBy('sort', 'desc')->get();
         $goodsSubCategorys = $this->goodsCategory::where([
             'status' => 0,
             'level' => 2

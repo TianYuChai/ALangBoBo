@@ -58,6 +58,7 @@ class PersonalPartTimeController extends BaseController
                 'money' => bcmul(trim($request->total_price), 100),
                 'settle' => $request->settle,
                 'time' => $request->time,
+                'the_time' => $request->the_time,
                 'describe' => trim($request->describe),
                 'content' => $request->input('content')
             ]);
@@ -107,6 +108,7 @@ class PersonalPartTimeController extends BaseController
                 'money' => bcmul(trim($request->total_price), 100),
                 'settle' => $request->settle,
                 'time' => $request->time,
+                'the_time' => $request->the_time,
                 'describe' => trim($request->describe),
                 'content' => $request->input('content')
             ]);
