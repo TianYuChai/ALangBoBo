@@ -157,23 +157,26 @@ class shoppingService extends BaseService
                                                 ->where('pay_method', $data)
                                                 ->whereIn('status', [200, 300, 400, 500])
                                                 ->where('timeout', '<>', '0000-00-00 00:00:00')->get();
-                Log::info('认缴订单', [
-                    '当前金额:' => $subscribed_money,
-                    '已买金额:' => $items->pluck('money')->sum(),
-                    '已买换算:' => bcdiv($items->pluck('money')->sum(), 100, 2)
-                ]);
                 if(!$items->isEmpty()) {
                     if(bcdiv($items->pluck('money')->sum(), 100, 2) >= $subscribed_money) {
                         throw new Exception('订单创建失败, 请先完
                                                     成认缴订单的缴纳, 也可取消当前订单中的认缴订单和充值更多的保证金');
                     }
                 }
-                dd();
                 $subscribed_price = $this->all_data['order_message']['subscribed_price'];
                 if($subscribed_price == 0) {
                     $subscribed_price = $money;
                 }
-                if($subscribed_price > bcmul($this->user->frozen_capital, 10, 2)) {
+                Log::info('认缴订单', [
+                    '当前金额:' => $subscribed_money,
+                    '已买金额:' => $items->pluck('money')->sum(),
+                    '已买换算:' => bcdiv($items->pluck('money')->sum(), 100, 2),
+                    '购买金额:' => $subscribed_price,
+                    '剩余金额:' => bcsub($subscribed_money, bcdiv($items->pluck('money')->sum(), 100, 2), 2)
+
+                ]);
+                dd();
+                if($subscribed_price > bcsub($subscribed_money, bcdiv($items->pluck('money')->sum(), 100, 2), 2)) {
                     throw new Exception('已超出保证金金额');
                 }
             }
