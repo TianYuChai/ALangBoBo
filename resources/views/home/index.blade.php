@@ -188,7 +188,7 @@
             </div>
         </div>
         <!--预售商品展示区-->
-        <div class="perfectShop relative artPart clearfix qihuoPart artParts" id="qihuoPart">
+        <div class="perfectShop relative artPart clearfix qihuoPart" id="qihuoPart">
             <!--<div class="perfectNav">-->
             <!--<p></p>-->
             <!--</div>-->
