@@ -83,7 +83,7 @@
         </ul>
         <ul class="productAttrUl">
             <li class="showStyle ">
-                <p>最近入职时间:</p>
+                <p>最佳入职时间:</p>
                 <ul class="clearfix attrList">
                     <li class="showStyleActive">
                         <p>{{ $item->the_time }}</p>
