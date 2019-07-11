@@ -77,15 +77,21 @@ class shoppPayService extends BaseService
     protected function merchantOrderAddressMemo($order_id, $data)
     {
         try {
+            $items = $this->shopp_orderModel::where('order_id', $order_id)->get();
+            $address = $this->addressModel::where('id', $data['address'])->first([
+                'address', 'detailed', 'code', 'number', 'contacts',
+            ]);
             if(!empty($data['memo'])) {
-                $items = $this->shopp_orderModel::where('order_id', $order_id)->get();
-                $address = $this->addressModel::where('id', $data['address'])->first([
-                    'address', 'detailed', 'code', 'number', 'contacts',
-                ]);
                 foreach ($data['memo'] as $datum) {
                     $item = $items->where('id', intval($datum['id']))->first();
                     $item->address = json_encode($address);
                     $item->memo = $datum['val'];
+                    $item->save();
+                }
+            } else {
+                foreach ($items as $item) {
+                    $item = $items->where('id', intval($item->id))->first();
+                    $item->address = json_encode($address);
                     $item->save();
                 }
             }
