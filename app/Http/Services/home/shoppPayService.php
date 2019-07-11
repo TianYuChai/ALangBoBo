@@ -242,10 +242,9 @@ class shoppPayService extends BaseService
         try {
             $order = [
                 'out_trade_no' => $data['order_id'],
-                'total_fee' => $data['paidin_prices'],
+                'total_fee' => $data['paidin_price'],
                 'body' => '阿朗博博商务中心---商品购买',
             ];
-            dd($order);
             if(isset($data['attach'])) {
                 $order['attach'] = $data['attach'];
             }

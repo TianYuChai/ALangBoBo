@@ -63,7 +63,7 @@ class PersonalHaveGoodsService extends BaseService
                 $result = QrCode::size(150)->generate($shoppPayService->wechat([
                     'order_id' => create_order_no(),
                     'attach' => $item->id,
-                    'paidin_prices' => $item->money,
+                    'paidin_price' => $item->money,
                 ]));
             }
         } else {
