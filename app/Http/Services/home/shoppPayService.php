@@ -234,6 +234,7 @@ class shoppPayService extends BaseService
     public function wechat($data)
     {
         try {
+            dd($data['paidin_prices']);
             $order = [
                 'out_trade_no' => $data['order_id'],
                 'total_fee' => $data['paidin_prices'],
