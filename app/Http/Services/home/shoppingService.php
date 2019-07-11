@@ -36,7 +36,7 @@ class shoppingService extends BaseService
                  'total_price' => 0,
                  'subscribed_price' => 0,
                  'paidin_price' => 0
-             ]
+             ],
          ];
     }
 
@@ -177,12 +177,18 @@ class shoppingService extends BaseService
                     '已买金额:' => $items->pluck('money')->sum(),
                     '已买换算:' => bcdiv($items->pluck('money')->sum(), 100, 2),
                     '购买金额:' => $subscribed_price,
-                    '剩余金额:' => $bought
-
+                    '剩余金额:' => $bought,
+                    '当前认缴订单金额' => $this->all_data['order_message']['subscribed_price']
                 ]);
+                if($this->all_data['order_message']['subscribed_price'] > 0) {
+                    if(bcadd($this->all_data['order_message']['subscribed_price'], $subscribed_price, 2) > bcsub($subscribed_money, $bought, 2)) {
+                        throw new Exception('已超出保证金金额');
+                    }
+                }
                 if($subscribed_price > bcsub($subscribed_money, $bought, 2)) {
                     throw new Exception('已超出保证金金额');
                 }
+
             }
         } catch (Exception $e) {
             Log::info('下单流程->创建订单->验证订单支付模式:', [
