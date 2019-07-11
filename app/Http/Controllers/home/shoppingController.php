@@ -243,15 +243,15 @@ class shoppingController extends BaseController
     {
         try {
             $result = $service->entrance($order_id, $request->all());
-//            if(is_array($result)) {
-//                return $this->ajaxReturn([
-//                    'status' => 200,
-//                    'info' => $result['info'],
-//                    'url' => $result['url'],
-//                ], 200);
-//            } else {
-//                return $result;
-//            }
+            if(is_array($result)) {
+                return $this->ajaxReturn([
+                    'status' => 200,
+                    'info' => $result['info'],
+                    'url' => $result['url'],
+                ], 200);
+            } else {
+                return $result;
+            }
         } catch (Exception $e) {
             Log::info('提交订单支付: ', [
                 'time' => getTime(),
