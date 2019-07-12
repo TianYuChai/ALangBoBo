@@ -9,7 +9,7 @@
     <meta charset="utf-8">
     <meta name="renderer" content="webkit">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>@yield('title', '阿郎博波')</title>
+    <title>@yield('title', '阿郎博波    将经历和体验做出产品')</title>
     @section('css')
         @include('home.public.public_css')
     @show
