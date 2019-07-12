@@ -60,25 +60,32 @@ class WechatService extends BaseService
      */
     public function notify()
     {
-        $vailet = $this->vailet();
-        $data = $vailet->all();
-        if($data['return_code'] == 'SUCCESS' || $data['result_code'] == 'SUCCESS'
-            && $data['app_id'] == $this->config['app_id']) {
-            $item = $this->capitalmode::where([
-                'order_id' => strval($data['out_trade_no']),
-                'category' => 300,
-                'status' => 1002
-            ])->first();
-            Log::info('订单：'.strval($data['out_trade_no']).'执行中');
-            if($item) {
-                $item->status = 1003;
-                $item->trans_at = getTime();
-                $item->due_at = Carbon::now()->modify('+30 days')->toDateTimeString();
-                $item->save();
+        try {
+            $vailet = $this->vailet();
+            $data = $vailet->all();
+            if($data['return_code'] == 'SUCCESS' || $data['result_code'] == 'SUCCESS'
+                && $data['app_id'] == $this->config['app_id']) {
+                $item = $this->capitalmode::where([
+                    'order_id' => strval($data['out_trade_no']),
+                    'category' => 300,
+                    'status' => 1002
+                ])->first();
+                Log::info('订单：'.strval($data['out_trade_no']).'执行中');
+                if($item) {
+                    $item->status = 1003;
+                    $item->trans_at = getTime();
+                    $item->due_at = Carbon::now()->modify('+30 days')->toDateTimeString();
+                    $item->save();
+                }
+                Log::info('保证金---微信异步回调处理结束');
             }
-            Log::info('保证金---微信异步回调处理结束');
+            return Pay::wechat($this->config)->success();
+        } catch (Exception $e) {
+            Log::info('微信保证金异步', [
+                'time' => getTime(),
+                'info' => $e->getMessage()
+            ]);
         }
-        return Pay::wechat($this->config)->success();
     }
 
     /**
@@ -99,7 +106,7 @@ class WechatService extends BaseService
      * @param $account
      * @return bool
      */
-    public function  cashWith($money, $procedures_fee, $account)
+    public function cashWith($money, $procedures_fee, $account)
     {
         $order_id = create_order_no();
         $item = $this->capitalmode::create([
