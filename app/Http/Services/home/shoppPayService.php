@@ -309,9 +309,6 @@ class shoppPayService extends BaseService
         try {
             $vailet = Pay::wechat($this->wxconfig)->verify();
             $data = $vailet->all();
-            Log::info('微信商品支付返回参数', [
-                'data' => $data
-            ]);
             if($data['return_code'] == 'SUCCESS' || $data['result_code'] == 'SUCCESS'
                 && $data['app_id'] == $this->wxconfig['app_id']) {
                 Log::info('微信商品支付返回参数', [
