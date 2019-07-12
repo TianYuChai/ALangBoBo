@@ -33,13 +33,13 @@ class keyword extends Command
     public function handle()
     {
         $search_keywods = json_decode(Redis::get('keyword'));
-        Log::info('热搜', [
-            'info' => $search_keywods
-        ]);
         $keywods = [];
         if(!empty($search_keywods)) {
             foreach ($search_keywods as $keywod) {
-                if(isset($keywod[$keywod])) {
+                if(empty($keywod)) {
+                    continue;
+                }
+                if(isset($keywods[$keywod])) {
                     $keywods[$keywod]['sort'] += 1;
                 } else {
                     $keywods[$keywod] = [
@@ -50,10 +50,7 @@ class keyword extends Command
             }
             $data = array_column(array_values($keywods), 'sort');
             array_multisort($data, SORT_DESC, $keywods);
-            Log::info('热搜', [
-                'info' => $keywods
-            ]);
-            Redis::set('keywords', json_encode($keywods));
+            Redis::set('keywords', json_encode(array_values($keywods)));
         }
     }
 }
