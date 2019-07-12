@@ -20,11 +20,11 @@ class theblackistController extends BaseController
         $merchants = theBlackListModel::where([
             'status' => 1,
             'type' => 0
-        ])->paginate(parent::$page_limits);
+        ])->orderBy('id', 'desc')->paginate(parent::$page_limits);
         $users = theBlackListModel::where([
             'status' => 1,
             'type' => 1
-        ])->paginate(parent::$page_limits);
+        ])->orderBy('id', 'desc')->paginate(parent::$page_limits);
         $data = [
             'merchants' => $merchants,
             'users' => $users
