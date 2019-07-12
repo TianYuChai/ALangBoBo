@@ -198,8 +198,8 @@ class PersonalHaveGoodsController extends BaseController
             $satisfaction_value = explode('%', $satisfaction)[0];
             if($satisfaction_value < 100) {
                 $calcul = bcdiv($satisfaction_value, 10, 2);
-                $shopp_money = bcdiv(bcmul(bcdiv($item->satisfied_fees, $item->num, 2), $calcul, 2), 10, 2);
-                $refund = bcsub($item->satisfied_fees, $shopp_money, 2);
+                $shopp_money = bcdiv(bcmul(bcmul($item->satisfied_fees, $item->num, 2), $calcul, 2), 10, 2);
+                $refund = bcsub(bcmul($item->satisfied_fees, $item->num, 2), $shopp_money, 2);
                 $this->capitalModel::create([
                     'uid' => $this->userId,
                     'order_id' => $item->order_id,
