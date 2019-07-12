@@ -282,6 +282,9 @@
                 obj['address'] = $(this).val();
             }
         });
+        if(!obj['address']) {
+            layer.msg('请选择收货地址');return false;
+        }
         $('.memo').each(function () {
             let val = $(this).val();
             if(val) {
