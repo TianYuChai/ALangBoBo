@@ -347,11 +347,11 @@ class shoppPayService extends BaseService
     public function processing($id, $order_id)
     {
         try {
-            $item = $this->shoppOrderModel::where([
+            $item = $this->shopp_orderModel::where([
                 'id' => intval($id),
                 'status' => 200
             ])->first();
-            $orders = $this->shoppOrderModel::where([
+            $orders = $this->shopp_orderModel::where([
                 'order_id' => strval($item->order_id),
                 'status' => 200
             ])->where('id', '!=', $item->id)->get();
