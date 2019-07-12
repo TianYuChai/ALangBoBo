@@ -77,6 +77,9 @@ class shoppPayService extends BaseService
     protected function merchantOrderAddressMemo($order_id, $data)
     {
         try {
+            if(empty($data['address'])) {
+                throw new Exception('请选择收货地址');
+            }
             $items = $this->shopp_orderModel::where('order_id', $order_id)->get();
             $address = $this->addressModel::where('id', $data['address'])->first([
                 'address', 'detailed', 'code', 'number', 'contacts',
