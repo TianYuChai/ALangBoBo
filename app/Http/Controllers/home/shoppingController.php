@@ -291,12 +291,11 @@ class shoppingController extends BaseController
      */
     public function wxnotify(shoppPayService $shoppPayService)
     {
-//        try {
-//            $result = $shoppPayService->wxnotify();
-//        } catch (Exception $e) {
-//            Log::info('微信异步回调错误:' . $e->getMessage());
-//        }
-        $result = $shoppPayService->wxnotify();
+        try {
+            $result = $shoppPayService->wxnotify();
+        } catch (Exception $e) {
+            Log::info('微信异步回调错误:' . $e->getMessage());
+        }
         return $result;
     }
 }
