@@ -82,11 +82,11 @@
                 </a>
                 @else
                     @if($item->status == 0)
-                        <a title="不公示" onclick="black_stop(this,'{{ route('backstage.blackList.del', ['id' => $item->id, 'type' => 1]) }}')" href="javascript:void(0);">
+                        <a title="不公示" onclick="black_stop(this,'{{ route('backstage.complain.handle', ['id' => $item->id, 'type' => 1]) }}')" href="javascript:void(0);">
                             <i class="layui-icon layui-icon-delete"></i>
                         </a>
                     @else
-                        <a onclick="black_stop(this,'{{ route('backstage.blackList.store', ['id' => $item->id, 'type' => 0]) }}')"
+                        <a onclick="black_stop(this,'{{ route('backstage.complain.handle', ['id' => $item->id, 'type' => 0]) }}')"
                            href="javascript:void(0);" title="公示">
                             <i class="layui-icon layui-icon-download-circle"></i>
                         </a>
