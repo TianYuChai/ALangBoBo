@@ -94,7 +94,7 @@
 @endsection
 @section('bottom')
     <div class="copyRight container">
-        <p class="copyRightTip">Copyright© 2002-2019，阿郎博波文化传媒（深圳）有限公司版权所有  |  浙公网安备 32010202010078号| 浙ICP备10207551号-4</p>
+        <p class="copyRightTip">Copyright© 2002-2019，阿郎博波文化传媒（深圳）有限公司版权所有  |  粤ICP备19016190号-1</p>
         <img src="{{ asset('home/images/img/bottomImg.png') }}" alt="" class="bottomImg"/>
     </div>
 @endsection
