@@ -52,6 +52,8 @@ Route::group(['prefix' => 'backstage', 'namespace' => 'admin'], function () {
             Route::get('member/cancel/{id}/agree', ['as' => 'backstage.cancel.agree', 'uses' => 'MemberCancelController@agree']);
             /*会员-流水*/
             Route::get('member/{id}/runningWater', ['as' => 'backstage.member.water', 'uses' => 'MemberController@runningWater']);
+            /*会员-修改绑定手机*/
+            Route::post('member/{id}/editMobile', ['as' => 'backstage.member.editmobile', 'uses' => 'MemberController@editMobile']);
         });
 
         /**

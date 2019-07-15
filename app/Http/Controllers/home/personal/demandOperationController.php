@@ -303,7 +303,7 @@ class demandOperationController extends BaseController
                 $order = [
                     'out_trade_no' => $data->order_id,
                     'total_fee' => $data->money,
-                    'body' => '阿朗博博商务中心-百录倩影-需求支付',
+                    'body' => '阿郎博波商务中心-百录倩影-需求支付',
                 ];
                 $wxcofig['notify_url'] = route('index.demand.wxnotify');
                 $wechat = Pay::wechat($wxcofig)->scan($order);

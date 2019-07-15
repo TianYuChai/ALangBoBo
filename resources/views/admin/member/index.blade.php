@@ -187,6 +187,10 @@
                                title="修改密码" href="javascript:void(0);">
                                 <i class="layui-icon layui-icon-util"></i>
                             </a>
+                            <a onclick="edit_mobile(this, '{{ route('backstage.member.editmobile', ['id' => $item->id]) }}')"
+                               title="修改绑定手机" href="javascript:void(0);">
+                                <i class="layui-icon layui-icon-util"></i>
+                            </a>
                     </td>
                 </tr>
             @endforeach
@@ -355,6 +359,39 @@
                     });
                 })
             };
+            /*用户-修改绑定手机号*/
+            window.edit_mobile = function(obj, url) {
+                layer.prompt({title: '请输入新的手机号, 并确保该手机没被使用！', formType: 3}, function(text, index){
+                    layer.close(index);
+                    var pattern = /^1[34578]\d{9}$/;
+                    if(!pattern.test(text)) {
+                        layer.msg('请输入正确的手机号');return;
+                    }
+                    $.ajax({
+                        headers: {
+                            'X-CSRF-TOKEN': "{{ csrf_token() }}"
+                        },
+                        method:"post",
+                        url:url,
+                        data:{'mobile': text},
+                        success:function (res) {
+                            if(res.status == 200) {
+                                layer.msg(res.info);
+                                setTimeout(function () {
+                                    window.location.reload();
+                                }, 1000)
+                            }
+                        },
+                        error:function (XMLHttpRequest) {
+                            //返回提示信息
+                            var errors = XMLHttpRequest.responseJSON.errors;
+                            for (var value in errors) {
+                                layer.msg(errors[value][0]);return;
+                            }
+                        }
+                    });
+                });
+            };
             $('.distinguish').change(function () {
                 var distinguish_id = $(this).val();
                 var url = $(this).data('action');
@@ -382,6 +419,7 @@
                     }
                 });
             });
+
         })
     </script>
 @endsection

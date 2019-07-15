@@ -230,11 +230,41 @@ class MemberController extends BaseController
                     ->whereIn('status', [1001])
                     ->where('uid', intval($id));
         })->sum('money');
-        $frost  = CapitalModel::where([
+        $frost = CapitalModel::where([
             'category' => 300,
             'status' => 1003,
             'uid' => intval($id)
         ])->sum('money');
         return view('admin.member.water', compact('items', 'avail', 'frost'));
     }
+
+    /**
+     * 修改绑定手机号
+     *
+     * @param $id
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function editMobile($id, Request $request)
+    {
+        try {
+            $mobile = trim($request->mobile);
+            if(!is_mobile($mobile)) {
+                throw new Exception('请输入正确的手机号');
+            }
+            if(UserModel::where('number', $mobile)->where('id', '!=', intval($id))->exists()) {
+                throw new Exception('该手机号码已被使用');
+            }
+            UserModel::where('id', intval($id))->update([
+                'number' => $mobile
+            ]);
+            return $this->ajaxReturn();
+        } catch (Exception $e) {
+            return $this->ajaxReturn([
+                'info' => $e->getMessage(),
+                'status' => 510
+            ], 510);
+        }
+    }
+
 }

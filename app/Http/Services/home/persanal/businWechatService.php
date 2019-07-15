@@ -41,7 +41,7 @@ class businWechatService extends BaseService
             'out_trade_no' => $item->order_id,
             'total_fee' => bcmul($data->moneys, 100),
             'attach' => urlencode($this->userId .'-'. $data->duration),
-            'body' => '阿朗博博商务中心---保证金充值',
+            'body' => '阿郎博波商务中心---保证金充值',
         ];
         $this->config['notify_url'] = route('index.busin.wxnotify');
         $wechat = Pay::wechat($this->config)->scan($order);

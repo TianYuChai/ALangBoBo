@@ -86,7 +86,7 @@ class PersonalHaveGoodsService extends BaseService
                     'out_trade_no' => create_order_no(),
                     'total_fee' =>  $item->money,
                     'attach' => $item->id,
-                    'body' => '阿朗博博商务中心---商品购买',
+                    'body' => '阿郎博波商务中心---商品购买',
                 ];
                 $this->wxconfig['notify_url'] = route('index.subscribed.wxnotify');
                 $wechat = Pay::wechat($this->wxconfig)->scan($order);
