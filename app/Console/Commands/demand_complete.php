@@ -57,7 +57,7 @@ class demand_complete extends Command
                         'uid' => $item->uid
                     ])->first()->update([
                         'category' => 400,
-                        'status' => 1002,
+                        'status' => 1004,
                         'memo' => '支付完成'
                     ]);
                     CapitalModel::create([

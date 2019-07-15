@@ -469,7 +469,7 @@ class demandOperationController extends BaseController
                 'uid' => $this->user->id
             ])->first();
             $capital->category = 400;
-            $capital->status = 1002;
+            $capital->status = 1004;
             $capital->memo = '支付完成';
             $capital->save();
 

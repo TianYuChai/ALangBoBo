@@ -46,7 +46,8 @@ class CapitalModel extends Model
     public static $_STATUS = [
         1001 => '可用', //交易成功
         1002 => '不可用', // 交易失败
-        1003 => '冻结'
+        1003 => '冻结',
+        1004 => '支付完成'
     ];
 
     /**

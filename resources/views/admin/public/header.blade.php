@@ -2,7 +2,7 @@
 <div class="container">
     <div class="logo">
         <a href="{{ route('backstage.member.index') }}">
-            商务管理中心
+            阿郎博波-商务管理中心
         </a>
     </div>
     <div class="left_open">
