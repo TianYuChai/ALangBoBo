@@ -82,6 +82,7 @@ class subscribedOrder extends Command
                    ]);
                }
            }
+           Log::info('认缴订单超时未支付处理完成');
         } catch (Exception $e) {
             Log::info('认缴订单超时未支付处理:', [
                 'time' => getTime(),
