@@ -79,6 +79,9 @@ class subscribedOrder extends Command
 //                       $moneys = $user->frozen_capital;
 //                   }
 //               }
+               Log::info('定时付款', [
+                   'info' => $g_moneys.'-'.$moneys
+               ]);
                CapitalModel::create([
                    'uid' => $item->gid,
                    'order_id' => $item->order_id,
