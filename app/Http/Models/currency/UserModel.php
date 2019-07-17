@@ -5,6 +5,7 @@ namespace App\Http\Models\currency;
 use App\Http\Models\admin\RegisterAuditingModel;
 use App\Http\Models\home\shoppCarModel;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Support\Facades\Log;
 
 class UserModel extends Authenticatable
 {
@@ -169,6 +170,11 @@ class UserModel extends Authenticatable
         $frozen_fee = $this->capital()->where(function ($query) {
             $query->where('category', '!=', 600)->whereIn('status', [1003]);
         })->sum('money');
+        Log::info('可用金额', [
+            '总金额' => $total_fee,
+            '冻结金额' => $frozen_fee,
+            '可用金额' => bcsub($total_fee, $frozen_fee, 2)
+        ]);
         return bcsub($total_fee, $frozen_fee, 2);
     }
 
