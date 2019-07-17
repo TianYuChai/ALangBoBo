@@ -50,13 +50,15 @@ class subscribedOrder extends Command
                                             ->where('timeout', '!=', '0000-00-00 00:00:00')
                                             ->where('timeout', '!=', '')
                                             ->where('timeout', '<', getTime())
+                                            ->orderBy('id', 'asc')
                                             ->get();
            foreach ($items as $item) {
                $user = UserModel::where('id', $item->uid)->first();
                Log::info('定时', [
+                   'id' => $item->id,
                    'info' => $user->frozen_capital
                ]);
-               if($user->frozen_capital == '0') {
+               if($user->frozen_capital == 0) {
                    continue;
                }
                if($item->status < 600) {
