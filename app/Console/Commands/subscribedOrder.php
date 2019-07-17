@@ -56,15 +56,29 @@ class subscribedOrder extends Command
                if($user->frozen_capital == 0) {
                    continue;
                }
-               if($item->moneys < $user->frozen_capital) {
-                   if($item->status < 600) {
-                       $moneys = bcsub($item->moneys, bcmul($item->satisfiedfees, $item->num, 2), 2);
-                   } else {
-                       $moneys = $item->moneys;
-                   }
+
+               if($item->status < 600) {
+                   $moneys = bcsub($item->moneys, bcmul($item->satisfiedfees, $item->num, 2), 2);
                } else {
-                   $moneys = $user->frozen_capital;
+                   if($item->moneys < $user->frozen_capital) {
+                       $moneys = $item->moneys;
+                   } else {
+                       $moneys = $user->frozen_capital;
+                   }
                }
+//               if($item->moneys < $user->frozen_capital) {
+//                   if($item->status < 600) {
+//                       $moneys = bcsub($item->moneys, bcmul($item->satisfiedfees, $item->num, 2), 2);
+//                   } else {
+//                       $moneys = $item->moneys;
+//                   }
+//               } else {
+//                   if($item->status < 600) {
+//                       $moneys = bcsub($item->moneys, bcmul($item->satisfiedfees, $item->num, 2), 2);
+//                   } else {
+//                       $moneys = $user->frozen_capital;
+//                   }
+//               }
                CapitalModel::create([
                    'uid' => $item->gid,
                    'order_id' => $item->order_id,
@@ -82,7 +96,7 @@ class subscribedOrder extends Command
                CapitalModel::create([
                    'uid' => $user->id,
                    'order_id' => $item->order_id,
-                   'money' => '-' . $item->moneys < $user->frozen_capital ? $item->moneys : $moneys,
+                   'money' => '-' . $item->moneys < $user->frozen_capital ? $item->moneys : $user->frozen_capital,
                    'trade_mode' => '',
                    'category' => 300,
                    'g_order_id' => $item->id,
