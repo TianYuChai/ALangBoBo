@@ -56,7 +56,6 @@ class subscribedOrder extends Command
                if($user->frozen_capital == 0) {
                    continue;
                }
-
                if($item->status < 600) {
                    $moneys = bcsub($item->moneys, bcmul($item->satisfiedfees, $item->num, 2), 2);
                } else {
@@ -66,6 +65,7 @@ class subscribedOrder extends Command
                        $moneys = $user->frozen_capital;
                    }
                }
+               $g_moneys = $item->moneys < $user->frozen_capital ? $item->moneys : $user->frozen_capital;
 //               if($item->moneys < $user->frozen_capital) {
 //                   if($item->status < 600) {
 //                       $moneys = bcsub($item->moneys, bcmul($item->satisfiedfees, $item->num, 2), 2);
@@ -96,7 +96,7 @@ class subscribedOrder extends Command
                CapitalModel::create([
                    'uid' => $user->id,
                    'order_id' => $item->order_id,
-                   'money' => '-' . $item->moneys < $user->frozen_capital ? $item->moneys : $user->frozen_capital,
+                   'money' => '-'. $g_moneys,
                    'trade_mode' => '',
                    'category' => 300,
                    'g_order_id' => $item->id,
