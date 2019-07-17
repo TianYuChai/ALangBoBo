@@ -51,7 +51,9 @@ class credit extends Command
             $items = $this->model::where([
                 'category' => 300,
                 'status' => 1003,
-            ])->where('due_at', '<', getTime())->get();
+            ])->where('due_at', '<', getTime())
+              ->where('due_at', '<>', '')
+              ->where('due_at', '<>', '0000-00-00 00:00:00')->get();
             $orders = $this->shoppOrderModel::whereIn('uid', $items->pluck('uid'))
                 ->where('pay_method', 'subscribed')
                 ->where('timeout', '<>', '0000-00-00 00:00:00')
