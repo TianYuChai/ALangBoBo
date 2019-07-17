@@ -65,8 +65,8 @@ class subscribedOrder extends Command
                        'g_order_id' => $item->id,
                        'money' => $moneys,
                        'trade_mode' => $item->pay_method,
-                       'memo' => '用户备注:' . empty($item->memo) ? '无, 平台备注: 用户下单支付订单' :
-                           $item->memo. ','. '平台备注: 用户下单支付订单',
+                       'memo' => '用户备注:' . empty($item->memo) ? '无, 平台备注: 买家未付款，保证金赔付' :
+                           $item->memo. ','. '平台备注: 买家未付款，保证金赔付',
                        'category' => 500,
                        'status' => 1001,
                        'trans_at' => $item->created_at,
@@ -80,7 +80,7 @@ class subscribedOrder extends Command
                        'trade_mode' => '',
                        'category' => 300,
                        'g_order_id' => $item->id,
-                       'status' => 1003
+                       'status' => 1001
                    ]);
                }
            }

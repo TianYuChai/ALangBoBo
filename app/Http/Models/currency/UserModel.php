@@ -175,7 +175,7 @@ class UserModel extends Authenticatable
             '冻结金额' => $frozen_fee,
             '可用金额' => bcsub($total_fee, $frozen_fee, 2)
         ]);
-        return bcsub($total_fee, $frozen_fee, 2);
+        return $total_fee > $frozen_fee ? bcsub($total_fee, $frozen_fee, 2) : $total_fee;
     }
 
     /**
