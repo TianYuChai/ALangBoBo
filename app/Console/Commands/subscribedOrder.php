@@ -50,7 +50,6 @@ class subscribedOrder extends Command
                                             ->where('timeout', '!=', '0000-00-00 00:00:00')
                                             ->where('timeout', '!=', '')
                                             ->where('timeout', '<', getTime())
-                                            ->orderBy('id', 'desc')
                                             ->get();
            foreach ($items as $item) {
                $user = UserModel::where('id', $item->uid)->first();
