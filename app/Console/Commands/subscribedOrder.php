@@ -59,29 +59,13 @@ class subscribedOrder extends Command
                if($item->status < 600) {
                    $moneys = bcsub($item->moneys, bcmul($item->satisfiedfees, $item->num, 2), 2);
                } else {
-                   if($item->moneys < $user->frozen_capital) {
-                       $moneys = $item->moneys;
-                   } else {
-                       $moneys = $user->frozen_capital;
-                   }
+                   $moneys = $item->moneys;
                }
-               $g_moneys = $item->moneys < $user->frozen_capital ? $item->moneys : $user->frozen_capital;
-//               if($item->moneys < $user->frozen_capital) {
-//                   if($item->status < 600) {
-//                       $moneys = bcsub($item->moneys, bcmul($item->satisfiedfees, $item->num, 2), 2);
-//                   } else {
-//                       $moneys = $item->moneys;
-//                   }
-//               } else {
-//                   if($item->status < 600) {
-//                       $moneys = bcsub($item->moneys, bcmul($item->satisfiedfees, $item->num, 2), 2);
-//                   } else {
-//                       $moneys = $user->frozen_capital;
-//                   }
-//               }
-               Log::info('定时付款', [
-                   'info' => $g_moneys.'-'.$moneys
-               ]);
+               if($item->moneys > $user->frozen_capital) {
+                    $moneys = $user->frozen_capital;
+                    $item->if_compensation = 1;
+               }
+               $g_moneys = $item->moneys < $user->frozen_capital ? $item->moneys : $moneys;
                CapitalModel::create([
                    'uid' => $item->gid,
                    'order_id' => $item->order_id,

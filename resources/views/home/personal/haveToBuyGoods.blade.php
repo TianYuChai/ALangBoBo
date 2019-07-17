@@ -240,7 +240,7 @@
                                                                     @case(500)
                                                                         @if(!$item->evaluation)
                                                                             @if($item->pay_method == 'paidin' || $item->pay_method == 'subscribed'
-                                                                                && $item->timeout == '0000-00-00 00:00:00' && $item->timeout != "")
+                                                                                && $item->timeout == '0000-00-00 00:00:00' && $item->timeout != "" && $item->if_compensation == 0)
                                                                                 <a class="deleteBtn evaluation"
                                                                                    data-action="{{ route('personal.havegoods.evaluation', ['id' => $item->id]) }}"
                                                                                    data-toggle="modal"
