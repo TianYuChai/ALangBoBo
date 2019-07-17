@@ -53,7 +53,10 @@ class subscribedOrder extends Command
                                             ->get();
            foreach ($items as $item) {
                $user = UserModel::where('id', $item->uid)->first();
-               if($user->frozen_capital == 0) {
+               Log::info('定时', [
+                   'info' => $user->frozen_capital
+               ]);
+               if($user->frozen_capital == '0') {
                    continue;
                }
                if($item->status < 600) {
