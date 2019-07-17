@@ -173,7 +173,7 @@ class UserModel extends Authenticatable
         Log::info('可用金额', [
             '总金额' => $total_fee,
             '冻结金额' => $frozen_fee,
-            '可用金额' => bcsub($total_fee, $frozen_fee, 2)
+            '可用金额' => $total_fee > $frozen_fee ? bcsub($total_fee, $frozen_fee, 2) : $total_fee
         ]);
         return $total_fee > $frozen_fee ? bcsub($total_fee, $frozen_fee, 2) : $total_fee;
     }
