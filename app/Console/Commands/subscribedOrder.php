@@ -53,7 +53,7 @@ class subscribedOrder extends Command
                $user = UserModel::where('id', $item->uid)->first();
                if($item->moneys < $user->frozen_capital) {
                    if($item->status < 600) {
-                       $moneys = bcsub($item->moneys, $item->satisfiedfees, 2);
+                       $moneys = bcsub($item->moneys, bcmul($item->satisfiedfees, $item->num, 2), 2);
                    } else {
                        $moneys = $item->moneys;
                    }
