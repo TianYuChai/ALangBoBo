@@ -153,8 +153,7 @@ class UserModel extends Authenticatable
     {
         return $this->capital()->where([
             'category' => 300,
-            'status' => 1003
-        ])->sum('money');
+        ])->whereIn('status', [1003, 1004])->sum('money');
     }
 
     /**
