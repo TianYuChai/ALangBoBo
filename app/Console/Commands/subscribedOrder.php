@@ -53,37 +53,42 @@ class subscribedOrder extends Command
                                             ->get();
            foreach ($items as $item) {
                $user = UserModel::where('id', $item->uid)->first();
+               if($user->frozen_capital == 0) {
+                   continue;
+               }
                if($item->moneys < $user->frozen_capital) {
                    if($item->status < 600) {
                        $moneys = bcsub($item->moneys, bcmul($item->satisfiedfees, $item->num, 2), 2);
                    } else {
                        $moneys = $item->moneys;
                    }
-                   CapitalModel::create([
-                       'uid' => $item->gid,
-                       'order_id' => $item->order_id,
-                       'g_order_id' => $item->id,
-                       'money' => $moneys,
-                       'trade_mode' => $item->pay_method,
-                       'memo' => '用户备注:' . empty($item->memo) ? '无, 平台备注: 买家未付款，保证金赔付' :
-                           $item->memo. ','. '平台备注: 买家未付款，保证金赔付',
-                       'category' => 500,
-                       'status' => 1001,
-                       'trans_at' => $item->created_at,
-                   ]);
-                   $item->timeout = '';
-                   $item->save();
-                   CapitalModel::create([
-                       'uid' => $user->id,
-                       'order_id' => $item->order_id,
-                       'money' => '-' . $item->moneys,
-                       'trade_mode' => '',
-                       'category' => 300,
-                       'g_order_id' => $item->id,
-                       'status' => 1004,
-                       'memo' => '平台备注: 订单未付款，保证金赔付',
-                   ]);
+               } else {
+                   $moneys = $user->frozen_capital;
                }
+               CapitalModel::create([
+                   'uid' => $item->gid,
+                   'order_id' => $item->order_id,
+                   'g_order_id' => $item->id,
+                   'money' => $moneys,
+                   'trade_mode' => $item->pay_method,
+                   'memo' => '用户备注:' . empty($item->memo) ? '无, 平台备注: 买家未付款，保证金赔付' :
+                       $item->memo. ','. '平台备注: 买家未付款，保证金赔付',
+                   'category' => 500,
+                   'status' => 1001,
+                   'trans_at' => $item->created_at,
+               ]);
+               $item->timeout = '';
+               $item->save();
+               CapitalModel::create([
+                   'uid' => $user->id,
+                   'order_id' => $item->order_id,
+                   'money' => '-' . $item->moneys < $user->frozen_capital ? $item->moneys : $moneys,
+                   'trade_mode' => '',
+                   'category' => 300,
+                   'g_order_id' => $item->id,
+                   'status' => 1004,
+                   'memo' => '平台备注: 订单未付款，保证金赔付',
+               ]);
            }
         } catch (Exception $e) {
             Log::info('认缴订单超时未支付处理:', [
