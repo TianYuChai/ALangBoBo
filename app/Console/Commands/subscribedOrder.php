@@ -48,6 +48,7 @@ class subscribedOrder extends Command
            $items = $this->shoppOrderModel::where('pay_method', 'subscribed')
                                             ->whereIn('status', [300, 400, 500, 600])
                                             ->where('timeout', '<', getTime())
+                                            ->where('timeout', '!=', '0000-00-00 00:00:00')
                                             ->get();
            foreach ($items as $item) {
                $user = UserModel::where('id', $item->uid)->first();
