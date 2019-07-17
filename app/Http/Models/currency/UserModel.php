@@ -170,12 +170,7 @@ class UserModel extends Authenticatable
         $frozen_fee = $this->capital()->where(function ($query) {
             $query->where('category', '!=', 600)->whereIn('status', [1003]);
         })->sum('money');
-        Log::info('可用金额', [
-            '总金额' => $total_fee,
-            '冻结金额' => $frozen_fee,
-            '可用金额' => $total_fee > $frozen_fee ? bcsub($total_fee, $frozen_fee, 2) : $total_fee
-        ]);
-        return $total_fee > $frozen_fee ? bcsub($total_fee, $frozen_fee, 2) : $total_fee;
+        return bcsub($total_fee, $frozen_fee, 2);
     }
 
     /**

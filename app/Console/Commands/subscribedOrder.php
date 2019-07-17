@@ -80,7 +80,8 @@ class subscribedOrder extends Command
                        'trade_mode' => '',
                        'category' => 300,
                        'g_order_id' => $item->id,
-                       'status' => 1001
+                       'status' => 1003,
+                       'memo' => '平台备注: 订单未付款，保证金赔付',
                    ]);
                }
            }
