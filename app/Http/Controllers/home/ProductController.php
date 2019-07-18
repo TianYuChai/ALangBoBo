@@ -40,7 +40,6 @@ class ProductController extends BaseController
             'id' => intval($id),
             'status' => 0,
         ])->first();
-        dd($item);
         $recom_goods = GoodsModel::where('id', '<>', intval($id))->where([
             'status' => 0,
             'recom' => 1,
