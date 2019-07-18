@@ -52,7 +52,8 @@ class shoppOrderModel extends Model
                         'order_id' => $query->order_id,
                         'g_order_id' => $query->id,
                     ])->update(['status' => $query->getDirty()['status']]);
-                    if($status == 500 && $query->pay_method == 'paidin') {
+                    if($status == 500 && $query->pay_method == 'paidin' || ($query->pay_method == 'subscribed'
+                            && $query->timeout =='0000-00-00 00:00:00' || $query->timeout == '')) {
                         CapitalModel::create([
                             'uid' => $query->gid,
                             'order_id' => $query->order_id,
