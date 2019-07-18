@@ -11,7 +11,7 @@
                     <div class="search">
                         <div class="citySelect">
                             <i class="locationIcon"></i>
-                            <span class="cityName inline-block">滁州</span>
+                            <span class="cityName inline-block">深圳</span>
                             <i class="iconDown db-n"></i>
                             <i class="line"></i>
                         </div>
