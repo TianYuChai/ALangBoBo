@@ -210,7 +210,7 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         'FileUpload' => FileUpload::class,
         'Input' => \Illuminate\Support\Facades\Input::class,
-        'QrCode' => SimpleSoftwareIO\QrCode\Facades\QrCode::class
+        'QrCode' => SimpleSoftwareIO\QrCode\Facades\QrCode::class,
     ],
 
 ];
