@@ -115,7 +115,8 @@ class PersonalHaveGoodsService extends BaseService
                     'id' => intval($data['passback_params']),
 //                    'order_id' => strval($data['out_trade_no']),
                     'pay_method' => 'subscribed'
-                ])->where('timeout', '!=', '0000-00-00 00:00:00')->first();
+                ])->where('timeout', '!=', '0000-00-00 00:00:00')
+                  ->where('timeout', '!=', '')->first();
                 if($item) {
                     $item->timeout = '';
                     $item->order_id = strval($data['out_trade_no']);
@@ -167,7 +168,8 @@ class PersonalHaveGoodsService extends BaseService
                     'id' => intval($data['attach']),
 //                    'order_id' => strval($data['out_trade_no']),
                     'pay_method' => 'subscribed'
-                ])->where('timeout', '!=', '0000-00-00 00:00:00')->first();
+                ])->where('timeout', '!=', '0000-00-00 00:00:00')
+                    ->where('timeout', '!=', '')->first();
                 if($item) {
                     $item->timeout = '';
                     $item->order_id = strval($data['out_trade_no']);
