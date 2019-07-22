@@ -53,7 +53,7 @@ class PersonalGoodsService extends BaseService
                 'three_category' => isset($data['category']['2']) ? intval($data['category']['2']) : '',
                 'nav_category' => intval($data['nav_category']),
                 'address' => intval($address_id),
-                'total_fee' => $data['total_price'],
+                'total_fee' => $data['cost_price'] + $data['satis_price'],
                 'cost_fee' => $data['cost_price'],
                 'satic_fee' => $data['satis_price'],
                 'delivery_fee' => !empty($data['delivery_price']) ? $data['delivery_price'] : '',

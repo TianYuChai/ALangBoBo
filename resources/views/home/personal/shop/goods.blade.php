@@ -218,14 +218,15 @@
                                                 </div>
                                             </div>
                                             <div class="form-group">
-                                                <label class="col-sm-2 control-label" for="inputPassword">总价</label>
-                                                <div class="input-group" style="width: 250px;margin-left: 165px;">
-                                                    <div class="input-group-addon">$</div>
-                                                    <input type="text" class="form-control money"
-                                                           name="total_price" placeholder="单位：元"
-                                                           onkeyup="this.value= this.value.match(/\d+(\.\d{0,2})?/) ? this.value.match(/\d+(\.\d{0,2})?/)[0] : ''"
-                                                           onblur="this.v();" autocomplete="off">
-                                                </div>
+                                                <label class="col-sm-2 control-label" for="inputPassword"></label>
+                                                <span style="color: red">总价 = 成本 + 满意度</span>
+                                                {{--<div class="input-group" style="width: 250px;margin-left: 165px;">--}}
+                                                    {{--<div class="input-group-addon">$</div>--}}
+                                                    {{--<input type="text" class="form-control money"--}}
+                                                           {{--name="total_price" placeholder="单位：元"--}}
+                                                           {{--onkeyup="this.value= this.value.match(/\d+(\.\d{0,2})?/) ? this.value.match(/\d+(\.\d{0,2})?/)[0] : ''"--}}
+                                                           {{--onblur="this.v();" autocomplete="off">--}}
+                                                {{--</div>--}}
                                             </div>
                                             <div class="form-group">
                                                 <label class="col-sm-2 control-label" for="inputPassword">成本</label>
@@ -373,7 +374,7 @@
         });
         $('.add').click(function () {
             var data = $('#add_goods').serializeArray();
-            var message = {title: '商品名称', second_category : '分类', total_price: '总价', cost_price: '成本价',
+            var message = {title: '商品名称', second_category : '分类', cost_price: '成本价',
                 satis_price: '满意度价', delivery_price: '运费', free_shipping: '包邮', stock: '库存', new_products: '新品',
                 cover_img: '封面图'};
             $.each(data, function (k, val) {
