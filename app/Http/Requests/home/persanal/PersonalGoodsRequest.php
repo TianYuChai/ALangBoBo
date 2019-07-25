@@ -52,11 +52,6 @@ class PersonalGoodsRequest extends FormRequest
                         }
                     }
             }],
-            'total_price' => ['required', function ($attribute, $value, $fail) {
-                    if(!is_numeric($value)) {
-                        return $fail('总价错误, 请重新填写');
-                    }
-            }],
             'cost_price' => ['required', function ($attribute, $value, $fail) {
                 if(!is_numeric($value)) {
                     return $fail('成本价错误, 请重新填写');
@@ -92,7 +87,6 @@ class PersonalGoodsRequest extends FormRequest
             'title.required' => '商品名称不可为空',
             'second_category.required' => '请选择分类',
             'nav_category.required' => '请选择导航分类',
-            'total_price.required' => '请填写总价',
             'cost_price.requried' => '请填写成本价',
             'satis_price.requried' => '请填写满意度价',
             'stock.required' => '请填写库存',
