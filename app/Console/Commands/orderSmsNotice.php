@@ -36,6 +36,7 @@ class orderSmsNotice extends Command
         $time = Carbon::createFromFormat('Y-m-d', date('Y-m-d', time()))->modify('+2 days');
         $time_range = [$time->copy()->startOfDay()->toDateTimeString(), $time->copy()->endOfDay()->toDateTimeString()];
         $order_uids = shoppOrderModel::whereBetween('timeout', $time_range)
+                                    ->whereIn('status', [300, 400, 500, 600])
                                     ->where('pay_method', 'subscribed')->groupBy(['uid'])->get()->pluck('uid');
         if(!empty($order_uids)) {
             foreach ($order_uids as $uid) {
