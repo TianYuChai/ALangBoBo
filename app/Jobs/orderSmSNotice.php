@@ -22,6 +22,7 @@ class orderSmSNotice implements ShouldQueue
     public $timeout = 120;
 
     public $tries = 3;
+    protected $user;
     /**
      * Create a new job instance.
      *
@@ -29,7 +30,7 @@ class orderSmSNotice implements ShouldQueue
      */
     public function __construct($user_id)
     {
-       $user = UserModel::where('id', $user_id)->first();
+       $user = UserModel::where('id', intval($user_id))->first();
        $this->user = $user;
     }
 
@@ -45,7 +46,7 @@ class orderSmSNotice implements ShouldQueue
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
         curl_setopt($ch, CURLOPT_POST, TRUE);
         curl_setopt($ch, CURLOPT_POSTFIELDS,
-            'uid=EpsJsKZCyEQA&pas=rmy7t4x8&mob='.$this->user['number'].'&cid=boF2H6bbmiYK&p1=&p2&type=json');
+            'uid=EpsJsKZCyEQA&pas=rmy7t4x8&mob='.$this->user->number.'&cid=boF2H6bbmiYK&p1=&p2&type=json');
         $res = curl_exec( $ch );
         curl_close( $ch );
         Log::info('队列通知', [
@@ -54,7 +55,7 @@ class orderSmSNotice implements ShouldQueue
         ]);
         if(json_decode($res)->code == 0) {
             $overdue_time = (strtotime(date('Y-m-d 24:00:00')) - time()) / 60;
-            Cache::put('order:sms:notice:'. $this->user['id'], $this->user['number'], $overdue_time);
+            Cache::put('order:sms:notice:'. $this->user->id, $this->user->number, $overdue_time);
         }
     }
 }
