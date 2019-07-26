@@ -40,6 +40,7 @@ class Kernel extends ConsoleKernel
         $schedule->command('demand')->everyMinute()->timezone('Asia/Shanghai')->runInBackground(); //未支付需求
         $schedule->command('demand_wait')->everyMinute()->timezone('Asia/Shanghai')->runInBackground(); //等待接单需求
         $schedule->command('subscribed_order')->everyMinute()->timezone('Asia/Shanghai')->runInBackground(); //认缴订单未支付超时支付
+        $schedule->command('order_sms_notice')->everyMinute()->timezone('Asia/Shanghai')->runInBackground(); //认缴订单提示短信
     }
 
     /**
