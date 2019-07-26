@@ -23,7 +23,7 @@ class shortMessage
      * @return mixed
      * @throws Exception
      */
-    public static function entrance(string $mobile, string $message)
+    public static function entrance(string $mobile, string $message, $uid)
     {
         if(!$mobile) {
             throw new Exception(self::$tips['empty']);
@@ -31,7 +31,10 @@ class shortMessage
         if(!is_mobile($mobile)) {
             throw new Exception(self::$tips['wrongFormat']);
         }
-        return self::send($mobile, $message);
+        if(empty($uid)) {
+            $uid = self::$cid;
+        }
+        return self::send($mobile, $message, $uid);
     }
 
     /**
@@ -41,14 +44,14 @@ class shortMessage
      * @param string $message
      * @return mixed
      */
-    public static function send(string $mobile, string $message)
+    public static function send(string $mobile, string $message, $uid)
     {
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, "http://api.weimi.cc/2/sms/send.html");
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
         curl_setopt($ch, CURLOPT_POST, TRUE);
         curl_setopt($ch, CURLOPT_POSTFIELDS,
-            'uid='.self::$uid.'&pas='.self::$uid_pass.'&mob='.$mobile.'&cid='.self::$cid.'&p1='.$message.'&p2&type=json');
+            'uid='.$uid.'&pas='.self::$uid_pass.'&mob='.$mobile.'&cid='.self::$cid.'&p1='.$message.'&p2&type=json');
         $res = curl_exec( $ch );
         curl_close( $ch );
         return json_decode($res);

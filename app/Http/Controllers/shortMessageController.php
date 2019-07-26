@@ -26,7 +26,7 @@ class shortMessageController extends BaseController
             $mobile = trim($request->mobile);
             $code = code();
             Redis::setex($mobile, 3 * 60, $code);
-            $result = shortMessage::entrance($mobile, $code);
+            $result = shortMessage::entrance($mobile, $code, '');
             if($result->code == 0) {
                 return $this->ajaxReturn([
                     'info' => '发送成功',
