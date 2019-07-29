@@ -174,6 +174,7 @@ class PersonalHaveGoodsService extends BaseService
                     $item->timeout = '';
                     $item->order_id = strval($data['out_trade_no']);
                     $item->save();
+                    Log::info('状态'.$item->status);
                     if($item->status == 500) {
                         $this->capitalModel::create([
                             'uid' => $item->gid,
