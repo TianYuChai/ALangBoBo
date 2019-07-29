@@ -176,6 +176,7 @@ class PersonalHaveGoodsService extends BaseService
                     $item->save();
                     Log::info('状态'.$item->status);
                     if($item->status == 500) {
+                        Log::info('状态1'.$item->status);
                         $this->capitalModel::create([
                             'uid' => $item->gid,
                             'order_id' => $item->order_id,
