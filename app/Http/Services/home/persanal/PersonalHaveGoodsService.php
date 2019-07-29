@@ -127,7 +127,7 @@ class PersonalHaveGoodsService extends BaseService
                             'order_id' => $item->order_id,
                             'g_order_id' => $item->id,
                             'money' => bcsub($item->moneys, $item->satisfiedfees, 2),
-                            'trade_mode' => $item->order->pay_method,
+                            'trade_mode' => isset($item->order) ? $item->order->pay_method : '支付宝',
                             'memo' => '用户备注:' . empty($item->memo) ? '无, 平台备注: 用户下单支付订单' :
                                 $item->memo. ','. '平台备注: 用户下单支付订单',
                             'category' => 500,
@@ -174,15 +174,13 @@ class PersonalHaveGoodsService extends BaseService
                     $item->timeout = '';
                     $item->order_id = strval($data['out_trade_no']);
                     $item->save();
-                    Log::info('状态'.$item->status);
                     if($item->status == 500) {
-                        Log::info('状态1'.$item->status);
                         $this->capitalModel::create([
                             'uid' => $item->gid,
                             'order_id' => $item->order_id,
                             'g_order_id' => $item->id,
                             'money' => bcsub($item->moneys, $item->satisfiedfees, 2),
-                            'trade_mode' => $item->order->pay_method,
+                            'trade_mode' => isset($item->order) ? $item->order->pay_method : '微信',
                             'memo' => '用户备注:' . empty($item->memo) ? '无, 平台备注: 用户下单支付订单' :
                                 $item->memo. ','. '平台备注: 用户下单支付订单',
                             'category' => 500,
