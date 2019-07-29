@@ -127,7 +127,7 @@ class PersonalHaveGoodsService extends BaseService
                             'order_id' => $item->order_id,
                             'g_order_id' => $item->id,
                             'money' => bcsub($item->moneys, $item->satisfiedfees, 2),
-                            'trade_mode' => isset($item->order) ? $item->order->pay_method : '支付宝',
+                            'trade_mode' => isset($item->order) ? $item->order->pay_method : 'Alipay',
                             'memo' => '用户备注:' . empty($item->memo) ? '无, 平台备注: 用户下单支付订单' :
                                 $item->memo. ','. '平台备注: 用户下单支付订单',
                             'category' => 500,
@@ -180,7 +180,7 @@ class PersonalHaveGoodsService extends BaseService
                             'order_id' => $item->order_id,
                             'g_order_id' => $item->id,
                             'money' => bcsub($item->moneys, $item->satisfiedfees, 2),
-                            'trade_mode' => isset($item->order) ? $item->order->pay_method : '微信',
+                            'trade_mode' => isset($item->order) ? $item->order->pay_method : 'WeChat',
                             'memo' => '用户备注:' . empty($item->memo) ? '无, 平台备注: 用户下单支付订单' :
                                 $item->memo. ','. '平台备注: 用户下单支付订单',
                             'category' => 500,
