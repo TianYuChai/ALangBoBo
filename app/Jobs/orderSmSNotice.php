@@ -22,6 +22,7 @@ class orderSmSNotice implements ShouldQueue
     public $timeout = 120;
 
     public $tries = 3;
+
     protected $user;
     /**
      * Create a new job instance.

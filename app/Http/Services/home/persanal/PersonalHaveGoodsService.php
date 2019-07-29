@@ -122,6 +122,10 @@ class PersonalHaveGoodsService extends BaseService
                     $item->order_id = strval($data['out_trade_no']);
                     $item->save();
                     if($item->satatus == 500) {
+                        Log::info('认缴回调生成支付流水-支付宝', [
+                            'info' => $item,
+                            'info_status' => $item->status
+                        ]);
                         $this->capitalModel::create([
                             'uid' => $item->gid,
                             'order_id' => $item->order_id,
@@ -175,6 +179,10 @@ class PersonalHaveGoodsService extends BaseService
                     $item->order_id = strval($data['out_trade_no']);
                     $item->save();
                     if($item->satatus == 500) {
+                        Log::info('认缴回调生成支付流水-微信', [
+                            'info' => $item,
+                            'info_status' => $item->status
+                        ]);
                         $this->capitalModel::create([
                             'uid' => $item->gid,
                             'order_id' => $item->order_id,
