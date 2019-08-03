@@ -24,6 +24,7 @@ Route::group(['prefix' => 'backstage', 'namespace' => 'admin'], function () {
         Route::get('index', ['as' => 'backstage.index.index', 'uses' => 'IndexController@index']);
         Route::get('welcome', ['as' => 'backstage.index.welcome', 'uses' => 'IndexController@welcome']);
         Route::get('logout', ['as' => 'backstage.login.out', 'uses' => 'basic\LoginController@logout']);
+        Route::post('editPass', ['as' => 'backstage.login.editpass', 'uses' => 'basic\LoginController@editPass']);
         /*黑名单*/
         Route::get('blackList/index', ['as' => 'backstage.blackList.index', 'uses' => 'other\blackListController@index']);
         Route::post('blackList/{id}/store', ['as' => 'backstage.blackList.store', 'uses' => 'other\blackListController@store']);

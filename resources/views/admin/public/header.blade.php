@@ -13,6 +13,7 @@
         <li class="layui-nav-item">
             <a href="javascript:void(0);">{{ auth()->guard('backstage')->user()->nickname }}</a>
             <dl class="layui-nav-child">
+                <dd><a class="edit_pass" href="javascript:void(0)">修改密码</a></dd>
                 <dd><a class="loginout" href="{{ route('backstage.login.out') }}">退出</a></dd>
             </dl>
         </li>
