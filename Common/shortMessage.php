@@ -32,7 +32,7 @@ class shortMessage
             throw new Exception(self::$tips['wrongFormat']);
         }
         if(empty($uid)) {
-            $uid = self::$cid;
+            $uid = self::$uid;
         }
         return self::send($mobile, $message, $uid);
     }
