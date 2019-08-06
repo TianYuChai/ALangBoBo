@@ -3,7 +3,10 @@
 namespace App\Http\Controllers\admin\basic;
 
 use App\Http\Controllers\admin\BaseController;
+use App\Http\Models\admin\BackstageModel;
 use App\Http\Requests\admin\basic\LoginRequest;
+use Illuminate\Foundation\Auth\User;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class LoginController extends BaseController
@@ -40,5 +43,27 @@ class LoginController extends BaseController
     {
         Auth::guard('backstage')->logout();
         return redirect(route('login'));
+    }
+
+    /**
+     * 修改密码
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
+    public function editPass(Request $request)
+    {
+        try {
+           BackstageModel::where('id', 1)->update([
+               'password' => bcrypt(trim($request->edit_pass))
+           ]);
+            Auth::guard('backstage')->logout();
+            return $this->ajaxReturn();
+        } catch (\Exception $e) {
+            return $this->ajaxReturn([
+                'info' => '密码只能为中英文集合',
+                'status' => 406
+            ], 406);
+        }
     }
 }
