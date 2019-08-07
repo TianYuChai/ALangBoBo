@@ -136,7 +136,7 @@
                             <li class="mgl-10">
                                 <a href="{{ route('demand.show', ['id' => $item->id]) }}"
                                     class="block artPartLink" target="_blank">
-                                    <img src="{{ FileUpload::url('image', $item->img) }}" alt="" class="perfectImg"/>
+                                    <img src="{{ FileUpload::url('image', $item->img) }}" alt="" class="perfectImg" style="width: 193px"/>
                                     <p class="perfectName">{{ $item->title }}</p>
                                     <p class="hotprice"><span class="priceicon">￥</span>{{ $item->moneys }}</p>
                                 </a>
