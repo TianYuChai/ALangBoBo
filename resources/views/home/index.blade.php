@@ -276,7 +276,7 @@
             </ul>
             <div id="myTabContent6" class="tab-content clearfix">
                 @foreach($data['commissions'] as $key => $commissions)
-                <div class="tab-pane fade in {{ $key == '43' ? 'active' : '' }} canyin1 canyin21 fl" id="{{ $key }}">
+                <div class="tab-pane fade in {{ $key == 139 ? 'active' : '' }} canyin1 canyin21 fl" id="{{ $key }}">
                     <ul class="clearfix">
                         @foreach($commissions as $commission)
                             <li>
