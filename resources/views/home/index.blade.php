@@ -94,7 +94,7 @@
             </ul>
             <div id="myTabContent" class="tab-content">
                 @foreach($data['good_business'] as $key => $good_business)
-                <div class="tab-pane fade in {{ $key == 6 ? 'active' : '' }} canyin1" id="{{ $key }}">
+                <div class="tab-pane fade in {{ $key == 26 ? 'active' : '' }} canyin1" id="{{ $key }}">
                     <ul class="clearfix">
                         @foreach($good_business as $good_busines)
                             <li class="perfectBl">
@@ -136,7 +136,7 @@
                             <li class="mgl-10">
                                 <a href="{{ route('demand.show', ['id' => $item->id]) }}"
                                     class="block artPartLink" target="_blank">
-                                    <img src="{{ FileUpload::url('image', $item->img) }}" alt="" class="perfectImg" style="width: 193px"/>
+                                    <img src="{{ FileUpload::url('image', $item->img) }}" alt="" class="perfectImg" style="width: 176px"/>
                                     <p class="perfectName">{{ $item->title }}</p>
                                     <p class="hotprice"><span class="priceicon">￥</span>{{ $item->moneys }}</p>
                                 </a>
