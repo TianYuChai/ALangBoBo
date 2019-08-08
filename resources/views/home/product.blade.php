@@ -57,8 +57,9 @@
                         </a>
                         <a href="{{ route('merchant.show', ['id' => $goodss->user->merchant['id']]) }}" class="shopLink">
                             {{--<img src="" alt="" class="shopIcon"/>--}}
-                            {{ $goodss->user->merchant['shop_name'] }}
-                            <span class="mgl-70">{{ $goodss->user->merchant['address'] }}</span>
+                            <span style="display:inline-block;width:50%;overflow:hidden;text-overflow:ellipsis;vertical-align:middle;">{{ $goodss->user->merchant['shop_name'] }}</span>
+                            <span style="display:inline-block;width:49%;vertical-align:middle;text-align:right;float:right;">{{ $goodss->user->merchant['address'] }}</span>
+                            {{--<span class="mgl-70">{{ $goodss->user->merchant['address'] }}</span>--}}
                         </a>
                     </li>
                 @endforeach
