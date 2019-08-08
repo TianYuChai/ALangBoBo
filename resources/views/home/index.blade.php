@@ -234,7 +234,7 @@
                 <?php $count = 0?>
                 @foreach($data['beauty'] as $key => $beauty)
                     <?php $count++?>
-                        @if($count < 5)
+                        @if($count <= 5)
                             <li class="{{ $key == 0 ? 'active mgl-650' : '' }}">
                                 <a href="#{{ $beauty->id }}" data-toggle="tab">
                                     {{ $beauty->cate_name }}
