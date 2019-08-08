@@ -243,6 +243,7 @@
                 <?php $count = 0?>
                 @foreach($data['beautys'] as $key => $beautys)
                 <?php $count++?>
+                    <li>{{ $count }}</li>
                 @if($count < 5)
                     <div class="tab-pane fade in {{ $key == 139 ? 'active' : '' }} canyin1" id="{{ $key }}">
                         <ul class="clearfix">
