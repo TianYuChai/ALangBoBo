@@ -55,7 +55,7 @@
                             <p class="productText">{!! $goodss->title !!}</p>
                             <p class="productPrice">￥{!! $goodss->total_price !!}</p>
                         </a>
-                        <a href="{{ route('merchant.show', ['id' => $goodss->user->merchant['id']]) }}" class="shopLink">
+                        <a href="{{ route('merchant.show', ['id' => $goodss->user->merchant['id']]) }}" class="shopLinks">
                             {{--<img src="" alt="" class="shopIcon"/>--}}
                             <span style="display:inline-block;width:50%;overflow:hidden;text-overflow:ellipsis;vertical-align:middle;">{{ $goodss->user->merchant['shop_name'] }}</span>
                             <span style="display:inline-block;width:49%;vertical-align:middle;text-align:right;float:right;">{{ $goodss->user->merchant['address'] }}</span>
