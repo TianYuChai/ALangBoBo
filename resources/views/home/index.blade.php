@@ -240,20 +240,24 @@
                 @endforeach
             </ul>
             <div id="myTabContent5" class="tab-content">
+                <?php $count = 0?>
                 @foreach($data['beautys'] as $key => $beautys)
-                <div class="tab-pane fade in {{ $key == '106' ? 'active' : '' }} canyin1" id="{{ $key }}">
-                    <ul class="clearfix">
-                        @foreach($beautys as $value)
-                        <li>
-                            <a href="{{ url('details', ['id' => $value->id]) }}" target="_blank">
-                                <img src="{{ FileUpload::url('image', $value->cost_img) }}" alt="" class="perfectImg" style="width: 186px;height: 186.94px"/>
-                                <p class="enjoyName">{{ $value->title }}</p>
-                                <p class="enjoyPrice"><span class="font-normal">￥</span>{{ $value->total_price }}</p>
-                            </a>
-                        </li>
-                        @endforeach
-                    </ul>
-                </div>
+                <?php $count++?>
+                @if($count < 5)
+                    <div class="tab-pane fade in {{ $key == 139 ? 'active' : '' }} canyin1" id="{{ $key }}">
+                        <ul class="clearfix">
+                            @foreach($beautys as $value)
+                            <li>
+                                <a href="{{ url('details', ['id' => $value->id]) }}" target="_blank">
+                                    <img src="{{ FileUpload::url('image', $value->cost_img) }}" alt="" class="perfectImg" style="width: 186px;height: 186.94px"/>
+                                    <p class="enjoyName">{{ $value->title }}</p>
+                                    <p class="enjoyPrice"><span class="font-normal">￥</span>{{ $value->total_price }}</p>
+                                </a>
+                            </li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
                 @endforeach
             </div>
             <div class="yishuPartTipDiv">
@@ -276,7 +280,7 @@
             </ul>
             <div id="myTabContent6" class="tab-content clearfix">
                 @foreach($data['commissions'] as $key => $commissions)
-                <div class="tab-pane fade in {{ $key == 139 ? 'active' : '' }} canyin1 canyin21 fl" id="{{ $key }}">
+                <div class="tab-pane fade in {{ $key == 43 ? 'active' : '' }} canyin1 canyin21 fl" id="{{ $key }}">
                     <ul class="clearfix">
                         @foreach($commissions as $commission)
                             <li>
