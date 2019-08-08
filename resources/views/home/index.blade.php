@@ -231,20 +231,20 @@
         <!--艺术品拍卖区-->
         <div class="enjoyPart perfectShop relative" id="yishuPart">
             <ul id="myTab5" class="nav nav-tabs tabList">
+                <?php $count = 0?>
                 @foreach($data['beauty'] as $key => $beauty)
-                    <li class="{{ $key == 0 ? 'active mgl-650' : '' }}">
-                        <a href="#{{ $beauty->id }}" data-toggle="tab">
-                            {{ $beauty->cate_name }}
-                        </a>
-                    </li>
-                @endforeach
+                    <?php $count++?>
+                        @if($count < 5)
+                            <li class="{{ $key == 0 ? 'active mgl-650' : '' }}">
+                                <a href="#{{ $beauty->id }}" data-toggle="tab">
+                                    {{ $beauty->cate_name }}
+                                </a>
+                            </li>
+                        @endif
+                    @endforeach
             </ul>
             <div id="myTabContent5" class="tab-content">
-                <?php $count = 0?>
                 @foreach($data['beautys'] as $key => $beautys)
-                <?php $count++?>
-                    <li>{{ $count }}</li>
-                @if($count < 5)
                     <div class="tab-pane fade in {{ $key == 139 ? 'active' : '' }} canyin1" id="{{ $key }}">
                         <ul class="clearfix">
                             @foreach($beautys as $value)
@@ -258,7 +258,6 @@
                             @endforeach
                         </ul>
                     </div>
-                @endif
                 @endforeach
             </div>
             <div class="yishuPartTipDiv">
