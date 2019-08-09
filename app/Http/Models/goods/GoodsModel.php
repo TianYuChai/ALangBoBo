@@ -76,7 +76,8 @@ class GoodsModel extends Model
     /*展示封面图*/
     public function getCostImgAttribute()
     {
-        return $this->img->where('type', 1)->first()->img;
+        $cost_img = $this->img()->where('type', 1)->first();
+        return !empty($cost_img) ? $cost_img->img : '';
     }
     /*展示轮播图*/
     public function getShuffImgAttribute()
