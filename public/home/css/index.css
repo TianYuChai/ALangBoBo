@@ -392,7 +392,8 @@
     border-bottom: 1px solid #e3e3e3;
 }
 .artPart .canyin1 ul li{
-    padding:1px;
+    /*padding:1px;*/
+    margin-right:10px;
     float: left;
     /*width:20%;*/
     border-right:1px solid #e3e3e3;
