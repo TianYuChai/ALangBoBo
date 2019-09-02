@@ -227,7 +227,7 @@ class shoppPayService extends BaseService
         } catch (Exception $e) {
             Log::info('支付宝订单支付：', [
                 'time' => getTime(),
-                'order_id' => $data->order_id,
+                'order_id' => $data['order_id'],
                 'info' => $e->getMessage()
             ]);
             throw new Exception('请联系管理员', 510);
