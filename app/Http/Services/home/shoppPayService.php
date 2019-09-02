@@ -218,7 +218,7 @@ class shoppPayService extends BaseService
                 'body' => '商品购买',
             ];
             if(isset($data['passback_params'])) {
-                $order['passback_params '] = $data['passback_params '];
+                $order['passback_params'] = $data['passback_params'];
             }
             $this->config['notify_url'] = route('index.order.notify');
             $this->config['return_url'] = route('personal.creditmargin');
