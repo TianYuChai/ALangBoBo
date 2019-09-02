@@ -278,7 +278,7 @@ class shoppPayService extends BaseService
             $data = $vailet->all();
             if($data['trade_status'] == 'TRADE_SUCCESS' || $data['trade_status'] == 'TRADE_FINISHED'
                 && $data['app_id'] == $this->config['app_id']) {
-                    if(isset($data['passback_params ']) && !empty($data['passback_params '])) {
+                    if(isset($data['passback_params']) && !empty($data['passback_params'])) {
                         $this->processing($data['passback_params'], $data['out_trade_no']);
                     } else {
                         $item = $this->orderModel::where([
